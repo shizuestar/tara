@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA – Showcase</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: "Vantage";
+            src: url("./assets/fonts/VantageRegular-L3xY5.ttf") format("truetype");
+        }
+
+        .font-vantage {
+            font-family: "Vantage", sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-floating {
+            width: 56px !important;
+            height: 56px !important;
+            border-radius: 9999px !important;
+            padding: 0 !important;
+            justify-content: center !important;
+            overflow: hidden;
+        }
+
+        .hide-on-float {
+            transition: opacity 0.3s ease;
+        }
+
+        .hidden-opacity {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
+        main,
+        section,
+        .hero {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black font-vantage tracking-wide">
+    <!-- Partikel interaktif -->
+    <div id="particles-js"></div>
+
+    <!-- Loading -->
+    <div id="loadingScreen" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center space-y-6">
+        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
+            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+        <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik...</p>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="opacity-0 fixed top-4 left-1/2 transform -translate-x-1/2 z-40 bg-white/80 backdrop-blur-md shadow-xl border border-black/10 rounded-full px-6 py-2 w-[90%] max-w-5xl flex items-center justify-between transition-all duration-300">
+        <div id="navbarLogo" class="flex items-center justify-center space-x-2">
+            <img src="/assets/logo/logo.png" alt="Logo" class="h-6 w-auto" />
+            <span class="text-sm font-semibold">TARA</span>
+        </div>
+        <div id="searchBar" class="flex-1 flex justify-center hide-on-float">
+            <input type="text" placeholder="Cari karya..."
+                class="w-full max-w-xs px-4 py-1.5 rounded-full bg-gray-100 text-black placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-black transition" />
+        </div>
+        <div id="dropdownMenu" class="relative group hide-on-float">
+            <button
+                class="flex items-center space-x-2 text-sm font-semibold text-black hover:text-gray-600 transition focus:outline-none">
+                <span>Guest</span>
+                <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div
+                class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 origin-top-right z-40">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Login</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Sign Up</a>
+            </div>
+        </div>
+        <!-- search menu -->
+        <div id="searchDropdown"
+            class="absolute top-[72px] left-1/2 transform -translate-x-1/2 w-full max-w-xl bg-white border border-gray-200 rounded-xl shadow-xl p-6 z-30 hidden transition-all duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
+                <div>
+                    <h3 class="font-bold text-gray-600 mb-2">Trending</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="hover:text-black">Situs Portofolio</a></li>
+                        <li><a href="#" class="hover:text-black">Font Gratis</a></li>
+                        <li><a href="#" class="hover:text-black">Situs Web Animasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-600 mb-2">Kategori</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="hover:text-black">Desain UI</a></li>
+                        <li><a href="#" class="hover:text-black">Satu Halaman</a></li>
+                        <li><a href="#" class="hover:text-black">E-Commerce</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-600 mb-2">Teknologi</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="hover:text-black">Three.js</a></li>
+                        <li><a href="#" class="hover:text-black">GSAP</a></li>
+                        <li><a href="#" class="hover:text-black">Tailwind</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- search menu -->
+    <div id="searchDropdown"
+        class="absolute top-[72px] left-1/2 transform -translate-x-1/2 w-full max-w-xl bg-white border border-gray-200 rounded-xl shadow-xl p-6 z-30 hidden transition-all duration-300">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
+            <div>
+                <h3 class="font-bold text-gray-600 mb-2">Trending</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="hover:text-black">Situs Portofolio</a></li>
+                    <li><a href="#" class="hover:text-black">Font Gratis</a></li>
+                    <li><a href="#" class="hover:text-black">Situs Web Animasi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-600 mb-2">Kategori</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="hover:text-black">Desain UI</a></li>
+                    <li><a href="#" class="hover:text-black">Satu Halaman</a></li>
+                    <li><a href="#" class="hover:text-black">E-Commerce</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-600 mb-2">Teknologi</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="hover:text-black">Three.js</a></li>
+                    <li><a href="#" class="hover:text-black">GSAP</a></li>
+                    <li><a href="#" class="hover:text-black">Tailwind</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="pt-15 opacity-0">
+        <!-- Hero Section -->
+        <section
+            class="min-h-screen relative z-10 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+            <div class="pointer-events-auto">
+                <h1 class="text-5xl md:text-7xl font-bold uppercase mb-4">
+                    Selamat datang di <span class="text-blue-600">TARA</span>
+                </h1>
+                <p class="text-lg text-gray-500 max-w-xl">
+                    Temukan inspirasi dari karya kreatif anak bangsa
+                </p>
+            </div>
+        </section>
+
+        <!-- Featured Works -->
+        <section class="px-6 py-24 bg-white text-black">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16 text-center">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-4 uppercase">Karya Teratas</h2>
+                    <p class="text-gray-500 max-w-xl mx-auto text-lg">Koleksi terbaik dari kreator Indonesia</p>
+                </div>
+                <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </section>
+        <!-- Info Section - Elevated Look -->
+        <section
+            class="relative px-6 py-28 bg-gradient-to-br from-white via-gray-50 to-white text-black overflow-hidden">
+            <!-- Decorative element -->
+            <div
+                class="absolute -top-32 -left-32 w-[400px] h-[400px] bg-blue-100 rounded-full filter blur-3xl opacity-30">
+            </div>
+            <div
+                class="absolute -bottom-20 -right-20 w-[300px] h-[300px] bg-indigo-100 rounded-full filter blur-2xl opacity-20">
+            </div>
+
+            <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center relative z-10">
+                <div data-aos="fade-right">
+                    <h3
+                        class="text-5xl md:text-6xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                        Kenapa Harus TARA?
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed max-w-xl">
+                        <span class="font-semibold text-black">TARA</span> bukan sekadar platform — ini adalah <span
+                            class="italic text-blue-600 font-medium">rumah kreativitas digital</span> bagi anak bangsa.
+                        Kamu bisa berbagi, terinspirasi, dan tumbuh bersama komunitas kreatif lainnya.
+                    </p>
+                    <ul class="space-y-4 text-base text-gray-800">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-blue-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414L8.414 15 5 11.586a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l9-9a1 1 0 00-1.414-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span><strong>Kurasi eksklusif</strong> — hanya karya terbaik yang ditampilkan</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-blue-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414L8.414 15 5 11.586a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l9-9a1 1 0 00-1.414-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span><strong>Komunitas aktif</strong> yang suportif dan inspiratif</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-blue-600 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414L8.414 15 5 11.586a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l9-9a1 1 0 00-1.414-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span><strong>Visual modern</strong> untuk karya yang standout</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div data-aos="fade-left">
+                    <img src="https://picsum.photos/600/800?creative,art" alt="Creative"
+                        class="rounded-3xl shadow-2xl w-full h-auto transform hover:scale-105 transition duration-500 ease-in-out" />
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CTA -->
+        <section class="w-full px-6 py-24 bg-transparent backdrop-blur-sm text-gray-800 text-center">
+            <div
+                class="max-w-2xl mx-auto bg-white/40 backdrop-blur-xl rounded-3xl ring-1 ring-black/10 shadow-lg px-6 py-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Gabung Sekarang & Tampilkan Karyamu</h2>
+                <p class="text-lg mb-6">Jadilah bagian dari gerakan kreatif digital Indonesia</p>
+                <a href="#"
+                    class="inline-block bg-black text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-800 transition">
+                    Daftar Sekarang
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Script -->
+    <script>
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+
+        for (let i = 1; i <= 8; i++) {
+            gallery.innerHTML += `
+        <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+          <img src="https://picsum.photos/600/800?random=${i}"
+            alt="Karya"
+            class="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110" />
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
+          <div class="absolute bottom-0 left-0 p-4 z-10">
+            <h4 class="text-white text-base font-semibold">Judul Karya ${i}</h4>
+          </div>
+        </div>
+      `;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray("section").forEach((section, i) => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 80,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                },
+                delay: i * 0.1,
+            });
+        });
+
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                gsap.to("#loadingScreen", {
+                    duration: 1,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.getElementById("loadingScreen").style.display = "none";
+                        gsap.to("#mainContent", { duration: 1, opacity: 1 });
+                        gsap.to("#navbar", { duration: 1, opacity: 1, y: 0, from: { y: -20 } });
+
+                        particlesJS("particles-js", {
+                            particles: {
+                                number: { value: 400, density: { enable: true, value_area: 800 } },
+                                color: { value: "#000000" },
+                                shape: { type: "circle" },
+                                opacity: { value: 0.3, random: true },
+                                size: { value: 3, random: true },
+                                line_linked: {
+                                    enable: true,
+                                    distance: 100,
+                                    color: "#000000",
+                                    opacity: 0.2,
+                                    width: 1
+                                },
+                                move: {
+                                    enable: true,
+                                    speed: 1.5,
+                                    out_mode: "out"
+                                }
+                            },
+                            interactivity: {
+                                events: {
+                                    onhover: { enable: true, mode: "repulse" },
+                                    onclick: { enable: true, mode: "push" },
+                                },
+                                modes: {
+                                    repulse: { distance: 70, duration: 0.4 },
+                                    push: { particles_nb: 4 },
+                                },
+                            },
+                            retina_detect: true
+                        });
+                    }
+                });
+            }, 1600);
+        });
+
+        const navbar = document.getElementById("navbar");
+        const navbarLogo = document.getElementById("navbarLogo");
+        const logoText = navbarLogo.querySelector("span");
+        const searchBar = document.getElementById("searchBar");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+
+        let lastScrollTop = 0;
+        let isFloating = false;
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.scrollY || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                if (!isFloating) {
+                    navbar.classList.add("nav-floating");
+                    gsap.to(navbar, { top: -60, duration: 0.6 });
+                    gsap.to(logoText, { opacity: 0, duration: 0.3 });
+                    searchBar.classList.add("hidden-opacity");
+                    dropdownMenu.classList.add("hidden-opacity");
+                    isFloating = true;
+                }
+            } else {
+                if (isFloating) {
+                    navbar.classList.remove("nav-floating");
+                    gsap.to(navbar, { top: 16, duration: 0.6 });
+                    gsap.to(logoText, { opacity: 1, duration: 0.3 });
+                    searchBar.classList.remove("hidden-opacity");
+                    dropdownMenu.classList.remove("hidden-opacity");
+                    isFloating = false;
+                }
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+
+        const searchInput = document.querySelector('#searchBar input');
+        const searchDropdown = document.getElementById('searchDropdown');
+
+        searchInput.addEventListener('focus', () => {
+            searchDropdown.classList.remove('hidden');
+            gsap.fromTo(searchDropdown, { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchDropdown.contains(e.target) && e.target !== searchInput) {
+                gsap.to(searchDropdown, {
+                    y: -10, opacity: 0, duration: 0.2,
+                    onComplete: () => searchDropdown.classList.add('hidden')
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

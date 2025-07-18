@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio Galeri Elegan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lottie-web@5.12.0/build/player/lottie.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Outfit', sans-serif; }
+
+    #ripple-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes fadeUp {
+      0% { transform: translateY(20px); opacity: 0.2; }
+      50% { transform: translateY(0); opacity: 0.4; }
+      100% { transform: translateY(20px); opacity: 0.2; }
+    }
+
+    /* Modal Styling */
+    #layout-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #layout-modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #layout-modal.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black relative overflow-x-hidden" onload="showModal()">
+  <div id="lottie-bg" class="fixed inset-0 -z-10 opacity-10 pointer-events-none"></div>
+
+  <!-- Modal -->
+  <div id="layout-modal">
+    <div class="bg-white p-8 rounded-xl shadow-2xl text-center space-y-6 w-full max-w-sm border border-neutral-200 animate-fade-in">
+      <h2 class="text-2xl fo
+      nt-semibold text-black">Pilih Tata Letak</h2>
+      <p class="text-neutral-500 text-sm">Tentukan gaya galeri sesuai nuansa hati Tuan.</p>
+      <div class="flex flex-col gap-4">
+        <button onclick="chooseLayout('compact')" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-neutral-800 transition">Tata Letak Padat</button>
+        <button onclick="chooseLayout('spacious')" class="px-4 py-2 bg-neutral-200 text-black rounded-lg hover:bg-neutral-300 transition">Tata Letak Longgar</button>
+      </div>
+    </div>
+  </div>
+  
+  <header class="p-6 border-b flex items-center justify-between">
+    <div class="text-2xl font-bold tracking-normal uppercase relative left-2" style="font-family: 'Space Grotesk', sans-serif;">
+      TARA<span class="text-yellow-400">●</span>
+    </div>
+    <nav class="hidden md:flex gap-4 text-sm">
+      <a href="#" class="hover:underline">Explore</a>
+      <a href="#" class="hover:underline">Directory</a>
+      <a href="#" class="hover:underline">Jobs</a>
+    </nav>
+    <div class="flex gap-2">
+      <input type="text" placeholder="Search" class="text-sm px-3 py-2 border rounded-md"/>
+    </div>
+  </header>
+
+  <section class="px-6 py-4 flex flex-wrap items-center gap-3 bg-gray-100">
+    <div class="flex flex-wrap gap-2">
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Awards</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Category</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Tag</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Technology</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Country</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Font</option></select>
+      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Color</option></select>
+    </div>
+    <div class="ml-auto flex items-center gap-2">
+      <div class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 font-semibold">1</div>
+      <button class="px-4 py-2 text-sm bg-white rounded-lg shadow-sm font-medium flex items-center gap-1 hover:bg-gray-200">
+        Reset filters
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582M20 20v-5h-.581M4 9a9 9 0 0116 0M4 15a9 9 0 0016 0" />
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <main class="px-6 py-4">
+    <h2 class="text-lg font-semibold mb-4" data-aos="fade-up">Kurasi <span class="font-bold">Portofolio Terbaik</span></h2>
+<div id="portfolio-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2">
+  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
+    <img src="https://picsum.photos/seed/1/400/300" alt="Project 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    </div>
+    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 1</div>
+  </div>
+
+  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-2" data-aos="fade-up">
+    <img src="https://picsum.photos/seed/2/400/600" alt="Project 2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    </div>
+    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 2</div>
+  </div>
+
+  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-1" data-aos="fade-up">
+    <img src="https://picsum.photos/seed/3/800/300" alt="Project 3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    </div>
+    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 3</div>
+  </div>
+
+  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
+    <img src="https://picsum.photos/seed/4/400/300" alt="Project 4" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    </div>
+    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 4</div>
+  </div>
+
+  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-2" data-aos="fade-up">
+    <img src="https://picsum.photos/seed/5/800/600" alt="Project 5" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    </div>
+    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 5</div>
+  </div>
+</div>
+
+    <div id="pagination" class="flex justify-center items-center gap-2 mt-12"></div>
+  </main>
+
+  <canvas id="ripple-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
+
+  <footer class="relative mt-10 bg-white border-t border-neutral-200 text-sm text-neutral-700 overflow-hidden">
+    <div class="absolute bottom-0 left-0 w-full h-56 pointer-events-none z-0">
+      <div class="w-full h-full bg-gradient-to-t from-white via-white/80 to-transparent animate-[fadeUp_4s_infinite]"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
+      <div class="col-span-2">
+       <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-yellow-400">●</span>
+          </div>
+        <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan. Temukan inspirasi. Bangun impresi.</p>
+        <div class="flex gap-3 mt-3">
+          <a href="#" class="hover:text-black" aria-label="Instagram">📸</a>
+          <a href="#" class="hover:text-black" aria-label="Twitter">🐦</a>
+          <a href="#" class="hover:text-black" aria-label="LinkedIn">💼</a>
+          <a href="#" class="hover:text-black" aria-label="Dribbble">🏀</a>
+          <a href="#" class="hover:text-black" aria-label="Behance">🎨</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-black mb-4">Navigasi</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-black transition">Beranda</a></li>
+          <li><a href="#" class="hover:text-black transition">Galeri</a></li>
+          <li><a href="#" class="hover:text-black transition">Tentang</a></li>
+          <li><a href="#" class="hover:text-black transition">Kontak</a></li>
+          <li><a href="#" class="hover:text-black transition">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-black transition">UI/UX</a></li>
+          <li><a href="#" class="hover:text-black transition">GSAP Effects</a></li>
+          <li><a href="#" class="hover:text-black transition">Landing Page</a></li>
+          <li><a href="#" class="hover:text-black transition">Microinteraction</a></li>
+          <li><a href="#" class="hover:text-black transition">Typography</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-black transition">Submit Karya</a></li>
+          <li><a href="#" class="hover:text-black transition">Gabung Kurator</a></li>
+          <li><a href="#" class="hover:text-black transition">Sponsor & Iklan</a></li>
+          <li><a href="#" class="hover:text-black transition">Media Partner</a></li>
+        </ul>
+      </div>
+      <div class="col-span-2 sm:col-span-1">
+        <h3 class="font-semibold text-black mb-4">Newsletter</h3>
+        <p class="text-neutral-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.</p>
+        <form class="flex items-center gap-2">
+          <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+          <button type="submit" class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-neutral-800 transition">Kirim</button>
+        </form>
+      </div>
+    </div>
+    <div class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
+      &copy; 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+
+    const totalProjects = 45;
+    const itemsPerPage = 15;
+    let currentPage = 1;
+
+    const gallery = document.getElementById("portfolio-gallery");
+    const pagination = document.getElementById("pagination");
+
+    function renderProjects(page) {
+      gallery.innerHTML = "";
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const projects = Array.from({ length: totalProjects }, (_, i) => ({
+        title: `Project ${i + 1}`,
+        image: `https://picsum.photos/seed/${i + 1}/400/300`,
+        height: ['row-span-1', 'row-span-2'][i % 2],
+        width: ['col-span-1', 'col-span-2'][i % 3 === 0 ? 1 : 0]
+      }));
+      projects.slice(start, end).forEach(project => {
+        const card = document.createElement('div');
+        card.className = `relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group ${project.height} ${project.width}`;
+        card.setAttribute('data-aos', 'fade-up');
+        card.innerHTML = `
+          <img src="${project.image}" alt="image" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+            <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+          </div>
+          <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">${project.title}</div>
+        `;
+        gallery.appendChild(card);
+      });
+      AOS.refresh();
+    }
+
+    function renderPagination() {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(totalProjects / itemsPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-black text-white' : 'bg-gray-200'} hover:bg-black hover:text-white transition`;
+        btn.textContent = i;
+        btn.addEventListener("click", () => {
+          currentPage = i;
+          renderProjects(currentPage);
+          renderPagination();
+        });
+        pagination.appendChild(btn);
+      }
+    }
+
+    renderProjects(currentPage);
+    renderPagination();
+
+    lottie.loadAnimation({
+      container: document.getElementById("lottie-bg"),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets5.lottiefiles.com/packages/lf20_x62chJ.json'
+    });
+
+    const canvas = document.getElementById("ripple-canvas");
+    const ctx = canvas.getContext("2d");
+    let ripples = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    document.addEventListener("mousemove", (e) => {
+      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, alpha: 0.3 });
+    });
+
+    function animateRipples() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ripples.forEach((ripple, index) => {
+        ctx.beginPath();
+        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 153, 255, ${ripple.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ripple.radius += 1.5;
+        ripple.alpha -= 0.01;
+        if (ripple.alpha <= 0) {
+          ripples.splice(index, 1);
+        }
+      });
+      requestAnimationFrame(animateRipples);
+    }
+    animateRipples();
+
+    function showModal() {
+  document.getElementById('layout-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function chooseLayout(mode) {
+  document.getElementById('layout-modal').classList.add('hidden');
+  document.body.style.overflow = 'auto';
+
+  if (mode === 'compact') {
+    gallery.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2";
+  } else if (mode === 'spacious') {
+    gallery.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 auto-rows-[220px] gap-4";
+  }
+
+  renderProjects(currentPage);
+  renderPagination();
+}
+
+  </script>
+</body>
+</html>
