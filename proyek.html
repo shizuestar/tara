@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proyek & Kolaborasi</title>
+    <title>TARA - Proyek</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -113,9 +113,9 @@
             background: #f3f4f6;
         }
         .filter-btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 9999px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             border: 2px solid #e5e7eb;
             background: #f3f4f6;
@@ -136,20 +136,29 @@
             transform: scale(1.05);
         }
         .action-btn {
-            padding: 0.75rem 2rem;
+            padding: 0.6rem 1.8rem;
             border-radius: 9999px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .create-btn {
+            padding: 0.7rem 2rem; /* Increased padding for better proportion */
+            border-radius: 9999px;
+            font-size: 1rem; /* Adjusted font size for clarity */
+            font-weight: 600;
             background: linear-gradient(90deg, #3b82f6, #2563eb);
             color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .create-btn:hover {
             background: linear-gradient(90deg, #2563eb, #1d4ed8);
@@ -157,13 +166,20 @@
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
         }
         .join-btn {
-            background: linear-gradient(90deg, #10b981, #059669);
-            color: #ffffff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .join-btn:hover {
-            background: linear-gradient(90deg, #059669, #047857);
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
         @media (max-width: 768px) {
             .notification-modal {
@@ -171,12 +187,20 @@
                 max-width: 100%;
             }
             .action-btn {
-                padding: 0.6rem 1.5rem;
-                font-size: 0.9rem;
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
             }
             .filter-btn {
-                padding: 0.6rem 1.2rem;
+                padding: 0.4rem 0.9rem;
+                font-size: 0.75rem;
+            }
+            .join-btn {
+                padding: 0.4rem 1.2rem;
                 font-size: 0.8rem;
+            }
+            .create-btn {
+                padding: 0.6rem 1.7rem; /* Adjusted for mobile */
+                font-size: 0.9rem;
             }
             .project-card img {
                 height: 150px;
@@ -194,7 +218,7 @@
             margin-bottom: 1rem;
         }
         .main-content {
-            padding-bottom: 4rem; /* Ensure space below content for button visibility */
+            padding-bottom: 4rem;
         }
     </style>
 </head>
