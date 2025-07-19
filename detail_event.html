@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Event - TARA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #ffffff;
+            color: #111827;
+            box-sizing: border-box;
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .event-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .event-detail-container {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: #111827;
+            color: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-primary:hover {
+            background: #374151;
+        }
+        .btn-secondary {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: #f3f4f6;
+            color: #374151;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        .event-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .event-status.upcoming {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .event-status.ongoing {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .event-status.past {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        .gallery-image {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+        .map-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .countdown-timer {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+        .organizer-info {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1.5rem;
+        }
+        .ticket-info {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-[#facc15]">●</span>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
+            <a href="/" class="hover:text-black transition">Beranda</a>
+            <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+            <a href="/komunitas" class="hover:text-black transition">Komunitas</a>
+            <a href="/proyek" class="hover:text-black transition">Proyek</a>
+            <a href="/blog" class="hover:text-black transition">Blog</a>
+            <a href="/agenda" class="hover:text-black transition font-semibold">Agenda</a>
+            <a href="/profil" class="hover:text-black transition">Profil</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <input type="text" placeholder="Cari event..." class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition" />
+            <a href="/login" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">Login</a>
+            <button id="mobileMenuBtn" class="md:hidden text-black focus:outline-none">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="p-4 flex justify-end">
+            <button id="closeMobileMenuBtn" class="text-black focus:outline-none">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col p-4 space-y-4">
+            <a href="/" class="text-lg font-semibold text-gray-700 hover:text-black transition">Beranda</a>
+            <a href="/eksplor" class="text-lg font-semibold text-gray-700 hover:text-black transition">Eksplor</a>
+            <a href="/komunitas" class="text-lg font-semibold text-gray-700 hover:text-black transition">Komunitas</a>
+            <a href="/proyek" class="text-lg font-semibold text-gray-700 hover:text-black transition">Proyek</a>
+            <a href="/blog" class="text-lg font-semibold text-gray-700 hover:text-black transition">Blog</a>
+            <a href="/agenda" class="text-lg font-semibold text-gray-700 hover:text-black transition">Agenda</a>
+            <a href="/profil" class="text-lg font-semibold text-gray-700 hover:text-black transition">Profil</a>
+            <hr class="border-gray-200">
+            <a href="/login" class="text-lg font-semibold text-gray-700 hover:text-black transition">Login</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="event-detail-container bg-white p-6 md:p-10 rounded-lg shadow-xl">
+                <div id="event-detail-content" class="flex flex-col md:flex-row gap-6">
+                    <p>Memuat detail event...</p>
+                </div>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/agenda" class="btn-primary inline-flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Kembali ke Daftar Event
+                    </a>
+                    <button id="shareBtn" class="btn-secondary inline-flex items-center">
+                        <i class="fas fa-share-alt mr-2"></i> Bagikan
+                    </button>
+                    <button id="bookmarkBtn" class="btn-secondary inline-flex items-center">
+                        <i class="far fa-bookmark mr-2"></i> Bookmark
+                    </button>
+                </div>
+                <!-- Additional Event Info -->
+                <div id="event-additional-info" class="mt-10">
+                    <h2 class="text-2xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Informasi Tambahan</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="event-map" class="map-container"></div>
+                        <div id="event-organizer-ticket" class="space-y-6">
+                            <div id="event-countdown"></div>
+                            <div class="organizer-info">
+                                <h3 class="text-lg font-semibold text-black mb-2">Penyelenggara</h3>
+                                <p class="text-gray-700"></p>
+                            </div>
+                            <div class="ticket-info">
+                                <h3 class="text-lg font-semibold text-black mb-2">Harga Tiket</h3>
+                                <p class="text-gray-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Related Events -->
+                <div id="related-events" class="mt-12">
+                    <h2 class="text-2xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Event Terkait</h2>
+                    <div id="related-events-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                    TARA<span class="text-[#facc15]">●</span>
+                </div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+               .</div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=puisi" class="hover:text-black transition">Puisi</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 the="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+                    <button class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        // Updated Event Data
+        const eventsData = [
+            {
+                id: 1,
+                title: "Web Development Workshop: HTML, CSS, & JavaScript Dasar",
+                image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1516321310762-479437144403?auto=format&fit=crop&w=800&q=80"
+                ],
+                date: "2024-01-15",
+                time: "10:00 - 14:00 WIB",
+                location: "Community Center Hall, Jakarta",
+                mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.309070928172!2d106.82199931525864!3d-6.222999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3f8a0a8a8e5%3A0x4f6f8a8e5a8a8e5!2sJakarta%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
+                description: "Bergabunglah dengan workshop interaktif ini untuk mempelajari dasar-dasar pengembangan web. Anda akan belajar membangun struktur halaman dengan HTML, menata tampilan dengan CSS, dan menambahkan interaktivitas dasar dengan JavaScript. Cocok untuk pemula yang ingin memulai karir di dunia web development. Bawalah laptop Anda!",
+                category: "web-dev",
+                registrationLink: "https://example.com/register-webdev",
+                organizer: {
+                    name: "Tech Community Jakarta",
+                    email: "contact@techjakarta.id",
+                    profileLink: "/organizer/tech-jakarta"
+                },
+                ticketPrice: "Rp 150.000"
+            },
+            {
+                id: 2,
+                title: "Seminar Graphic Design: Tren & Tool Terbaru 2024",
+                image: "https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1516321310762-479437144403?auto=format&fit=crop&w=800&q=80"
+                ],
+                date: "2024-02-20",
+                time: "11:00 - 16:00 WIB",
+                location: "Ruang Konferensi Pusat Kota, Surabaya",
+                mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.692071928172!2d112.73799931525864!3d-7.261999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f8a8e5a8a8e5%3A0x4f6f8a8e5a8a8e5!2sSurabaya%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
+                description: "Seminar ini akan membahas tren terkini dalam desain grafis dan memperkenalkan alat-alat desain terbaru yang wajib Anda kuasai di tahun 2024. Hadirkan portofolio terbaik Anda dan dapatkan masukan langsung dari para ahli. Sesi networking juga tersedia!",
+                category: "graphic-design",
+                registrationLink: "https://example.com/register-graphicdesign",
+                organizer: {
+                    name: "Design Hub Surabaya",
+                    email: "info@designsurabaya.id",
+                    profileLink: "/organizer/design-surabaya"
+                },
+                ticketPrice: "Rp 200.000"
+            },
+            {
+                id: 3,
+                title: "Panel Diskusi: Strategi Marketing Digital Efektif",
+                image: "https://images.unsplash.com/photo-1557804506-66579ae70529?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1557804506-66579ae70529?auto=format&fit=crop&w=800&q=80"
+                ],
+                date: "2024-03-05",
+                time: "15:00 - 17:00 WIB",
+                location: "Online (via Zoom)",
+                mapUrl: null,
+                description: "Dengarkan pandangan mendalam dari para pakar pemasaran digital tentang bagaimana membangun strategi yang berhasil di era digital saat ini. Topik meliputi SEO, SEM, Media Sosial, Konten Marketing, dan Analisis Data. Jangan lewatkan sesi tanya jawab interaktif!",
+                category: "marketing",
+                registrationLink: "https://example.com/register-marketing",
+                organizer: {
+                    name: "Digital Marketing Indonesia",
+                    email: "events@digitalmarketing.id",
+                    profileLink: "/organizer/digital-marketing"
+                },
+                ticketPrice: "Gratis"
+            },
+            {
+                id: 4,
+                title: "Bootcamp Data Science: Dari Nol Hingga Analis Data",
+                image: "https://images.unsplash.com/photo-1507679799979-99413289ba11?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1507679799979-99413289ba11?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1516321310762-479437144403?auto=format&fit=crop&w=800&q=80"
+                ],
+                date: "2024-04-10",
+                time: "09:00 - 17:00 WIB",
+                location: "Auditorium Tech Hub, Yogyakarta",
+                mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.692071928172!2d110.35799931525864!3d-7.781999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a578a8e5a8e5%3A0x4f6f8a8e5a8a8e5!2sYogyakarta%20Tech%20Hub!5e0!3m2!1sen!2sid!4v1669999999999",
+                description: "Ikuti bootcamp intensif ini untuk memulai perjalanan Anda di bidang Data Science. Pelajari Python untuk data analysis, statistik dasar, machine learning, dan visualisasi data. Dapatkan pengalaman langsung dengan proyek-proyek praktis. Tempat terbatas!",
+                category: "data-science",
+                registrationLink: "https://example.com/register-datascience",
+                organizer: {
+                    name: "Data Science Yogya",
+                    email: "contact@datayogya.id",
+                    profileLink: "/organizer/data-yogya"
+                },
+                ticketPrice: "Rp 500.000"
+            },
+            {
+                id: 5,
+                title: "Workshop AI & Machine Learning untuk Pemula",
+                image: "https://images.unsplash.com/photo-1555257912-f703e3a4e9a0?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1555257912-f703e3a4e9a0?auto=format&fit=crop&w=800&q=80"
+                ],
+                date: "2024-05-15",
+                time: "13:00 - 16:00 WIB",
+                location: "Online (via Webex)",
+                mapUrl: null,
+                description: "Jelajahi dunia Artificial Intelligence dan Machine Learning dalam workshop ini. Kami akan membahas konsep dasar, algoritma populer, dan studi kasus sederhana yang dapat Anda terapkan. Tidak diperlukan latar belakang coding yang mendalam.",
+                category: "ai-ml",
+                registrationLink: "https://example.com/register-ai-ml",
+                organizer: {
+                    name: "AI Indonesia",
+                    email: "info@ai-indonesia.id",
+                    profileLink: "/organizer/ai-indonesia"
+                },
+                ticketPrice: "Rp 100.000"
+            }
+        ];
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+            mobileMenuOverlay.classList.remove('hidden');
+            mobileMenuOverlay.classList.add('opacity-100');
+            anime({
+                targets: '#mobileMenu',
+                translateX: [300, 0],
+                easing: 'easeOutQuad',
+                duration: 300
+            });
+        });
+
+        closeMobileMenuBtn.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+
+        mobileMenuOverlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+
+        function closeMobileMenu() {
+            anime({
+                targets: '#mobileMenu',
+                translateX: [0, 300],
+                easing: 'easeOutQuad',
+                duration: 300,
+                complete: () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuOverlay.classList.remove('opacity-100');
+                    mobileMenuOverlay.classList.add('hidden');
+                }
+            });
+        }
+
+        // Get Event ID from URL
+        function getEventIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'));
+        }
+
+        // Determine Event Status
+        function getEventStatus(eventDate) {
+            const today = new Date('2025-07-19');
+            const eventDateObj = new Date(eventDate);
+            if (eventDateObj > today) return { text: 'Upcoming', class: 'upcoming' };
+            if (eventDateObj.toDateString() === today.toDateString()) return { text: 'Ongoing', class: 'ongoing' };
+            return { text: 'Past', class: 'past' };
+        }
+
+        // Countdown Timer
+        function startCountdown(eventDate, elementId) {
+            const eventDateObj = new Date(eventDate);
+            const today = new Date('2025-07-19');
+            if (eventDateObj <= today) return '';
+
+            const countdown = setInterval(() => {
+                const now = new Date();
+                const distance = eventDateObj - now;
+                if (distance < 0) {
+                    clearInterval(countdown);
+                    document.getElementById(elementId).innerHTML = '<p class="text-gray-700">Event telah dimulai!</p>';
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById(elementId).innerHTML = `
+                    <div class="countdown-timer">
+                        <span>${days} Hari </span>
+                        <span>${hours} Jam </span>
+                        <span>${minutes} Menit </span>
+                        <span>${seconds} Detik</span>
+                    </div>
+                `;
+            }, 1000);
+            return `<div class="countdown-timer">Memuat countdown...</div>`;
+        }
+
+        // Display Event Detail
+        function displayEventDetail() {
+            const eventId = getEventIdFromUrl();
+            const event = eventsData.find(e => e.id === eventId);
+            const container = document.getElementById('event-detail-content');
+            const mapContainer = document.getElementById('event-map');
+            const organizerTicketContainer = document.getElementById('event-organizer-ticket');
+
+            if (event) {
+                const status = getEventStatus(event.date);
+                const isBookmarked = localStorage.getItem(`bookmark_${event.id}`) === 'true';
+                container.innerHTML = `
+                    <div class="w-full md:w-1/2 flex-shrink-0">
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            ${event.images.map(img => `
+                                <img src="${img}" alt="${event.title}" class="gallery-image w-full h-auto rounded-lg shadow-md">
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <span class="event-status ${status.class} mb-4">${status.text}</span>
+                        <h1 class="text-3xl md:text-4xl font-bold mb-4 text-black" style="font-family: 'Space Grotesk', sans-serif;">${event.title}</h1>
+                        <p class="text-gray-700 mb-2"><i class="far fa-calendar-alt mr-2 text-[#facc15]"></i> <strong>Tanggal:</strong> ${event.date}</p>
+                        <p class="text-gray-700 mb-2"><i class="far fa-clock mr-2 text-[#facc15]"></i> <strong>Waktu:</strong> ${event.time}</p>
+                        <p class="text-gray-700 mb-4"><i class="fas fa-map-marker-alt mr-2 text-[#facc15]"></i> <strong>Lokasi:</strong> ${event.location}</p>
+                        <p class="text-gray-800 leading-relaxed mb-6">${event.description}</p>
+                        <a href="${event.registrationLink}" target="_blank" class="btn-primary inline-flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Daftar Sekarang!
+                        </a>
+                    </div>
+                `;
+                mapContainer.innerHTML = event.mapUrl ? `
+                    <iframe src="${event.mapUrl}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                ` : '<p class="text-gray-700">Event ini diselenggarakan secara online.</p>';
+                organizerTicketContainer.innerHTML = `
+                    <div id="event-countdown">${startCountdown(event.date, 'event-countdown')}</div>
+                    <div class="organizer-info">
+                        <h3 class="text-lg font-semibold text-black mb-2">Penyelenggara</h3>
+                        <p class="text-gray-700 mb-1"><strong>Nama:</strong> ${event.organizer.name}</p>
+                        <p class="text-gray-700 mb-1"><strong>Email:</strong> <a href="mailto:${event.organizer.email}" class="text-[#facc15] hover:underline">${event.organizer.email}</a></p>
+                        <p class="text-gray-700"><strong>Profil:</strong> <a href="${event.organizer.profileLink}" class="text-[#facc15] hover:underline">Lihat Profil</a></p>
+                    </div>
+                    <div class="ticket-info">
+                        <h3 class="text-lg font-semibold text-black mb-2">Harga Tiket</h3>
+                        <p class="text-gray-700">${event.ticketPrice}</p>
+                    </div>
+                `;
+                document.title = `${event.title} - TARA`;
+                document.getElementById('bookmarkBtn').innerHTML = `
+                    <i class="${isBookmarked ? 'fas' : 'far'} fa-bookmark mr-2"></i> ${isBookmarked ? 'Bookmarked' : 'Bookmark'}
+                `;
+
+                // GSAP Animations for Event Details
+                gsap.fromTo(
+                    ".event-detail-container",
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+                );
+                gsap.from(".gallery-image", {
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out"
+                });
+                gsap.from(".event-detail-container h1, .event-detail-container p, .event-detail-container a, .event-status", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    delay: 0.4
+                });
+                gsap.from("#event-additional-info > div > div", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: "#event-additional-info",
+                        start: "top 80%"
+                    }
+                });
+
+                // Display Related Events
+                displayRelatedEvents(event.category, event.id);
+            } else {
+                container.innerHTML = `
+                    <div class="text-center w-full">
+                        <h2 class="text-3xl font-bold text-red-600 mb-4" style="font-family: 'Space Grotesk', sans-serif;">Event Tidak Ditemukan!</h2>
+                        <p class="text-gray-700">Maaf, event dengan ID tersebut tidak tersedia.</p>
+                    </div>
+                `;
+                mapContainer.innerHTML = '';
+                organizerTicketContainer.innerHTML = '';
+                gsap.fromTo(
+                    ".event-detail-container",
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+                );
+            }
+        }
+
+        // Display Related Events
+        function displayRelatedEvents(category, currentEventId) {
+            const relatedEventsList = document.getElementById('related-events-list');
+            const relatedEvents = eventsData
+                .filter(e => e.category === category && e.id !== currentEventId)
+                .slice(0, 3);
+
+            if (relatedEvents.length === 0) {
+                relatedEventsList.innerHTML = `
+                    <p class="text-gray-600 text-center">Tidak ada event terkait saat ini.</p>
+                `;
+                return;
+            }
+
+            relatedEventsList.innerHTML = relatedEvents.map(event => `
+                <a href="?id=${event.id}" class="event-card">
+                    <img src="${event.image}" alt="${event.title}" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold text-black">${event.title}</h3>
+                    <p class="text-sm text-gray-600">${event.date} | ${event.time}</p>
+                    <p class="text-sm text-gray-600">${event.location}</p>
+                </a>
+            `).join('');
+
+            // Animate Related Events
+            gsap.from(".event-card", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: "#related-events",
+                    start: "top 80%"
+                }
+            });
+        }
+
+        // Share Event
+        document.getElementById('shareBtn').addEventListener('click', () => {
+            const eventId = getEventIdFromUrl();
+            const event = eventsData.find(e => e.id === eventId);
+            if (event) {
+                const shareUrl = window.location.href;
+                if (navigator.share) {
+                    navigator.share({
+                        title: event.title,
+                        text: event.description,
+                        url: shareUrl
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareUrl);
+                    anime({
+                        targets: '#shareBtn',
+                        scale: [1, 1.1, 1],
+                        backgroundColor: ['#f3f4f6', '#111827', '#f3f4f6'],
+                        color: ['#374151', '#ffffff', '#374151'],
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                    alert('Link event telah disalin ke clipboard!');
+                }
+            }
+        });
+
+        // Bookmark Event
+        document.getElementById('bookmarkBtn').addEventListener('click', () => {
+            const eventId = getEventIdFromUrl();
+            const isBookmarked = localStorage.getItem(`bookmark_${eventId}`) === 'true';
+            localStorage.setItem(`bookmark_${eventId}`, !isBookmarked);
+            document.getElementById('bookmarkBtn').innerHTML = `
+                <i class="${!isBookmarked ? 'fas' : 'far'} fa-bookmark mr-2"></i> ${!isBookmarked ? 'Bookmarked' : 'Bookmark'}
+            `;
+            anime({
+                targets: '#bookmarkBtn',
+                scale: [1, 1.1, 1],
+                backgroundColor: ['#f3f4f6', '#111827', '#f3f4f6'],
+                color: ['#374151', '#ffffff', '#374151'],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        });
+
+        // Particles.js Initialization
+        window.addEventListener('load', () => {
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 1000 } },
+                    color: { value: "#4b5563" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.4, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: false },
+                    move: {
+                        enable: true,
+                        speed: 0.5,
+                        direction: "top",
+                        random: false,
+                        straight: false,
+                        out_mode: "out"
+                    }
+                },
+                interactivity: {
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: false }
+                    },
+                    modes: {
+                        repulse: { distance: 100, duration: 0.4 }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', displayEventDetail);
+    </script>
+</body>
+</html>

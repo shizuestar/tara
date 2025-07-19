@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyek & Kolaborasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .project-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        .progress {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-left: 1px solid #e5e7eb;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .notification-modal.open {
+            transform: translateX(0);
+        }
+        .notification-modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #374151;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .notification-modal .close-btn:hover {
+            transform: scale(1.2);
+        }
+        .notification-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .notification-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .notification-card.unread {
+            background: #f3f4f6;
+        }
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid #e5e7eb;
+            background: #f3f4f6;
+            color: #374151;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: #111827;
+            color: #ffffff;
+            border-color: #facc15;
+            transform: scale(1.05);
+        }
+        .filter-btn:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+            transform: scale(1.05);
+        }
+        .action-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .create-btn {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            color: #ffffff;
+        }
+        .create-btn:hover {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+        .join-btn {
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: #ffffff;
+        }
+        .join-btn:hover {
+            background: linear-gradient(90deg, #059669, #047857);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+        @media (max-width: 768px) {
+            .notification-modal {
+                width: 100%;
+                max-width: 100%;
+            }
+            .action-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .project-card img {
+                height: 150px;
+            }
+            .category-container {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+        }
+        .category-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .main-content {
+            padding-bottom: 4rem; /* Ensure space below content for button visibility */
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi</h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-accent">●</span>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
+            <a href="/" class="hover:text-black transition">Beranda</a>
+            <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+            <a href="/komunitas" class="hover:text-black transition font-semibold">Komunitas</a>
+            <a href="/proyek" class="hover:text-black transition">Proyek</a>
+            <a href="/blog" class="hover:text-black transition">Blog</a>
+            <a href="/agenda" class="hover:text-black transition">Agenda</a>
+            <a href="/profil" class="hover:text-black transition">Profil</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <input type="text" placeholder="Cari karya, komunitas, proyek..."
+                class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition" />
+            <a href="/login" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">Login</a>
+        </div>
+    </header>
+
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6 main-content">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Proyek & Kolaborasi</h1>
+                <p class="text-lg text-gray-600">Jelajahi, bergabung, dan ciptakan bersama komunitas kreatif 🚀</p>
+            </div>
+
+            <div class="text-center mb-8 flex justify-center gap-6">
+                <a href="/buat-kolaborasi" class="create-btn"><i class="fas fa-plus"></i> Buat Kolaborasi</a>
+                <a href="/gabung-kolaborasi" class="join-btn"><i class="fas fa-users"></i> Gabung Kolaborasi</a>
+            </div>
+
+            <div class="category-container">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="coding">Coding</button>
+                <button class="filter-btn" data-filter="musik">Musik</button>
+                <button class="filter-btn" data-filter="desain">Desain</button>
+                <button class="filter-btn" data-filter="sastra">Sastra</button>
+                <button class="filter-btn" data-filter="populer">Populer</button>
+                <button class="filter-btn" data-filter="baru">Baru</button>
+            </div>
+
+            <div id="project-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="project-card perspective" data-category="coding">
+                    <div class="inner p-4">
+                        <img src="https://picsum.photos/600/200?coding" alt="Aplikasi Edukasi Kode" />
+                        <h3 class="text-lg font-semibold">Aplikasi Edukasi Kode</h3>
+                        <span class="badge bg-blue-100 text-blue-800">Coding</span>
+                        <p class="text-sm text-gray-600 mt-2">Progress: 70%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-blue-600" style="width: 70%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm text-gray-500">+5 Anggota</span>
+                            <a href="/detail-proyek/1" class="join-btn bg-blue-600 text-white hover:bg-blue-700">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card perspective" data-category="musik">
+                    <div class="inner p-4">
+                        <img src="https://picsum.photos/600/200?musik" alt="Proyek Musik Kolaborasi" />
+                        <h3 class="text-lg font-semibold">Proyek Musik Kolaborasi</h3>
+                        <span class="badge bg-green-100 text-green-800">Musik</span>
+                        <p class="text-sm text-gray-600 mt-2">Progress: 45%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-green-600" style="width: 45%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm text-gray-500">+3 Anggota</span>
+                            <a href="/detail-proyek/2" class="join-btn bg-green-600 text-white hover:bg-green-700">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card perspective" data-category="desain">
+                    <div class="inner p-4">
+                        <img src="https://picsum.photos/600/200?desain" alt="Desain Poster Kreatif" />
+                        <h3 class="text-lg font-semibold">Desain Poster Kreatif</h3>
+                        <span class="badge bg-yellow-100 text-yellow-800">Desain</span>
+                        <p class="text-sm text-gray-600 mt-2">Progress: 88%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-yellow-600" style="width: 88%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm text-gray-500">+2 Anggota</span>
+                            <a href="/detail-proyek/3" class="join-btn bg-yellow-600 text-white hover:bg-yellow-700">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card perspective" data-category="sastra" data-populer="true">
+                    <div class="inner p-4">
+                        <img src="https://picsum.photos/600/200?sastra" alt="Antologi Puisi Baru" />
+                        <h3 class="text-lg font-semibold">Antologi Puisi Baru</h3>
+                        <span class="badge bg-red-100 text-red-800">Sastra</span>
+                        <span class="badge bg-gray-100 text-gray-800">Populer</span>
+                        <p class="text-sm text-gray-600 mt-2">Progress: 60%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-red-600" style="width: 60%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm text-gray-500">+4 Anggota</span>
+                            <a href="/detail-proyek/4" class="join-btn bg-red-600 text-white hover:bg-red-700">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card perspective" data-category="coding" data-baru="true">
+                    <div class="inner p-4">
+                        <img src="https://picsum.photos/600/200?newcoding" alt="Aplikasi AI Sederhana" />
+                        <h3 class="text-lg font-semibold">Aplikasi AI Sederhana</h3>
+                        <span class="badge bg-blue-100 text-blue-800">Coding</span>
+                        <span class="badge bg-green-100 text-green-800">Baru</span>
+                        <p class="text-sm text-gray-600 mt-2">Progress: 20%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-blue-600" style="width: 20%"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm text-gray-500">+1 Anggota</span>
+                            <a href="/detail-proyek/5" class="join-btn bg-blue-600 text-white hover:bg-blue-700">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="/semua-proyek" class="action-btn bg-black text-white rounded-full hover:bg-gray-800 transition">Lihat Semua Proyek</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm z-30">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                    TARA<span class="text-accent">●</span>
+                </div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=sastra" class="hover:text-black transition">Sastra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+                    <button class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        // Simulated Project Data
+        const projects = [
+            { id: 1, name: "Aplikasi Edukasi Kode", category: "coding", progress: 70, members: 5, image: "https://picsum.photos/600/200?coding" },
+            { id: 2, name: "Proyek Musik Kolaborasi", category: "musik", progress: 45, members: 3, image: "https://picsum.photos/600/200?musik" },
+            { id: 3, name: "Desain Poster Kreatif", category: "desain", progress: 88, members: 2, image: "https://picsum.photos/600/200?desain" },
+            { id: 4, name: "Antologi Puisi Baru", category: "sastra", progress: 60, members: 4, image: "https://picsum.photos/600/200?sastra", populer: true },
+            { id: 5, name: "Aplikasi AI Sederhana", category: "coding", progress: 20, members: 1, image: "https://picsum.photos/600/200?newcoding", baru: true },
+        ];
+
+        // Simulated Notification Data
+        const notifications = [
+            { id: 1, text: "New project update: Aplikasi Edukasi Kode", time: "2 jam lalu", read: false },
+            { id: 2, text: "New collaboration request: Proyek Musik Kolaborasi", time: "4 jam lalu", read: false },
+        ];
+
+        // Render Projects
+        function renderProjects(filter = 'all') {
+            const projectList = document.getElementById('project-list');
+            projectList.innerHTML = '';
+
+            let filteredProjects = filter === 'all' || !filter ? projects :
+                filter === 'populer' ? projects.filter(p => p.populer) :
+                filter === 'baru' ? projects.filter(p => p.baru) :
+                projects.filter(p => p.category === filter);
+
+            if (filteredProjects.length === 0) {
+                projectList.innerHTML = `
+                    <div class="text-center text-gray-600 col-span-full">
+                        <p class="text-lg">Tidak ada proyek ditemukan.</p>
+                        <a href="/semua-proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Proyek</a>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredProjects.forEach(project => {
+                projectList.innerHTML += `
+                    <div class="project-card perspective" data-category="${project.category}" ${project.populer ? 'data-populer="true"' : ''} ${project.baru ? 'data-baru="true"' : ''}>
+                        <div class="inner p-4">
+                            <img src="${project.image}" alt="${project.name}" />
+                            <h3 class="text-lg font-semibold">${project.name}</h3>
+                            <span class="badge bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-100 text-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-800">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
+                            ${project.populer ? '<span class="badge bg-gray-100 text-gray-800">Populer</span>' : ''}
+                            ${project.baru ? '<span class="badge bg-green-100 text-green-800">Baru</span>' : ''}
+                            <p class="text-sm text-gray-600 mt-2">Progress: ${project.progress}%</p>
+                            <div class="progress-bar mt-1">
+                                <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-sm text-gray-500">+${project.members} Anggota</span>
+                                <a href="/detail-proyek/${project.id}" class="join-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">Lihat Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            gsap.from(".project-card", {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+        }
+
+        // Render Notifications in Modal
+        function renderNotifications(filter = 'all') {
+            const notificationList = document.getElementById('notification-list');
+            notificationList.innerHTML = '';
+
+            let filteredNotifications = filter === 'all' ? notifications : notifications.filter(n => !n.read);
+
+            if (filteredNotifications.length === 0) {
+                notificationList.innerHTML = '<div class="text-center text-gray-600"><p class="text-sm">Tidak ada notifikasi.</p></div>';
+                return;
+            }
+
+            filteredNotifications.forEach(notification => {
+                notificationList.innerHTML += `
+                    <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
+                        <p>${notification.text}</p>
+                        <p class="time">${notification.time}</p>
+                    </div>
+                `;
+            });
+
+            gsap.from(".notification-card", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+        }
+
+        // Toggle Notifications Modal
+        function toggleNotifications() {
+            const modal = document.getElementById('notification-modal');
+            const isOpen = modal.classList.contains('open');
+            modal.classList.toggle('open');
+            gsap.to(modal, {
+                x: isOpen ? '100%' : '0%',
+                duration: 0.3,
+                ease: "power2.out"
+            });
+            if (!isOpen) renderNotifications();
+        }
+
+        // Mark All Notifications as Read
+        function markAllAsRead() {
+            notifications.forEach(n => n.read = true);
+            renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+        }
+
+        // View Notification
+        function viewNotification(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification) {
+                notification.read = true;
+                renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+            }
+        }
+
+        // Filter Functionality for Categories
+        const filterButtons = document.querySelectorAll('.filter-btn:not(#notification-modal .filter-btn)');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const currentActive = document.querySelector('.filter-btn.active');
+                const isSameButton = currentActive && currentActive.dataset.filter === btn.dataset.filter;
+
+                if (isSameButton && btn.dataset.filter !== 'all') {
+                    // If clicking the same category again, reset to 'all'
+                    filterButtons.forEach(f => f.classList.remove('active'));
+                    document.querySelector('[data-filter="all"]').classList.add('active');
+                    renderProjects('all');
+                } else {
+                    // Otherwise, activate the clicked button and filter
+                    filterButtons.forEach(f => f.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderProjects(btn.dataset.filter || 'all');
+                }
+
+                anime({
+                    targets: btn,
+                    scale: [1, 1.1, 1],
+                    backgroundColor: ['#f3f4f6', '#111827'],
+                    color: ['#374151', '#ffffff'],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+        });
+
+        // Filter Functionality for Notifications
+        const notificationFilterButtons = document.querySelectorAll('#notification-modal .filter-btn');
+        notificationFilterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                notificationFilterButtons.forEach(f => f.classList.remove('active'));
+                btn.classList.add('active');
+                renderNotifications(btn.dataset.filter);
+            });
+        });
+
+        // Particles.js Initialization
+        window.addEventListener('load', () => {
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 1000 } },
+                    color: { value: "#4b5563" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.4, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: false },
+                    move: { enable: true, speed: 0.5, direction: "top", random: false, straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: false } },
+                    modes: { repulse: { distance: 100, duration: 0.4 } }
+                },
+                retina_detect: true
+            });
+        });
+
+        // Initialize
+        renderProjects();
+        renderNotifications();
+    </script>
+</body>
+</html>

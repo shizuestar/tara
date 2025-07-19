@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARA - Gallery Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .animate-ping-slow {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        
+        @keyframes ping-slow {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            75%, 100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .animate-float-delayed {
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #000000 0%, #4a4a4a 50%, #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .gallery-item {
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+            z-index: 10;
+        }
+        
+        .gallery-item:hover::before {
+            left: 100%;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-item:nth-child(odd):hover {
+            transform: translateY(-15px) scale(1.02) rotate(-2deg);
+        }
+        
+        .gallery-item:nth-child(even):hover {
+            transform: translateY(-15px) scale(1.02) rotate(2deg);
+        }
+        
+        .hero-bg {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .button-primary {
+            background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .button-primary:hover::before {
+            left: 100%;
+        }
+        
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .button-secondary {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border: 2px solid #000000;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            transition: left 0.4s;
+            z-index: 1;
+        }
+        
+        .button-secondary:hover::before {
+            left: 0;
+        }
+        
+        .button-secondary span {
+            position: relative;
+            z-index: 2;
+            transition: color 0.4s;
+        }
+        
+        .button-secondary:hover span {
+            color: white;
+        }
+        
+        .button-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .shape-1 {
+            width: 100px;
+            height: 100px;
+            transform: rotate(45deg);
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float 8s ease-in-out infinite;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .gallery-item:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #000000;
+        }
+        
+        .stats-number {
+            background: linear-gradient(135deg, #000000, #4a4a4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .text-appear {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: appear 1s ease forwards;
+        }
+        
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .text-appear:nth-child(1) { animation-delay: 0.1s; }
+        .text-appear:nth-child(2) { animation-delay: 0.2s; }
+        .text-appear:nth-child(3) { animation-delay: 0.3s; }
+        .text-appear:nth-child(4) { animation-delay: 0.4s; }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="hero-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl font-bold text-gray-900" style="font-family: 'Space Grotesk', sans-serif;">TARA</span>
+                    <div class="relative">
+                        <span class="text-yellow-400 text-2xl">●</span>
+                        <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#" class="nav-link font-medium">Home</a>
+                    <a href="#" class="nav-link font-medium">Gallery</a>
+                    <a href="#" class="nav-link font-medium">About</a>
+                    <a href="#" class="nav-link font-medium">Contact</a>
+                </div>
+                <button class="md:hidden">
+                    <svg class="w-7 h-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen relative flex flex-col lg:flex-row items-center justify-between px-6 md:px-16 pt-40 pb-20 gap-20">
+        <!-- Geometric Shapes -->
+        <div class="geometric-shape shape-1 top-32 left-16"></div>
+        <div class="geometric-shape shape-2 top-48 right-20"></div>
+        <div class="geometric-shape shape-3 bottom-40 left-32"></div>
+        <div class="geometric-shape shape-1 bottom-32 right-40" style="width: 60px; height: 60px;"></div>
+        
+        <!-- Hero Text -->
+        <div class="hero-text flex-1 max-w-2xl z-10">
+            <div class="mb-8 text-appear">
+                <span class="inline-block px-6 py-3 bg-gray-900 text-white rounded-full text-sm font-semibold uppercase tracking-wide">
+                    ● Premium Showcase
+                </span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-bold uppercase mb-10 leading-none tracking-tighter text-appear">
+                <span class="text-gradient">Selamat</span>
+                <br>
+                <span class="text-gradient">Datang di</span>
+                <br>
+                <span class="inline-flex items-center gap-4 text-gray-900">
+                    TARA
+                    <div class="relative">
+                        <span class="text-yellow-400 text-6xl md:text-7xl">●</span>
+                        <span class="absolute top-0 left-0 text-yellow-400 text-6xl md:text-7xl animate-ping-slow">●</span>
+                    </div>
+                </span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-xl text-appear">
+                Platform showcase eksklusif untuk memamerkan karya kreatif terbaik dari talenta Indonesia.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 mb-16 text-appear">
+                <button class="button-primary px-10 py-5 text-white rounded-full font-bold text-lg uppercase tracking-wide">
+                    Mulai Showcase
+                </button>
+                <button class="button-secondary px-10 py-5 rounded-full font-bold text-lg uppercase tracking-wide">
+                    <span>Jelajahi Karya</span>
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-8 pt-8 border-t-2 border-gray-200 text-appear">
+                <div class="text-center">
+                    <div class="stats-number text-4xl font-bold mb-3">1000+</div>
+                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Karya Seni</div>
+                </div>
+                <div class="text-center">
+                    <div class="stats-number text-4xl font-bold mb-3">500+</div>
+                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Kreator</div>
+                </div>
+                <div class="text-center">
+                    <div class="stats-number text-4xl font-bold mb-3">50K+</div>
+                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Pengunjung</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Gallery -->
+        <div class="hero-gallery flex-1 max-w-2xl z-10">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item col-span-1 row-span-2">
+                    <div class="relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200">
+                        <img src="https://picsum.photos/300/400?random=1" alt="Gallery 1" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                        <div class="image-overlay"></div>
+                        <div class="absolute bottom-6 left-6 text-white z-20">
+                            <div class="text-lg font-bold uppercase tracking-wide">Digital Art</div>
+                            <div class="text-sm opacity-80">Premium Collection</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item col-span-1">
+                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
+                        <img src="https://picsum.photos/250/250?random=2" alt="Gallery 2" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                        <div class="image-overlay"></div>
+                        <div class="absolute bottom-4 left-4 text-white z-20">
+                            <div class="text-sm font-bold uppercase tracking-wide">Photography</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item col-span-1">
+                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
+                        <img src="https://picsum.photos/250/250?random=3" alt="Gallery 3" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                        <div class="image-overlay"></div>
+                        <div class="absolute bottom-4 left-4 text-white z-20">
+                            <div class="text-sm font-bold uppercase tracking-wide">Illustration</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item col-span-2">
+                    <div class="relative overflow-hidden bg-gray-900 aspect-[2/1] border-4 border-gray-200">
+                        <img src="https://picsum.photos/500/250?random=4" alt="Gallery 4" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                        <div class="image-overlay"></div>
+                        <div class="absolute bottom-4 left-4 text-white z-20">
+                            <div class="text-lg font-bold uppercase tracking-wide">Creative Design</div>
+                            <div class="text-sm opacity-80">Featured Work</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item col-span-1">
+                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
+                        <img src="https://picsum.photos/250/250?random=5" alt="Gallery 5" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                        <div class="image-overlay"></div>
+                        <div class="absolute bottom-4 left-4 text-white z-20">
+                            <div class="text-sm font-bold uppercase tracking-wide">Fine Art</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Preview -->
+    <section class="py-24 px-6 md:px-16 bg-white border-t-4 border-gray-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-8 uppercase tracking-tight">Kategori Karya</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Eksplorasi mendalam berbagai medium seni dari kreator terbaik Indonesia
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="category-card p-10 text-center cursor-pointer group">
+                    <div class="text-6xl mb-6 text-yellow-400 group-hover:scale-110 transition-transform duration-300">⬛</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Digital Art</h3>
+                    <p class="text-gray-600 font-medium">120+ Karya Premium</p>
+                </div>
+                
+                <div class="category-card p-10 text-center cursor-pointer group">
+                    <div class="text-6xl mb-6 text-blue-500 group-hover:scale-110 transition-transform duration-300">⚫</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Photography</h3>
+                    <p class="text-gray-600 font-medium">200+ Koleksi Eksklusif</p>
+                </div>
+                
+                <div class="category-card p-10 text-center cursor-pointer group">
+                    <div class="text-6xl mb-6 text-pink-500 group-hover:scale-110 transition-transform duration-300">◼️</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Illustration</h3>
+                    <p class="text-gray-600 font-medium">150+ Karya Pilihan</p>
+                </div>
+                
+                <div class="category-card p-10 text-center cursor-pointer group">
+                    <div class="text-6xl mb-6 text-green-500 group-hover:scale-110 transition-transform duration-300">⬛</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Design</h3>
+                    <p class="text-gray-600 font-medium">180+ Portfolio Terbaik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-24 px-6 md:px-16 bg-gray-900 text-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl md:text-6xl font-bold mb-8 uppercase tracking-tight">
+                Bergabunglah dengan<br>Komunitas Kreator
+            </h2>
+            <p class="text-xl mb-12 opacity-80 leading-relaxed">
+                Jadilah bagian dari platform showcase premium untuk kreator Indonesia
+            </p>
+            <button class="bg-white text-gray-900 px-12 py-6 font-bold text-lg uppercase tracking-wide hover:bg-gray-100 hover:border-yellow-400 transition-colors duration-300 border-4 border-white">
+                Daftar Sekarang
+            </button>
+        </div>
+    </section>
+</body>
+</html>

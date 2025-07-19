@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portofolio Galeri Elegan</title>
+  <title>TARA - Galeri</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lottie-web@5.12.0/build/player/lottie.min.js"></script>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <style>
     body { font-family: 'Outfit', sans-serif; }
 
@@ -17,6 +19,7 @@
       top: 0; left: 0;
       z-index: -1;
       pointer-events: none;
+      background: transparent !important;
     }
 
     @keyframes fadeUp {
@@ -24,46 +27,11 @@
       50% { transform: translateY(0); opacity: 0.4; }
       100% { transform: translateY(20px); opacity: 0.2; }
     }
-
-    /* Modal Styling */
-    #layout-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      background-color: rgba(255, 255, 255, 0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    #layout-modal.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    #layout-modal.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
   </style>
-</head>
+</head> 
 
-<body class="bg-white text-black relative overflow-x-hidden" onload="showModal()">
+<body class="bg-white text-black relative overflow-x-hidden">
   <div id="lottie-bg" class="fixed inset-0 -z-10 opacity-10 pointer-events-none"></div>
-
-  <!-- Modal -->
-  <div id="layout-modal">
-    <div class="bg-white p-8 rounded-xl shadow-2xl text-center space-y-6 w-full max-w-sm border border-neutral-200 animate-fade-in">
-      <h2 class="text-2xl fo
-      nt-semibold text-black">Pilih Tata Letak</h2>
-      <p class="text-neutral-500 text-sm">Tentukan gaya galeri sesuai nuansa hati Tuan.</p>
-      <div class="flex flex-col gap-4">
-        <button onclick="chooseLayout('compact')" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-neutral-800 transition">Tata Letak Padat</button>
-        <button onclick="chooseLayout('spacious')" class="px-4 py-2 bg-neutral-200 text-black rounded-lg hover:bg-neutral-300 transition">Tata Letak Longgar</button>
-      </div>
-    </div>
-  </div>
   
   <header class="p-6 border-b flex items-center justify-between">
     <div class="text-2xl font-bold tracking-normal uppercase relative left-2" style="font-family: 'Space Grotesk', sans-serif;">
@@ -102,47 +70,47 @@
 
   <main class="px-6 py-4">
     <h2 class="text-lg font-semibold mb-4" data-aos="fade-up">Kurasi <span class="font-bold">Portofolio Terbaik</span></h2>
-<div id="portfolio-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2">
-  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
-    <img src="https://picsum.photos/seed/1/400/300" alt="Project 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
-    </div>
-    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 1</div>
-  </div>
+    <div id="portfolio-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2">
+      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
+        <img src="https://picsum.photos/seed/1/400/300" alt="Project 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        </div>
+        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 1</div>
+      </div>
 
-  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-2" data-aos="fade-up">
-    <img src="https://picsum.photos/seed/2/400/600" alt="Project 2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
-    </div>
-    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 2</div>
-  </div>
+      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-2" data-aos="fade-up">
+        <img src="https://picsum.photos/seed/2/400/600" alt="Project 2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        </div>
+        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 2</div>
+      </div>
 
-  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-1" data-aos="fade-up">
-    <img src="https://picsum.photos/seed/3/800/300" alt="Project 3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
-    </div>
-    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 3</div>
-  </div>
+      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-1" data-aos="fade-up">
+        <img src="https://picsum.photos/seed/3/800/300" alt="Project 3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        </div>
+        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 3</div>
+      </div>
 
-  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
-    <img src="https://picsum.photos/seed/4/400/300" alt="Project 4" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
-    </div>
-    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 4</div>
-  </div>
+      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
+        <img src="https://picsum.photos/seed/4/400/300" alt="Project 4" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        </div>
+        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 4</div>
+      </div>
 
-  <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-2" data-aos="fade-up">
-    <img src="https://picsum.photos/seed/5/800/600" alt="Project 5" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-      <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-2" data-aos="fade-up">
+        <img src="https://picsum.photos/seed/5/800/600" alt="Project 5" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        </div>
+        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 5</div>
+      </div>
     </div>
-    <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 5</div>
-  </div>
-</div>
 
     <div id="pagination" class="flex justify-center items-center gap-2 mt-12"></div>
   </main>
@@ -155,16 +123,26 @@
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
       <div class="col-span-2">
-       <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
-            TARA<span class="text-yellow-400">●</span>
-          </div>
+        <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+          TARA<span class="text-yellow-400">●</span>
+        </div>
         <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan. Temukan inspirasi. Bangun impresi.</p>
-        <div class="flex gap-3 mt-3">
-          <a href="#" class="hover:text-black" aria-label="Instagram">📸</a>
-          <a href="#" class="hover:text-black" aria-label="Twitter">🐦</a>
-          <a href="#" class="hover:text-black" aria-label="LinkedIn">💼</a>
-          <a href="#" class="hover:text-black" aria-label="Dribbble">🏀</a>
-          <a href="#" class="hover:text-black" aria-label="Behance">🎨</a>
+        <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
+          <a href="#" class="hover:text-black transition" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Dribbble">
+            <i class="fab fa-dribbble"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+          </a>
         </div>
       </div>
       <div>
@@ -206,7 +184,7 @@
       </div>
     </div>
     <div class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
-      &copy; 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
+      © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
     </div>
   </footer>
 
@@ -286,46 +264,93 @@
     window.addEventListener("resize", resizeCanvas);
 
     document.addEventListener("mousemove", (e) => {
-      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, alpha: 0.3 });
+      ripples.push({ 
+        x: e.clientX, 
+        y: e.clientY, 
+        radius: 0, 
+        alpha: 0.8,
+        wavePhase: 0,
+        depth: Math.random() * 0.5 + 0.5, 
+        rippleSpeed: Math.random() * 0.5 + 1.2
+      });
     });
 
     function animateRipples() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
       ripples.forEach((ripple, index) => {
-        ctx.beginPath();
-        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 153, 255, ${ripple.alpha})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ripple.radius += 1.5;
-        ripple.alpha -= 0.01;
-        if (ripple.alpha <= 0) {
+        const maxRadius = 80;
+        const waveAmplitude = 2;
+        const waveFrequency = 0.15;
+
+        for (let i = 0; i < 3; i++) {
+          const radiusOffset = i * 8;
+          const depthAlpha = ripple.alpha * (1 - i * 0.3) * ripple.depth;
+          
+          if (depthAlpha > 0) {
+            ctx.beginPath();
+            ctx.arc(
+              ripple.x + Math.sin(ripple.wavePhase + i * 0.5) * waveAmplitude,
+              ripple.y + Math.cos(ripple.wavePhase + i * 0.5) * waveAmplitude,
+              ripple.radius + radiusOffset,
+              0,
+              Math.PI * 2
+            );
+            
+            const baseColor = i === 0 ? 
+              `rgba(173, 216, 230, ${depthAlpha})` :
+              i === 1 ? 
+              `rgba(224, 255, 255, ${depthAlpha * 0.7})` :
+              `rgba(240, 248, 255, ${depthAlpha * 0.4})`; 
+            
+            ctx.strokeStyle = baseColor;
+            ctx.lineWidth = i === 0 ? 2.5 : i === 1 ? 1.8 : 1.2;
+            ctx.stroke();
+
+            if (i === 0) {
+              ctx.beginPath();
+              ctx.arc(
+                ripple.x + Math.sin(ripple.wavePhase) * waveAmplitude,
+                ripple.y + Math.cos(ripple.wavePhase) * waveAmplitude,
+                ripple.radius - 2,
+                0,
+                Math.PI * 2
+              );
+              ctx.strokeStyle = `rgba(255, 255, 255, ${depthAlpha * 0.6})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+        
+        // Add shimmering effect
+        if (ripple.radius > 10 && ripple.radius < 40) {
+          ctx.beginPath();
+          ctx.arc(
+            ripple.x + Math.sin(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
+            ripple.y + Math.cos(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
+            ripple.radius * 0.3,
+            0,
+            Math.PI * 2
+          );
+          ctx.fillStyle = `rgba(255, 255, 255, ${ripple.alpha * 0.3})`;
+          ctx.fill();
+        }
+
+        // Update ripple properties
+        ripple.radius += ripple.rippleSpeed;
+        ripple.alpha -= 0.006;
+        ripple.wavePhase += waveFrequency;
+
+        // Remove ripple when it fades out
+        if (ripple.alpha <= 0 || ripple.radius > maxRadius) {
           ripples.splice(index, 1);
         }
       });
+      
       requestAnimationFrame(animateRipples);
     }
     animateRipples();
-
-    function showModal() {
-  document.getElementById('layout-modal').classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
-}
-
-function chooseLayout(mode) {
-  document.getElementById('layout-modal').classList.add('hidden');
-  document.body.style.overflow = 'auto';
-
-  if (mode === 'compact') {
-    gallery.className = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2";
-  } else if (mode === 'spacious') {
-    gallery.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 auto-rows-[220px] gap-4";
-  }
-
-  renderProjects(currentPage);
-  renderPagination();
-}
-
   </script>
 </body>
 </html>
