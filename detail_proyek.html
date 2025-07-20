@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA - Detail Proyek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .project-header img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        .progress {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .member-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .timeline-event {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+        }
+        .timeline-event::after {
+            content: '';
+            position: absolute;
+            left: 0.95rem;
+            top: 1rem;
+            width: 2px;
+            height: 100%;
+            background: #e5e7eb;
+        }
+        .comment-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .action-btn {
+            padding: 0.6rem 1.8rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .project-header img {
+                height: 250px;
+            }
+            .action-btn {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-accent">●</span>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
+            <a href="/" class="hover:text-black transition">Beranda</a>
+            <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+            <a href="/komunitas" class="hover:text-black transition">Komunitas</a>
+            <a href="/proyek" class="hover:text-black transition font-semibold">Proyek</a>
+            <a href="/blog" class="hover:text-black transition">Blog</a>
+            <a href="/agenda" class="hover:text-black transition">Agenda</a>
+            <a href="/profil" class="hover:text-black transition">Profil</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <input type="text" placeholder="Cari karya, komunitas, proyek..."
+                class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition" />
+            <a href="/login" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">Login</a>
+        </div>
+    </header>
+
+    <!-- Project Detail Section -->
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="project-header mb-8"></div>
+
+            <!-- Team Members -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Anggota Tim</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            </div>
+
+            <!-- Project Timeline -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Linimasa Proyek</h2>
+                <div class="timeline"></div>
+            </div>
+
+            <!-- Task Progress Tracker -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Progres Tugas</h2>
+                <div class="grid grid-cols-1 gap-4"></div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
+                <div class="mb-4">
+                    <textarea class="w-full p-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="4" placeholder="Tulis komentar Anda..."></textarea>
+                    <button class="mt-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition">Kirim Komentar</button>
+                </div>
+                <div class="comments-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm z-30">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                    TARA<span class="text-accent">●</span>
+                </div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=sastra" class="hover:text-black transition">Sastra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+                    <button class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        // Simulated Project Data (same as the project listing page)
+        const projects = [
+            {
+                id: 1,
+                name: "Aplikasi Edukasi Kode",
+                category: "coding",
+                progress: 70,
+                members: [
+                    { name: "Budi Santoso", role: "Lead Developer", profileUrl: "/profil/budi", avatar: "https://picsum.photos/100/100?person1" },
+                    { name: "Siti Aisyah", role: "UI/UX Designer", profileUrl: "/profil/siti", avatar: "https://picsum.photos/100/100?person2" },
+                    { name: "Ahmad Yani", role: "Backend Developer", profileUrl: "/profil/ahmad", avatar: "https://picsum.photos/100/100?person3" },
+                    { name: "Rina Putri", role: "Content Creator", profileUrl: "/profil/rina", avatar: "https://picsum.photos/100/100?person4" },
+                    { name: "Dewi Lestari", role: "QA Engineer", profileUrl: "/profil/dewi", avatar: "https://picsum.photos/100/100?person5" }
+                ],
+                description: "Proyek ini bertujuan untuk menciptakan aplikasi edukasi interaktif yang membantu pengguna belajar pemrograman dengan cara yang menyenangkan dan mudah dipahami.",
+                image: "https://picsum.photos/1200/400?coding",
+                created: "15 Juli 2025",
+                timeline: [
+                    { date: "15 Juli 2025", title: "Proyek Dimulai", description: "Tim awal dibentuk dan perencanaan dimulai." },
+                    { date: "30 Juli 2025", title: "Prototipe Selesai", description: "Versi awal aplikasi selesai untuk pengujian." },
+                    { date: "10 Agustus 2025", title: "Pengujian Beta", description: "Aplikasi diuji oleh pengguna terpilih." }
+                ],
+                tasks: [
+                    { name: "Desain UI/UX", progress: 90 },
+                    { name: "Pengembangan Backend", progress: 60 },
+                    { name: "Konten Edukasi", progress: 50 }
+                ],
+                comments: [
+                    { user: "John Doe", avatar: "https://picsum.photos/50/50?commenter1", time: "2 jam lalu", text: "Proyek ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi." },
+                    { user: "Jane Smith", avatar: "https://picsum.photos/50/50?commenter2", time: "1 hari lalu", text: "UI/UX-nya sangat menjanjikan. Semoga sukses untuk tim!" }
+                ],
+                discord: "https://discord.gg/example1",
+                whatsapp: "https://wa.me/1234567890",
+                populer: true
+            },
+            {
+                id: 2,
+                name: "Proyek Musik Kolaborasi",
+                category: "musik",
+                progress: 45,
+                members: [
+                    { name: "Andi Pratama", role: "Komposer", profileUrl: "/profil/andi", avatar: "https://picsum.photos/100/100?person6" },
+                    { name: "Lina Sari", role: "Vokalis", profileUrl: "/profil/lina", avatar: "https://picsum.photos/100/100?person7" },
+                    { name: "Rudi Hartono", role: "Produser", profileUrl: "/profil/rudi", avatar: "https://picsum.photos/100/100?person8" }
+                ],
+                description: "Kolaborasi musik untuk menciptakan album indie dengan pengaruh tradisional dan modern.",
+                image: "https://picsum.photos/1200/400?musik",
+                created: "10 Juli 2025",
+                timeline: [
+                    { date: "10 Juli 2025", title: "Proyek Dimulai", description: "Pembentukan tim dan konsep awal." },
+                    { date: "20 Juli 2025", title: "Rekaman Demo", description: "Demo lagu pertama selesai." }
+                ],
+                tasks: [
+                    { name: "Komposisi Lagu", progress: 50 },
+                    { name: "Rekaman", progress: 30 },
+                    { name: "Mixing", progress: 10 }
+                ],
+                comments: [
+                    { user: "Maya Anggita", avatar: "https://picsum.photos/50/50?commenter3", time: "3 jam lalu", text: "Keren banget konsepnya! Kapan rilis albumnya?" }
+                ],
+                discord: "https://discord.gg/example2",
+                whatsapp: "https://wa.me/0987654321"
+            },
+            {
+                id: 3,
+                name: "Desain Poster Kreatif",
+                category: "desain",
+                progress: 88,
+                members: [
+                    { name: "Tina Melati", role: "Graphic Designer", profileUrl: "/profil/tina", avatar: "https://picsum.photos/100/100?person9" },
+                    { name: "Eko Wijaya", role: "Art Director", profileUrl: "/profil/eko", avatar: "https://picsum.photos/100/100?person10" }
+                ],
+                description: "Membuat poster kreatif untuk acara seni tahunan dengan tema futuristik.",
+                image: "https://picsum.photos/1200/400?desain",
+                created: "5 Juli 2025",
+                timeline: [
+                    { date: "5 Juli 2025", title: "Proyek Dimulai", description: "Konsep desain awal dibuat." },
+                    { date: "15 Juli 2025", title: "Desain Final", description: "Desain poster selesai." },
+                    { date: "25 Juli 2025", title: "Cetak", description: "Poster mulai dicetak." }
+                ],
+                tasks: [
+                    { name: "Konsep Desain", progress: 100 },
+                    { name: "Revisi Desain", progress: 80 },
+                    { name: "Produksi", progress: 70 }
+                ],
+                comments: [
+                    { user: "Rian Nugroho", avatar: "https://picsum.photos/50/50?commenter4", time: "5 jam lalu", text: "Desainnya sangat futuristik, sukses selalu!" }
+                ],
+                discord: "https://discord.gg/example3",
+                whatsapp: "https://wa.me/1122334455"
+            },
+            {
+                id: 4,
+                name: "Antologi Puisi Baru",
+                category: "sastra",
+                progress: 60,
+                members: [
+                    { name: "Sari Puspita", role: "Penulis", profileUrl: "/profil/sari", avatar: "https://picsum.photos/100/100?person11" },
+                    { name: "Adi Nugroho", role: "Editor", profileUrl: "/profil/adi", avatar: "https://picsum.photos/100/100?person12" },
+                    { name: "Lia Amalia", role: "Penulis", profileUrl: "/profil/lia", avatar: "https://picsum.photos/100/100?person13" },
+                    { name: "Bima Sakti", role: "Ilustrator", profileUrl: "/profil/bima", avatar: "https://picsum.photos/100/100?person14" }
+                ],
+                description: "Mengumpulkan puisi-puisi baru dari penulis muda untuk antologi sastra.",
+                image: "https://picsum.photos/1200/400?sastra",
+                created: "12 Juli 2025",
+                timeline: [
+                    { date: "12 Juli 2025", title: "Proyek Dimulai", description: "Pengumpulan naskah dimulai." },
+                    { date: "22 Juli 2025", title: "Seleksi Naskah", description: "Naskah terpilih disusun." }
+                ],
+                tasks: [
+                    { name: "Penulisan Puisi", progress: 70 },
+                    { name: "Editing", progress: 50 },
+                    { name: "Ilustrasi", progress: 40 }
+                ],
+                comments: [
+                    { user: "Anita Sari", avatar: "https://picsum.photos/50/50?commenter5", time: "1 hari lalu", text: "Puisi-puisinya sangat menyentuh, kapan terbit?" }
+                ],
+                discord: "https://discord.gg/example4",
+                whatsapp: "https://wa.me/6677889900",
+                populer: true
+            },
+            {
+                id: 5,
+                name: "Aplikasi AI Sederhana",
+                category: "coding",
+                progress: 20,
+                members: [
+                    { name: "Fajar Ramadhan", role: "AI Developer", profileUrl: "/profil/fajar", avatar: "https://picsum.photos/100/100?person15" }
+                ],
+                description: "Mengembangkan aplikasi AI sederhana untuk analisis data dasar.",
+                image: "https://picsum.photos/1200/400?newcoding",
+                created: "18 Juli 2025",
+                timeline: [
+                    { date: "18 Juli 2025", title: "Proyek Dimulai", description: "Perencanaan model AI dimulai." }
+                ],
+                tasks: [
+                    { name: "Model AI", progress: 30 },
+                    { name: "Integrasi API", progress: 10 }
+                ],
+                comments: [
+                    { user: "Dika Pratama", avatar: "https://picsum.photos/50/50?commenter6", time: "4 jam lalu", text: "Menarik! Saya ingin ikut berkontribusi." }
+                ],
+                discord: "https://discord.gg/example5",
+                whatsapp: "https://wa.me/5544332211",
+                baru: true
+            }
+        ];
+
+        // Function to get project ID from URL
+        function getProjectIdFromUrl() {
+            const path = window.location.pathname; // e.g., /detail-proyek/1
+            const match = path.match(/\/detail-proyek\/(\d+)/);
+            return match ? parseInt(match[1]) : null;
+        }
+
+        // Render Project Details based on ID
+        function renderProjectDetails(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) {
+                document.querySelector('.project-header').innerHTML = `
+                    <div class="text-center text-gray-600">
+                        <p class="text-lg">Proyek tidak ditemukan.</p>
+                        <a href="/proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Kembali ke Proyek</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const header = document.querySelector('.project-header');
+            header.innerHTML = `
+                <img src="${project.image}" alt="${project.name}" />
+                <h1 class="text-4xl font-bold text-black mt-6" style="font-family: 'Space Grotesk', sans-serif;">${project.name}</h1>
+                <div class="flex items-center mt-2">
+                    <span class="badge bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-100 text-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-800">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
+                    ${project.populer ? '<span class="badge bg-gray-100 text-gray-800">Populer</span>' : ''}
+                    ${project.baru ? '<span class="badge bg-green-100 text-green-800">Baru</span>' : ''}
+                </div>
+                <p class="text-lg text-gray-600 mt-4">${project.description}</p>
+                <div class="flex items-center gap-4 mt-4">
+                    <p class="text-sm text-gray-600">Progress: ${project.progress}%</p>
+                    <div class="progress-bar w-1/3">
+                        <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="text-sm text-gray-500">+${project.members.length} Anggota</span>
+                    <span class="text-sm text-gray-500">Dibuat: ${project.created}</span>
+                </div>
+                <div class="flex gap-4 mt-6">
+                    <a href="${project.discord}" target="_blank" class="action-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">
+                        <i class="fab fa-discord"></i> Gabung via Discord
+                    </a>
+                    <a href="${project.whatsapp}" target="_blank" class="action-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">
+                        <i class="fab fa-whatsapp"></i> Gabung via WhatsApp
+                    </a>
+                </div>
+            `;
+
+            // Render Team Members
+            const membersContainer = document.querySelector('.grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-4');
+            membersContainer.innerHTML = project.members.map(member => `
+                <div class="member-card">
+                    <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full object-cover mb-2">
+                    <h3 class="text-lg font-semibold">${member.name}</h3>
+                    <p class="text-sm text-gray-600">${member.role}</p>
+                    <a href="${member.profileUrl}" class="text-sm text-blue-600 hover:underline">Lihat Profil</a>
+                </div>
+            `).join('');
+
+            // Render Timeline
+            const timelineContainer = document.querySelector('.timeline');
+            timelineContainer.innerHTML = project.timeline.map(event => `
+                <div class="timeline-event">
+                    <p class="text-sm text-gray-600">${event.date}</p>
+                    <p class="text-base font-semibold">${event.title}</p>
+                    <p class="text-sm text-gray-600">${event.description}</p>
+                </div>
+            `).join('');
+
+            // Render Task Progress
+            const tasksContainer = document.querySelector('.grid.grid-cols-1.gap-4');
+            tasksContainer.innerHTML = project.tasks.map(task => `
+                <div class="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200">
+                    <p class="text-sm font-semibold">${task.name}</p>
+                    <div class="progress-bar w-1/3">
+                        <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${task.progress}%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">${task.progress}% Selesai</p>
+                </div>
+            `).join('');
+
+            // Render Comments
+            const commentsContainer = document.querySelector('.comments-container');
+            commentsContainer.innerHTML = project.comments.map(comment => `
+                <div class="comment-card">
+                    <div class="flex items-center gap-3">
+                        <img src="${comment.avatar}" alt="${comment.user}" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="text-sm font-semibold">${comment.user}</p>
+                            <p class="text-xs text-gray-600">${comment.time}</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">${comment.text}</p>
+                </div>
+            `).join('');
+
+            // GSAP Animations
+            gsap.from(".project-header, .member-card, .timeline-event, .flex.items-center.justify-between, .comment-card", {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+        }
+
+        // Submit Comment
+        function submitComment(projectId) {
+            const textarea = document.querySelector('textarea');
+            const text = textarea.value.trim();
+            if (text) {
+                const project = projects.find(p => p.id === projectId);
+                if (project) {
+                    project.comments.push({
+                        user: "Current User", // Replace with actual user data
+                        avatar: "https://picsum.photos/50/50?commenter" + (project.comments.length + 3),
+                        time: "Sekarang",
+                        text
+                    });
+                    renderProjectDetails(projectId);
+                    textarea.value = '';
+                }
+            }
+        }
+
+        // Particles.js Initialization
+        window.addEventListener('load', () => {
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 1000 } },
+                    color: { value: "#4b5563" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.4, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: false },
+                    move: { enable: true, speed: 0.5, direction: "top", random: false, straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: false } },
+                    modes: { repulse: { distance: 100, duration: 0.4 } }
+                },
+                retina_detect: true
+            });
+
+            // Get project ID from URL and render details
+            const projectId = getProjectIdFromUrl();
+            if (projectId) {
+                renderProjectDetails(projectId);
+                document.querySelector('button.bg-blue-600').addEventListener('click', () => submitComment(projectId));
+            } else {
+                document.querySelector('.project-header').innerHTML = `
+                    <div class="text-center text-gray-600">
+                        <p class="text-lg">Proyek tidak ditemukan.</p>
+                        <a href="/proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Kembali ke Proyek</a>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
