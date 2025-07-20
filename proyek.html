@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TARA - Proyek</title>
@@ -9,14 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Outfit', sans-serif;
@@ -24,8 +18,8 @@
             color: #111827;
             box-sizing: border-box;
             margin: 0;
-            padding: 0;woi kanjut badag
-        }
+            padding: 0;
+        }aoki hina imut
         *,
         *::before,
         *::after {
@@ -159,8 +153,8 @@
             font-size: 0.85rem;
             font-weight: 600;
             border: 2px solid #e5e7eb;
-            background: #f3f4f6;
-            color: #374151;
+            background: #111827;
+            color: #ffffff;
             transition: all 0.3s ease;
             white-space: nowrap;
             cursor: pointer;
@@ -314,32 +308,22 @@
             padding-bottom: 4rem;
         }
     </style>
-  </head>
-  <body class="relative overflow-x-hidden">
+</head>
+<body class="relative overflow-x-hidden">
     <div id="particles-js"></div>
 
     <!-- Notification Modal -->
     <div id="notification-modal" class="notification-modal">
-      <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-      <div class="p-6">
-        <h2
-          class="text-2xl font-bold text-black mb-4"
-          style="font-family: 'Space Grotesk', sans-serif"
-        >
-          Notifikasi
-        </h2>
-        <div class="flex gap-2 mb-4">
-          <button class="filter-btn active" data-filter="all">Semua</button>
-          <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi</h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
         </div>
-        <button
-          id="mark-all-read"
-          class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4"
-        >
-          Tandai Semua Dibaca
-        </button>
-        <div id="notification-list" class="space-y-4"></div>
-      </div>
     </div>
 
     <!-- Header -->
@@ -350,13 +334,8 @@
         <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
             <a href="/" class="hover:text-black transition">Beranda</a>
             <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
-<<<<<<< HEAD
-            <a href="/komunitas" class="hover:text-black transition font-semibold">Komunitas</a>
-            <a href="/proyek" class="hover:text-black transition">Proyek</a>
-=======
             <a href="/komunitas" class="hover:text-black transition">Komunitas</a>
             <a href="/proyek" class="hover:text-black transition font-semibold">Proyek</a>
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
             <a href="/blog" class="hover:text-black transition">Blog</a>
             <a href="/agenda" class="hover:text-black transition">Agenda</a>
             <a href="/profil" class="hover:text-black transition">Profil</a>
@@ -371,168 +350,6 @@
 
     <!-- Project Section -->
     <section class="pt-24 pb-12">
-<<<<<<< HEAD
-      <div class="max-w-7xl mx-auto px-6 main-content">
-        <div class="text-center mb-12">
-          <h1
-            class="text-4xl font-bold text-black mb-4"
-            style="font-family: 'Space Grotesk', sans-serif"
-          >
-            Proyek & Kolaborasi
-          </h1>
-          <p class="text-lg text-gray-600">
-            Jelajahi, bergabung, dan ciptakan bersama komunitas kreatif 🚀
-          </p>
-        </div>
-
-        <div class="text-center mb-8 flex justify-center gap-6">
-          <a href="/buat-kolaborasi" class="create-btn"
-            ><i class="fas fa-plus"></i> Buat Kolaborasi</a
-          >
-          <a href="/gabung-kolaborasi" class="join-btn"
-            ><i class="fas fa-users"></i> Gabung Kolaborasi</a
-          >
-        </div>
-
-        <div class="category-container">
-          <button class="filter-btn active" data-filter="all">Semua</button>
-          <button class="filter-btn" data-filter="coding">Coding</button>
-          <button class="filter-btn" data-filter="musik">Musik</button>
-          <button class="filter-btn" data-filter="desain">Desain</button>
-          <button class="filter-btn" data-filter="sastra">Sastra</button>
-          <button class="filter-btn" data-filter="populer">Populer</button>
-          <button class="filter-btn" data-filter="baru">Baru</button>
-        </div>
-
-        <div
-          id="project-list"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="project-card perspective" data-category="coding">
-            <div class="inner p-4">
-              <img
-                src="https://picsum.photos/600/200?coding"
-                alt="Aplikasi Edukasi Kode"
-              />
-              <h3 class="text-lg font-semibold">Aplikasi Edukasi Kode</h3>
-              <span class="badge bg-blue-100 text-blue-800">Coding</span>
-              <p class="text-sm text-gray-600 mt-2">Progress: 70%</p>
-              <div class="progress-bar mt-1">
-                <div class="progress bg-blue-600" style="width: 70%"></div>
-              </div>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-sm text-gray-500">+5 Anggota</span>
-                <a
-                  href="/detail-proyek/1"
-                  class="join-btn bg-blue-600 text-white hover:bg-blue-700"
-                  >Lihat Detail</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="project-card perspective" data-category="musik">
-            <div class="inner p-4">
-              <img
-                src="https://picsum.photos/600/200?musik"
-                alt="Proyek Musik Kolaborasi"
-              />
-              <h3 class="text-lg font-semibold">Proyek Musik Kolaborasi</h3>
-              <span class="badge bg-green-100 text-green-800">Musik</span>
-              <p class="text-sm text-gray-600 mt-2">Progress: 45%</p>
-              <div class="progress-bar mt-1">
-                <div class="progress bg-green-600" style="width: 45%"></div>
-              </div>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-sm text-gray-500">+3 Anggota</span>
-                <a
-                  href="/detail-proyek/2"
-                  class="join-btn bg-green-600 text-white hover:bg-green-700"
-                  >Lihat Detail</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="project-card perspective" data-category="desain">
-            <div class="inner p-4">
-              <img
-                src="https://picsum.photos/600/200?desain"
-                alt="Desain Poster Kreatif"
-              />
-              <h3 class="text-lg font-semibold">Desain Poster Kreatif</h3>
-              <span class="badge bg-yellow-100 text-yellow-800">Desain</span>
-              <p class="text-sm text-gray-600 mt-2">Progress: 88%</p>
-              <div class="progress-bar mt-1">
-                <div class="progress bg-yellow-600" style="width: 88%"></div>
-              </div>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-sm text-gray-500">+2 Anggota</span>
-                <a
-                  href="/detail-proyek/3"
-                  class="join-btn bg-yellow-600 text-white hover:bg-yellow-700"
-                  >Lihat Detail</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="project-card perspective"
-            data-category="sastra"
-            data-populer="true"
-          >
-            <div class="inner p-4">
-              <img
-                src="https://picsum.photos/600/200?sastra"
-                alt="Antologi Puisi Baru"
-              />
-              <h3 class="text-lg font-semibold">Antologi Puisi Baru</h3>
-              <span class="badge bg-red-100 text-red-800">Sastra</span>
-              <span class="badge bg-gray-100 text-gray-800">Populer</span>
-              <p class="text-sm text-gray-600 mt-2">Progress: 60%</p>
-              <div class="progress-bar mt-1">
-                <div class="progress bg-red-600" style="width: 60%"></div>
-              </div>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-sm text-gray-500">+4 Anggota</span>
-                <a
-                  href="/detail-proyek/4"
-                  class="join-btn bg-red-600 text-white hover:bg-red-700"
-                  >Lihat Detail</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="project-card perspective"
-            data-category="coding"
-            data-baru="true"
-          >
-            <div class="inner p-4">
-              <img
-                src="https://picsum.photos/600/200?newcoding"
-                alt="Aplikasi AI Sederhana"
-              />
-              <h3 class="text-lg font-semibold">Aplikasi AI Sederhana</h3>
-              <span class="badge bg-blue-100 text-blue-800">Coding</span>
-              <span class="badge bg-green-100 text-green-800">Baru</span>
-              <p class="text-sm text-gray-600 mt-2">Progress: 20%</p>
-              <div class="progress-bar mt-1">
-                <div class="progress bg-blue-600" style="width: 20%"></div>
-              </div>
-              <div class="flex justify-between items-center mt-4">
-                <span class="text-sm text-gray-500">+1 Anggota</span>
-                <a
-                  href="/detail-proyek/5"
-                  class="join-btn bg-blue-600 text-white hover:bg-blue-700"
-                  >Lihat Detail</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-            <div class="text-center mt-8">
-                <a href="/semua-proyek" class="action-btn bg-black text-white rounded-full hover:bg-gray-800 transition">Lihat Semua Proyek</a>
-=======
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row gap-6">
                 <!-- Main Content -->
@@ -562,222 +379,89 @@
                         <a href="/semua-proyek" class="action-btn bg-black text-white rounded-full hover:bg-gray-800 transition">Lihat Semua Proyek</a>
                     </div>
                 </div>
-                <!-- Sidebar -->
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
+                <!-- Sidebar (Commented Out) -->
+                <!-- <aside class="sidebar md:w-80">
+                    <h3 class="text-lg font-semibold text-black mb-4">Navigasi Proyek</h3>
+                    <a href="/proyek/buat" class="flex items-center gap-2"><i class="fas fa-plus"></i> Buat Proyek</a>
+                    <a href="/proyek/saya" class="flex items-center gap-2"><i class="fas fa-user-friends"></i> Proyek Saya</a>
+                    <a href="/proyek/populer" class="flex items-center gap-2"><i class="fas fa-fire"></i> Proyek Populer</a>
+                    <hr class="my-4 border-gray-200" />
+                    <h3 class="text-lg font-semibold text-black mb-4">Proyek Saya</h3>
+                    <div id="joined-projects" class="space-y-2 mb-6"></div>
+                    <h3 class="text-lg font-semibold text-black mb-4">Rekomendasi Proyek</h3>
+                    <div id="recommended-projects" class="space-y-2 mb-6"></div>
+                    <h3 class="text-lg font-semibold text-black mb-4">Aktivitas Terbaru</h3>
+                    <div id="recent-activities" class="space-y-2"></div>
+                </aside> -->
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer
-      class="bg-white border-t border-gray-200 text-gray-700 text-sm z-30"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10"
-      >
-        <div class="col-span-1 sm:col-span-2">
-          <div
-            class="text-2xl font-bold tracking-normal uppercase"
-            style="font-family: 'Space Grotesk', sans-serif"
-          >
-            TARA<span class="text-accent">●</span>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
-            depan.
-          </p>
-          <div class="flex gap-4 mt-4 text-gray-700 text-lg">
-            <a
-              href="#"
-              class="hover:text-black transition"
-              aria-label="Instagram"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="Twitter"
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a
-              href="#"
-              class="hover:text-black transition"
-              aria-label="LinkedIn"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <a
-              href="#"
-              class="hover:text-black transition"
-              aria-label="Dribbble"
-              ><i class="fab fa-dribbble"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="Behance"
-              ><i class="fab fa-behance"></i
-            ></a>
-          </div>
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm z-30">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                    TARA<span class="text-accent">●</span>
+                </div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=sastra" class="hover:text-black transition">Sastra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+                    <button class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </div>
         </div>
-        <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
-          <ul class="space-y-2">
-            <li><a href="/" class="hover:text-black transition">Beranda</a></li>
-            <li>
-              <a href="/eksplor" class="hover:text-black transition"
-                >Eksplor Karya</a
-              >
-            </li>
-            <li>
-              <a href="/komunitas" class="hover:text-black transition"
-                >Komunitas</a
-              >
-            </li>
-            <li>
-              <a href="/proyek" class="hover:text-black transition"
-                >Proyek Sosial</a
-              >
-            </li>
-            <li>
-              <a href="/blog" class="hover:text-black transition">Blog</a>
-            </li>
-            <li>
-              <a href="/agenda" class="hover:text-black transition">Agenda</a>
-            </li>
-          </ul>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
         </div>
-        <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
-          <ul class="space-y-2">
-            <li>
-              <a
-                href="/eksplor?kategori=coding"
-                class="hover:text-black transition"
-                >Coding</a
-              >
-            </li>
-            <li>
-              <a
-                href="/eksplor?kategori=musik"
-                class="hover:text-black transition"
-                >Musik</a
-              >
-            </li>
-            <li>
-              <a
-                href="/eksplor?kategori=desain"
-                class="hover:text-black transition"
-                >Desain</a
-              >
-            </li>
-            <li>
-              <a
-                href="/eksplor?kategori=sastra"
-                class="hover:text-black transition"
-                >Sastra</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="/proyek/submit" class="hover:text-black transition"
-                >Submit Karya</a
-              >
-            </li>
-            <li>
-              <a href="/komunitas/gabung" class="hover:text-black transition"
-                >Gabung Komunitas</a
-              >
-            </li>
-            <li>
-              <a href="/proyek/buat" class="hover:text-black transition"
-                >Buat Proyek</a
-              >
-            </li>
-            <li>
-              <a href="/kontak" class="hover:text-black transition">Kontak</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
-          <p class="text-gray-700 mb-3">
-            Dapatkan inspirasi mingguan di kotak masuk Tuan.
-          </p>
-          <div class="flex items-center gap-2">
-            <input
-              type="email"
-              placeholder="Email Tuan..."
-              class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <button
-              class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition"
-            >
-              Kirim
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="border-t border-gray-200 text-center py-4 text-xs text-gray-700"
-      >
-        © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
-        <a href="/tentang" class="hover:text-black transition">Tentang Kami</a>
-        |
-        <a href="/ketentuan" class="hover:text-black transition"
-          >Ketentuan Layanan</a
-        >
-        | <a href="/privasi" class="hover:text-black transition">Privasi</a> |
-        <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
-      </div>
     </footer>
 
     <script>
-<<<<<<< HEAD
-      // Simulated Project Data
-      const projects = [
-        {
-          id: 1,
-          name: "Aplikasi Edukasi Kode",
-          category: "coding",
-          progress: 70,
-          members: 5,
-          image: "https://picsum.photos/600/200?coding",
-        },
-        {
-          id: 2,
-          name: "Proyek Musik Kolaborasi",
-          category: "musik",
-          progress: 45,
-          members: 3,
-          image: "https://picsum.photos/600/200?musik",
-        },
-        {
-          id: 3,
-          name: "Desain Poster Kreatif",
-          category: "desain",
-          progress: 88,
-          members: 2,
-          image: "https://picsum.photos/600/200?desain",
-        },
-        {
-          id: 4,
-          name: "Antologi Puisi Baru",
-          category: "sastra",
-          progress: 60,
-          members: 4,
-          image: "https://picsum.photos/600/200?sastra",
-          populer: true,
-        },
-        {
-          id: 5,
-          name: "Aplikasi AI Sederhana",
-          category: "coding",
-          progress: 20,
-          members: 1,
-          image: "https://picsum.photos/600/200?newcoding",
-          baru: true,
-        },
-      ];
-=======
-        // Simulated Project Data (synchronized with detail.html)
+        // Simulated Project Data (updated with theme-specific images)
         const projects = [
             {
                 id: 1,
@@ -792,7 +476,7 @@
                     { name: "Dewi Lestari", role: "QA Engineer", profileUrl: "/profil/dewi", avatar: "https://picsum.photos/100/100?person5" }
                 ],
                 description: "Proyek ini bertujuan untuk menciptakan aplikasi edukasi interaktif yang membantu pengguna belajar pemrograman dengan cara yang menyenangkan dan mudah dipahami.",
-                image: "https://picsum.photos/1200/400?coding",
+                image: "https://images.unsplash.com/photo-1662638600476-d563fffbb072?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGtvZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
                 created: "15 Juli 2025",
                 timeline: [
                     { date: "15 Juli 2025", title: "Proyek Dimulai", description: "Tim awal dibentuk dan perencanaan dimulai." },
@@ -824,7 +508,7 @@
                     { name: "Rudi Hartono", role: "Produser", profileUrl: "/profil/rudi", avatar: "https://picsum.photos/100/100?person8" }
                 ],
                 description: "Kolaborasi musik untuk menciptakan album indie dengan pengaruh tradisional dan modern.",
-                image: "https://picsum.photos/1200/400?musik",
+                image: "https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bXVzaWN8ZW58MHx8MHx8fDA%3D",
                 created: "10 Juli 2025",
                 timeline: [
                     { date: "10 Juli 2025", title: "Proyek Dimulai", description: "Pembentukan tim dan konsep awal." },
@@ -852,7 +536,7 @@
                     { name: "Eko Wijaya", role: "Art Director", profileUrl: "/profil/eko", avatar: "https://picsum.photos/100/100?person10" }
                 ],
                 description: "Membuat poster kreatif untuk acara seni tahunan dengan tema futuristik.",
-                image: "https://picsum.photos/1200/400?desain",
+                image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80",
                 created: "5 Juli 2025",
                 timeline: [
                     { date: "5 Juli 2025", title: "Proyek Dimulai", description: "Konsep desain awal dibuat." },
@@ -883,7 +567,7 @@
                     { name: "Bima Sakti", role: "Ilustrator", profileUrl: "/profil/bima", avatar: "https://picsum.photos/100/100?person14" }
                 ],
                 description: "Mengumpulkan puisi-puisi baru dari penulis muda untuk antologi sastra.",
-                image: "https://picsum.photos/1200/400?sastra",
+                image: "https://images.unsplash.com/photo-1473186505569-9c61870c11f9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVpc2l8ZW58MHx8MHx8fDA%3D",
                 created: "12 Juli 2025",
                 timeline: [
                     { date: "12 Juli 2025", title: "Proyek Dimulai", description: "Pengumpulan naskah dimulai." },
@@ -911,7 +595,7 @@
                     { name: "Fajar Ramadhan", role: "AI Developer", profileUrl: "/profil/fajar", avatar: "https://picsum.photos/100/100?person15" }
                 ],
                 description: "Mengembangkan aplikasi AI sederhana untuk analisis data dasar.",
-                image: "https://picsum.photos/1200/400?newcoding",
+                image: "https://images.unsplash.com/photo-1712002641088-9d76f9080889?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFpfGVufDB8fDB8fHww",
                 created: "18 Juli 2025",
                 timeline: [
                     { date: "18 Juli 2025", title: "Proyek Dimulai", description: "Perencanaan model AI dimulai." }
@@ -929,30 +613,13 @@
                 joined: false
             }
         ];
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
 
-      // Simulated Notification Data
-      const notifications = [
-        {
-          id: 1,
-          text: "New project update: Aplikasi Edukasi Kode",
-          time: "2 jam lalu",
-          read: false,
-        },
-        {
-          id: 2,
-          text: "New collaboration request: Proyek Musik Kolaborasi",
-          time: "4 jam lalu",
-          read: false,
-        },
-      ];
+        // Simulated Notification Data
+        const notifications = [
+            { id: 1, text: "New project update: Aplikasi Edukasi Kode", time: "2 jam lalu", read: false },
+            { id: 2, text: "New collaboration request: Proyek Musik Kolaborasi", time: "4 jam lalu", read: false },
+        ];
 
-<<<<<<< HEAD
-      // Render Projects
-      function renderProjects(filter = "all") {
-        const projectList = document.getElementById("project-list");
-        projectList.innerHTML = "";
-=======
         // Simulated Recent Activity Data
         const recentActivities = [
             { id: 1, text: "New update in Aplikasi Edukasi Kode: Beta testing started", time: "2 jam lalu", projectId: 1 },
@@ -963,73 +630,22 @@
         function renderProjects(filter = 'all') {
             const projectList = document.getElementById('project-list');
             projectList.innerHTML = '';
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
 
-        let filteredProjects =
-          filter === "all" || !filter
-            ? projects
-            : filter === "populer"
-            ? projects.filter((p) => p.populer)
-            : filter === "baru"
-            ? projects.filter((p) => p.baru)
-            : projects.filter((p) => p.category === filter);
+            let filteredProjects = filter === 'all' || !filter ? projects :
+                filter === 'populer' ? projects.filter(p => p.populer) :
+                filter === 'baru' ? projects.filter(p => p.baru) :
+                projects.filter(p => p.category === filter);
 
-        if (filteredProjects.length === 0) {
-          projectList.innerHTML = `
+            if (filteredProjects.length === 0) {
+                projectList.innerHTML = `
                     <div class="text-center text-gray-600 col-span-full">
                         <p class="text-lg">Tidak ada proyek ditemukan.</p>
                         <a href="/semua-proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Proyek</a>
                     </div>
                 `;
-          return;
-        }
+                return;
+            }
 
-<<<<<<< HEAD
-        filteredProjects.forEach((project) => {
-          projectList.innerHTML += `
-                    <div class="project-card perspective" data-category="${
-                      project.category
-                    }" ${project.populer ? 'data-populer="true"' : ""} ${
-            project.baru ? 'data-baru="true"' : ""
-          }>
-                        <div class="inner p-4">
-                            <img src="${project.image}" alt="${project.name}" />
-                            <h3 class="text-lg font-semibold">${
-                              project.name
-                            }</h3>
-                            <span class="badge bg-${
-                              project.category === "coding"
-                                ? "blue"
-                                : project.category === "musik"
-                                ? "green"
-                                : project.category === "desain"
-                                ? "yellow"
-                                : "red"
-                            }-100 text-${
-            project.category === "coding"
-              ? "blue"
-              : project.category === "musik"
-              ? "green"
-              : project.category === "desain"
-              ? "yellow"
-              : "red"
-          }-800">${
-            project.category.charAt(0).toUpperCase() + project.category.slice(1)
-          }</span>
-                            ${
-                              project.populer
-                                ? '<span class="badge bg-gray-100 text-gray-800">Populer</span>'
-                                : ""
-                            }
-                            ${
-                              project.baru
-                                ? '<span class="badge bg-green-100 text-green-800">Baru</span>'
-                                : ""
-                            }
-                            <p class="text-sm text-gray-600 mt-2">Progress: ${
-                              project.progress
-                            }%</p>
-=======
             filteredProjects.forEach(project => {
                 projectList.innerHTML += `
                     <div class="project-card hover-3d" data-category="${project.category}" ${project.populer ? 'data-populer="true"' : ''} ${project.baru ? 'data-baru="true"' : ''}>
@@ -1040,153 +656,24 @@
                             ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ''}
                             ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ''}
                             <p class="text-sm text-gray-600 mt-2">Progress: ${project.progress}%</p>
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
                             <div class="progress-bar mt-1">
-                                <div class="progress bg-${
-                                  project.category === "coding"
-                                    ? "blue"
-                                    : project.category === "musik"
-                                    ? "green"
-                                    : project.category === "desain"
-                                    ? "yellow"
-                                    : "red"
-                                }-600" style="width: ${
-            project.progress
-          }%"></div>
+                                <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
                             </div>
                             <div class="flex justify-between items-center mt-4">
-<<<<<<< HEAD
-                                <span class="text-sm text-gray-500">+${
-                                  project.members
-                                } Anggota</span>
-                                <a href="/detail-proyek/${
-                                  project.id
-                                }" class="join-btn bg-${
-            project.category === "coding"
-              ? "blue"
-              : project.category === "musik"
-              ? "green"
-              : project.category === "desain"
-              ? "yellow"
-              : "red"
-          }-600 text-white hover:bg-${
-            project.category === "coding"
-              ? "blue"
-              : project.category === "musik"
-              ? "green"
-              : project.category === "desain"
-              ? "yellow"
-              : "red"
-          }-700">Lihat Detail</a>
-=======
                                 <span class="text-sm text-gray-500">+${project.members.length} Anggota</span>
                                 <a href="detail_proyek.html?id=${project.id}" class="join-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">Lihat Detail</a>
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
                             </div>
                         </div>
                     </div>
                 `;
-        });
-
-        gsap.from(".project-card", {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-        });
-      }
-
-      // Render Notifications in Modal
-      function renderNotifications(filter = "all") {
-        const notificationList = document.getElementById("notification-list");
-        notificationList.innerHTML = "";
-
-        let filteredNotifications =
-          filter === "all"
-            ? notifications
-            : notifications.filter((n) => !n.read);
-
-        if (filteredNotifications.length === 0) {
-          notificationList.innerHTML =
-            '<div class="text-center text-gray-600"><p class="text-sm">Tidak ada notifikasi.</p></div>';
-          return;
-        }
-
-<<<<<<< HEAD
-        filteredNotifications.forEach((notification) => {
-          notificationList.innerHTML += `
-                    <div class="notification-card ${
-                      notification.read ? "" : "unread"
-                    }" onclick="viewNotification(${notification.id})">
-=======
-        // Render Joined Projects in Sidebar
-        function renderJoinedProjects() {
-            const joinedProjects = document.getElementById('joined-projects');
-            const joined = projects.filter(p => p.joined);
-            joinedProjects.innerHTML = joined.length === 0 ?
-                '<p class="text-sm text-gray-500">Belum bergabung dengan proyek.</p>' :
-                joined.map(p => `
-                    <a href="detail_proyek.html?id=${p.id}" class="flex items-center gap-2 text-sm">
-                        <i class="fas fa-circle text-xs text-accent"></i> ${p.name}
-                    </a>
-                `).join('');
-
-            anime({
-                targets: '#joined-projects a',
-                translateY: [20, 0],
-                opacity: [0, 1],
-                duration: 600,
-                delay: anime.stagger(100),
-                easing: 'easeOutQuad'
             });
-        }
 
-        // Render Recommended Projects in Sidebar
-        function renderRecommendedProjects() {
-            const recommendedProjects = document.getElementById('recommended-projects');
-            const popular = projects.filter(p => p.populer).slice(0, 3);
-            recommendedProjects.innerHTML = popular.length === 0 ?
-                '<p class="text-sm text-gray-500">Tidak ada rekomendasi saat ini.</p>' :
-                popular.map(p => `
-                    <div class="recommended-project cursor-pointer" onclick="filterByCategory('${p.category}')">
-                        <img src="${p.image}" alt="${p.name}" />
-                        <div>
-                            <p class="text-sm font-medium text-gray-700">${p.name}</p>
-                            <p class="text-xs text-gray-500">${p.members.length} Anggota</p>
-                        </div>
-                    </div>
-                `).join('');
-
-            anime({
-                targets: '.recommended-project',
-                translateY: [20, 0],
-                opacity: [0, 1],
-                duration: 600,
-                delay: anime.stagger(100),
-                easing: 'easeOutQuad'
-            });
-        }
-
-        // Render Recent Activities in Sidebar
-        function renderRecentActivities() {
-            const recentActivitiesDiv = document.getElementById('recent-activities');
-            recentActivitiesDiv.innerHTML = recentActivities.length === 0 ?
-                '<p class="text-sm text-gray-500">Tidak ada aktivitas terbaru.</p>' :
-                recentActivities.map(a => `
-                    <div class="recent-activity cursor-pointer" onclick="viewActivity(${a.id})">
-                        <p class="text-sm text-gray-700">${a.text}</p>
-                        <p class="text-xs text-gray-500">${a.time}</p>
-                    </div>
-                `).join('');
-
-            anime({
-                targets: '.recent-activity',
-                translateY: [20, 0],
-                opacity: [0, 1],
-                duration: 600,
-                delay: anime.stagger(100),
-                easing: 'easeOutQuad'
+            gsap.from(".project-card", {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out"
             });
         }
 
@@ -1205,21 +692,10 @@
             filteredNotifications.forEach(notification => {
                 notificationList.innerHTML += `
                     <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
                         <p>${notification.text}</p>
                         <p class="time">${notification.time}</p>
                     </div>
                 `;
-<<<<<<< HEAD
-        });
-
-        gsap.from(".notification-card", {
-          opacity: 0,
-          y: 20,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-=======
             });
 
             gsap.from(".notification-card", {
@@ -1268,7 +744,7 @@
             }
         }
 
-        // Filter by Category from Recommended Projects
+        // Filter by Category
         function filterByCategory(category) {
             const filterButtons = document.querySelectorAll('.filter-btn:not(#notification-modal .filter-btn)');
             filterButtons.forEach(f => f.classList.remove('active'));
@@ -1285,11 +761,6 @@
                 });
             }
             renderProjects(category);
-        }
-
-        // View Activity
-        function viewActivity(activityId) {
-            alert(`Viewing activity ${activityId} (placeholder).`);
         }
 
         // Toggle Join Project
@@ -1327,9 +798,6 @@
                 });
                 renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
             }
-
-            renderJoinedProjects();
-            renderRecentActivities();
         }
 
         // Dismiss Notification Bar
@@ -1388,129 +856,8 @@
                     easing: 'easeOutQuad'
                 });
             });
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
         });
-      }
 
-<<<<<<< HEAD
-      // Toggle Notifications Modal
-      function toggleNotifications() {
-        const modal = document.getElementById("notification-modal");
-        const isOpen = modal.classList.contains("open");
-        modal.classList.toggle("open");
-        gsap.to(modal, {
-          x: isOpen ? "100%" : "0%",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-        if (!isOpen) renderNotifications();
-      }
-
-      // Mark All Notifications as Read
-      function markAllAsRead() {
-        notifications.forEach((n) => (n.read = true));
-        renderNotifications(
-          document.querySelector("#notification-modal .filter-btn.active")
-            ?.dataset.filter || "all"
-        );
-      }
-
-      // View Notification
-      function viewNotification(notificationId) {
-        const notification = notifications.find((n) => n.id === notificationId);
-        if (notification) {
-          notification.read = true;
-          renderNotifications(
-            document.querySelector("#notification-modal .filter-btn.active")
-              ?.dataset.filter || "all"
-          );
-        }
-      }
-
-      // Filter Functionality for Categories
-      const filterButtons = document.querySelectorAll(
-        ".filter-btn:not(#notification-modal .filter-btn)"
-      );
-      filterButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const currentActive = document.querySelector(".filter-btn.active");
-          const isSameButton =
-            currentActive &&
-            currentActive.dataset.filter === btn.dataset.filter;
-
-          if (isSameButton && btn.dataset.filter !== "all") {
-            // If clicking the same category again, reset to 'all'
-            filterButtons.forEach((f) => f.classList.remove("active"));
-            document
-              .querySelector('[data-filter="all"]')
-              .classList.add("active");
-            renderProjects("all");
-          } else {
-            // Otherwise, activate the clicked button and filter
-            filterButtons.forEach((f) => f.classList.remove("active"));
-            btn.classList.add("active");
-            renderProjects(btn.dataset.filter || "all");
-          }
-
-          anime({
-            targets: btn,
-            scale: [1, 1.1, 1],
-            backgroundColor: ["#f3f4f6", "#111827"],
-            color: ["#374151", "#ffffff"],
-            duration: 300,
-            easing: "easeOutQuad",
-          });
-        });
-      });
-
-      // Filter Functionality for Notifications
-      const notificationFilterButtons = document.querySelectorAll(
-        "#notification-modal .filter-btn"
-      );
-      notificationFilterButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          notificationFilterButtons.forEach((f) =>
-            f.classList.remove("active")
-          );
-          btn.classList.add("active");
-          renderNotifications(btn.dataset.filter);
-        });
-      });
-
-      // Particles.js Initialization
-      window.addEventListener("load", () => {
-        particlesJS("particles-js", {
-          particles: {
-            number: { value: 50, density: { enable: true, value_area: 1000 } },
-            color: { value: "#4b5563" },
-            shape: { type: "circle" },
-            opacity: { value: 0.4, random: true },
-            size: { value: 2, random: true },
-            line_linked: { enable: false },
-            move: {
-              enable: true,
-              speed: 0.5,
-              direction: "top",
-              random: false,
-              straight: false,
-              out_mode: "out",
-            },
-          },
-          interactivity: {
-            events: {
-              onhover: { enable: true, mode: "repulse" },
-              onclick: { enable: false },
-            },
-            modes: { repulse: { distance: 100, duration: 0.4 } },
-          },
-          retina_detect: true,
-        });
-      });
-
-      // Initialize
-      renderProjects();
-      renderNotifications();
-=======
         // Mark All as Read Button
         document.getElementById('mark-all-read').addEventListener('click', markAllAsRead);
 
@@ -1534,12 +881,8 @@
             });
 
             renderProjects();
-            renderJoinedProjects();
-            renderRecommendedProjects();
-            renderRecentActivities();
             renderNotifications();
         });
->>>>>>> 0a070cdaf9234adc539265bfcbfc2c3edd20af5e
     </script>
-  </body>
+</body>
 </html>

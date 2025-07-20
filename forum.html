@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TARA – Detail Komunitas</title>
+    <title>TARA – Forum Diskusi</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/vcya58nqfw4vp8bbe79scjwpyqp4vlnlbzodc3utt7zjubiz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       rel="stylesheet"
@@ -31,16 +32,16 @@
         box-sizing: inherit;
       }
 
-      .community-banner {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
+      .forum-header {
+        background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
         border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
-      .post-card {
-        background: linear-gradient(145deg, #ffffff, #f9fafb);
+      .thread-card {
+        background: #ffffff;
         border: 1px solid #e5e7eb;
         border-radius: 12px;
         padding: 1.5rem;
@@ -51,19 +52,19 @@
         gap: 1rem;
       }
 
-      .post-card:hover {
+      .thread-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       }
 
-      .post-card-header {
+      .thread-card-header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         gap: 1rem;
       }
 
-      .post-card-header h3 {
+      .thread-card-header h3 {
         font-size: 1.25rem;
         font-weight: 600;
         color: #111827;
@@ -72,11 +73,11 @@
         transition: color 0.2s ease;
       }
 
-      .post-card-header h3:hover {
+      .thread-card-header h3:hover {
         color: #2563eb;
       }
 
-      .post-card-meta {
+      .thread-card-meta {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
@@ -84,7 +85,7 @@
         color: #6b7280;
       }
 
-      .post-card-content {
+      .thread-card-content {
         font-size: 1rem;
         color: #4b5563;
         line-height: 1.5;
@@ -94,7 +95,7 @@
         overflow: hidden;
       }
 
-      .post-footer {
+      .thread-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -140,20 +141,6 @@
 
       .attachment-container a:hover {
         background: #e6f0ff;
-      }
-
-      .recommended-community {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.5rem 0;
-      }
-
-      .recommended-community img {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 8px;
       }
 
       .badge {
@@ -302,114 +289,6 @@
         color: #2563eb;
       }
 
-      .event-item {
-        padding: 0.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-
-      .community-section {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .highlight-post {
-        border-left: 4px solid #facc15;
-        background: linear-gradient(145deg, #f3f4f6, #f3f4f6);
-      }
-
-      .moderator-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 60;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
-
-      .moderator-modal.open {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .moderator-modal-content {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 2rem;
-        max-width: 500px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        position: relative;
-      }
-
-      .moderator-modal-content .close-btn {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 1.5rem;
-        color: #374151;
-        cursor: pointer;
-      }
-
-      .show-more-btn {
-        color: #2563eb;
-        font-size: 0.9rem;
-        cursor: pointer;
-        margin-top: 0.5rem;
-        display: inline-block;
-      }
-
-      .moderator-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .moderator-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 0.75rem;
-        border-bottom: 1px solid #e5e7eb;
-        transition: background 0.2s ease;
-      }
-
-      .moderator-item:last-child {
-        border-bottom: none;
-      }
-
-      .moderator-item:hover {
-        background: #f9fafb;
-      }
-
-      .moderator-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: #e5e7eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #374151;
-        font-size: 1.25rem;
-      }
-
-      .moderator-name {
-        flex: 1;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #111827;
-      }
-
       .pagination {
         display: flex;
         justify-content: center;
@@ -489,10 +368,60 @@
         color: #dc2626;
       }
 
+      .new-thread-form {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .new-thread-form input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        color: #111827;
+      }
+
+      .new-thread-form input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+      }
+
+      .new-thread-form button {
+        padding: 0.5rem 1.5rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: linear-gradient(90deg, #111827, #374151);
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .new-thread-form button:hover {
+        background: linear-gradient(90deg, #374151, #4b5563);
+      }
+
+      .highlight-thread {
+        border-left: 4px solid #facc15;
+        background: linear-gradient(145deg, #f3f4f6, #f3f4f6);
+      }
+
+      #new-thread-content {
+        min-height: 200px;
+      }
+
       @media (min-width: 768px) {
-        .community-section {
+        .forum-section {
+          display: flex;
           flex-direction: row;
           align-items: flex-start;
+          gap: 1.5rem;
         }
       }
 
@@ -504,21 +433,13 @@
         .sidebar {
           padding: 1.5rem;
         }
-        .post-footer {
+        .thread-footer {
           flex-direction: column;
           align-items: flex-start;
           gap: 0.5rem;
         }
-        .moderator-item {
-          padding: 0.5rem;
-        }
-        .moderator-icon {
-          width: 32px;
-          height: 32px;
-          font-size: 1rem;
-        }
-        .pagination {
-          flex-wrap: wrap;
+        .new-thread-form {
+          padding: 1rem;
         }
       }
     </style>
@@ -546,20 +467,6 @@
           Tandai Semua Dibaca
         </button>
         <div id="notification-list" class="space-y-4"></div>
-      </div>
-    </div>
-
-    <!-- Moderator Modal -->
-    <div id="moderator-modal" class="moderator-modal">
-      <div class="moderator-modal-content">
-        <i class="fas fa-times close-btn" onclick="toggleModeratorModal()"></i>
-        <h2
-          class="text-2xl font-bold text-black mb-4"
-          style="font-family: 'Space Grotesk', sans-serif"
-        >
-          Daftar Moderator
-        </h2>
-        <ul id="moderator-list" class="moderator-list"></ul>
       </div>
     </div>
 
@@ -605,7 +512,7 @@
       </div>
     </header>
 
-    <!-- Community Detail Section -->
+    <!-- Forum Section -->
     <section class="relative pt-24 pb-12 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <!-- Notification Bar -->
@@ -615,156 +522,188 @@
           onclick="dismissNotification()"
         >
           <p class="text-sm text-gray-700">
-            Selamat datang di komunitas! Lihat aktivitas terbaru.
+            Selamat datang di forum! Mulai diskusi baru.
           </p>
         </div>
 
         <!-- Main Content and Sidebar -->
-        <div class="community-section">
-          <!-- Main Content -->
-          <div class="flex-1">
-<div class="mb-8 flex items-center gap-3">
-  <a
-    href="/komunitas.html"
-    class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
-    style="font-family: 'Space Grotesk', sans-serif;"
-  >
-    <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-    <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-      ← Komunitas
-    </span>
-  </a>
-  <a
-    href="/forum.html?community=1"
-    class="relative inline-block px-5 py-2 text-sm text-gray-700 border border-gray-400 rounded-full overflow-hidden group"
-    style="font-family: 'Space Grotesk', sans-serif;"
-  >
-    <span class="absolute inset-0 bg-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-    <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-      Forum Diskusi
-    </span>
-  </a>
+<div class="forum-section">
+  <!-- Main Content -->
+  <div class="flex-1">
+    <div class="mb-8 flex items-center gap-3">
+      <a
+        href="/komunitas.html"
+        class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
+        style="font-family: 'Space Grotesk', sans-serif;"
+      >
+        <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+        <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+          ← Komunitas
+        </span>
+      </a>
+      <a
+        href="/detail_komunitas.html?community=1"
+        class="relative inline-block px-5 py-2 text-sm text-gray-700 border border-gray-400 rounded-full overflow-hidden group"
+        style="font-family: 'Space Grotesk', sans-serif;"
+      >
+        <span class="absolute inset-0 bg-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+        <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+          Kembali ke Komunitas
+        </span>
+      </a>
+    </div>
+
+    <div class="forum-header">
+      <div class="flex items-center gap-2 mb-4">
+        <h1
+          id="community-name"
+          class="text-3xl font-bold text-black"
+          style="font-family: 'Space Grotesk', sans-serif"
+        ></h1>
+        <span id="community-badge" class="badge"></span>
+      </div>
+      <p id="community-description" class="text-lg text-gray-600 mb-4"></p>
+      <div class="flex items-center gap-4">
+        <button
+          id="join-btn"
+          class="join-btn relative inline-block px-5 py-2 text-sm text-white border border-black rounded-full overflow-hidden group"
+          style="font-family: 'Space Grotesk', sans-serif;"
+          onclick="toggleJoin()"
+        >
+          <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+          <span class="relative z-10 group-hover:text-white transition-colors duration-300"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- New Thread Form -->
+    <div class="new-thread-form">
+      <h2
+        class="text-xl font-bold text-black mb-4"
+        style="font-family: 'Space Grotesk', sans-serif'"
+      >
+        Buat Diskusi Baru
+      </h2>
+      <input
+        type="text"
+        id="new-thread-title"
+        placeholder="Judul Diskusi..."
+        class="mb-4 w-full border border-gray-300 rounded-md p-2"
+      />
+      <textarea
+        id="new-thread-content"
+        placeholder="Tulis isi diskusi Tuan..."
+        class="mb-4 w-full border border-gray-300 rounded-md p-2"
+      ></textarea>
+      <div class="flex justify-end mt-3">
+       .max-w-7xl
+        <button
+          onclick="createNewThread()"
+          class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
+          style="font-family: 'Space Grotesk', sans-serif;"
+        >
+          <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+          <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+            Kirim
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Threads -->
+    <div id="forum-threads" class="space-y-6"></div>
+    <div id="pagination" class="pagination"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar md:w-80">
+    <h3
+      class="text-2xl font-semibold text-black mb-4"
+      style="font-family: 'Space Grotesk', sans-serif'"
+    >
+      Tentang Komunitas
+    </h3>
+    <div
+      id="sidebar-community-details"
+      class="space-y-4 mb-6 border-l-4 border-yellow-400 pl-4"
+    >
+      <p
+        id="sidebar-community-name"
+        class="text-base font-semibold text-gray-700"
+      ></p>
+      <p
+        id="sidebar-community-category"
+        class="text-xs text-gray-500"
+      ></p>
+      <p
+        id="sidebar-community-description"
+        class="text-sm text-gray-600"
+      ></p>
+      <p
+        id="sidebar-community-creator"
+        class="text-sm text-gray-500"
+      ></p>
+      <p
+        id="sidebar-community-created"
+        class="text-sm text-gray-500"
+      ></p>
+      <p
+        id="sidebar-community-discussions"
+        class="text-sm text-gray-500"
+      ></p>
+      <p
+        id="sidebar-community-moderators"
+        class="text-sm text-gray-500"
+      ></p>
+      <span id="show-more-moderators" class="show-more-btn hidden"
+        >Show More Moderator</span
+      >
+    </div>
+    <div
+      id="sidebar-community-stats"
+      class="flex items-center gap-4 mb-6"
+    >
+      <span
+        id="sidebar-community-members"
+        class="text-sm text-gray-500"
+      ></span>
+      <span
+        id="sidebar-community-online"
+        class="text-sm text-gray-500"
+      ></span>
+    </div>
+    <h3
+      class="text-2xl font-semibold text-black mb-4"
+      style="font-family: 'Space Grotesk', sans-serif'"
+    >
+      Jadwal Event
+    </h3>
+    <div id="sidebar-community-events" class="space-y-4 mb-6"></div>
+    <h3
+      class="text-2xl font-semibold text-black mb-4"
+      style="font-family: 'Space Grotesk', sans-serif'"
+    >
+      Peraturan Komunitas
+    </h3>
+    <div id="sidebar-community-rules" class="space-y-4 mb-6">
+      <p class="text-sm text-gray-600">1. Hormati anggota lain.</p>
+      <p class="text-sm text-gray-600">
+        2. Dilarang memposting konten yang melanggar hukum.
+      </p>
+      <p class="text-sm text-gray-600">3. Gunakan bahasa yang sopan.</p>
+      <p class="text-sm text-gray-600">
+        4. Dilarang spam atau promosi tanpa izin.
+      </p>
+    </div>
+    <h3
+      class="text-2xl font-semibold text-black mb-4"
+      style="font-family: 'Space Grotesk', sans-serif'"
+    >
+      Komunitas Lain
+    </h3>
+    <div id="recommended-communities" class="space-y-4"></div>
+  </aside>
 </div>
-
-            <div id="community-detail" class="mb-8">
-              <img
-                id="community-image"
-                class="community-banner"
-                src=""
-                alt=""
-              />
-              <div class="mt-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <h1
-                    id="community-name"
-                    class="text-3xl font-bold text-black"
-                    style="font-family: 'Space Grotesk', sans-serif"
-                  ></h1>
-                  <span id="community-badge" class="badge"></span>
-                </div>
-                <p
-                  id="community-description"
-                  class="text-lg text-gray-600 mb-4"
-                ></p>
-              </div>
-            </div>
-            <span
-              id="community-members"
-              class="text-sm text-gray-500 mb-4 block"
-              ><i class="fas fa-user-friends mr-1"></i
-            ></span>
-            <h2
-              class="text-2xl font-bold text-black mb-4"
-              style="font-family: 'Space Grotesk', sans-serif"
-            >
-              Aktivitas Komunitas
-            </h2>
-            <div id="community-posts" class="space-y-6"></div>
-            <div id="pagination" class="pagination"></div>
-          </div>
-
-          <!-- Sidebar -->
-          <aside class="sidebar md:w-80">
-            <h3
-              class="text-2xl font-semibold text-black mb-4"
-              style="font-family: 'Space Grotesk', sans-serif"
-            >
-              Tentang Komunitas
-            </h3>
-            <div
-              id="sidebar-community-details"
-              class="space-y-4 mb-6 border-l-4 border-yellow-400 pl-4"
-            >
-              <p
-                id="sidebar-community-name"
-                class="text-base font-semibold text-gray-700"
-              ></p>
-              <p
-                id="sidebar-community-category"
-                class="text-xs text-gray-500"
-              ></p>
-              <p
-                id="sidebar-community-description"
-                class="text-sm text-gray-600"
-              ></p>
-              <p
-                id="sidebar-community-creator"
-                class="text-sm text-gray-500"
-              ></p>
-              <p
-                id="sidebar-community-created"
-                class="text-sm text-gray-500"
-              ></p>
-              <p
-                id="sidebar-community-discussions"
-                class="text-sm text-gray-500"
-              ></p>
-              <p
-                id="sidebar-community-moderators"
-                class="text-sm text-gray-500"
-              ></p>
-              <span id="show-more-moderators" class="show-more-btn hidden"
-                >Show More Moderator</span
-              >
-            </div>
-            <div
-              id="sidebar-community-stats"
-              class="flex items-center gap-4 mb-6"
-            >
-              <span
-                id="sidebar-community-members"
-                class="text-sm text-gray-500"
-              ></span>
-              <span
-                id="sidebar-community-online"
-                class="text-sm text-gray-500"
-              ></span>
-            </div>
-            <h3
-              class="text-2xl font-semibold text-black mb-4"
-              style="font-family: 'Space Grotesk', sans-serif"
-            >
-              Jadwal Event
-            </h3>
-            <div id="sidebar-community-events" class="space-y-4 mb-6"></div>
-            <h3
-              class="text-2xl font-semibold text-black mb-4"
-              style="font-family: 'Space Grotesk', sans-serif"
-            >
-              Peraturan Komunitas
-            </h3>
-            <div id="sidebar-community-rules" class="space-y-4 mb-6">
-              <p class="text-sm text-gray-600">1. Hormati anggota lain.</p>
-              <p class="text-sm text-gray-600">
-                2. Dilarang memposting konten yang melanggar hukum.
-              </p>
-              <p class="text-sm text-gray-600">3. Gunakan bahasa yang sopan.</p>
-              <p class="text-sm text-gray-600">
-                4. Dilarang spam atau promosi tanpa izin.
-              </p>
-            </div>
-          </aside>
-        </div>
       </div>
     </section>
 
@@ -888,7 +827,7 @@
     </footer>
 
     <script>
-      // Simulated Community Data
+      // Simulated Community Data (aligned with community.html)
       const communities = [
         {
           id: 1,
@@ -1020,10 +959,10 @@
         },
         {
           id: 999,
-          name: "Komunitas Umum",
-          category: "Umum",
+          name: "Komunitas Puisi",
+          category: "puisi",
           description:
-            "Tempat untuk berbagai diskusi kreatif dan kolaborasi lintas kategori.",
+            "Tempat untuk berbagai karya puisi antar generasi.",
           members: 100,
           image: "https://picsum.photos/600/400?general",
           badge: null,
@@ -1035,7 +974,7 @@
         },
       ];
 
-      // Simulated Notification Data
+      // Simulated Notification Data (aligned with community.html)
       const notifications = [
         {
           id: 1,
@@ -1096,14 +1035,14 @@
         },
       ];
 
-      // Simulated Community Posts Data with Additional Posts
+      // Simulated Community Posts Data (aligned with community.html)
       const communityPosts = [
         {
           id: 1,
           communityId: 1,
           title: "Puisi Senja",
           content:
-            "Sebuah puisi tentang keindahan senja di ufuk barat, menggambarkan perasaan damai dan nostalgia.",
+            "<p>Sebuah puisi tentang keindahan senja di ufuk barat, menggambarkan perasaan damai dan nostalgia.</p>",
           time: "2 jam lalu",
           votes: 42,
           pinned: true,
@@ -1119,7 +1058,7 @@
           communityId: 1,
           title: "Sastra Modern",
           content:
-            "Diskusi tentang tren sastra modern di Indonesia, termasuk pengaruh budaya digital.",
+            "<p>Diskusi tentang tren sastra modern di Indonesia, termasuk pengaruh budaya digital.</p>",
           time: "6 jam lalu",
           votes: 15,
           pinned: false,
@@ -1139,7 +1078,7 @@
           communityId: 2,
           title: "Workshop UI",
           content:
-            "Acara workshop desain antarmuka pengguna untuk pemula dan profesional.",
+            "<p>Acara workshop desain antarmuka pengguna untuk pemula dan profesional.</p>",
           time: "4 jam lalu",
           votes: 28,
           pinned: true,
@@ -1153,7 +1092,7 @@
           communityId: 2,
           title: "Tips Desain Minimalis",
           content:
-            "Panduan untuk menciptakan desain yang bersih, fungsional, dan estetis.",
+            "<p>Panduan untuk menciptakan desain yang bersih, fungsional, dan estetis.</p>",
           time: "1 hari lalu",
           votes: 10,
           pinned: false,
@@ -1169,7 +1108,7 @@
           communityId: 3,
           title: "Kolaborasi Musik",
           content:
-            "Ajak musisi lain untuk proyek musik baru, fokus pada genre akustik.",
+            "<p>Ajak musisi lain untuk proyek musik baru, fokus pada genre akustik.</p>",
           time: "3 jam lalu",
           votes: 20,
           pinned: true,
@@ -1189,7 +1128,7 @@
           communityId: 4,
           title: "Hackathon Open-Source",
           content:
-            "Bergabung dalam hackathon untuk proyek open-source, fokus pada aplikasi web.",
+            "<p>Bergabung dalam hackathon untuk proyek open-source, fokus pada aplikasi web.</p>",
           time: "5 jam lalu",
           votes: 18,
           pinned: true,
@@ -1208,7 +1147,8 @@
           id: 7,
           communityId: 5,
           title: "Cerita Pendek",
-          content: "Berbagi cerita pendek tentang petualangan di kota kecil.",
+          content:
+            "<p>Berbagi cerita pendek tentang petualangan di kota kecil.</p>",
           time: "8 jam lalu",
           votes: 12,
           pinned: false,
@@ -1221,7 +1161,7 @@
           id: 8,
           communityId: 6,
           title: "Desain UX Mobile",
-          content: "Diskusi tentang tren desain UX untuk aplikasi mobile.",
+          content: "<p>Diskusi tentang tren desain UX untuk aplikasi mobile.</p>",
           time: "10 jam lalu",
           votes: 25,
           pinned: false,
@@ -1235,7 +1175,7 @@
           communityId: 7,
           title: "Tips Fotografi Malam",
           content:
-            "Panduan untuk mengambil foto malam dengan pencahayaan minim.",
+            "<p>Panduan untuk mengambil foto malam dengan pencahayaan minim.</p>",
           time: "12 jam lalu",
           votes: 30,
           pinned: true,
@@ -1250,7 +1190,7 @@
           id: 10,
           communityId: 1,
           title: "Puisi Pagi",
-          content: "Puisi tentang fajar yang membawa harapan baru.",
+          content: "<p>Puisi tentang fajar yang membawa harapan baru.</p>",
           time: "1 jam lalu",
           votes: 35,
           pinned: false,
@@ -1263,7 +1203,8 @@
           id: 11,
           communityId: 2,
           title: "Desain Poster Keren",
-          content: "Berbagi tips membuat poster yang menarik dan modern.",
+          content:
+            "<p>Berbagi tips membuat poster yang menarik dan modern.</p>",
           time: "7 jam lalu",
           votes: 22,
           pinned: false,
@@ -1278,7 +1219,7 @@
           id: 12,
           communityId: 3,
           title: "Jamming Akustik",
-          content: "Undangan untuk sesi jamming akustik virtual.",
+          content: "<p>Undangan untuk sesi jamming akustik virtual.</p>",
           time: "2 jam lalu",
           votes: 15,
           pinned: true,
@@ -1291,7 +1232,8 @@
           id: 13,
           communityId: 4,
           title: "Belajar JavaScript",
-          content: "Panduan dasar untuk pemula dalam mempelajari JavaScript.",
+          content:
+            "<p>Panduan dasar untuk pemula dalam mempelajari JavaScript.</p>",
           time: "9 jam lalu",
           votes: 10,
           pinned: false,
@@ -1306,7 +1248,7 @@
           id: 14,
           communityId: 5,
           title: "Novel Romansa",
-          content: "Diskusi tentang menulis novel romansa yang menyentuh.",
+          content: "<p>Diskusi tentang menulis novel romansa yang menyentuh.</p>",
           time: "11 jam lalu",
           votes: 18,
           pinned: false,
@@ -1319,7 +1261,7 @@
           id: 15,
           communityId: 6,
           title: "Prototipe Aplikasi",
-          content: "Berbagi prototipe aplikasi mobile terbaru.",
+          content: "<p>Berbagi prototipe aplikasi mobile terbaru.</p>",
           time: "5 jam lalu",
           votes: 20,
           pinned: true,
@@ -1334,7 +1276,8 @@
           id: 16,
           communityId: 1,
           title: "Puisi Malam",
-          content: "Puisi tentang malam yang penuh misteri dan keindahan.",
+          content:
+            "<p>Puisi tentang malam yang penuh misteri dan keindahan.</p>",
           time: "3 jam lalu",
           votes: 25,
           pinned: false,
@@ -1347,7 +1290,7 @@
           id: 17,
           communityId: 2,
           title: "Desain Logo Modern",
-          content: "Tips membuat logo yang simpel namun berkesan.",
+          content: "<p>Tips membuat logo yang simpel namun berkesan.</p>",
           time: "8 jam lalu",
           votes: 18,
           pinned: false,
@@ -1362,7 +1305,7 @@
           id: 18,
           communityId: 3,
           title: "Lagu Baru Akustik",
-          content: "Berbagi lagu akustik terbaru untuk kolaborasi.",
+          content: "<p>Berbagi lagu akustik terbaru untuk kolaborasi.</p>",
           time: "6 jam lalu",
           votes: 22,
           pinned: false,
@@ -1381,7 +1324,7 @@
           id: 19,
           communityId: 4,
           title: "Proyek AI Sederhana",
-          content: "Diskusi tentang proyek AI untuk pemula.",
+          content: "<p>Diskusi tentang proyek AI untuk pemula.</p>",
           time: "10 jam lalu",
           votes: 15,
           pinned: false,
@@ -1396,7 +1339,7 @@
           id: 20,
           communityId: 7,
           title: "Fotografi Alam",
-          content: "Berbagi tips fotografi alam di pegunungan.",
+          content: "<p>Berbagi tips fotografi alam di pegunungan.</p>",
           time: "4 jam lalu",
           votes: 27,
           pinned: false,
@@ -1412,7 +1355,7 @@
           communityId: 999,
           title: "Selamat Datang!",
           content:
-            "Selamat datang di komunitas ini! Mulai diskusi Anda di sini.",
+            "<p>Selamat datang di komunitas ini! Mulai diskusi Anda di sini.</p>",
           time: "Baru saja",
           votes: 0,
           pinned: false,
@@ -1423,88 +1366,14 @@
         },
       ];
 
-      // Simulated Community Events Data
-      const communityEvents = [
-        {
-          id: 1,
-          communityId: 1,
-          name: "Pembacaan Puisi Senja",
-          date: "25 Juli 2025",
-          type: "Offline",
-        },
-        {
-          id: 2,
-          communityId: 1,
-          name: "Workshop Penulisan Puisi",
-          date: "30 Juli 2025",
-          type: "Online",
-        },
-        {
-          id: 3,
-          communityId: 2,
-          name: "UI/UX Design Webinar",
-          date: "28 Juli 2025",
-          type: "Online",
-        },
-        {
-          id: 4,
-          communityId: 2,
-          name: "Pameran Desain",
-          date: "5 Agustus 2025",
-          type: "Offline",
-        },
-        {
-          id: 5,
-          communityId: 3,
-          name: "Konser Musik Muda",
-          date: "27 Juli 2025",
-          type: "Offline",
-        },
-        {
-          id: 6,
-          communityId: 4,
-          name: "Hackathon Coding",
-          date: "2 Agustus 2025",
-          type: "Online",
-        },
-        {
-          id: 7,
-          communityId: 5,
-          name: "Diskusi Cerita Pendek",
-          date: "3 Agustus 2025",
-          type: "Online",
-        },
-        {
-          id: 8,
-          communityId: 6,
-          name: "Workshop UX Research",
-          date: "4 Agustus 2025",
-          type: "Online",
-        },
-        {
-          id: 9,
-          communityId: 7,
-          name: "Pameran Fotografi",
-          date: "6 Agustus 2025",
-          type: "Offline",
-        },
-        {
-          id: 999,
-          communityId: 999,
-          name: "Sesi Perkenalan Komunitas",
-          date: "1 Agustus 2025",
-          type: "Online",
-        },
-      ];
-
       // Pagination Settings
-      const POSTS_PER_PAGE = 5;
+      const THREADS_PER_PAGE = 5;
       let currentPage = 1;
 
       // Get Community ID from URL
       function getCommunityId() {
         const params = new URLSearchParams(window.location.search);
-        const id = parseInt(params.get("community")) || 1;
+        const id = parseInt(params.get("community")) || 999;
         return communities.find((c) => c.id === id) ? id : 999;
       }
 
@@ -1514,8 +1383,6 @@
         const community =
           communities.find((c) => c.id === communityId) ||
           communities.find((c) => c.id === 999);
-        document.getElementById("community-image").src = community.image;
-        document.getElementById("community-image").alt = community.name;
         document.getElementById("community-name").textContent = community.name;
         document.getElementById("community-badge").className = community.badge
           ? `badge badge-${community.badge}`
@@ -1525,9 +1392,9 @@
           : "";
         document.getElementById("community-description").textContent =
           community.description;
-        document.getElementById(
-          "community-members"
-        ).innerHTML = `<i class="fas fa-user-friends mr-1"></i>${community.members} Anggota`;
+        document.getElementById("join-btn").textContent = community.joined
+          ? "Keluar"
+          : "Gabung";
       }
 
       // Render Sidebar Community Details
@@ -1556,10 +1423,10 @@
         document.getElementById(
           "sidebar-community-discussions"
         ).innerHTML = `<i class="fas fa-comment-alt mr-1"></i>Total Diskusi: ${posts.length}`;
-        const moderators = community.moderators.slice(0, 1);
         document.getElementById(
           "sidebar-community-moderators"
-        ).innerHTML = `<i class="fas fa-user-shield mr-1"></i>Moderator: ${moderators
+        ).innerHTML = `<i class="fas fa-user-shield mr-1"></i>Moderator: ${community.moderators
+          .slice(0, 1)
           .map(
             (m) =>
               `${m.name}${
@@ -1576,152 +1443,99 @@
           "sidebar-community-online"
         ).innerHTML = `<i class="fas fa-circle text-green-500 mr-1 text-xs"></i>${community.onlineMembers} Online`;
 
-        const showMoreBtn = document.getElementById("show-more-moderators");
-        if (community.moderators.length > 3) {
-          showMoreBtn.classList.remove("hidden");
-          showMoreBtn.onclick = toggleModeratorModal;
-        } else {
-          showMoreBtn.classList.add("hidden");
-        }
-
-        const events = communityEvents.filter(
-          (e) => e.communityId === communityId
-        ) || [communityEvents.find((e) => e.id === 999)];
-        const eventsContainer = document.getElementById(
-          "sidebar-community-events"
-        );
-        eventsContainer.innerHTML = events
-          .map(
-            (e) => `
-                <div class="event-item" onclick="viewEvent(${e.id})">
-                    <p class="text-sm font-medium text-gray-700">${e.name}</p>
-                    <p class="text-xs text-gray-500">${e.date} • ${e.type}</p>
+        // Render Recommended Communities
+        const recommendedCommunities = communities
+          .filter((c) => c.id !== communityId && c.id !== 999)
+          .slice(0, 3);
+        document.getElementById("recommended-communities").innerHTML =
+          recommendedCommunities
+            .map(
+              (c) => `
+                <div class="recommended-community">
+                    <img src="${c.image}" alt="${c.name}" />
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">${
+                          c.name
+                        }</p>
+                        <p class="text-xs text-gray-500">${
+                          c.members
+                        } Anggota</p>
+                    </div>
                 </div>
             `
-          )
-          .join("");
+            )
+            .join("");
       }
 
-      // Render Moderator Modal
-      function renderModeratorModal() {
+      // Render Forum Threads with Pagination
+      function renderForumThreads(page = 1) {
         const communityId = getCommunityId();
-        const community =
-          communities.find((c) => c.id === communityId) ||
-          communities.find((c) => c.id === 999);
-        const moderatorList = document.getElementById("moderator-list");
-        moderatorList.innerHTML = community.moderators
-          .map(
-            (m) => `
-                <li class="moderator-item">
-                    <div class="moderator-icon"><i class="fas fa-user"></i></div>
-                    <span class="moderator-name">${m.name}</span>
-                    ${
-                      m.isModerator
-                        ? '<span class="badge badge-moderator">Moderator</span>'
-                        : ""
-                    }
-                </li>
-            `
-          )
-          .join("");
+        let threads = communityPosts.filter((p) => p.communityId === communityId);
+        const threadsContainer = document.getElementById("forum-threads");
+        threadsContainer.innerHTML = "";
 
-        gsap.from(".moderator-item", {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power3.out",
-        });
-      }
-
-      // Toggle Moderator Modal
-      function toggleModeratorModal() {
-        const modal = document.getElementById("moderator-modal");
-        const isOpen = modal.classList.contains("open");
-        modal.classList.toggle("open");
-        gsap.to(modal, {
-          opacity: isOpen ? 0 : 1,
-          duration: 0.3,
-          ease: "power2.out",
-          onComplete: () => {
-            if (isOpen) modal.style.visibility = "hidden";
-            else modal.style.visibility = "visible";
-          },
-        });
-        if (!isOpen) {
-          renderModeratorModal();
-        }
-      }
-
-      // Render Community Posts with Pagination
-      function renderCommunityPosts(page = 1) {
-        const communityId = getCommunityId();
-        let posts = communityPosts.filter((p) => p.communityId === communityId);
-        const postsContainer = document.getElementById("community-posts");
-        postsContainer.innerHTML = "";
-
-        if (posts.length === 0) {
-          posts = [communityPosts.find((p) => p.id === 999)];
+        if (threads.length === 0) {
+          threads = [communityPosts.find((p) => p.id === 999)];
         }
 
-        // Sort posts to highlight active ones
-        posts.sort((a, b) => {
+        // Sort threads to highlight active ones
+        threads.sort((a, b) => {
           const aActivity = new Date(a.lastActivity).getTime();
           const bActivity = new Date(b.lastActivity).getTime();
           return bActivity - aActivity || b.votes - a.votes;
         });
 
         // Pagination logic
-        const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+        const totalPages = Math.ceil(threads.length / THREADS_PER_PAGE);
         currentPage = Math.min(Math.max(page, 1), totalPages);
-        const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-        const endIndex = startIndex + POSTS_PER_PAGE;
-        const paginatedPosts = posts.slice(startIndex, endIndex);
+        const startIndex = (currentPage - 1) * THREADS_PER_PAGE;
+        const endIndex = startIndex + THREADS_PER_PAGE;
+        const paginatedThreads = threads.slice(startIndex, endIndex);
 
-        paginatedPosts.forEach((post) => {
+        paginatedThreads.forEach((thread) => {
           const isHighlighted =
-            post.replies > 5 ||
-            post.votes > 20 ||
-            new Date().getTime() - new Date(post.lastActivity).getTime() <
+            thread.replies > 5 ||
+            thread.votes > 20 ||
+            new Date().getTime() - new Date(thread.lastActivity).getTime() <
               2 * 3600000;
-          postsContainer.innerHTML += `
-            <a href="/thread.html?community=${post.communityId}&thread=${
-              post.id
-            }" class="post-card ${isHighlighted ? "highlight-post" : ""}">
-              <div class="post-card-header">
-                <h3>${post.title}</h3>
+          threadsContainer.innerHTML += `
+            <a href="/thread.html?community=${thread.communityId}&thread=${
+              thread.id
+            }" class="thread-card ${isHighlighted ? "highlight-thread" : ""}">
+              <div class="thread-card-header">
+                <h3>${thread.title}</h3>
                 ${
-                  post.pinned
-                    ? '<i class="fas fa-thumbtack text-yellow-400" title="Pinned Post"></i>'
+                  thread.pinned
+                    ? '<i class="fas fa-thumbtack text-yellow-400" title="Pinned Thread"></i>'
                     : ""
                 }
                 <div class="post-menu">
                   <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, ${
-                    post.id
+                    thread.id
                   })"></i>
-                  <div class="post-menu-content" id="post-menu-${post.id}">
+                  <div class="post-menu-content" id="post-menu-${thread.id}">
                     <div class="post-menu-item" onclick="sharePost(${
-                      post.id
+                      thread.id
                     })">Bagikan</div>
                     <div class="post-menu-item" onclick="savePost(${
-                      post.id
+                      thread.id
                     })">Simpan</div>
                     <div class="post-menu-item danger" onclick="reportPost(${
-                      post.id
+                      thread.id
                     })">Laporkan</div>
                   </div>
                 </div>
               </div>
-              <div class="post-card-meta">
-                <span>Diposting oleh ${post.author}</span>
-                <span>${post.time}</span>
+              <div class="thread-card-meta">
+                <span>Diposting oleh ${thread.author}</span>
+                <span>${thread.time}</span>
               </div>
-              <p class="post-card-content">${post.content}</p>
+              <div class="thread-card-content">${thread.content}</div>
               ${
-                post.attachments.length > 0
+                thread.attachments.length > 0
                   ? `
                 <div class="attachment-container">
-                  ${post.attachments
+                  ${thread.attachments
                     .map((att) =>
                       att.type === "image"
                         ? `<img src="${att.url}" alt="Attachment" />`
@@ -1732,21 +1546,21 @@
               `
                   : ""
               }
-              <div class="post-footer">
+              <div class="thread-footer">
                 <div class="vote-container">
                   <i class="fas fa-arrow-up vote-btn" onclick="votePost(event, ${
-                    post.id
+                    thread.id
                   }, 1)"></i>
-                  <span class="text-sm text-gray-500">${post.votes}</span>
+                  <span class="text-sm text-gray-500">${thread.votes}</span>
                   <i class="fas fa-arrow-down vote-btn" onclick="votePost(event, ${
-                    post.id
+                    thread.id
                   }, -1)"></i>
                 </div>
                 <div class="flex items-center gap-4">
                   <span class="text-xs text-gray-500"><i class="fas fa-comment mr-1"></i>${
-                    post.replies
+                    thread.replies
                   } Balasan</span>
-                  <span class="text-xs text-gray-500">${post.time}</span>
+                  <span class="text-xs text-gray-500">${thread.time}</span>
                 </div>
               </div>
             </a>
@@ -1756,8 +1570,8 @@
         // Render Pagination
         renderPagination(totalPages);
 
-        // Animate Posts
-        gsap.from(".post-card", {
+        // Animate Threads
+        gsap.from(".thread-card", {
           opacity: 0,
           y: 20,
           duration: 0.5,
@@ -1773,7 +1587,7 @@
 
         // Previous Button
         paginationContainer.innerHTML += `
-          <button class="pagination-btn" onclick="renderCommunityPosts(${
+          <button class="pagination-btn" onclick="renderForumThreads(${
             currentPage - 1
           })" ${currentPage === 1 ? "disabled" : ""}>
             Sebelumnya
@@ -1785,13 +1599,13 @@
           paginationContainer.innerHTML += `
             <button class="pagination-btn ${
               i === currentPage ? "active" : ""
-            }" onclick="renderCommunityPosts(${i})">${i}</button>
+            }" onclick="renderForumThreads(${i})">${i}</button>
           `;
         }
 
         // Next Button
         paginationContainer.innerHTML += `
-          <button class="pagination-btn" onclick="renderCommunityPosts(${
+          <button class="pagination-btn" onclick="renderForumThreads(${
             currentPage + 1
           })" ${currentPage === totalPages ? "disabled" : ""}>
             Selanjutnya
@@ -1830,7 +1644,7 @@
       // Share Post
       function sharePost(postId) {
         const post = communityPosts.find((p) => p.id === postId);
-        const url = `/forum.html?community=${post.communityId}&thread=${post.id}`;
+        const url = `/thread.html?community=${post.communityId}&thread=${post.id}`;
         navigator.clipboard.writeText(window.location.origin + url);
         alert("Link thread telah disalin ke clipboard!");
       }
@@ -1930,17 +1744,12 @@
             ?.dataset.filter || "all"
         );
         if (notification.type === "post" || notification.type === "reply") {
-          window.location.href = `/forum.html?community=${
+          window.location.href = `/thread.html?community=${
             notification.communityId
           }&thread=${notification.threadId || notification.id}`;
         } else if (notification.type === "event") {
-          viewEvent(notification.id);
+          window.location.href = `/agenda.html?event=${notification.id}`;
         }
-      }
-
-      // View Event
-      function viewEvent(eventId) {
-        window.location.href = `/agenda.html?event=${eventId}`;
       }
 
       // Vote Post
@@ -1949,7 +1758,7 @@
         const post = communityPosts.find((p) => p.id === postId);
         post.votes += value;
         post.lastActivity = new Date().toISOString();
-        renderCommunityPosts(currentPage);
+        renderForumThreads(currentPage);
         if (post.votes >= 20) {
           notifications.unshift({
             id: notifications.length + 1,
@@ -1973,6 +1782,7 @@
         const community =
           communities.find((c) => c.id === communityId) ||
           communities.find((c) => c.id === 999);
+        community.joined = !community.joined;
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = community.joined
           ? `Anda telah bergabung dengan ${community.name}!`
@@ -2000,7 +1810,7 @@
           );
         }
 
-        renderSidebarDetails();
+        renderCommunityDetails();
       }
 
       // Dismiss Notification Bar
@@ -2014,8 +1824,81 @@
           onComplete: () => {
             notificationBar.classList.add("hidden");
             notificationBar.querySelector("p").textContent =
-              "Selamat datang di komunitas! Lihat aktivitas terbaru.";
+              "Selamat datang di forum! Mulai diskusi baru.";
           },
+        });
+      }
+
+      // Initialize TinyMCE
+      tinymce.init({
+        selector: "#new-thread-content",
+        height: 300,
+        menubar: false,
+        plugins: [
+          "advlist autolink lists link image charmap print preview anchor",
+          "searchreplace visualblocks code fullscreen",
+          "insertdatetime media table paste code help wordcount",
+        ],
+        toolbar:
+          "undo redo | formatselect | bold italic underline | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | link image | removeformat | help",
+        placeholder: "Tulis isi diskusi Tuan...",
+        content_style:
+          "body { font-family: Outfit, sans-serif; font-size: 14px; color: #111827; }",
+        setup: (editor) => {
+          editor.on("init", () => {
+            gsap.from(".tox-tinymce", {
+              opacity: 0,
+              y: 20,
+              duration: 0.5,
+              ease: "power3.out",
+            });
+          });
+        },
+      });
+
+      // Create New Thread
+      function createNewThread() {
+        const title = document.getElementById("new-thread-title").value.trim();
+        const content = tinymce.get("new-thread-content").getContent().trim();
+        if (!title || !content) {
+          alert("Judul dan isi diskusi tidak boleh kosong!");
+          return;
+        }
+        const communityId = getCommunityId();
+        const newThread = {
+          id: communityPosts.length + 1,
+          communityId: communityId,
+          title: title,
+          content: content,
+          time: "Baru saja",
+          votes: 0,
+          pinned: false,
+          attachments: [],
+          replies: 0,
+          lastActivity: new Date().toISOString(),
+          author: "Pengguna TARA",
+        };
+        communityPosts.push(newThread);
+        notifications.unshift({
+          id: notifications.length + 1,
+          text: `Diskusi baru di ${communities.find((c) => c.id === communityId).name}: '${title}'`,
+          time: "Baru saja",
+          communityId: communityId,
+          read: false,
+          type: "post",
+          threadId: newThread.id,
+        });
+        document.getElementById("new-thread-title").value = "";
+        tinymce.get("new-thread-content").setContent("");
+        renderForumThreads(1);
+        renderNotifications();
+        anime({
+          targets: ".new-thread-form",
+          scale: [1, 1.05, 1],
+          duration: 300,
+          easing: "easeOutQuad",
         });
       }
 
@@ -2059,8 +1942,8 @@
       document.getElementById("notification-bar").classList.remove("hidden");
       renderCommunityDetails();
       renderSidebarDetails();
-      renderCommunityPosts();
+      renderForumThreads();
       renderNotifications();
     </script>
   </body>
-</html>f
+</html>

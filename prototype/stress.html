@@ -59,8 +59,8 @@
         .article-tags button:hover{background:var(--tara-dark);color:#fff;}
         
         /* comment panel */
-        .comment-panel{position:fixed;top:5.25rem;right:1.25rem;width:340px;max-height:calc(100vh-6rem);display:flex;flex-direction:column;background:#ffffff;border:1px solid #e5e7eb;border-radius:1rem;box-shadow:0 10px 30px rgba(0,0,0,.08);z-index:50;padding:1rem;}
-        .comment-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+        .comment-panel {position: sticky;top: 6rem;right: auto;width: 100%;max-height: calc(100vh - 8rem);display: flex;flex-direction: column;background: #ffffff;border: 1px solid #e5e7eb;border-radius: 1rem;box-shadow: 0 10px 30px rgba(0,0,0,.08);z-index: 30;padding: 1rem;margin-bottom: 2rem;}        
+        .comment-panel-header{z-index: 40;display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
         .comment-panel-header h3{font-weight:600;font-size:1rem;}
         .comment-scroll{flex:1;overflow-y:auto;scrollbar-width:thin;padding-right:.25rem;}
         .comment-card{position:relative;padding:.75rem;border:1px solid #f3f4f6;border-radius:.75rem;background:#fff;margin-bottom:.75rem;font-size:.875rem;}
@@ -83,7 +83,7 @@
         .comment-form textarea{resize:none;width:100%;min-height:60px;max-height:160px;}
         .comment-char{text-align:right;font-size:.7rem;color:var(--tara-muted);margin-top:.25rem;}
         /* mobile comment toggle */
-        #mobile-comment-toggle{position:fixed;bottom:1.25rem;right:1rem;z-index:55;padding:.5rem .875rem;font-size:.875rem;border-radius:9999px;background:var(--tara-dark);color:#fff;display:none;align-items:center;gap:.35rem;box-shadow:0 8px 24px rgba(0,0,0,.2);}        
+        #mobile-comment-toggle{z-index: 55;position:fixed;bottom:1.25rem;right:1rem;z-index:55;padding:.5rem .875rem;font-size:.875rem;border-radius:9999px;background:var(--tara-dark);color:#fff;display:none;align-items:center;gap:.35rem;box-shadow:0 8px 24px rgba(0,0,0,.2);}        
         #mobile-comment-toggle .count{background:var(--tara-accent);color:#000;font-size:.75rem;padding:0 .4rem;border-radius:.375rem;font-weight:700;}
         /* responsive */
         @media (max-width:1023.98px){
@@ -91,7 +91,7 @@
             #mobile-comment-toggle{display:inline-flex;}
         }
         /* show comment drawer on mobile */
-        .comment-drawer{position:fixed;inset:0 0 auto 0;bottom:0;background:#fff;z-index:70;display:none;flex-direction:column;max-height:85vh;border-top-left-radius:1rem;border-top-right-radius:1rem;box-shadow:0 -8px 32px rgba(0,0,0,.25);}
+        .comment-drawer{z-index: 70;position:fixed;inset:0 0 auto 0;bottom:0;background:#fff;z-index:70;display:none;flex-direction:column;max-height:85vh;border-top-left-radius:1rem;border-top-right-radius:1rem;box-shadow:0 -8px 32px rgba(0,0,0,.25);}
         .comment-drawer.open{display:flex;}
         .comment-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid #e5e7eb;font-weight:600;}
         .comment-drawer-body{flex:1;padding:1rem 1.25rem;overflow-y:auto;}
@@ -123,79 +123,85 @@
         </div>
     </header>
 
-    <main class="w-full pt-32 pb-32">
-        <!-- Article Header / Hero -->
-        <section class="hero-wrapper px-4" id="article-hero">
-            <div class="flex flex-col items-center text-center gap-6">
-                <!-- author -->
-                <div class="flex items-center gap-3 text-sm text-gray-600">
-                    <img id="article-author-avatar" src="https://i.pravatar.cc/60?img=22" alt="avatar" class="w-10 h-10 rounded-full object-cover"/>
-                    <div class="text-left leading-tight">
-                        <div id="article-author-name" class="font-semibold text-[var(--tara-dark)]">Uploader Contoh</div>
-                        <div id="article-posted-rel" class="text-xs text-gray-500">Diposting hari ini</div>
+    <main class="w-full pt-32 pb-32 grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
+        <!-- Left Column - Article Content -->
+        <div class="lg:col-span-8">
+            <!-- Article Header / Hero -->
+            <section class="hero-wrapper px-4" id="article-hero">
+                <div class="flex flex-col items-center text-center gap-6">
+                    <!-- author -->
+                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                        <img id="article-author-avatar" src="https://i.pravatar.cc/60?img=22" alt="avatar" class="w-10 h-10 rounded-full object-cover"/>
+                        <div class="text-left leading-tight">
+                            <div id="article-author-name" class="font-semibold text-[var(--tara-dark)]">Uploader Contoh</div>
+                            <div id="article-posted-rel" class="text-xs text-gray-500">Diposting hari ini</div>
+                        </div>
+                        <button id="follow-btn" class="ml-2 px-3 py-1 text-xs rounded-full bg-[var(--tara-accent)] text-black font-semibold hover:bg-yellow-300 transition">Follow</button>
                     </div>
-                    <button id="follow-btn" class="ml-2 px-3 py-1 text-xs rounded-full bg-[var(--tara-accent)] text-black font-semibold hover:bg-yellow-300 transition">Follow</button>
-                </div>
-                <!-- hero image -->
-                <div class="hero-img-wrapper group" id="article-hero-image-wrapper">
-                    <img id="article-hero-image" src="https://picsum.photos/id/1015/1200/800" alt="Gambar Artikel"/>
-                    <div class="float-actions hidden lg:flex" id="float-actions">
-                        <button id="float-share" title="Bagikan"><i class="fas fa-share"></i></button>
-                        <div class="relative">
-                            <button id="float-like" title="Suka"><i class="fas fa-heart"></i></button>
-                            <span id="float-like-badge" class="badge hidden">0</span>
+                    <!-- hero image -->
+                    <div class="hero-img-wrapper group" id="article-hero-image-wrapper">
+                        <img id="article-hero-image" src="https://picsum.photos/id/1015/1200/800" alt="Gambar Artikel"/>
+                        <div class="float-actions hidden lg:flex" id="float-actions">
+                            <button id="float-share" title="Bagikan"><i class="fas fa-share"></i></button>
+                            <div class="relative">
+                                <button id="float-like" title="Suka"><i class="fas fa-heart"></i></button>
+                                <span id="float-like-badge" class="badge hidden">0</span>
+                            </div>
                         </div>
                     </div>
+                    <!-- title -->
+                    <h1 id="article-title" class="text-3xl md:text-4xl font-bold max-w-3xl leading-tight" style="font-family:'Space Grotesk',sans-serif;">Judul Artikel</h1>
+                    <!-- meta -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+                        <span id="article-date-meta"><i class="fas fa-calendar-alt mr-1"></i>–</span>
+                        <span id="article-readtime-meta"><i class="fas fa-book-open mr-1"></i>– menit baca</span>
+                        <span id="article-views-meta"><i class="fas fa-eye mr-1"></i>0 Dilihat</span>
+                        <span id="article-category-meta" class="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-gray-700"></span>
+                    </div>
                 </div>
-                <!-- title -->
-                <h1 id="article-title" class="text-3xl md:text-4xl font-bold max-w-3xl leading-tight" style="font-family:'Space Grotesk',sans-serif;">Judul Artikel</h1>
-                <!-- meta -->
-                <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
-                    <span id="article-date-meta"><i class="fas fa-calendar-alt mr-1"></i>–</span>
-                    <span id="article-readtime-meta"><i class="fas fa-book-open mr-1"></i>– menit baca</span>
-                    <span id="article-views-meta"><i class="fas fa-eye mr-1"></i>0 Dilihat</span>
-                    <span id="article-category-meta" class="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-gray-700"></span>
+            </section>
+
+            <!-- Article Body -->
+            <article id="article-body" class="article-content max-w-3xl mx-auto mt-16 px-4 prose prose-sm sm:prose-base lg:prose-lg prose-img:rounded-xl prose-headings:font-semibold prose-a:text-[var(--tara-dark)]">
+                <!-- body injected by JS -->
+            </article>
+
+            <!-- Article Tags -->
+            <section class="max-w-3xl mx-auto mt-10 px-4">
+                <div class="flex flex-wrap gap-2 article-tags" id="article-tags"></div>
+            </section>
+
+            <!-- Prev / Next -->
+            <nav class="max-w-3xl mx-auto mt-16 px-4 grid grid-cols-1 sm:grid-cols-2 gap-4" id="article-prev-next">
+                <!-- injected -->
+            </nav>
+
+            <!-- Recommended -->
+            <section class="max-w-6xl mx-auto mt-24 px-4" id="article-reco-wrapper">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center" style="font-family:'Space Grotesk',sans-serif;">Artikel Rekomendasi Lainnya<span class="text-[var(--tara-accent)] ml-1">●</span></h2>
+                <div id="article-reco" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- cards injected -->
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Article Body -->
-        <article id="article-body" class="article-content max-w-3xl mx-auto mt-16 px-4 prose prose-sm sm:prose-base lg:prose-lg prose-img:rounded-xl prose-headings:font-semibold prose-a:text-[var(--tara-dark)]">
-            <!-- body injected by JS -->
-        </article>
-
-        <!-- Article Tags -->
-        <section class="max-w-3xl mx-auto mt-10 px-4">
-            <div class="flex flex-wrap gap-2 article-tags" id="article-tags"></div>
-        </section>
-
-        <!-- Prev / Next -->
-        <nav class="max-w-3xl mx-auto mt-16 px-4 grid grid-cols-1 sm:grid-cols-2 gap-4" id="article-prev-next">
-            <!-- injected -->
-        </nav>
-
-        <!-- Recommended -->
-        <section class="max-w-6xl mx-auto mt-24 px-4" id="article-reco-wrapper">
-            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center" style="font-family:'Space Grotesk',sans-serif;">Artikel Rekomendasi Lainnya<span class="text-[var(--tara-accent)] ml-1">●</span></h2>
-            <div id="article-reco" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- cards injected -->
-            </div>
-        </section>
+        <!-- Right Column - Comment Section -->
+        <div class="lg:col-span-4">
+            <!-- Desktop Comment Panel -->
+            <aside class="comment-panel" id="comment-panel" aria-labelledby="comment-panel-title">
+                <div class="comment-panel-header">
+                    <h3 id="comment-panel-title">Komentar</h3>
+                    <span id="comment-count-top" class="text-xs text-gray-500"></span>
+                </div>
+                <div class="comment-scroll" id="comment-list"></div>
+                <div class="comment-form" id="comment-form-desktop">
+                    <textarea id="new-comment-text" maxlength="300" placeholder="Tambahkan komentar... (Maks 300 karakter)" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+                    <div class="comment-char" id="comment-char-count">0/300</div>
+                    <button id="submit-comment" class="mt-2 w-full px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </aside>
+        </div>
     </main>
-
-    <!-- Desktop Comment Panel -->
-    <aside class="comment-panel" id="comment-panel" aria-labelledby="comment-panel-title">
-        <div class="comment-panel-header">
-            <h3 id="comment-panel-title">Komentar</h3>
-            <span id="comment-count-top" class="text-xs text-gray-500"></span>
-        </div>
-        <div class="comment-scroll" id="comment-list"></div>
-        <div class="comment-form" id="comment-form-desktop">
-            <textarea id="new-comment-text" maxlength="300" placeholder="Tambahkan komentar... (Maks 300 karakter)" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"></textarea>
-            <div class="comment-char" id="comment-char-count">0/300</div>
-            <button id="submit-comment" class="mt-2 w-full px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
-        </div>
-    </aside>
 
     <!-- Mobile Comment Toggle -->
     <button id="mobile-comment-toggle"><i class="fas fa-comments"></i><span>Komentar</span><span class="count" id="mobile-comment-count">0</span></button>
@@ -684,4 +690,4 @@
 
     </script>
 </body>
-</html> 
+</html>
