@@ -266,7 +266,7 @@
 
         .search-input {
             padding: 0.5rem 1rem 0.5rem 2.5rem;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="%23000000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 11.65a5.65 5.65 0 11-11.3 0 5.65  Devil="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 11.65a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" /></svg>') no-repeat 0.75rem center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="%23000000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 11.65a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" /></svg>') no-repeat 0.75rem center;
             background-size: 1rem;
             border: 1px solid #000000;
             border-radius: 9999px;
@@ -308,7 +308,7 @@
             z-index: 30;
             opacity: 0;
             visibility: hidden;
-            transition: opacity  sle=0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         #mobileMenuOverlay.open {
@@ -321,33 +321,6 @@
             max-width: 260px;
             background: #FFFFFF;
             border-left: 1px solid #000000;
-        }
-
-        /* Modal Styling */
-        #eventModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        #eventModal .modal-content {
-            background: #FFFFFF;
-            border-radius: 12px;
-            padding: 16px;
-            max-width: 500px;
-            width: 90%;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        #eventModal.show .modal-content {
-            transform: scale(1);
-            opacity: 1;
         }
 
         /* Hero Section */
@@ -367,12 +340,6 @@
             transform: scale(1.02);
         }
 
-        /* Testimonials Section */
-        .testimonials {
-            background: #FFFFFF;
-            padding: 48px 16px;
-        }
-
         /* Pagination Styling */
         .pagination {
             display: flex;
@@ -385,7 +352,7 @@
 
         .pagination button {
             background: #FFFFFF;
-            border.Texture=1px solid #000000;
+            border: 1px solid #000000;
             border-radius: 8px;
             padding: 8px 16px;
             font-size: 0.875rem;
@@ -409,51 +376,6 @@
         .pagination button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        /* Featured Collections Section */
-        .collections {
-            background: #FFFFFF;
-            padding: 48px 16px;
-        }
-
-        .collection-card {
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 16px;
-            margin: 24px auto;
-            max-width: 800px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .collection-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        .collection-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border: 2px solid #000000;
-        }
-
-        .collection-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease, filter 0.4s ease;
-        }
-
-        .collection-card:hover .collection-image {
-            transform: scale(1.1);
-            filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 0, 0, 0.2));
         }
 
         /* Text Gradient Animation */
@@ -484,13 +406,13 @@
                 align-items: flex-start;
             }
 
-            .event-card, .collection-card {
+            .event-card {
                 display: flex;
                 align-items: center;
                 padding: 24px;
             }
 
-            .card-image-wrapper, .collection-image-wrapper {
+            .card-image-wrapper {
                 width: 35%;
                 height: 300px;
                 margin-right: 16px;
@@ -515,19 +437,19 @@
                 display: none;
             }
 
-            .event-card, .collection-card {
+            .event-card {
                 padding: 12px;
             }
 
-            .card-text h2, .collection-card h2 {
+            .card-text h2 {
                 font-size: 1.5rem;
             }
 
-            .card-text p, .collection-card p {
+            .card-text p {
                 font-size: 0.75rem;
             }
 
-            .card-image-wrapper, .collection-image-wrapper {
+            .card-image-wrapper {
                 height: 200px;
             }
 
@@ -593,7 +515,7 @@
         </div>
     </section>
 
-    <main class="pt-24 flex flex-col md:flex-row min-h-screen px-4">
+    <main class="pt-24 relative bottom-24 flex flex-col md:flex-row min-h-screen px-4">
         <aside id="sidebar" class="w-full md:w-64 p-4">
             <button id="toggleSidebar" class="md:hidden text-black mb-4"><i class="fas fa-filter mr-2"></i>Filters</button>
             <div>
@@ -603,7 +525,7 @@
                     <p class="text-xs text-neutral-600 mb-3">Ikuti pameran terkini untuk inspirasi seni</p>
                     <ul class="space-y-2">
                         <li>
-                            <a href="detail_event.html?id=1" class="block p-2 rounded-lg transition">
+                            <a href="detail_event1.html" class="block p-2 rounded-lg transition">
                                 <p class="text-sm font-semibold text-black">Abstract Expressionism</p>
                                 <p class="text-xs text-neutral-600 mt-1">25 Jul 2025 · TARA Gallery</p>
                             </a>
@@ -661,7 +583,7 @@
                 <div class="event-card" data-event-id="1" data-category="painting">
                     <div class="card-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600" alt="Abstract Expressionism Exhibit at TARA Gallery" class="card-image" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Available'" />
-                        <a href="detail_event.html?id=1" class="image-overlay">View Exhibition</a>
+                        <a href="detail_event1.html" class="image-overlay">View Exhibition</a>
                     </div>
                     <div class="card-text">
                         <h2 class="text-gradient">Abstract Expressionism Exhibit</h2>
@@ -806,27 +728,6 @@
             © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
         </div>
     </footer>
-
-    <!-- Event Modal -->
-    <div id="eventModal" class="fixed inset-0 hidden">
-        <div class="modal-content">
-            <div class="flex justify-end">
-                <button id="closeModalBtn" class="text-black hover:text-black transform hover:scale-110 transition" aria-label="Close modal">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div id="modalContent" class="text-left">
-                <img id="modalImage" src="" alt="" class="w-full h-40 object-cover rounded-lg mb-3" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Available'" />
-                <h2 id="modalTitle" class="text-xl font-bold font-['Space Grotesk'] mb-3 text-gradient"></h2>
-                <p id="modalDate" class="text-black mb-2 text-sm"></p>
-                <p id="modalTime" class="text-black mb-2 text-sm"></p>
-                <p id="modalLocation" class="text-black mb-3 text-sm"></p>
-                <p id="modalDescription" class="text-black text-sm"></p>
-            </div>
-        </div>
-    </div>
 
     <script>
         // Initialize particles.js
@@ -998,88 +899,6 @@
             });
         });
 
-        // Modal Logic
-        const modal = document.getElementById('eventModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalContent = {
-            1: {
-                title: 'Abstract Expressionism Exhibit',
-                image: 'https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600',
-                date: '25 Jul 2025',
-                time: '10:00 - 14:00',
-                location: 'TARA Gallery',
-                description: 'Explore vibrant abstract works with a guided tour by the curator.'
-            },
-            2: {
-                title: 'Modern Sculpture Exhibit',
-                image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600',
-                date: '30 Jul 2025',
-                time: '11:00 - 16:00',
-                location: 'Downtown Gallery',
-                description: 'Discover bold sculptural forms in an immersive setting.'
-            },
-            3: {
-                title: 'Digital Art Symposium',
-                image: 'https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600',
-                date: '18 Jul 2025',
-                time: '15:00 - 17:00',
-                location: 'Zoom',
-                description: 'Join artists discussing the future of digital creativity.'
-            },
-            4: {
-                title: 'Photography Showcase',
-                image: 'https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600',
-                date: '28 Jul 2025',
-                time: '09:00 - 17:00',
-                location: 'TARA Studio',
-                description: 'Captivating moments captured by emerging photographers.'
-            },
-            5: {
-                title: 'Contemporary Painting Workshop',
-                image: 'https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600',
-                date: '15 Aug 2025',
-                time: '13:00 - 16:00',
-                location: 'Webex',
-                description: 'Learn painting techniques with renowned artists.'
-            }
-        };
-
-        document.querySelectorAll('.event-card').forEach(card => {
-            card.querySelector('.image-overlay').addEventListener('click', (e) => {
-                e.preventDefault();
-                const eventId = card.dataset.eventId;
-                window.location.href = `detail_event.html?id=${eventId}`;
-            });
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-        });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                modal.classList.remove('show');
-                setTimeout(() => { modal.style.display = 'none'; }, 300);
-            }
-        });
-
-        // Modal Keyboard Navigation
-        modal.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                const first = focusable[0];
-                const last = focusable[focusable.length - 1];
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
-                } else if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault();
-                    first.focus();
-                }
-            }
-        });
-
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', () => {
             gsap.fromTo(".hero", 
@@ -1101,18 +920,6 @@
             gsap.fromTo("header", 
                 { opacity: 0, y: -30 }, 
                 { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.05 }
-            );
-            gsap.fromTo(".testimonials", 
-                { opacity: 0, y: 30 }, 
-                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.4 }
-            );
-            gsap.fromTo(".collections", 
-                { opacity: 0, y: 30 }, 
-                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.5 }
-            );
-            gsap.fromTo(".collection-card", 
-                { opacity: 0, y: 40 }, 
-                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.15, delay: 0.6 }
             );
             gsap.fromTo("footer", 
                 { opacity: 0, y: 30 }, 
