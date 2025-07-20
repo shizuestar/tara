@@ -55,7 +55,457 @@
             background: linear-gradient(to bottom right, #eff6ff, #ede9fe);
             z-index: -2;
         }
+
+        * {
+            font-family: "Space Grotesk", sans-serif;
+        }
+
+        .animate-ping-slow {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes ping-slow {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            75%,
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg,
+                    #000000 0%,
+                    #4a4a4a 50%,
+                    #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: rotate(var(--rotate-angle)) translateY(0);
+            animation: sway var(--sway-duration) ease-in-out infinite;
+            perspective: 1000px;
+        }
+
+        @keyframes sway {
+
+            0%,
+            100% {
+                transform: rotate(var(--rotate-angle)) translateY(0);
+            }
+
+            50% {
+                transform: rotate(calc(var(--rotate-angle) + 2deg)) translateY(5px);
+            }
+        }
+
+        .gallery-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            transition: left 0.6s;
+            z-index: 10;
+        }
+
+        .gallery-item:hover::before {
+            left: 100%;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-20px) scale(1.1) rotate(0deg);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-item.active {
+            transform: scale(1.2) rotate(0deg);
+            z-index: 20;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+        }
+
+        .rope {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background: #4a4a4a;
+            transform-origin: top;
+            transform: rotate(var(--rope-angle));
+            z-index: 5;
+            animation: rope-sway var(--sway-duration) ease-in-out infinite;
+        }
+
+        @keyframes rope-sway {
+
+            0%,
+            100% {
+                transform: rotate(var(--rope-angle));
+            }
+
+            50% {
+                transform: rotate(calc(var(--rope-angle) + 1deg));
+            }
+        }
+
+        .hero-bg {
+            background: radial-gradient(circle at 20% 50%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
+                radial-gradient(circle at 80% 20%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
+                radial-gradient(circle at 40% 80%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
+                linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-primary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    transparent);
+            transition: left 0.6s;
+        }
+
+        .button-primary:hover::before {
+            left: 100%;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border: 2px solid #000000;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-secondary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            transition: left 0.4s;
+            z-index: 1;
+        }
+
+        .button-secondary:hover::before {
+            left: 0;
+        }
+
+        .button-secondary span {
+            position: relative;
+            z-index: 2;
+            transition: color 0.4s;
+        }
+
+        .button-secondary:hover span {
+            color: white;
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            z-index: 0;
+        }
+
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            transform: rotate(45deg);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float 8s ease-in-out infinite;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg,
+                    rgba(0, 0, 0, 0.9) 0%,
+                    rgba(0, 0, 0, 0.4) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-item:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #000000;
+        }
+
+        .stats-number {
+            background: linear-gradient(135deg, #000000, #4a4a4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-appear {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: appear 1s ease forwards;
+        }
+
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-appear:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .text-appear:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .text-appear:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .text-appear:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .featured-bg {
+            background: linear-gradient(135deg,
+                    #f8f8f8 0%,
+                    #ffffff 50%,
+                    #f0f0f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.4);
+            border-radius: 50%;
+            animation: drift 12s linear infinite;
+        }
+
+        .particle-1 {
+            width: 25px;
+            height: 25px;
+            top: 5%;
+            left: 10%;
+        }
+
+        .particle-2 {
+            width: 15px;
+            height: 15px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        .particle-3 {
+            width: 20px;
+            height: 20px;
+            top: 30%;
+            left: 40%;
+            animation-delay: 8s;
+        }
+
+        .particle-4 {
+            width: 18px;
+            height: 18px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(120vw, 100vh);
+                opacity: 0;
+            }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1200px;
+            padding: 40px 0;
+        }
+
+        .flip-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .gallery-item.flipped .flip-card {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flip-card-back p {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-back a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+        }
     </style>
+
 </head>
 
 <body class="relative font-vantage overflow-x-hidden">
@@ -187,153 +637,121 @@
         </section>
 
 
-        <!-- Section Karya -->
-        <section class="w-full px-6 py-16 bg-white/60 backdrop-blur-sm">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-10 text-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Postingan terakhir mu</h2>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-                        <img src="https://picsum.photos/400/300?random=1" alt="Karya 1"
-                            class="w-full h-48 object-cover" />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg text-gray-800">Desain Portofolio</h3>
-                            <p class="text-sm text-gray-500 mt-1">UI/UX | 12 Juli 2025</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-                        <img src="https://picsum.photos/400/300?random=2" alt="Karya 2"
-                            class="w-full h-48 object-cover" />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg text-gray-800">Landing Page Startup</h3>
-                            <p class="text-sm text-gray-500 mt-1">Frontend | 10 Juli 2025</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-                        <img src="https://picsum.photos/400/300?random=3" alt="Karya 3"
-                            class="w-full h-48 object-cover" />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg text-gray-800">Dashboard Admin</h3>
-                            <p class="text-sm text-gray-500 mt-1">Tailwind | 8 Juli 2025</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-12 text-center">
-                    <a href="/explore.html"
-                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">
-                        Lihat Semua Karya
-                    </a>
-                </div>
+        <!-- Agenda Section -->
+        <section id="agenda" class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
             </div>
-        </section>
-
-        <!-- SECTION: PROYEK SAYA -->
-        <section class="w-full px-6 py-16 bg-gradient-to-b from-white/60 to-indigo-50/40 backdrop-blur-sm">
-            <div class="max-w-7xl mx-auto">
-
-                <!-- Header -->
-                <div class="mb-10 text-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Proyek Saya <span class="text-indigo-500">·</span>
-                        Kolaborasi Aktif</h2>
-                    <p class="mt-2 text-sm text-gray-500">Lanjutkan task & berdiskusi bareng tim kamu 🚀</p>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-24">
+                    <h2 class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear">
+                        postingan terakhir <span class="text-gradient">Anda</span>
+                    </h2>
+                    <p class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear">
+                        Rayakan kreativitas melalui webinar, pameran virtual, dan kontes
+                        mingguan
+                    </p>
                 </div>
-
-                <!-- Grid Proyek -->
-                <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-
-                    <!-- Card 1 -->
-                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col">
-                        <div class="flex items-start justify-between">
-                            <h3 class="text-lg font-semibold text-gray-800">SIMAPRES SKANDAKRA</h3>
-                            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-600 text-xs rounded-full">Mobile
-                                App</span>
-                        </div>
-                        <div class="flex -space-x-3 mt-4">
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=1" />
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=2" />
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=3" />
-                            <span
-                                class="w-9 h-9 flex items-center justify-center text-xs bg-gray-200 rounded-full border-2 border-white">+4</span>
-                        </div>
-                        <div class="mt-6">
-                            <div class="flex justify-between mb-1 text-xs font-medium text-gray-600">
-                                <span>Progres</span><span>70%</span>
+                <div class="gallery-grid">
+                    <div class="gallery-item" style="
+              --rotate-angle: -2deg;
+              --rope-angle: -2deg;
+              --sway-duration: 6s;
+              --parallax: 0.2;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=29" alt="Webinar Portofolio"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Webinar Portofolio
+                                    </div>
+                                    <div class="text-sm opacity-80">10 Agustus 2025</div>
+                                    <div class="text-sm opacity-80">Webinar</div>
+                                </div>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full">
-                                <div class="h-2 rounded-full bg-indigo-500" style="width:70%"></div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pelajari cara membangun portofolio yang memikat untuk karir
+                                    kreatif.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
+                                    Sekarang</a>
                             </div>
                         </div>
-                        <a href="#"
-                            class="mt-6 inline-block text-center text-sm font-semibold px-4 py-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition">
-                            Lanjutkan
-                        </a>
                     </div>
-
-                    <!-- Card 2 -->
-                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col">
-                        <div class="flex items-start justify-between">
-                            <h3 class="text-lg font-semibold text-gray-800">Website Portofolio Tim</h3>
-                            <span class="px-2 py-0.5 bg-green-100 text-green-600 text-xs rounded-full">Frontend</span>
-                        </div>
-                        <div class="flex -space-x-3 mt-4">
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=4" />
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=5" />
-                            <span
-                                class="w-9 h-9 flex items-center justify-center text-xs bg-gray-200 rounded-full border-2 border-white">+2</span>
-                        </div>
-                        <div class="mt-6">
-                            <div class="flex justify-between mb-1 text-xs font-medium text-gray-600">
-                                <span>Progres</span><span>45%</span>
+                    <div class="gallery-item" style="
+              --rotate-angle: 3deg;
+              --rope-angle: 3deg;
+              --sway-duration: 7s;
+              --parallax: 0.15;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=30" alt="Pameran Virtual"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Pameran Virtual
+                                    </div>
+                                    <div class="text-sm opacity-80">15 Agustus 2025</div>
+                                    <div class="text-sm opacity-80">Pameran</div>
+                                </div>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full">
-                                <div class="h-2 rounded-full bg-green-500" style="width:45%"></div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pameran daring karya terbaik dari komunitas TARA.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
+                                    Sekarang</a>
                             </div>
                         </div>
-                        <a href="#"
-                            class="mt-6 inline-block text-center text-sm font-semibold px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition">
-                            Lanjutkan
-                        </a>
                     </div>
-
-                    <!-- Card 3 (Baru) -->
-                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col">
-                        <div class="flex items-start justify-between">
-                            <h3 class="text-lg font-semibold text-gray-800">Sistem API Auth</h3>
-                            <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded-full">Backend</span>
-                        </div>
-                        <div class="flex -space-x-3 mt-4">
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=6" />
-                            <img class="w-9 h-9 rounded-full border-2 border-white"
-                                src="https://i.pravatar.cc/36?img=7" />
-                        </div>
-                        <div class="mt-6">
-                            <div class="flex justify-between mb-1 text-xs font-medium text-gray-600">
-                                <span>Progres</span><span>88%</span>
+                    <div class="gallery-item" style="
+              --rotate-angle: -1deg;
+              --rope-angle: -1deg;
+              --sway-duration: 5.5s;
+              --parallax: 0.25;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=31" alt="Kontes Puisi"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Kontes Puisi
+                                    </div>
+                                    <div class="text-sm opacity-80">Setiap Minggu</div>
+                                    <div class="text-sm opacity-80">Kontes</div>
+                                </div>
                             </div>
-                            <div class="w-full bg-gray-200 h-2 rounded-full">
-                                <div class="h-2 rounded-full bg-red-500" style="width:88%"></div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pamerkan bakat menulis puisi dan menangkan hadiah menarik.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Ikuti
+                                    Kontes</a>
                             </div>
                         </div>
-                        <a href="#"
-                            class="mt-6 inline-block text-center text-sm font-semibold px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition">
-                            Lanjutkan
-                        </a>
                     </div>
-
                 </div>
-
-                <!-- Tombol View More -->
-                <div class="mt-12 text-center">
-                    <a href="/projects.html"
-                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-black transition">
-                        Lihat Semua Proyek
+                <div class="text-center mt-16 text-appear">
+                    <a href="/agenda"
+                        class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide">
+                        Lihat Semua
                     </a>
                 </div>
             </div>

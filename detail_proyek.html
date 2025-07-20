@@ -20,6 +20,30 @@
             margin: 0;
             padding: 0;
         }
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+        .perspective {
+            perspective: 1200px;
+        }
+        .hover-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+        .hover-3d .inner {
+            transform: rotateY(0deg) rotateX(0deg);
+            transition: transform 0.4s ease;
+        }
+        .hover-3d:hover .inner {
+            transform: rotateY(8deg) rotateX(4deg);
+        }
+        .hover-3d:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
         #particles-js {
             position: fixed;
             top: 0;
@@ -44,6 +68,14 @@
             border-radius: 9999px;
             margin-left: 0.5rem;
         }
+        .badge-populer {
+            background: #facc15;
+            color: #111827;
+        }
+        .badge-baru {
+            background: #d1fae5;
+            color: #065f46;
+        }
         .progress-bar {
             height: 6px;
             background: #e5e7eb;
@@ -59,11 +91,6 @@
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .member-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         .timeline-event {
             position: relative;
@@ -87,8 +114,14 @@
             left: 0.95rem;
             top: 1rem;
             width: 2px;
-            height: 100%;
+            height: calc(100% - 1rem);
             background: #e5e7eb;
+        }
+        .task-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
         }
         .comment-card {
             background: #ffffff;
@@ -110,8 +143,156 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .action-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .join-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .join-btn:hover {
+            transform: translateY(-2px) scale(1.05);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-left: 1px solid #e5e7eb;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .notification-modal.open {
+            transform: translateX(0);
+        }
+        .notification-modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #374151;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .notification-modal .close-btn:hover {
+            transform: scale(1.2);
+        }
+        .notification-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .notification-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .notification-card.unread {
+            background: #f3f4f6;
+        }
+        .notification-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        .notification-card .time {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 2px solid #e5e7eb;
+            background: #111827;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: #111827;
+            color: #ffffff;
+            border-color: #facc15;
+            transform: scale(1.05);
+        }
+        .filter-btn:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+            transform: scale(1.05);
+        }
+        .comment-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .comment-action-btn {
+            font-size: 0.75rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .comment-action-btn:hover {
+            color: #1f2937;
+        }
+        .comment-action-btn.liked {
+            color: #ef4444;
+        }
+        .reply-container {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+        }
+        .recommended-project {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .recommended-project img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .recommended-project:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .notification-bar {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+        .tag {
+            color: #3b82f6;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .tag:hover {
+            text-decoration: underline;
         }
         @media (max-width: 768px) {
             .project-header img {
@@ -121,11 +302,37 @@
                 padding: 0.5rem 1.5rem;
                 font-size: 0.85rem;
             }
+            .join-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .notification-modal {
+                width: 100%;
+                max-width: 100%;
+            }
+            .filter-btn {
+                padding: 0.4rem 0.9rem;
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
 <body class="relative overflow-x-hidden">
     <div id="particles-js"></div>
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi</h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
+        </div>
+    </div>
 
     <!-- Header -->
     <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
@@ -144,6 +351,7 @@
         <div class="flex items-center gap-4">
             <input type="text" placeholder="Cari karya, komunitas, proyek..."
                 class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition" />
+            <i class="fas fa-bell text-gray-700 text-lg cursor-pointer hover:text-black transition" onclick="toggleNotifications()"></i>
             <a href="/login" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">Login</a>
         </div>
     </header>
@@ -151,34 +359,43 @@
     <!-- Project Detail Section -->
     <section class="pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="project-header mb-8"></div>
-
+            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
+                <p class="text-sm text-gray-700">Notifikasi placeholder.</p>
+            </div>
+            <div class="project-header mb-8">
+                <div class="inner"></div>
+            </div>
             <!-- Team Members -->
             <div class="mb-12">
                 <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Anggota Tim</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container"></div>
             </div>
-
             <!-- Project Timeline -->
             <div class="mb-12">
                 <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Linimasa Proyek</h2>
                 <div class="timeline"></div>
             </div>
-
             <!-- Task Progress Tracker -->
             <div class="mb-12">
                 <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Progres Tugas</h2>
-                <div class="grid grid-cols-1 gap-4"></div>
+                <div class="grid grid-cols-1 gap-4 tasks-container"></div>
             </div>
-
             <!-- Comments Section -->
             <div class="mb-12">
-                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-black" style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
+                    <button id="show-hidden-comments" class="join-btn bg-gray-600 text-white hover:bg-gray-700 hidden"><i class="fas fa-eye"></i> Tampilkan Komentar Tersembunyi</button>
+                </div>
                 <div class="mb-4">
-                    <textarea class="w-full p-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="4" placeholder="Tulis komentar Anda..."></textarea>
-                    <button class="mt-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition">Kirim Komentar</button>
+                    <textarea id="comment-input" class="w-full p-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="4" placeholder="Tulis komentar Anda..."></textarea>
+                    <button id="submit-comment" class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-2"><i class="fas fa-paper-plane"></i> Kirim Komentar</button>
                 </div>
                 <div class="comments-container"></div>
+            </div>
+            <!-- Recommended Collaborations -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Rekomendasi Kolaborasi Lainnya</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects"></div>
             </div>
         </div>
     </section>
@@ -247,13 +464,14 @@
     </footer>
 
     <script>
-        // Simulated Project Data (same as the project listing page)
+        // Simulated Project Data (synchronized with index.html)
         const projects = [
             {
                 id: 1,
                 name: "Aplikasi Edukasi Kode",
                 category: "coding",
                 progress: 70,
+                likes: 10,
                 members: [
                     { name: "Budi Santoso", role: "Lead Developer", profileUrl: "/profil/budi", avatar: "https://picsum.photos/100/100?person1" },
                     { name: "Siti Aisyah", role: "UI/UX Designer", profileUrl: "/profil/siti", avatar: "https://picsum.photos/100/100?person2" },
@@ -275,11 +493,29 @@
                     { name: "Konten Edukasi", progress: 50 }
                 ],
                 comments: [
-                    { user: "John Doe", avatar: "https://picsum.photos/50/50?commenter1", time: "2 jam lalu", text: "Proyek ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi." },
-                    { user: "Jane Smith", avatar: "https://picsum.photos/50/50?commenter2", time: "1 hari lalu", text: "UI/UX-nya sangat menjanjikan. Semoga sukses untuk tim!" }
+                    {
+                        id: 1,
+                        user: "John Doe",
+                        avatar: "https://picsum.photos/50/50?commenter1",
+                        time: "2 jam lalu",
+                        text: "Proyek ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi.",
+                        replies: [],
+                        hidden: false,
+                        likes: 5,
+                        likedBy: []
+                    },
+                    {
+                        id: 2,
+                        user: "Jane Smith",
+                        avatar: "https://picsum.photos/50/50?commenter2",
+                        time: "1 hari lalu",
+                        text: "UI/UX-nya sangat menjanjikan. Semoga sukses untuk tim!",
+                        replies: [],
+                        hidden: false,
+                        likes: 3,
+                        likedBy: []
+                    }
                 ],
-                discord: "https://discord.gg/example1",
-                whatsapp: "https://wa.me/1234567890",
                 populer: true
             },
             {
@@ -287,6 +523,7 @@
                 name: "Proyek Musik Kolaborasi",
                 category: "musik",
                 progress: 45,
+                likes: 8,
                 members: [
                     { name: "Andi Pratama", role: "Komposer", profileUrl: "/profil/andi", avatar: "https://picsum.photos/100/100?person6" },
                     { name: "Lina Sari", role: "Vokalis", profileUrl: "/profil/lina", avatar: "https://picsum.photos/100/100?person7" },
@@ -305,16 +542,25 @@
                     { name: "Mixing", progress: 10 }
                 ],
                 comments: [
-                    { user: "Maya Anggita", avatar: "https://picsum.photos/50/50?commenter3", time: "3 jam lalu", text: "Keren banget konsepnya! Kapan rilis albumnya?" }
-                ],
-                discord: "https://discord.gg/example2",
-                whatsapp: "https://wa.me/0987654321"
+                    {
+                        id: 1,
+                        user: "Maya Anggita",
+                        avatar: "https://picsum.photos/50/50?commenter3",
+                        time: "3 jam lalu",
+                        text: "Keren banget konsepnya! Kapan rilis albumnya?",
+                        replies: [],
+                        hidden: false,
+                        likes: 2,
+                        likedBy: []
+                    }
+                ]
             },
             {
                 id: 3,
                 name: "Desain Poster Kreatif",
                 category: "desain",
                 progress: 88,
+                likes: 12,
                 members: [
                     { name: "Tina Melati", role: "Graphic Designer", profileUrl: "/profil/tina", avatar: "https://picsum.photos/100/100?person9" },
                     { name: "Eko Wijaya", role: "Art Director", profileUrl: "/profil/eko", avatar: "https://picsum.photos/100/100?person10" }
@@ -333,16 +579,25 @@
                     { name: "Produksi", progress: 70 }
                 ],
                 comments: [
-                    { user: "Rian Nugroho", avatar: "https://picsum.photos/50/50?commenter4", time: "5 jam lalu", text: "Desainnya sangat futuristik, sukses selalu!" }
-                ],
-                discord: "https://discord.gg/example3",
-                whatsapp: "https://wa.me/1122334455"
+                    {
+                        id: 1,
+                        user: "Rian Nugroho",
+                        avatar: "https://picsum.photos/50/50?commenter4",
+                        time: "5 jam lalu",
+                        text: "Desainnya sangat futuristik, sukses selalu!",
+                        replies: [],
+                        hidden: false,
+                        likes: 4,
+                        likedBy: []
+                    }
+                ]
             },
             {
                 id: 4,
                 name: "Antologi Puisi Baru",
                 category: "sastra",
                 progress: 60,
+                likes: 15,
                 members: [
                     { name: "Sari Puspita", role: "Penulis", profileUrl: "/profil/sari", avatar: "https://picsum.photos/100/100?person11" },
                     { name: "Adi Nugroho", role: "Editor", profileUrl: "/profil/adi", avatar: "https://picsum.photos/100/100?person12" },
@@ -362,10 +617,18 @@
                     { name: "Ilustrasi", progress: 40 }
                 ],
                 comments: [
-                    { user: "Anita Sari", avatar: "https://picsum.photos/50/50?commenter5", time: "1 hari lalu", text: "Puisi-puisinya sangat menyentuh, kapan terbit?" }
+                    {
+                        id: 1,
+                        user: "Anita Sari",
+                        avatar: "https://picsum.photos/50/50?commenter5",
+                        time: "1 hari lalu",
+                        text: "Puisi-puisinya sangat menyentuh, kapan terbit?",
+                        replies: [],
+                        hidden: false,
+                        likes: 6,
+                        likedBy: []
+                    }
                 ],
-                discord: "https://discord.gg/example4",
-                whatsapp: "https://wa.me/6677889900",
                 populer: true
             },
             {
@@ -373,6 +636,7 @@
                 name: "Aplikasi AI Sederhana",
                 category: "coding",
                 progress: 20,
+                likes: 3,
                 members: [
                     { name: "Fajar Ramadhan", role: "AI Developer", profileUrl: "/profil/fajar", avatar: "https://picsum.photos/100/100?person15" }
                 ],
@@ -387,26 +651,537 @@
                     { name: "Integrasi API", progress: 10 }
                 ],
                 comments: [
-                    { user: "Dika Pratama", avatar: "https://picsum.photos/50/50?commenter6", time: "4 jam lalu", text: "Menarik! Saya ingin ikut berkontribusi." }
+                    {
+                        id: 1,
+                        user: "Dika Pratama",
+                        avatar: "https://picsum.photos/50/50?commenter6",
+                        time: "4 jam lalu",
+                        text: "Menarik! Saya ingin ikut berkontribusi.",
+                        replies: [],
+                        hidden: false,
+                        likes: 1,
+                        likedBy: []
+                    }
                 ],
-                discord: "https://discord.gg/example5",
-                whatsapp: "https://wa.me/5544332211",
                 baru: true
             }
         ];
 
-        // Function to get project ID from URL
+        // Simulated Notification Data
+        const notifications = [
+            { id: 1, text: "New project update: Aplikasi Edukasi Kode", time: "2 jam lalu", read: false },
+            { id: 2, text: "New collaboration request: Proyek Musik Kolaborasi", time: "4 jam lalu", read: false },
+        ];
+
+        // Simulated Current User
+        const currentUser = "User"; // Placeholder: Replace with actual user authentication
+
+        // Get Project ID from URL Query Parameter
         function getProjectIdFromUrl() {
-            const path = window.location.pathname; // e.g., /detail-proyek/1
-            const match = path.match(/\/detail-proyek\/(\d+)/);
-            return match ? parseInt(match[1]) : null;
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'));
         }
 
-        // Render Project Details based on ID
-        function renderProjectDetails(projectId) {
+        // Render Project Header
+        function renderProjectHeader(project) {
+            const projectHeader = document.querySelector('.project-header .inner');
+            projectHeader.innerHTML = `
+                <img src="${project.image}" alt="${project.name}" />
+                <h1 class="text-3xl font-bold mt-4" style="font-family: 'Space Grotesk', sans-serif;">${project.name}</h1>
+                <div class="flex items-center mt-2">
+                    <span class="badge bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-100 text-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-800">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
+                    ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ''}
+                    ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ''}
+                </div>
+                <p class="text-sm text-gray-600 mt-2">Dibuat: ${project.created}</p>
+                <p class="text-gray-700 mt-4">${project.description}</p>
+                <p class="text-sm text-gray-600 mt-2">Progress: ${project.progress}%</p>
+                <div class="progress-bar mt-1">
+                    <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
+                </div>
+                <div class="flex gap-4 mt-4">
+                    <button id="share-project-btn" class="join-btn bg-gray-600 text-white hover:bg-gray-700"><i class="fas fa-discord"></i> Gabung Discord</button>
+                    <button id="share-project-btn" class="join-btn bg-gray-600 text-white hover:bg-gray-700"><i class="fas fa-share"></i> Gabung WhatsApp</button>
+                    <button id="like-project-btn" class="join-btn bg-red-600 text-white hover:bg-red-700"><i class="fas fa-heart"></i> Suka (${project.likes})</button>
+                    <button id="share-project-btn" class="join-btn bg-gray-600 text-white hover:bg-gray-700"><i class="fas fa-share"></i> Bagikan</button>
+                </div>
+            `;
+            gsap.from(projectHeader, { opacity: 0, y: 30, duration: 0.8, ease: "power3.out" });
+
+            // Add event listeners for like and share buttons
+            document.getElementById('like-project-btn').addEventListener('click', () => toggleProjectLike(project.id));
+            document.getElementById('share-project-btn').addEventListener('click', () => shareProject(project.id));
+        }
+
+        // Render Team Members
+        function renderMembers(members) {
+            const membersContainer = document.querySelector('.members-container');
+            membersContainer.innerHTML = members.map(member => `
+                <div class="member-card hover-3d">
+                    <div class="inner">
+                        <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full mb-2" />
+                        <h3 class="text-sm font-semibold">${member.name}</h3>
+                        <p class="text-xs text-gray-500">${member.role}</p>
+                        <a href="${member.profileUrl}" class="text-xs text-blue-600 hover:underline">Lihat Profil</a>
+                    </div>
+                </div>
+            `).join('');
+            gsap.from(".member-card", { opacity: 0, y: 20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Render Timeline
+        function renderTimeline(timeline) {
+            const timelineContainer = document.querySelector('.timeline');
+            timelineContainer.innerHTML = timeline.map(event => `
+                <div class="timeline-event hover-3d">
+                    <div class="inner">
+                        <p class="text-sm text-gray-500">${event.date}</p>
+                        <h3 class="text-lg font-semibold">${event.title}</h3>
+                        <p class="text-gray-600">${event.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            gsap.from(".timeline-event", { opacity: 0, x: -20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Render Tasks
+        function renderTasks(tasks, category) {
+            const tasksContainer = document.querySelector('.tasks-container');
+            tasksContainer.innerHTML = tasks.map(task => `
+                <div class="task-card hover-3d">
+                    <div class="inner">
+                        <h3 class="text-sm font-semibold">${task.name}</h3>
+                        <p class="text-xs text-gray-600">Progress: ${task.progress}%</p>
+                        <div class="progress-bar mt-1">
+                            <div class="progress bg-${category === 'coding' ? 'blue' : category === 'musik' ? 'green' : category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${task.progress}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            gsap.from(".task-card", { opacity: 0, y: 20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Render Comments
+        function renderComments(comments, projectId) {
+            const commentsContainer = document.querySelector('.comments-container');
+            const showHiddenCommentsBtn = document.getElementById('show-hidden-comments');
+            const hasHiddenComments = comments.some(c => c.hidden || c.replies.some(r => r.hidden));
+            showHiddenCommentsBtn.classList.toggle('hidden', !hasHiddenComments);
+
+            commentsContainer.innerHTML = comments.map(comment => `
+                <div class="comment-card hover-3d ${comment.hidden ? 'hidden' : ''}" data-comment-id="${comment.id}">
+                    <div class="inner flex gap-4">
+                        <img src="${comment.avatar}" alt="${comment.user}" class="w-10 h-10 rounded-full" />
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${comment.user}</h3>
+                                <p class="text-xs text-gray-500">${comment.time}</p>
+                            </div>
+                            <p class="text-gray-600">${comment.text}</p>
+                            <div class="comment-actions">
+                                <span class="comment-action-btn" onclick="toggleReplyForm(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-reply"></i> Balas</span>
+                                ${comment.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${comment.id})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
+                                <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${comment.id})"><i class="fas fa-eye${comment.hidden ? '-slash' : ''}"></i> ${comment.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
+                                <span class="comment-action-btn" onclick="reportComment(${comment.id})"><i class="fas fa-flag"></i> Laporkan</span>
+                                <span class="comment-action-btn ${comment.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${comment.id})"><i class="fas fa-heart"></i> Suka (${comment.likes})</span>
+                            </div>
+                            <div class="reply-form hidden mt-2" data-comment-id="${comment.id}">
+                                <textarea class="w-full p-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="2" placeholder="Tulis balasan Anda..."></textarea>
+                                <button class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-1" onclick="submitReply(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
+                            </div>
+                            <div class="reply-container">
+                                ${renderReplies(comment.replies, projectId, comment.id)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            gsap.from(".comment-card", { opacity: 0, y: 20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Render Replies (Recursive for nested replies)
+        function renderReplies(replies, projectId, parentCommentId) {
+            return replies.map(reply => `
+                <div class="comment-card hover-3d mt-2 ${reply.hidden ? 'hidden' : ''}" data-comment-id="${reply.id}">
+                    <div class="inner flex gap-4">
+                        <img src="${reply.avatar}" alt="${reply.user}" class="w-10 h-10 rounded-full" />
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${reply.user}</h3>
+                                <p class="text-xs text-gray-500">${reply.time}</p>
+                            </div>
+                            <p class="text-gray-600">${reply.tag ? `<span class="tag" onclick="window.location.href='/profil/${reply.tag}'">@${reply.tag}</span> ` : ''}${reply.text}</p>
+                            <div class="comment-actions">
+                                <span class="comment-action-btn" onclick="toggleReplyForm(${projectId}, ${reply.id}, '${reply.user}', ${parentCommentId})"><i class="fas fa-reply"></i> Balas</span>
+                                ${reply.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
+                                <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-eye${reply.hidden ? '-slash' : ''}"></i> ${reply.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
+                                <span class="comment-action-btn" onclick="reportComment(${reply.id})"><i class="fas fa-flag"></i> Laporkan</span>
+                                <span class="comment-action-btn ${reply.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-heart"></i> Suka (${reply.likes})</span>
+                            </div>
+                            <div class="reply-form hidden mt-2" data-comment-id="${reply.id}">
+                                <textarea class="w-full p-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="2" placeholder="Tulis balasan Anda..."></textarea>
+                                <button class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-1" onclick="submitReply(${projectId}, ${reply.id}, '${reply.user}', ${parentCommentId})"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
+                            </div>
+                            <div class="reply-container">
+                                ${renderReplies(reply.replies || [], projectId, parentCommentId)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Recommended Projects
+        function renderRecommendedProjects(currentProjectId) {
+            const recommendedProjects = document.getElementById('recommended-projects');
+            const recommendations = projects.filter(p => p.id !== currentProjectId && (p.populer || p.baru)).slice(0, 3);
+            recommendedProjects.innerHTML = recommendations.length === 0 ?
+                '<p class="text-sm text-gray-500">Tidak ada rekomendasi saat ini.</p>' :
+                recommendations.map(p => `
+                    <div class="recommended-project" onclick="window.location.href='detail-proyek.html?id=${p.id}'">
+                        <img src="${p.image}" alt="${p.name}" />
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">${p.name}</p>
+                            <p class="text-xs text-gray-500">${p.members.length} Anggota</p>
+                            <p class="text-xs text-gray-600">${p.description.substring(0, 50)}...</p>
+                        </div>
+                    </div>
+                `).join('');
+            gsap.from(".recommended-project", { opacity: 0, y: 20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Render Notifications
+        function renderNotifications(filter = 'all') {
+            const notificationList = document.getElementById('notification-list');
+            notificationList.innerHTML = '';
+            let filteredNotifications = filter === 'all' ? notifications : notifications.filter(n => !n.read);
+            if (filteredNotifications.length === 0) {
+                notificationList.innerHTML = '<div class="text-center text-gray-600"><p class="text-sm">Tidak ada notifikasi.</p></div>';
+                return;
+            }
+            filteredNotifications.forEach(notification => {
+                notificationList.innerHTML += `
+                    <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
+                        <p>${notification.text}</p>
+                        <p class="time">${notification.time}</p>
+                    </div>
+                `;
+            });
+            gsap.from(".notification-card", { opacity: 0, y: 20, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        }
+
+        // Toggle Notifications Modal
+        function toggleNotifications() {
+            const modal = document.getElementById('notification-modal');
+            const isOpen = modal.classList.contains('open');
+            modal.classList.toggle('open');
+            gsap.to(modal, {
+                x: isOpen ? '100%' : '0%',
+                duration: 0.3,
+                ease: "power2.out"
+            });
+            if (!isOpen) renderNotifications();
+        }
+
+        // Mark All Notifications as Read
+        function markAllAsRead() {
+            notifications.forEach(n => n.read = true);
+            renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+            anime({
+                targets: '#mark-all-read',
+                scale: [1, 1.1, 1],
+                backgroundColor: ['#111827', '#374151', '#111827'],
+                color: ['#ffffff', '#facc15', '#ffffff'],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // View Notification
+        function viewNotification(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification) {
+                notification.read = true;
+                renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+                alert(`Viewing notification ${notificationId} (placeholder).`);
+            }
+        }
+
+        // Dismiss Notification Bar
+        function dismissNotification() {
+            const notificationBar = document.getElementById('notification-bar');
+            gsap.to(notificationBar, {
+                opacity: 0,
+                y: -20,
+                duration: 0.5,
+                ease: "power2.in",
+                onComplete: () => notificationBar.classList.add('hidden')
+            });
+        }
+
+        // Submit Comment
+        function submitComment(projectId) {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const project = projects.find(p => p.id === projectId);
+                project.comments.unshift({
+                    id: project.comments.length + 1,
+                    user: currentUser,
+                    avatar: "https://picsum.photos/50/50?user",
+                    time: "Baru saja",
+                    text: commentText,
+                    replies: [],
+                    hidden: false,
+                    likes: 0,
+                    likedBy: []
+                });
+                renderComments(project.comments, projectId);
+                commentInput.value = '';
+                anime({
+                    targets: '#submit-comment',
+                    scale: [1, 1.1, 1],
+                    backgroundColor: ['#2563eb', '#3b82f6'],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        // Toggle Reply Form
+        function toggleReplyForm(projectId, commentId, taggedUser, parentCommentId = null) {
+            const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
+            replyForm.classList.toggle('hidden');
+            if (!replyForm.classList.contains('hidden')) {
+                const textarea = replyForm.querySelector('textarea');
+                textarea.value = `@${taggedUser} `;
+                textarea.focus();
+                gsap.from(replyForm, { opacity: 0, y: 10, duration: 0.3, ease: "power2.out" });
+            }
+        }
+
+        // Submit Reply
+        function submitReply(projectId, commentId, taggedUser, parentCommentId = null) {
+            const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
+            const replyText = replyForm.querySelector('textarea').value.trim();
+            if (replyText) {
+                const project = projects.find(p => p.id === projectId);
+                let targetComment;
+                if (parentCommentId) {
+                    targetComment = project.comments.find(c => c.id === parentCommentId);
+                    let currentComment = targetComment.replies.find(r => r.id === commentId);
+                    if (!currentComment.replies) currentComment.replies = [];
+                    targetComment = currentComment;
+                } else {
+                    targetComment = project.comments.find(c => c.id === commentId);
+                }
+                targetComment.replies.unshift({
+                    id: (targetComment.replies.length + 1) * 1000 + commentId,
+                    user: currentUser,
+                    avatar: "https://picsum.photos/50/50?user",
+                    time: "Baru saja",
+                    text: replyText.replace(`@${taggedUser}`, '').trim(),
+                    tag: taggedUser,
+                    replies: [],
+                    hidden: false,
+                    likes: 0,
+                    likedBy: []
+                });
+                renderComments(project.comments, projectId);
+                replyForm.querySelector('textarea').value = '';
+                replyForm.classList.add('hidden');
+                anime({
+                    targets: replyForm.querySelector('button'),
+                    scale: [1, 1.1, 1],
+                    backgroundColor: ['#2563eb', '#3b82f6'],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        // Delete Comment
+        function deleteComment(projectId, commentId, parentCommentId = null) {
+            if (confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
+                const project = projects.find(p => p.id === projectId);
+                if (parentCommentId) {
+                    let parentComment = project.comments.find(c => c.id === parentCommentId);
+                    if (!parentComment) {
+                        // Search in nested replies
+                        project.comments.forEach(c => {
+                            c.replies.forEach(r => {
+                                if (r.id === parentCommentId) parentComment = r;
+                            });
+                        });
+                    }
+                    parentComment.replies = parentComment.replies.filter(r => r.id !== commentId);
+                } else {
+                    project.comments = project.comments.filter(c => c.id !== commentId);
+                }
+                renderComments(project.comments, projectId);
+                anime({
+                    targets: `.comment-card[data-comment-id="${commentId}"]`,
+                    opacity: 0,
+                    height: 0,
+                    marginBottom: 0,
+                    duration: 300,
+                    easing: 'easeOutQuad',
+                    complete: () => renderComments(project.comments, projectId)
+                });
+            }
+        }
+
+        // Toggle Comment Visibility
+        function toggleCommentVisibility(projectId, commentId, parentCommentId = null) {
             const project = projects.find(p => p.id === projectId);
+            if (parentCommentId) {
+                let parentComment = project.comments.find(c => c.id === parentCommentId);
+                if (!parentComment) {
+                    project.comments.forEach(c => {
+                        c.replies.forEach(r => {
+                            if (r.id === parentCommentId) parentComment = r;
+                        });
+                    });
+                }
+                const reply = parentComment.replies.find(r => r.id === commentId);
+                reply.hidden = !reply.hidden;
+            } else {
+                const comment = project.comments.find(c => c.id === commentId);
+                comment.hidden = !comment.hidden;
+            }
+            renderComments(project.comments, projectId);
+            gsap.from(`.comment-card[data-comment-id="${commentId}"]`, {
+                opacity: 0,
+                y: 10,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        }
+
+        // Show All Hidden Comments
+        function showAllHiddenComments(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            project.comments.forEach(comment => {
+                comment.hidden = false;
+                (comment.replies || []).forEach(reply => {
+                    reply.hidden = false;
+                    (reply.replies || []).forEach(nestedReply => {
+                        nestedReply.hidden = false;
+                    });
+                });
+            });
+            renderComments(project.comments, projectId);
+            anime({
+                targets: '#show-hidden-comments',
+                scale: [1, 1.1, 1],
+                backgroundColor: ['#4b5563', '#6b7280', '#4b5563'],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // Toggle Comment Like
+        function toggleCommentLike(projectId, commentId, parentCommentId = null) {
+            const project = projects.find(p => p.id === projectId);
+            let targetComment;
+            if (parentCommentId) {
+                let parentComment = project.comments.find(c => c.id === parentCommentId);
+                if (!parentComment) {
+                    project.comments.forEach(c => {
+                        c.replies.forEach(r => {
+                            if (r.id === parentCommentId) parentComment = r;
+                        });
+                    });
+                }
+                targetComment = parentComment.replies.find(r => r.id === commentId);
+            } else {
+                targetComment = project.comments.find(c => c.id === commentId);
+            }
+            if (targetComment.likedBy.includes(currentUser)) {
+                targetComment.likes--;
+                targetComment.likedBy = targetComment.likedBy.filter(u => u !== currentUser);
+            } else {
+                targetComment.likes++;
+                targetComment.likedBy.push(currentUser);
+            }
+            renderComments(project.comments, projectId);
+            anime({
+                targets: `.comment-card[data-comment-id="${commentId}"] .comment-action-btn.liked`,
+                scale: [1, 1.2, 1],
+                color: targetComment.likedBy.includes(currentUser) ? '#ef4444' : '#6b7280',
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // Toggle Project Like
+        function toggleProjectLike(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (project.likedBy && project.likedBy.includes(currentUser)) {
+                project.likes--;
+                project.likedBy = project.likedBy.filter(u => u !== currentUser);
+            } else {
+                project.likes++;
+                if (!project.likedBy) project.likedBy = [];
+                project.likedBy.push(currentUser);
+            }
+            renderProjectHeader(project);
+            anime({
+                targets: '#like-project-btn',
+                scale: [1, 1.2, 1],
+                backgroundColor: project.likedBy.includes(currentUser) ? '#dc2626' : '#b91c1c',
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // Share Project
+        function shareProject(projectId) {
+            const projectUrl = `${window.location.origin}/detail-proyek.html?id=${projectId}`;
+            navigator.clipboard.writeText(projectUrl).then(() => {
+                alert("Link proyek telah disalin ke clipboard!");
+                anime({
+                    targets: '#share-project-btn',
+                    scale: [1, 1.2, 1],
+                    backgroundColor: ['#4b5563', '#6b7280', '#4b5563'],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }).catch(() => {
+                alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
+            });
+        }
+
+        // Report Comment
+        function reportComment(commentId) {
+            alert(`Komentar dengan ID ${commentId} telah dilaporkan (placeholder).`);
+        }
+
+        // Filter Notifications
+        const notificationFilterButtons = document.querySelectorAll('#notification-modal .filter-btn');
+        notificationFilterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                notificationFilterButtons.forEach(f => f.classList.remove('active'));
+                btn.classList.add('active');
+                renderNotifications(btn.dataset.filter);
+                anime({
+                    targets: btn,
+                    scale: [1, 1.1, 1],
+                    backgroundColor: ['#f3f4f6', '#111827'],
+                    color: ['#374151', '#ffffff'],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+        });
+
+        // Initialize Page
+        window.addEventListener('load', () => {
+            const projectId = getProjectIdFromUrl();
+            const project = projects.find(p => p.id === projectId);
+
             if (!project) {
-                document.querySelector('.project-header').innerHTML = `
+                document.querySelector('.project-header .inner').innerHTML = `
                     <div class="text-center text-gray-600">
                         <p class="text-lg">Proyek tidak ditemukan.</p>
                         <a href="/proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Kembali ke Proyek</a>
@@ -415,115 +1190,20 @@
                 return;
             }
 
-            const header = document.querySelector('.project-header');
-            header.innerHTML = `
-                <img src="${project.image}" alt="${project.name}" />
-                <h1 class="text-4xl font-bold text-black mt-6" style="font-family: 'Space Grotesk', sans-serif;">${project.name}</h1>
-                <div class="flex items-center mt-2">
-                    <span class="badge bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-100 text-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-800">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
-                    ${project.populer ? '<span class="badge bg-gray-100 text-gray-800">Populer</span>' : ''}
-                    ${project.baru ? '<span class="badge bg-green-100 text-green-800">Baru</span>' : ''}
-                </div>
-                <p class="text-lg text-gray-600 mt-4">${project.description}</p>
-                <div class="flex items-center gap-4 mt-4">
-                    <p class="text-sm text-gray-600">Progress: ${project.progress}%</p>
-                    <div class="progress-bar w-1/3">
-                        <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 mt-4">
-                    <span class="text-sm text-gray-500">+${project.members.length} Anggota</span>
-                    <span class="text-sm text-gray-500">Dibuat: ${project.created}</span>
-                </div>
-                <div class="flex gap-4 mt-6">
-                    <a href="${project.discord}" target="_blank" class="action-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">
-                        <i class="fab fa-discord"></i> Gabung via Discord
-                    </a>
-                    <a href="${project.whatsapp}" target="_blank" class="action-btn bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600 text-white hover:bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-700">
-                        <i class="fab fa-whatsapp"></i> Gabung via WhatsApp
-                    </a>
-                </div>
-            `;
+            renderProjectHeader(project);
+            renderMembers(project.members);
+            renderTimeline(project.timeline);
+            renderTasks(project.tasks, project.category);
+            renderComments(project.comments, projectId);
+            renderRecommendedProjects(projectId);
+            renderNotifications();
 
-            // Render Team Members
-            const membersContainer = document.querySelector('.grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-4');
-            membersContainer.innerHTML = project.members.map(member => `
-                <div class="member-card">
-                    <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full object-cover mb-2">
-                    <h3 class="text-lg font-semibold">${member.name}</h3>
-                    <p class="text-sm text-gray-600">${member.role}</p>
-                    <a href="${member.profileUrl}" class="text-sm text-blue-600 hover:underline">Lihat Profil</a>
-                </div>
-            `).join('');
+            // Add event listener for comment submission
+            document.getElementById('submit-comment').addEventListener('click', () => submitComment(projectId));
+            // Add event listener for showing hidden comments
+            document.getElementById('show-hidden-comments').addEventListener('click', () => showAllHiddenComments(projectId));
 
-            // Render Timeline
-            const timelineContainer = document.querySelector('.timeline');
-            timelineContainer.innerHTML = project.timeline.map(event => `
-                <div class="timeline-event">
-                    <p class="text-sm text-gray-600">${event.date}</p>
-                    <p class="text-base font-semibold">${event.title}</p>
-                    <p class="text-sm text-gray-600">${event.description}</p>
-                </div>
-            `).join('');
-
-            // Render Task Progress
-            const tasksContainer = document.querySelector('.grid.grid-cols-1.gap-4');
-            tasksContainer.innerHTML = project.tasks.map(task => `
-                <div class="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200">
-                    <p class="text-sm font-semibold">${task.name}</p>
-                    <div class="progress-bar w-1/3">
-                        <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${task.progress}%"></div>
-                    </div>
-                    <p class="text-sm text-gray-600">${task.progress}% Selesai</p>
-                </div>
-            `).join('');
-
-            // Render Comments
-            const commentsContainer = document.querySelector('.comments-container');
-            commentsContainer.innerHTML = project.comments.map(comment => `
-                <div class="comment-card">
-                    <div class="flex items-center gap-3">
-                        <img src="${comment.avatar}" alt="${comment.user}" class="w-10 h-10 rounded-full object-cover">
-                        <div>
-                            <p class="text-sm font-semibold">${comment.user}</p>
-                            <p class="text-xs text-gray-600">${comment.time}</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2">${comment.text}</p>
-                </div>
-            `).join('');
-
-            // GSAP Animations
-            gsap.from(".project-header, .member-card, .timeline-event, .flex.items-center.justify-between, .comment-card", {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out"
-            });
-        }
-
-        // Submit Comment
-        function submitComment(projectId) {
-            const textarea = document.querySelector('textarea');
-            const text = textarea.value.trim();
-            if (text) {
-                const project = projects.find(p => p.id === projectId);
-                if (project) {
-                    project.comments.push({
-                        user: "Current User", // Replace with actual user data
-                        avatar: "https://picsum.photos/50/50?commenter" + (project.comments.length + 3),
-                        time: "Sekarang",
-                        text
-                    });
-                    renderProjectDetails(projectId);
-                    textarea.value = '';
-                }
-            }
-        }
-
-        // Particles.js Initialization
-        window.addEventListener('load', () => {
+            // Particles.js Initialization
             particlesJS("particles-js", {
                 particles: {
                     number: { value: 50, density: { enable: true, value_area: 1000 } },
@@ -540,20 +1220,6 @@
                 },
                 retina_detect: true
             });
-
-            // Get project ID from URL and render details
-            const projectId = getProjectIdFromUrl();
-            if (projectId) {
-                renderProjectDetails(projectId);
-                document.querySelector('button.bg-blue-600').addEventListener('click', () => submitComment(projectId));
-            } else {
-                document.querySelector('.project-header').innerHTML = `
-                    <div class="text-center text-gray-600">
-                        <p class="text-lg">Proyek tidak ditemukan.</p>
-                        <a href="/proyek" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Kembali ke Proyek</a>
-                    </div>
-                `;
-            }
         });
     </script>
 </body>
