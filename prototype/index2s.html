@@ -1,480 +1,1839 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TARA - Gallery Showcase</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            font-family: 'Space Grotesk', sans-serif;
+      * {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .animate-ping-slow {
+        animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes ping-slow {
+        0% {
+          transform: scale(1);
+          opacity: 1;
         }
-        
-        .animate-ping-slow {
-            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        75%,
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
         }
-        
-        @keyframes ping-slow {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            75%, 100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+      }
+
+      .animate-float {
+        animation: float 8s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
         }
-        
-        .animate-float {
-            animation: float 8s ease-in-out infinite;
+        50% {
+          transform: translateY(-30px) rotate(5deg);
         }
-        
-        .animate-float-delayed {
-            animation: float 8s ease-in-out infinite;
-            animation-delay: 4s;
+      }
+
+      .text-gradient {
+        background: linear-gradient(
+          135deg,
+          #000000 0%,
+          #4a4a4a 50%,
+          #000000 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 200%;
+        animation: gradientShift 4s ease-in-out infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        } 
+        50% {
+          background-position: 100% 50%;
         }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-30px) rotate(5deg);
-            }
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: rotate(var(--rotate-angle)) translateY(0);
+        animation: sway var(--sway-duration) ease-in-out infinite;
+        perspective: 1000px;
+      }
+
+      @keyframes sway {
+        0%,
+        100% {
+          transform: rotate(var(--rotate-angle)) translateY(0);
         }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, #000000 0%, #4a4a4a 50%, #000000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradientShift 4s ease-in-out infinite;
+        50% {
+          transform: rotate(calc(var(--rotate-angle) + 2deg)) translateY(5px);
         }
-        
-        @keyframes gradientShift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+      }
+
+      .gallery-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.6s;
+        z-index: 10;
+      }
+
+      .gallery-item:hover::before {
+        left: 100%;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-20px) scale(1.1) rotate(0deg);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+      }
+
+      .gallery-item.active {
+        transform: scale(1.2) rotate(0deg);
+        z-index: 20;
+        box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+      }
+
+      .rope {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        width: 2px;
+        height: 30px;
+        background: #4a4a4a;
+        transform-origin: top;
+        transform: rotate(var(--rope-angle));
+        z-index: 5;
+        animation: rope-sway var(--sway-duration) ease-in-out infinite;
+      }
+
+      @keyframes rope-sway {
+        0%,
+        100% {
+          transform: rotate(var(--rope-angle));
         }
-        
-        .gallery-item {
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+        50% {
+          transform: rotate(calc(var(--rope-angle) + 1deg));
         }
-        
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-            z-index: 10;
+      }
+
+      .hero-bg {
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 0, 0, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(0, 0, 0, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(0, 0, 0, 0.05) 0%,
+            transparent 50%
+          ),
+          linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      }
+
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .button-primary {
+        background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.6s;
+      }
+
+      .button-primary:hover::before {
+        left: 100%;
+      }
+
+      .button-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .button-secondary {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        border: 2px solid #000000;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button-secondary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        transition: left 0.4s;
+        z-index: 1;
+      }
+
+      .button-secondary:hover::before {
+        left: 0;
+      }
+
+      .button-secondary span {
+        position: relative;
+        z-index: 2;
+        transition: color 0.4s;
+      }
+
+      .button-secondary:hover span {
+        color: white;
+      }
+
+      .button-secondary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .geometric-shape {
+        position: absolute;
+        border: 2px solid rgba(0, 0, 0, 0.15);
+        z-index: 0;
+      }
+
+      .shape-1 {
+        width: 120px;
+        height: 120px;
+        transform: rotate(45deg);
+        animation: float 10s ease-in-out infinite;
+      }
+
+      .shape-2 {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        animation: float 12s ease-in-out infinite reverse;
+      }
+
+      .shape-3 {
+        width: 100px;
+        height: 100px;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        animation: float 8s ease-in-out infinite;
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 0, 0, 0.9) 0%,
+          rgba(0, 0, 0, 0.4) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .gallery-item:hover .image-overlay {
+        opacity: 1;
+      }
+
+      .category-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        border-color: #000000;
+      }
+
+      .stats-number {
+        background: linear-gradient(135deg, #000000, #4a4a4a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .text-appear {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: appear 1s ease forwards;
+      }
+
+      @keyframes appear {
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        .gallery-item:hover::before {
-            left: 100%;
+      }
+
+      .text-appear:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .text-appear:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .text-appear:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .text-appear:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+
+      .nav-link {
+        position: relative;
+        transition: color 0.3s;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #000000;
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .featured-bg {
+        background: linear-gradient(
+          135deg,
+          #f8f8f8 0%,
+          #ffffff 50%,
+          #f0f0f0 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(255, 215, 0, 0.4);
+        border-radius: 50%;
+        animation: drift 12s linear infinite;
+      }
+
+      .particle-1 {
+        width: 25px;
+        height: 25px;
+        top: 5%;
+        left: 10%;
+      }
+      .particle-2 {
+        width: 15px;
+        height: 15px;
+        top: 60%;
+        left: 70%;
+        animation-delay: 4s;
+      }
+      .particle-3 {
+        width: 20px;
+        height: 20px;
+        top: 30%;
+        left: 40%;
+        animation-delay: 8s;
+      }
+      .particle-4 {
+        width: 18px;
+        height: 18px;
+        top: 80%;
+        left: 20%;
+        animation-delay: 2s;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0);
+          opacity: 0.4;
         }
-        
-        .gallery-item:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        50% {
+          opacity: 0.7;
         }
-        
-        .gallery-item:nth-child(odd):hover {
-            transform: translateY(-15px) scale(1.02) rotate(-2deg);
+        100% {
+          transform: translate(120vw, 100vh);
+          opacity: 0;
         }
-        
-        .gallery-item:nth-child(even):hover {
-            transform: translateY(-15px) scale(1.02) rotate(2deg);
-        }
-        
-        .hero-bg {
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
-                linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-        }
-        
-        .glass-effect {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .button-primary {
-            background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .button-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s;
-        }
-        
-        .button-primary:hover::before {
-            left: 100%;
-        }
-        
-        .button-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .button-secondary {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            border: 2px solid #000000;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .button-secondary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            transition: left 0.4s;
-            z-index: 1;
-        }
-        
-        .button-secondary:hover::before {
-            left: 0;
-        }
-        
-        .button-secondary span {
-            position: relative;
-            z-index: 2;
-            transition: color 0.4s;
-        }
-        
-        .button-secondary:hover span {
-            color: white;
-        }
-        
-        .button-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .geometric-shape {
-            position: absolute;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .shape-1 {
-            width: 100px;
-            height: 100px;
-            transform: rotate(45deg);
-            animation: float 10s ease-in-out infinite;
-        }
-        
-        .shape-2 {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            animation: float 12s ease-in-out infinite reverse;
-        }
-        
-        .shape-3 {
-            width: 80px;
-            height: 80px;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: float 8s ease-in-out infinite;
-            background: rgba(0, 0, 0, 0.05);
-        }
-        
-        .image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .gallery-item:hover .image-overlay {
-            opacity: 1;
-        }
-        
-        .category-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #000000;
-        }
-        
-        .stats-number {
-            background: linear-gradient(135deg, #000000, #4a4a4a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .text-appear {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: appear 1s ease forwards;
-        }
-        
-        @keyframes appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .text-appear:nth-child(1) { animation-delay: 0.1s; }
-        .text-appear:nth-child(2) { animation-delay: 0.2s; }
-        .text-appear:nth-child(3) { animation-delay: 0.3s; }
-        .text-appear:nth-child(4) { animation-delay: 0.4s; }
-        
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #000000;
-            transition: width 0.3s;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        perspective: 1200px;
+        padding: 40px 0;
+      }
+
+      .flip-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+      }
+
+      .gallery-item.flipped .flip-card {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 16px;
+      }
+
+      .flip-card-back {
+        transform: rotateY(180deg);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .flip-card-back p {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .flip-card-back a {
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body class="hero-bg min-h-screen">
+  </head>
+  <body class="hero-bg min-h-screen">
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass-effect">
-        <div class="max-w-7xl mx-auto px-6 py-5">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="text-3xl font-bold text-gray-900" style="font-family: 'Space Grotesk', sans-serif;">TARA</span>
-                    <div class="relative">
-                        <span class="text-yellow-400 text-2xl">●</span>
-                        <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center gap-10">
-                    <a href="#" class="nav-link font-medium">Home</a>
-                    <a href="#" class="nav-link font-medium">Gallery</a>
-                    <a href="#" class="nav-link font-medium">About</a>
-                    <a href="#" class="nav-link font-medium">Contact</a>
-                </div>
-                <button class="md:hidden">
-                    <svg class="w-7 h-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+      <div class="max-w-7xl mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <a href="/home" class="text-3xl font-bold text-gray-900">TARA</a>
+            <div class="relative">
+              <span class="text-yellow-400 text-2xl">●</span>
+              <span
+                class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow"
+                >●</span
+              >
             </div>
+          </div>
+          <div class="hidden md:flex items-center gap-10">
+            <a href="/home" class="nav-link font-medium">Beranda</a>
+            <a href="/eksplor" class="nav-link font-medium">Eksplor</a>
+            <a href="/komunitas" class="nav-link font-medium">Komunitas</a>
+            <a href="/proyek" class="nav-link font-medium">Proyek</a>
+            <a href="/blog" class="nav-link font-medium">Blog</a>
+            <a href="/agenda" class="nav-link font-medium">Agenda</a>
+            <a href="/notifikasi" class="nav-link font-medium">Notifikasi</a>
+            <a href="/login" class="nav-link font-medium">Login/Daftar</a>
+          </div>
+          <button class="md:hidden">
+            <svg
+              class="w-7 h-7 text-yellow-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen relative flex flex-col lg:flex-row items-center justify-between px-6 md:px-16 pt-40 pb-20 gap-20">
-        <!-- Geometric Shapes -->
-        <div class="geometric-shape shape-1 top-32 left-16"></div>
-        <div class="geometric-shape shape-2 top-48 right-20"></div>
-        <div class="geometric-shape shape-3 bottom-40 left-32"></div>
-        <div class="geometric-shape shape-1 bottom-32 right-40" style="width: 60px; height: 60px;"></div>
-        
-        <!-- Hero Text -->
-        <div class="hero-text flex-1 max-w-2xl z-10">
-            <div class="mb-8 text-appear">
-                <span class="inline-block px-6 py-3 bg-gray-900 text-white rounded-full text-sm font-semibold uppercase tracking-wide">
-                    ● Premium Showcase
-                </span>
-            </div>
-            
-            <h1 class="text-6xl md:text-8xl font-bold uppercase mb-10 leading-none tracking-tighter text-appear">
-                <span class="text-gradient">Selamat</span>
-                <br>
-                <span class="text-gradient">Datang di</span>
-                <br>
-                <span class="inline-flex items-center gap-4 text-gray-900">
-                    TARA
-                    <div class="relative">
-                        <span class="text-yellow-400 text-6xl md:text-7xl">●</span>
-                        <span class="absolute top-0 left-0 text-yellow-400 text-6xl md:text-7xl animate-ping-slow">●</span>
-                    </div>
-                </span>
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-xl text-appear">
-                Platform showcase eksklusif untuk memamerkan karya kreatif terbaik dari talenta Indonesia.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-6 mb-16 text-appear">
-                <button class="button-primary px-10 py-5 text-white rounded-full font-bold text-lg uppercase tracking-wide">
-                    Mulai Showcase
-                </button>
-                <button class="button-secondary px-10 py-5 rounded-full font-bold text-lg uppercase tracking-wide">
-                    <span>Jelajahi Karya</span>
-                </button>
-            </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-3 gap-8 pt-8 border-t-2 border-gray-200 text-appear">
-                <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">1000+</div>
-                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Karya Seni</div>
-                </div>
-                <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">500+</div>
-                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Kreator</div>
-                </div>
-                <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">50K+</div>
-                    <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">Pengunjung</div>
-                </div>
-            </div>
+    <section
+      class="min-h-screen relative flex flex-col lg:flex-row items-center justify-between px-6 md:px-16 pt-40 pb-20 gap-20"
+    >
+      <div class="geometric-shape shape-1 top-32 left-16"></div>
+      <div class="geometric-shape shape-2 top-48 right-20"></div>
+      <div class="geometric-shape shape-3 bottom-40 left-32"></div>
+      <div
+        class="geometric-shape shape-1 bottom-32 right-40"
+        style="width: 60px; height: 60px"
+      ></div>
+
+      <div class="hero-text flex-1 max-w-2xl z-10">
+        <div class="mb-8 text-appear">
+          <span
+            class="inline-block px-6 py-3 bg-gray-900 text-white rounded-full text-sm font-semibold uppercase tracking-wide"
+          >
+            ● Premium Showcase
+          </span>
         </div>
-        
-        <!-- Hero Gallery -->
-        <div class="hero-gallery flex-1 max-w-2xl z-10">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- Gallery Item 1 -->
-                <div class="gallery-item col-span-1 row-span-2">
-                    <div class="relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200">
-                        <img src="https://picsum.photos/300/400?random=1" alt="Gallery 1" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                        <div class="image-overlay"></div>
-                        <div class="absolute bottom-6 left-6 text-white z-20">
-                            <div class="text-lg font-bold uppercase tracking-wide">Digital Art</div>
-                            <div class="text-sm opacity-80">Premium Collection</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 2 -->
-                <div class="gallery-item col-span-1">
-                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
-                        <img src="https://picsum.photos/250/250?random=2" alt="Gallery 2" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                        <div class="image-overlay"></div>
-                        <div class="absolute bottom-4 left-4 text-white z-20">
-                            <div class="text-sm font-bold uppercase tracking-wide">Photography</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 3 -->
-                <div class="gallery-item col-span-1">
-                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
-                        <img src="https://picsum.photos/250/250?random=3" alt="Gallery 3" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                        <div class="image-overlay"></div>
-                        <div class="absolute bottom-4 left-4 text-white z-20">
-                            <div class="text-sm font-bold uppercase tracking-wide">Illustration</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 4 -->
-                <div class="gallery-item col-span-2">
-                    <div class="relative overflow-hidden bg-gray-900 aspect-[2/1] border-4 border-gray-200">
-                        <img src="https://picsum.photos/500/250?random=4" alt="Gallery 4" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                        <div class="image-overlay"></div>
-                        <div class="absolute bottom-4 left-4 text-white z-20">
-                            <div class="text-lg font-bold uppercase tracking-wide">Creative Design</div>
-                            <div class="text-sm opacity-80">Featured Work</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 5 -->
-                <div class="gallery-item col-span-1">
-                    <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
-                        <img src="https://picsum.photos/250/250?random=5" alt="Gallery 5" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
-                        <div class="image-overlay"></div>
-                        <div class="absolute bottom-4 left-4 text-white z-20">
-                            <div class="text-sm font-bold uppercase tracking-wide">Fine Art</div>
-                        </div>
-                    </div>
-                </div>
+        <h1
+          class="text-6xl md:text-8xl font-bold uppercase mb-10 leading-none tracking-tighter text-appear"
+        >
+          <span class="text-gradient">Selamat</span><br />
+          <span class="text-gradient">Datang di</span><br />
+          <span class="inline-flex items-center gap-4 text-gray-900">
+            TARA
+            <div class="relative">
+              <span class="text-yellow-400 text-6xl md:text-7xl">●</span>
+              <span
+                class="absolute top-0 left-0 text-yellow-400 text-6xl md:text-7xl animate-ping-slow"
+                >●</span
+              >
             </div>
+          </span>
+        </h1>
+        <p
+          class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-xl text-appear"
+        >
+          Platform showcase eksklusif untuk memamerkan karya kreatif terbaik
+          dari talenta Indonesia.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 mb-16 text-appear">
+          <a
+            href="/register"
+            class="button-primary px-10 py-5 text-white rounded-full font-bold text-lg uppercase tracking-wide"
+          >
+            Gabung Sekarang
+          </a>
+          <a
+            href="/eksplor"
+            class="button-secondary px-10 py-5 rounded-full font-bold text-lg uppercase tracking-wide"
+          >
+            <span>Jelajahi Karya</span>
+          </a>
         </div>
+        <div
+          class="grid grid-cols-3 gap-8 pt-8 border-t-2 border-gray-200 text-appear"
+        >
+          <div class="text-center">
+            <div class="stats-number text-4xl font-bold mb-3">1000+</div>
+            <div
+              class="text-gray-600 font-medium uppercase tracking-wide text-sm"
+            >
+              Karya Seni
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="stats-number text-4xl font-bold mb-3">500+</div>
+            <div
+              class="text-gray-600 font-medium uppercase tracking-wide text-sm"
+            >
+              Kreator
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="stats-number text-4xl font-bold mb-3">50K+</div>
+            <div
+              class="text-gray-600 font-medium uppercase tracking-wide text-sm"
+            >
+              Pengunjung
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-gallery flex-1 max-w-2xl z-10">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div
+            class="gallery-item col-span-1 row-span-2"
+            style="--rotate-angle: -2deg; --sway-duration: 6s"
+          >
+            <div
+              class="relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200"
+            >
+              <img
+                src="https://picsum.photos/300/400?random=1"
+                alt="Digital Art"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="image-overlay"></div>
+              <div class="absolute bottom-6 left-6 text-white z-20">
+                <div class="text-lg font-bold uppercase tracking-wide">
+                  Digital Art
+                </div>
+                <div class="text-sm opacity-80">Premium Collection</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item col-span-1"
+            style="--rotate-angle: 3deg; --sway-duration: 7s"
+          >
+            <div
+              class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200"
+            >
+              <img
+                src="https://picsum.photos/250/250?random=2"
+                alt="Photography"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="image-overlay"></div>
+              <div class="absolute bottom-4 left-4 text-white z-20">
+                <div class="text-sm font-bold uppercase tracking-wide">
+                  Photography
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item col-span-1"
+            style="--rotate-angle: -1deg; --sway-duration: 5.5s"
+          >
+            <div
+              class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200"
+            >
+              <img
+                src="https://picsum.photos/250/250?random=3"
+                alt="Illustration"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="image-overlay"></div>
+              <div class="absolute bottom-4 left-4 text-white z-20">
+                <div class="text-sm font-bold uppercase tracking-wide">
+                  Illustration
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item col-span-2"
+            style="--rotate-angle: 2deg; --sway-duration: 6.5s"
+          >
+            <div
+              class="relative overflow-hidden bg-gray-900 aspect-[2/1] border-4 border-gray-200"
+            >
+              <img
+                src="https://picsum.photos/500/250?random=4"
+                alt="Creative Design"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="image-overlay"></div>
+              <div class="absolute bottom-4 left-4 text-white z-20">
+                <div class="text-lg font-bold uppercase tracking-wide">
+                  Creative Design
+                </div>
+                <div class="text-sm opacity-80">Featured Work</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item col-span-1"
+            style="--rotate-angle: -3deg; --sway-duration: 7s"
+          >
+            <div
+              class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200"
+            >
+              <img
+                src="https://picsum.photos/250/250?random=5"
+                alt="Fine Art"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="image-overlay"></div>
+              <div class="absolute bottom-4 left-4 text-white z-20">
+                <div class="text-sm font-bold uppercase tracking-wide">
+                  Fine Art
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Works (Karya Unggulan) -->
+    <section class="py-24 px-6 md:px-16 featured-bg relative">
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+      <div class="particle particle-4"></div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-20">
+          <h2
+            class="text-5xl md:text-6xl font-bold text-gradient uppercase tracking-tight text-appear"
+          >
+            Karya Unggulan
+          </h2>
+          <p
+            class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed text-appear"
+            style="animation-delay: 0.2s"
+          >
+            Karya pilihan dari kreator Indonesia, digantung dengan penuh
+            keindahan
+          </p>
+        </div>
+        <div class="flex justify-center mb-12">
+          <div class="flex gap-4 flex-wrap justify-center">
+            <button
+              class="filter-button px-6 py-3 border-2 border-gray-200 rounded-full font-medium hover:bg-gray-900 hover:text-white transition"
+            >
+              Semua
+            </button>
+            <button
+              class="filter-button px-6 py-3 border-2 border-gray-200 rounded-full font-medium hover:bg-gray-900 hover:text-white transition"
+            >
+              Puisi
+            </button>
+            <button
+              class="filter-button px-6 py-3 border-2 border-gray-200 rounded-full font-medium hover:bg-gray-900 hover:text-white transition"
+            >
+              Desain
+            </button>
+            <button
+              class="filter-button px-6 py-3 border-2 border-gray-200 rounded-full font-medium hover:bg-gray-900 hover:text-white transition"
+            >
+              Musik
+            </button>
+            <button
+              class="filter-button px-6 py-3 border-2 border-gray-200 rounded-full font-medium hover:bg-gray-900 hover:text-white transition"
+            >
+              Coding
+            </button>
+          </div>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+        <div class="text-center mt-12">
+          <a
+            href="/eksplor"
+            class="button-primary px-10 py-5 text-white rounded-full font-bold text-lg uppercase tracking-wide"
+          >
+            Lihat Semua Karya
+          </a>
+        </div>
+      </div>
+      <script>
+        const galleryData = [
+          {
+            title: "Puisi: Senja",
+            author: "Rina",
+            views: "1200",
+            image: "https://picsum.photos/300/400?random=6",
+            description:
+              "Puisi tentang keindahan senja di tepi pantai, menggambarkan perasaan damai dan refleksi.",
+            link: "/detail/puisi-senja",
+            rotateAngle: "-2deg",
+            ropeAngle: "-2deg",
+            swayDuration: "6s",
+            parallax: "0.2",
+          },
+          {
+            title: "Desain: Poster",
+            author: "Budi",
+            views: "800",
+            image: "https://picsum.photos/300/400?random=7",
+            description:
+              "Poster promosi dengan desain minimalis dan warna bold untuk acara seni lokal.",
+            link: "/detail/desain-poster",
+            rotateAngle: "3deg",
+            ropeAngle: "3deg",
+            swayDuration: "7s",
+            parallax: "0.15",
+          },
+          {
+            title: "Musik: Lagu Indie",
+            author: "Andi",
+            views: "1500",
+            image: "https://picsum.photos/300/400?random=8",
+            description:
+              "Lagu indie dengan nuansa akustik yang menggambarkan perjalanan hidup.",
+            link: "/detail/lagu-indie",
+            rotateAngle: "-1deg",
+            ropeAngle: "-1deg",
+            swayDuration: "5.5s",
+            parallax: "0.25",
+          },
+          {
+            title: "Coding: Aplikasi",
+            author: "Dewi",
+            views: "900",
+            image: "https://picsum.photos/300/400?random=9",
+            description:
+              "Aplikasi web interaktif untuk komunitas seni dengan fitur modern.",
+            link: "/detail/aplikasi-web",
+            rotateAngle: "2deg",
+            ropeAngle: "2deg",
+            swayDuration: "6.5s",
+            parallax: "0.18",
+          },
+          {
+            title: "Lukisan: Pemandangan",
+            author: "Sari",
+            views: "1100",
+            image: "https://picsum.photos/300/400?random=10",
+            description:
+              "Lukisan pemandangan alam dengan warna cerah dan detail halus.",
+            link: "/detail/lukisan-pemandangan",
+            rotateAngle: "-3deg",
+            ropeAngle: "-3deg",
+            swayDuration: "6.8s",
+            parallax: "0.22",
+          },
+          {
+            title: "Fotografi: Potret",
+            author: "Joko",
+            views: "1300",
+            image: "https://picsum.photos/300/400?random=11",
+            description:
+              "Potret manusia dengan ekspresi emosional dalam cahaya alami.",
+            link: "/detail/fotografi-potret",
+            rotateAngle: "1deg",
+            ropeAngle: "1deg",
+            swayDuration: "7.2s",
+            parallax: "0.17",
+          },
+          {
+            title: "Ilustrasi: Fantasi",
+            author: "Maya",
+            views: "1000",
+            image: "https://picsum.photos/300/400?random=12",
+            description:
+              "Ilustrasi dunia fantasi dengan karakter mitologi yang menawan.",
+            link: "/detail/ilustrasi-fantasi",
+            rotateAngle: "-2.5deg",
+            ropeAngle: "-2.5deg",
+            swayDuration: "6.3s",
+            parallax: "0.19",
+          },
+          {
+            title: "Puisi: Malam",
+            author: "Tono",
+            views: "1400",
+            image: "https://picsum.photos/300/400?random=13",
+            description: "Puisi tentang misteri malam dan refleksi batin.",
+            link: "/detail/puisi-malam",
+            rotateAngle: "2.5deg",
+            ropeAngle: "2.5deg",
+            swayDuration: "7.5s",
+            parallax: "0.21",
+          },
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const galleryGrid = document.getElementById("gallery-grid");
+          galleryData.forEach((item) => {
+            const galleryItem = document.createElement("div");
+            galleryItem.className = "gallery-item";
+            galleryItem.style.cssText = `
+              --rotate-angle: ${item.rotateAngle};
+              --rope-angle: ${item.ropeAngle};
+              --sway-duration: ${item.swayDuration};
+            `;
+            galleryItem.setAttribute("data-parallax", item.parallax);
+            galleryItem.innerHTML = `
+              <div class="rope"></div>
+              <div class="flip-card">
+                <div class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-2xl">
+                  <img
+                    src="${item.image}"
+                    alt="${item.title}"
+                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  />
+                  <div class="image-overlay"></div>
+                  <div class="absolute bottom-6 left-6 text-white z-20">
+                    <div class="text-lg font-bold uppercase tracking-wide">
+                      ${item.title}
+                    </div>
+                    <div class="text-sm opacity-80">oleh ${item.author}</div>
+                    <div class="text-sm opacity-80">${item.views} views</div>
+                    <div class="flex gap-2 mt-2">
+                      <button class="text-white hover:scale-110 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                      </button>
+                      <button class="text-white hover:scale-110 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                        </svg>
+                      </button>
+                      <button class="text-white hover:scale-110 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C9.375 12.651 10.223 12.2 11.156 12.2c.933 0 1.781.451 2.472 1.142M14 7h.01M10 7h.01M6 7h.01M6 11h.01M10 11h.01M16 11h.01M16 15h.01M6 15h.01M10 15h.01M7.757 19.243a8 8 0 008.486 0M4 10.236C4 6.817 6.817 4 10.236 4c1.69 0 3.296.676 4.486 1.879"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="flip-card-back">
+                  <p class="text-gray-900 font-medium">
+                    ${item.description}
+                  </p>
+                  <a href="${item.link}" class="text-blue-600 font-semibold hover:underline">Lihat Detail</a>
+                </div>
+              </div>
+            `;
+            galleryGrid.appendChild(galleryItem);
+          });
+
+          const items = document.querySelectorAll(".gallery-item");
+          items.forEach((item) => {
+            item.addEventListener("click", () => {
+              items.forEach((i) => i.classList.remove("flipped", "active"));
+              item.classList.toggle("flipped");
+              item.classList.toggle("active");
+            });
+          });
+
+          window.addEventListener("scroll", () => {
+            items.forEach((item) => {
+              const parallax = item.getAttribute("data-parallax");
+              const offset = window.pageYOffset * parallax;
+              if (!item.classList.contains("flipped")) {
+                item.style.transform = `translateY(${offset}px) rotate(${item.style.getPropertyValue(
+                  "--rotate-angle"
+                )})`;
+              }
+            });
+          });
+        });
+      </script>
     </section>
 
     <!-- Categories Preview -->
-    <section class="py-24 px-6 md:px-16 bg-white border-t-4 border-gray-200">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-8 uppercase tracking-tight">Kategori Karya</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    Eksplorasi mendalam berbagai medium seni dari kreator terbaik Indonesia
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="category-card p-10 text-center cursor-pointer group">
-                    <div class="text-6xl mb-6 text-yellow-400 group-hover:scale-110 transition-transform duration-300">⬛</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Digital Art</h3>
-                    <p class="text-gray-600 font-medium">120+ Karya Premium</p>
-                </div>
-                
-                <div class="category-card p-10 text-center cursor-pointer group">
-                    <div class="text-6xl mb-6 text-blue-500 group-hover:scale-110 transition-transform duration-300">⚫</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Photography</h3>
-                    <p class="text-gray-600 font-medium">200+ Koleksi Eksklusif</p>
-                </div>
-                
-                <div class="category-card p-10 text-center cursor-pointer group">
-                    <div class="text-6xl mb-6 text-pink-500 group-hover:scale-110 transition-transform duration-300">◼️</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Illustration</h3>
-                    <p class="text-gray-600 font-medium">150+ Karya Pilihan</p>
-                </div>
-                
-                <div class="category-card p-10 text-center cursor-pointer group">
-                    <div class="text-6xl mb-6 text-green-500 group-hover:scale-110 transition-transform duration-300">⬛</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">Design</h3>
-                    <p class="text-gray-600 font-medium">180+ Portfolio Terbaik</p>
-                </div>
-            </div>
+    <section
+      class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden"
+    >
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="geometric-shape shape-1 top-10 left-20 opacity-20"></div>
+        <div
+          class="geometric-shape shape-2 bottom-20 right-32 opacity-20"
+        ></div>
+        <div class="geometric-shape shape-3 top-40 right-16 opacity-20"></div>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-24">
+          <h2
+            class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear"
+          >
+            Kategori <span class="text-gradient">Karya</span>
+          </h2>
+          <p
+            class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear"
+          >
+            Jelajahi dunia seni melalui karya-karya unik dari talenta muda
+            Indonesia
+          </p>
         </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <a
+            href="/eksplor?category=puisi"
+            class="category-card relative bg-white rounded-3xl shadow-xl p-12 text-center cursor-pointer group overflow-hidden"
+            style="--rotate-angle: -2deg; --sway-duration: 6s"
+          >
+            <div class="rope"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-yellow-100 to-yellow-200 opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+            ></div>
+            <div
+              class="text-7xl mb-8 text-yellow-400 group-hover:scale-110 transition-transform duration-300"
+            >
+              📜
+            </div>
+            <h3
+              class="text-2xl font-bold text-gray-900 mb-4 uppercase tracking-wide"
+            >
+              Puisi
+            </h3>
+            <p class="text-gray-600 font-medium">324 Karya Puitis</p>
+          </a>
+          <a
+            href="/eksplor?category=desain"
+            class="category-card relative bg-white rounded-3xl shadow-xl p-12 text-center cursor-pointer group overflow-hidden"
+            style="--rotate-angle: 2deg; --sway-duration: 7s"
+          >
+            <div class="rope"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+            ></div>
+            <div
+              class="text-7xl mb-8 text-blue-500 group-hover:scale-110 transition-transform duration-300"
+            >
+              🎨
+            </div>
+            <h3
+              class="text-2xl font-bold text-gray-900 mb-4 uppercase tracking-wide"
+            >
+              Desain
+            </h3>
+            <p class="text-gray-600 font-medium">456 Karya Visual</p>
+          </a>
+          <a
+            href="/eksplor?category=musik"
+            class="category-card relative bg-white rounded-3xl shadow-xl p-12 text-center cursor-pointer group overflow-hidden"
+            style="--rotate-angle: -1deg; --sway-duration: 5.5s"
+          >
+            <div class="rope"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-pink-100 to-pink-200 opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+            ></div>
+            <div
+              class="text-7xl mb-8 text-pink-500 group-hover:scale-110 transition-transform duration-300"
+            >
+              🎶
+            </div>
+            <h3
+              class="text-2xl font-bold text-gray-900 mb-4 uppercase tracking-wide"
+            >
+              Musik
+            </h3>
+            <p class="text-gray-600 font-medium">287 Karya Auditori</p>
+          </a>
+          <a
+            href="/eksplor?category=coding"
+            class="category-card relative bg-white rounded-3xl shadow-xl p-12 text-center cursor-pointer group overflow-hidden"
+            style="--rotate-angle: 3deg; --sway-duration: 6.5s"
+          >
+            <div class="rope"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+            ></div>
+            <div
+              class="text-7xl mb-8 text-green-500 group-hover:scale-110 transition-transform duration-300"
+            >
+              💻
+            </div>
+            <h3
+              class="text-2xl font-bold text-gray-900 mb-4 uppercase tracking-wide"
+            >
+              Coding
+            </h3>
+            <p class="text-gray-600 font-medium">183 Proyek Digital</p>
+          </a>
+        </div>
+      </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="py-24 px-6 md:px-16 bg-gray-900 text-white">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-5xl md:text-6xl font-bold mb-8 uppercase tracking-tight">
-                Bergabunglah dengan<br>Komunitas Kreator
+    <!-- Community Section -->
+    <section
+      id="komunitas"
+      class="py-32 px-6 bg-white relative overflow-hidden"
+    >
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+      </div>
+      <div class="max-w-7xl mx-4 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2
+              class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear"
+            >
+              Komunitas <span class="text-gradient">Kreatif</span>
             </h2>
-            <p class="text-xl mb-12 opacity-80 leading-relaxed">
-                Jadilah bagian dari platform showcase premium untuk kreator Indonesia
+            <p class="text-2xl text-gray-600 mb-10 leading-relaxed text-appear">
+              Bergabunglah dengan jiwa-jiwa kreatif Indonesia, berkolaborasi,
+              dan wujudkan inspirasi bersama.
             </p>
-            <button class="bg-white text-gray-900 px-12 py-6 font-bold text-lg uppercase tracking-wide hover:bg-gray-100 hover:border-yellow-400 transition-colors duration-300 border-4 border-white">
-                Daftar Sekarang
-            </button>
+            <div class="space-y-8">
+              <div class="flex items-start gap-6 text-appear">
+                <div
+                  class="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold text-xl"
+                >
+                  1
+                </div>
+                <div>
+                  <h4 class="font-semibold text-xl mb-3">
+                    Ruang Diskusi Hidup
+                  </h4>
+                  <p class="text-gray-600 leading-relaxed">
+                    Tukar ide, dapatkan masukan, dan ikuti tren seni serta
+                    teknologi.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6 text-appear">
+                <div
+                  class="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold text-xl"
+                >
+                  2
+                </div>
+                <div>
+                  <h4 class="font-semibold text-xl mb-3">Workshop & Event</h4>
+                  <p class="text-gray-600 leading-relaxed">
+                    Ikuti sesi pengembangan keterampilan dan pameran karya yang
+                    menginspirasi.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6 text-appear">
+                <div
+                  class="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold text-xl"
+                >
+                  3
+                </div>
+                <div>
+                  <h4 class="font-semibold text-xl mb-3">Jaringan Keren</h4>
+                  <p class="text-gray-600 leading-relaxed">
+                    Terhubung dengan kreator dari berbagai penjuru dengan visi
+                    unik.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 text-appear">
+              <a
+                href="/komunitas"
+                class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide"
+              >
+                Join the Movement
+              </a>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-8">
+            <div
+              class="gallery-item bg-white rounded-3xl shadow-xl p-8 animate-float"
+              style="--rotate-angle: -2deg; --sway-duration: 6s"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full"
+                ></div>
+                <div>
+                  <div class="font-semibold text-lg">Aisyah R.</div>
+                  <div class="text-sm text-gray-600">Poet, Jakarta</div>
+                </div>
+              </div>
+              <p class="text-gray-700 text-base">
+                "TARA membawa puisiku ke panggung yang lebih luas. Komunitas ini
+                seperti keluarga!"
+              </p>
+            </div>
+            <div
+              class="gallery-item bg-white rounded-3xl shadow-xl p-8 animate-float mt-12"
+              style="--rotate-angle: 2deg; --sway-duration: 7s"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full"
+                ></div>
+                <div>
+                  <div class="font-semibold text-lg">Budi S.</div>
+                  <div class="text-sm text-gray-600">Developer, Bandung</div>
+                </div>
+              </div>
+              <p class="text-gray-700 text-base">
+                "Kolaborasi dengan seniman lain di TARA membuat proyekku hidup!"
+              </p>
+            </div>
+            <div
+              class="gallery-item bg-white rounded-3xl shadow-xl p-8 animate-float"
+              style="--rotate-angle: -1deg; --sway-duration: 5.5s"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full"
+                ></div>
+                <div>
+                  <div class="font-semibold text-lg">Maya L.</div>
+                  <div class="text-sm text-gray-600">Designer, Yogyakarta</div>
+                </div>
+              </div>
+              <p class="text-gray-700 text-base">
+                "Dukungan komunitas TARA membuat desainku lebih berani dan
+                inovatif."
+              </p>
+            </div>
+            <div
+              class="gallery-item bg-white rounded-3xl shadow-xl p-8 animate-float mt-12"
+              style="--rotate-angle: 3deg; --sway-duration: 6.5s"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full"
+                ></div>
+                <div>
+                  <div class="font-semibold text-lg">Rizky A.</div>
+                  <div class="text-sm text-gray-600">Musician, Surabaya</div>
+                </div>
+              </div>
+              <p class="text-gray-700 text-base">
+                "TARA menghubungkan saya dengan musisi lain untuk proyek
+                impian."
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
-</body>
+
+    <!-- Projects Section -->
+    <section
+      id="proyek"
+      class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden"
+    >
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="geometric-shape shape-1 top-20 left-32 opacity-20"></div>
+        <div
+          class="geometric-shape shape-2 bottom-16 right-20 opacity-20"
+        ></div>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-24">
+          <h2
+            class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear"
+          >
+            Proyek <span class="text-gradient">Sosial</span>
+          </h2>
+          <p
+            class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear"
+          >
+            Kolaborasi lintas disiplin untuk menciptakan perubahan melalui seni
+            dan teknologi
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -2deg;
+              --rope-angle: -2deg;
+              --sway-duration: 6s;
+              --parallax: 0.2;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=23"
+                  alt="Edukasi Digital"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Edukasi Digital
+                  </div>
+                  <div class="text-sm opacity-80">12 Anggota | 3 Bulan</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Platform pembelajaran daring untuk anak-anak di daerah
+                  terpencil.
+                </p>
+                <p class="text-gray-600 font-medium">
+                  Butuh: Developer, Desainer UI/UX
+                </p>
+                <a
+                  href="/proyek-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Gabung Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: 3deg;
+              --rope-angle: 3deg;
+              --sway-duration: 7s;
+              --parallax: 0.15;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=24"
+                  alt="Kampanye Lingkungan"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Kampanye Lingkungan
+                  </div>
+                  <div class="text-sm opacity-80">8 Anggota | 2 Bulan</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Konten kreatif untuk meningkatkan kesadaran lingkungan.
+                </p>
+                <p class="text-gray-600 font-medium">
+                  Butuh: Penulis, Videografer
+                </p>
+                <a
+                  href="/proyek-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Gabung Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -1deg;
+              --rope-angle: -1deg;
+              --sway-duration: 5.5s;
+              --parallax: 0.25;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=25"
+                  alt="Musik untuk Amal"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Musik untuk Amal
+                  </div>
+                  <div class="text-sm opacity-80">15 Anggota | 4 Bulan</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Konser virtual untuk penggalangan dana pendidikan.
+                </p>
+                <p class="text-gray-600 font-medium">Butuh: Musisi, Produser</p>
+                <a
+                  href="/proyek-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Gabung Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-16 text-appear">
+          <a
+            href="/proyek"
+            class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide"
+          >
+            Jelajahi Semua Proyek
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section
+      id="blog"
+      class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden"
+    >
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="geometric-shape shape-3 top-16 left-40 opacity-20"></div>
+        <div
+          class="geometric-shape shape-1 bottom-20 right-24 opacity-20"
+        ></div>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-24">
+          <h2
+            class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear"
+          >
+            Blog & <span class="text-gradient">Inspirasi</span>
+          </h2>
+          <p
+            class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear"
+          >
+            Dapatkan wawasan, tutorial, dan kisah inspiratif dari komunitas
+            kreatif
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -2deg;
+              --rope-angle: -2deg;
+              --sway-duration: 6s;
+              --parallax: 0.2;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=26"
+                  alt="Kisah Sukses"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Kisah Sukses
+                  </div>
+                  <div class="text-sm opacity-80">oleh Maya L.</div>
+                  <div class="text-sm opacity-80">Wawancara</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Kisah seorang desainer muda menjuarai kontes nasional.
+                </p>
+                <a
+                  href="/blog-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Baca Selengkapnya</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: 3deg;
+              --rope-angle: 3deg;
+              --sway-duration: 7s;
+              --parallax: 0.15;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=27"
+                  alt="Musik Indie"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Musik Indie
+                  </div>
+                  <div class="text-sm opacity-80">oleh Rizky A.</div>
+                  <div class="text-sm opacity-80">Tutorial</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Cara merekam lagu berkualitas dengan peralatan minimal.
+                </p>
+                <a
+                  href="/blog-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Baca Selengkapnya</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -1deg;
+              --rope-angle: -1deg;
+              --sway-duration: 5.5s;
+              --parallax: 0.25;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=28"
+                  alt="Optimalkan Kode"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Optimalkan Kode
+                  </div>
+                  <div class="text-sm opacity-80">oleh Budi S.</div>
+                  <div class="text-sm opacity-80">Tips & Trik</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Tips praktis untuk developer dalam membangun aplikasi
+                  berdampak.
+                </p>
+                <a
+                  href="/blog-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Baca Selengkapnya</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-16 text-appear">
+          <a
+            href="/blog"
+            class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide"
+          >
+            Jelajahi Semua Artikel
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agenda Section -->
+    <section
+      id="agenda"
+      class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden"
+    >
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-24">
+          <h2
+            class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear"
+          >
+            Agenda & <span class="text-gradient">Event</span>
+          </h2>
+          <p
+            class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear"
+          >
+            Rayakan kreativitas melalui webinar, pameran virtual, dan kontes
+            mingguan
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -2deg;
+              --rope-angle: -2deg;
+              --sway-duration: 6s;
+              --parallax: 0.2;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=29"
+                  alt="Webinar Portofolio"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Webinar Portofolio
+                  </div>
+                  <div class="text-sm opacity-80">10 Agustus 2025</div>
+                  <div class="text-sm opacity-80">Webinar</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Pelajari cara membangun portofolio yang memikat untuk karir
+                  kreatif.
+                </p>
+                <a
+                  href="/event-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Daftar Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: 3deg;
+              --rope-angle: 3deg;
+              --sway-duration: 7s;
+              --parallax: 0.15;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=30"
+                  alt="Pameran Virtual"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Pameran Virtual
+                  </div>
+                  <div class="text-sm opacity-80">15 Agustus 2025</div>
+                  <div class="text-sm opacity-80">Pameran</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Pameran daring karya terbaik dari komunitas TARA.
+                </p>
+                <a
+                  href="/event-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Daftar Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="gallery-item"
+            style="
+              --rotate-angle: -1deg;
+              --rope-angle: -1deg;
+              --sway-duration: 5.5s;
+              --parallax: 0.25;
+            "
+          >
+            <div class="rope"></div>
+            <div class="flip-card">
+              <div
+                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl"
+              >
+                <img
+                  src="https://picsum.photos/300/400?random=31"
+                  alt="Kontes Puisi"
+                  class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                <div class="image-overlay"></div>
+                <div class="absolute bottom-8 left-8 text-white z-20">
+                  <div class="text-xl font-bold uppercase tracking-wide">
+                    Kontes Puisi
+                  </div>
+                  <div class="text-sm opacity-80">Setiap Minggu</div>
+                  <div class="text-sm opacity-80">Kontes</div>
+                </div>
+              </div>
+              <div class="flip-card-back">
+                <p class="text-gray-900 font-medium text-lg">
+                  Pamerkan bakat menulis puisi dan menangkan hadiah menarik.
+                </p>
+                <a
+                  href="/event-detail"
+                  class="text-blue-600 font-semibold hover:underline mt-4"
+                  >Ikuti Kontes</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-16 text-appear">
+          <a
+            href="/agenda"
+            class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide"
+          >
+            Lihat Semua Agenda
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 bg-gray-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="geometric-shape shape-2 top-10 left-16 opacity-10"></div>
+        <div
+          class="geometric-shape shape-3 bottom-12 right-20 opacity-10"
+        ></div>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-4 gap-12">
+          <div>
+            <div class="text-3xl font-bold text-gradient mb-6">TARA</div>
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              Platform galeri seni digital untuk talenta muda Indonesia,
+              merayakan kreativitas dan kolaborasi.
+            </p>
+            <div class="flex gap-6">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-gray-200 transform hover:scale-110 transition"
+              >
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.91-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.09 5.39z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-gray-200 transform hover:scale-110 transition"
+              >
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11 1-3.56-.18-6.73-1.89-8.84-4.48-.37.63-.58 1.37-.58 2.16 0 1.49.76 2.81 1.91 3.58-.7-.02-1.36-.21-1.94-.52v.05c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.28 0-.55-.03-.81-.08.55 1.72 2.14 2.97 4.02 3.01-1.47 1.15-3.32 1.84-5.33 1.84-.35 0-.69-.02-1.03-.06 1.91 1.23 4.18 1.94 6.62 1.94 7.94 0 12.29-6.58 12.29-12.29 0-.19 0-.37-.01-.56.84-.6 1.57-1.36 2.14-2.22z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-gray-200 transform hover:scale-110 transition"
+              >
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4c-.77 0-1.54.15-2.27.44-.73.29-1.39.71-1.96 1.24-.57-.53-1.23-.95-1.96-1.24C8.54 4.15 7.77 4 7 4c-1.5.26-2.94.71-4.27 1.33C1.41 6.95 1 8.88 1 11c0 5.25 4.97 9.54 11 12.66 6.03-3.12 11-7.41 11-12.66 0-2.12-.41-4.05-1.73-5.67zM12 19.47C7.82 17.18 4 13.69 4 11c0-1.42.35-2.76 1-3.94.65-1.18 1.56-2.16 2.73-2.88.59.32 1.22.56 1.88.72.66.16 1.34.24 2.02.24.68 0 1.36-.08 2.02-.24.66-.16 1.29-.4 1.88-.72 1.17.72 2.08 1.7 2.73 2.88.65 1.18 1 2.52 1 3.94 0 2.69-3.82 6.18-8 8.47z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-6">Tentang Kami</h4>
+            <ul class="space-y-3 text-gray-400">
+              <li>
+                <a href="/tentang" class="hover:text-gray-200 nav-link"
+                  >Misi & Visi</a
+                >
+              </li>
+              <li>
+                <a href="/tim" class="hover:text-gray-200 nav-link">Tim Kami</a>
+              </li>
+              <li>
+                <a href="/karir" class="hover:text-gray-200 nav-link">Karir</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-6">Bantuan</h4>
+            <ul class="space-y-3 text-gray-400">
+              <li>
+                <a href="/faq" class="hover:text-gray-200 nav-link">FAQ</a>
+              </li>
+              <li>
+                <a href="/kontak" class="hover:text-gray-200 nav-link"
+                  >Kontak</a
+                >
+              </li>
+              <li>
+                <a href="/bantuan" class="hover:text-gray-200 nav-link"
+                  >Panduan Pengguna</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xl font-semibold mb-6">Ketentuan</h4>
+            <ul class="space-y-3 text-gray-400">
+              <li>
+                <a href="/privasi" class="hover:text-gray-200 nav-link"
+                  >Kebijakan Privasi</a
+                >
+              </li>
+              <li>
+                <a href="/syarat" class="hover:text-gray-200 nav-link"
+                  >Syarat & Ketentuan</a
+                >
+              </li>
+              <li>
+                <a href="/lisensi" class="hover:text-gray-200 nav-link"
+                  >Lisensi Konten</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-16 text-center text-gray-400 text-base">
+          <p>© 2025 TARA. Semua hak dilindungi.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuButton = document.querySelector(".md\\:hidden");
+        const nav = document.querySelector("nav");
+        mobileMenuButton.addEventListener("click", () => {
+          nav.classList.toggle("mobile-nav-active");
+        });
+
+        const items = document.querySelectorAll(".gallery-item");
+        items.forEach((item) => {
+          item.addEventListener("click", () => {
+            items.forEach((i) => i.classList.remove("flipped", "active"));
+            item.classList.toggle("flipped");
+            item.classList.toggle("active");
+          });
+        });
+
+        window.addEventListener("scroll", () => {
+          items.forEach((item) => {
+            const parallax = item.getAttribute("data-parallax") || 0.2;
+            const offset = window.pageYOffset * parallax;
+            if (!item.classList.contains("flipped")) {
+              item.style.transform = `translateY(${offset}px) rotate(${item.style.getPropertyValue(
+                "--rotate-angle"
+              )})`;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
 </html>

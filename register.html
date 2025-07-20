@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login – TARA</title>
+    <title>Register – TARA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -27,14 +27,6 @@
       }
 
       .left-section {
-        position: relative;
-        overflow: hidden;
-        height: 100vh;
-        background: linear-gradient(135deg, #e2e8f0, #edf2f7);
-        flex: 1;
-      }
-
-      .right-section {
         width: 520px;
         min-height: 100vh;
         display: flex;
@@ -42,6 +34,14 @@
         justify-content: center;
         background: #ffffff;
         padding: 0 16px;
+      }
+
+      .right-section {
+        position: relative;
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(135deg, #e2e8f0, #edf2f7);
+        flex: 1;
       }
 
       #three-canvas {
@@ -53,136 +53,6 @@
         z-index: 0;
       }
 
-      .card-section {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        padding: 20px;
-        z-index: 1;
-        overflow: hidden;
-        align-content: start;
-      }
-
-      .card-column {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        height: 200vh;
-      }
-
-      .card {
-        border-radius: 1.5rem;
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0;
-        transform: scale(0.8) translateY(50px);
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        overflow: hidden;
-        flex-shrink: 0;
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(15px);
-        border-radius: 1.5rem;
-        z-index: 1;
-        transition: all 0.4s ease;
-      }
-
-      .card:hover {
-        transform: scale(1.03) translateY(-8px);
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
-      }
-
-      .card:hover::before {
-        background: rgba(255, 255, 255, 0.15);
-      }
-
-      .card-small {
-        width: 100%;
-        height: 200px;
-      }
-      .card-medium {
-        width: 100%;
-        height: 250px;
-      }
-      .card-large {
-        width: 100%;
-        height: 300px;
-      }
-      .card-xl {
-        width: 100%;
-        height: 350px;
-      }
-
-      .tara-container {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-      }
-
-      .tara-text {
-        display: flex;
-        gap: 0.6rem;
-        font-size: 7rem;
-        font-weight: 700;
-        letter-spacing: 0.25rem;
-        color: #1a202c;
-        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-      }
-
-      .tara-letter {
-        transform-style: preserve-3d;
-        transition: transform 0.4s ease, filter 0.4s ease;
-      }
-
-      .tara-dot {
-        font-size: 0.9em;
-        color: #f6e05e;
-        animation: pulse 2s infinite alternate;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-          opacity: 0.7;
-        }
-        100% {
-          transform: scale(1.2);
-          opacity: 1;
-        }
-      }
-
-      .description {
-        max-width: 24rem;
-        text-align: center;
-        color: #2d3748;
-        font-weight: 300;
-        font-size: 1.1rem;
-        margin-top: 1.5rem;
-        opacity: 0.9;
-      }
-
       .form-container {
         background: linear-gradient(145deg, #ffffff, #f7fafc);
         border-radius: 2rem;
@@ -192,9 +62,8 @@
 
       .form-container:hover {
         transform: translateY(-5px);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); /* Tambahkan bayangan lebih besar saat dihover */
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); /* Bayangan lebih besar saat dihover */
       }
-
 
       .form-input {
         transition: all 0.3s ease;
@@ -223,12 +92,140 @@
         transform: translateY(-2px);
       }
 
+      .feature-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 40px;
+        z-index: 1;
+        justify-content: center;
+        align-content: center;
+      }
+
+      .feature-card {
+        border-radius: 1.5rem;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        border-radius: 1.5rem;
+        z-index: -1;
+      }
+
+      .feature-card:hover {
+        transform: scale(1.03) translateY(-8px);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
+      }
+
+      .feature-card:hover::before {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 10px;
+      }
+
+      .feature-desc {
+        font-size: 1rem;
+        color: #2d3748;
+        font-weight: 300;
+      }
+
+      .welcome-container {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+
+      .welcome-text {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 5rem;
+        font-weight: 700;
+        letter-spacing: 0.25rem;
+        color: #1a202c;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+      }
+
+      .welcome-letter {
+        transform-style: preserve-3d;
+        transition: transform 0.4s ease, filter 0.4s ease;
+      }
+
+      .welcome-dot {
+        font-size: 0.9em;
+        color: #f6e05e;
+        animation: pulse 2s infinite alternate;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+
+      .description {
+        max-width: 28rem;
+        text-align: center;
+        color: #2d3748;
+        font-weight: 300;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        opacity: 0.9;
+      }
+
       @media (max-width: 768px) {
         .main-container {
           flex-direction: column;
         }
-        .right-section {
+        .left-section {
           width: 100%;
+        }
+        .feature-section {
+          padding: 20px;
+        }
+        .feature-card {
+          width: 100%;
+          max-width: 300px;
+        }
+        .welcome-text {
+          font-size: 3rem;
         }
       }
     </style>
@@ -236,34 +233,22 @@
   <body>
     <main class="main-container">
       <div class="left-section">
-        <canvas id="three-canvas"></canvas>
-        <div class="card-section" id="card-section"></div>
-        <div class="tara-container">
-          <div class="tara-text relative top-[20px]" id="tara-text">
-            <span class="tara-letter">T</span>
-            <span class="tara-letter">A</span>
-            <span class="tara-letter">R</span>
-            <span class="tara-letter">A</span>
-            <span class="tara-dot">.</span>
-          </div>
-          <p class="description">
-            Temukan karya kreatif terbaik dan bangun portofoliomu bersama
-            komunitas digital Indonesia.
-          </p>
-        </div>
-      </div>
-      <div class="right-section">
         <div class="w-full max-w-lg p-7 py-14 pb-9 form-container">
           <div class="text-center mb-8">
             <div
               class="text-center text-4xl font-semibold tracking-wide text-black"
               style="font-family: 'Space Grotesk', sans-serif"
             >
-              Login ke <span class="text-black">TARA</span
+              Daftar ke <span class="text-black">TARA</span
               ><span class="text-yellow-400">●</span>
             </div>
           </div>
-          <form action="/in dex.html" method="GET" class="space-y-5">
+          <form action="/register.html" method="POST" class="space-y-5">
+            <input
+              type="text"
+              placeholder="Nama Lengkap"
+              class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
+            />
             <input
               type="email"
               placeholder="Email"
@@ -274,18 +259,16 @@
               placeholder="Password"
               class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
             />
-            <div class="text-right text-xs">
-              <a
-                href="#"
-                class="text-gray-500 hover:text-gray-700 hover:underline transition"
-                >Lupa Password?</a
-              >
-            </div>
+            <input
+              type="password"
+              placeholder="Konfirmasi Password"
+              class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
+            />
             <button
               type="submit"
               class="form-button w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 text-sm font-medium"
             >
-              Masuk
+              Daftar
             </button>
           </form>
           <div
@@ -293,7 +276,7 @@
           >
             <span
               class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2"
-              >atau masuk dengan</span
+              >atau daftar dengan</span
             >
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
@@ -329,13 +312,52 @@
             </button>
           </div>
           <p class="text-center text-xs text-gray-500 mt-8">
-            Belum punya akun?
+            Sudah punya akun?
             <a
-              href="/register.html"
-              id="register-link"
+              href="/login.html"
+              id="login-link"
               class="text-gray-500 hover:text-gray-700 hover:underline transition"
-              >Daftar</a
+              >Masuk</a
             >
+          </p>
+        </div>
+      </div>
+      <div class="right-section">
+        <canvas id="three-canvas"></canvas>
+        <div class="feature-section" id="feature-section">
+          <div class="feature-card">
+            <div class="feature-title">Bangun Portofolio</div>
+            <div class="feature-desc">
+              Pamerkan karya kreatifmu dan dapatkan pengakuan dari komunitas.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">Bergabung Komunitas</div>
+            <div class="feature-desc">
+              Terhubung dengan kreator lain dan kolaborasi di proyek menarik.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">Inspirasi Tanpa Batas</div>
+            <div class="feature-desc">
+              Temukan ide baru dari karya kreatif di seluruh Indonesia.
+            </div>
+          </div>
+        </div>
+        <div class="welcome-container">
+          <div class="welcome-text relative top-[20px]" id="welcome-text">
+            <span class="welcome-letter">B</span>
+            <span class="welcome-letter">E</span>
+            <span class="welcome-letter">R</span>
+            <span class="welcome-letter">G</span>
+            <span class="welcome-letter">A</span>
+            <span class="welcome-letter">B</span>
+            <span class="welcome-letter">U</span>
+            <span class="welcome-letter">N</span>
+            <span class="welcome-letter">G</span>
+          </div>
+          <p class="description">
+            Daftar sekarang dan mulailah perjalanan kreatifmu bersama kami.
           </p>
         </div>
       </div>
@@ -413,134 +435,30 @@
         });
       }
 
-      // Structured Card System
-      const cardSection = document.getElementById("card-section");
-      const numberOfColumns = 4;
-      const cardsPerColumn = 8;
-      const cardSizes = ["card-small", "card-medium", "card-large", "card-xl"];
-      let cardColumns = [];
+      // Feature Card Animation
+      const featureSection = document.getElementById("feature-section");
+      const featureCards = featureSection.querySelectorAll(".feature-card");
 
-      function getRandomPicsumImage(width, height) {
-        const imageId = Math.floor(Math.random() * 1000) + 1;
-        return `https://picsum.photos/${width}/${height}?random=${imageId}`;
-      }
-
-      function createCardColumns() {
-        for (let col = 0; col < numberOfColumns; col++) {
-          const column = document.createElement("div");
-          column.className = "card-column";
-          column.style.animationDelay = `${col * 0.5}s`;
-
-          for (let card = 0; card < cardsPerColumn * 2; card++) {
-            const cardElement = document.createElement("div");
-            const sizeClass =
-              cardSizes[Math.floor(Math.random() * cardSizes.length)];
-            cardElement.className = `card ${sizeClass}`;
-
-            let width = 300,
-              height;
-            switch (sizeClass) {
-              case "card-small":
-                height = 200;
-                break;
-              case "card-medium":
-                height = 250;
-                break;
-              case "card-large":
-                height = 300;
-                break;
-              case "card-xl":
-                height = 350;
-                break;
-              default:
-                height = 250;
-            }
-
-            cardElement.style.backgroundImage = `url(${getRandomPicsumImage(
-              width,
-              height
-            )})`;
-
-            cardElement.addEventListener("mouseenter", () => {
-              anime({
-                targets: cardElement,
-                scale: 1.03,
-                translateY: -8,
-                rotateZ: Math.random() * 2 - 1,
-                duration: 300,
-                easing: "easeOutCubic",
-              });
-            });
-
-            cardElement.addEventListener("mouseleave", () => {
-              anime({
-                targets: cardElement,
-                scale: 1,
-                translateY: 0,
-                rotateZ: 0,
-                duration: 300,
-                easing: "easeOutCubic",
-              });
-            });
-
-            column.appendChild(cardElement);
-          }
-
-          cardSection.appendChild(column);
-          cardColumns.push(column);
-        }
-      }
-
-      function animateCardsAppearance() {
-        cardColumns.forEach((column, colIndex) => {
-          const cards = column.querySelectorAll(".card");
-          cards.forEach((card, cardIndex) => {
-            if (cardIndex < cardsPerColumn) {
-              anime({
-                targets: card,
-                opacity: [0, 1],
-                scale: [0.8, 1],
-                translateY: [50, 0],
-                duration: 800,
-                delay: colIndex * 100 + cardIndex * 150,
-                easing: "easeOutCubic",
-              });
-            } else {
-              anime.set(card, { opacity: 1, scale: 1, translateY: 0 });
-            }
-          });
+      function animateFeatureCards() {
+        anime({
+          targets: featureCards,
+          opacity: [0, 1],
+          scale: [0.8, 1],
+          translateY: [50, 0],
+          duration: 800,
+          delay: anime.stagger(200, { start: 500 }),
+          easing: "easeOutCubic",
         });
       }
 
-      function startInfiniteScroll() {
-        cardColumns.forEach((column, index) => {
-          const cards = column.querySelectorAll(".card");
-          let totalHeight = 0;
-          for (let i = 0; i < cardsPerColumn; i++) {
-            totalHeight += cards[i].offsetHeight + 20;
-          }
-
-          let duration = index === 1 || index === 3 ? 20000 : 28000;
-
-          anime({
-            targets: column,
-            translateY: -totalHeight,
-            duration: duration,
-            easing: "linear",
-            loop: true,
-            autoplay: true,
-          });
-        });
-      }
-
-      // TARA text animation
-      const taraLetters = document.querySelectorAll(
-        "#tara-text .tara-letter, #tara-text .tara-dot"
+      // Welcome Text Animation
+      const welcomeLetters = document.querySelectorAll(
+        "#welcome-text .welcome-letter, #welcome-text .welcome-dot"
       );
-      const taraContainer = document.querySelector(".tara-container");
+      const welcomeContainer = document.querySelector(".welcome-container");
 
       anime({
-        targets: taraLetters,
+        targets: welcomeLetters,
         translateY: [50, 0],
         translateZ: [0, 100],
         opacity: [0, 1],
@@ -550,26 +468,22 @@
         complete: function () {
           setTimeout(() => {
             anime({
-              targets: taraContainer,
+              targets: welcomeContainer,
               opacity: [1, 0],
               translateY: [0, -40],
               scale: [1, 0.9],
               duration: 1000,
               easing: "easeInCubic",
               complete: function () {
-                taraContainer.style.display = "none";
-                createCardColumns();
-                animateCardsAppearance();
-                setTimeout(() => {
-                  startInfiniteScroll();
-                }, 2000);
+                welcomeContainer.style.display = "none";
+                animateFeatureCards();
               },
             });
           }, 1500);
         },
       });
 
-      taraLetters.forEach((letter) => {
+      welcomeLetters.forEach((letter) => {
         letter.style.pointerEvents = "auto";
         letter.addEventListener("mouseenter", () => {
           anime({
@@ -593,20 +507,26 @@
         });
       });
 
-      // Transition to register page
-      const registerLink = document.getElementById("register-link");
-      registerLink.addEventListener("click", (e) => {
+      // Transition to login page
+      const loginLink = document.getElementById("login-link");
+      loginLink.addEventListener("click", (e) => {
         e.preventDefault();
         const leftSection = document.querySelector(".left-section");
         const rightSection = document.querySelector(".right-section");
 
         anime({
           targets: [leftSection, rightSection],
-          translateX: [0, (el) => (el === leftSection ? window.innerWidth - 520 : -window.innerWidth + 520)],
+          translateX: [
+            0,
+            (el) =>
+              el === leftSection
+                ? window.innerWidth - 520
+                : -window.innerWidth + 520,
+          ],
           duration: 600,
           easing: "easeInOutQuad",
           complete: () => {
-            window.location.href = "/register.html";
+            window.location.href = "/login.html";
           },
         });
       });

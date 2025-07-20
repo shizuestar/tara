@@ -303,6 +303,7 @@
                     <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
                         <p>${notification.text}</p>
                         <p class="time">${notification.time}</p>
+                        ${!notification.read ? '<span class="text-red-500 absolute top-2 right-2 text-xl">!</span>' : ''}
                     </div>
                 `;
             });
@@ -320,6 +321,7 @@
                 ease: "power3.out"
             });
         }
+
 
         // Render Joined Communities in Sidebar
         function renderJoinedCommunities() {
