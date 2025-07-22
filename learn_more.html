@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA - Learn More</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      :root {
+        --primary-black: #000000;
+        --primary-white: #ffffff;
+        --gray-light: #f5f6f5;
+        --gray-dark: #1a1a1a;
+        --accent-silver: #b0b0b0;
+        --accent-platinum: #e5e5e5;
+      }
+
+      .text-gradient {
+        background: linear-gradient(
+          135deg,
+          #000000 0%,
+          #4a4a4a 50%,
+          #000000 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 200%;
+        animation: gradientShift 4s ease-in-out infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .geometric-shape {
+        position: absolute;
+        border: 2px solid rgba(0, 0, 0, 0.15);
+        z-index: 0;
+      }
+
+      .shape-1 {
+        width: 100px;
+        height: 100px;
+        transform: rotate(45deg);
+        animation: float 10s ease-in-out infinite;
+      }
+
+      .shape-2 {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        animation: float 12s ease-in-out infinite reverse;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-30px) rotate(5deg);
+        }
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(255, 215, 0, 0.4);
+        border-radius: 50%;
+        animation: drift 12s linear infinite;
+      }
+
+      .particle-1 {
+        width: 20px;
+        height: 20px;
+        top: 10%;
+        left: 15%;
+      }
+
+      .particle-2 {
+        width: 15px;
+        height: 15px;
+        top: 65%;
+        left: 75%;
+        animation-delay: 4s;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0);
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translate(120vw, 100vh);
+          opacity: 0;
+        }
+      }
+
+      .button-primary {
+        background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.6s;
+      }
+
+      .button-primary:hover::before {
+        left: 100%;
+      }
+
+      .button-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .text-appear {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: appear 1s ease forwards;
+      }
+
+      @keyframes appear {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .fade-section.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-b from-white to-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-md border-b border-gray-200"
+    >
+      <div class="max-w-7xl mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <a href="/home" class="text-3xl font-bold text-gray-900">TARA</a>
+            <div class="relative">
+              <span class="text-yellow-400 text-2xl">●</span>
+              <span
+                class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping"
+                >●</span
+              >
+            </div>
+          </div>
+          <div class="hidden md:flex items-center gap-8">
+            <a href="/home" class="text-gray-700 hover:text-black transition"
+              >Beranda</a
+            >
+            <a href="/eksplor" class="text-gray-700 hover:text-black transition"
+              >Eksplor</a
+            >
+            <a
+              href="/komunitas"
+              class="text-gray-700 hover:text-black transition"
+              >Komunitas</a
+            >
+            <a href="/proyek" class="text-gray-700 hover:text-black transition"
+              >Proyek</a
+            >
+            <a href="/blog" class="text-gray-700 hover:text-black transition"
+              >Blog</a
+            >
+            <a href="/agenda" class="text-gray-700 hover:text-black transition"
+              >Agenda</a
+            >
+            <a href="/login" class="text-gray-700 hover:text-black transition"
+              >Login/Daftar</a
+            >
+          </div>
+          <button class="md:hidden text-gray-700">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Learn More Section -->
+    <section class="py-32 px-6 relative overflow-hidden fade-section">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="geometric-shape shape-1 top-16 left-20 opacity-15"></div>
+        <div
+          class="geometric-shape shape-2 bottom-20 right-24 opacity-15"
+        ></div>
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-16 relative z-10 text-center">
+        <h1
+          class="text-6xl md:text-7xl font-bold text-gray-900 mb-10 text-appear"
+        >
+          Pelajari Lebih Lanjut <br />
+          Tentang <span class="text-gradient">TARA</span>
+        </h1>
+        <div
+          class="w-32 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent mx-auto mb-12"
+        ></div>
+        <p
+          class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-16 text-appear"
+        >
+          TARA adalah platform eksklusif untuk seniman dan kreator Indonesia,
+          tempat berkolaborasi, memamerkan karya, dan menginspirasi dunia.
+        </p>
+        <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+          <div class="text-appear">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Misi Kami</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Menciptakan ruang bagi seniman untuk berkembang, berbagi visi, dan
+              menghidupkan ide melalui kolaborasi lintas disiplin.
+            </p>
+          </div>
+          <div class="text-appear">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+              Apa yang Kami Tawarkan
+            </h3>
+            <p class="text-gray-600 leading-relaxed">
+              Akses ke komunitas kreatif, acara seni, workshop, dan peluang
+              untuk memamerkan karya Anda di panggung global.
+            </p>
+          </div>
+          <div class="text-appear">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+              Mengapa Bergabung?
+            </h3>
+            <p class="text-gray-600 leading-relaxed">
+              Terhubung dengan kreator berbakat, dapatkan dukungan untuk proyek
+              Anda, dan jadilah bagian dari gerakan seni modern Indonesia.
+            </p>
+          </div>
+          <div class="text-appear">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+              Cara Memulai
+            </h3>
+            <p class="text-gray-600 leading-relaxed">
+              Daftar gratis, jelajahi galeri, ikuti acara, atau mulai proyek
+              Anda sendiri dengan komunitas TARA.
+            </p>
+          </div>
+        </div>
+        <div class="mt-16">
+          <a
+            href="/register"
+            class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide text-appear"
+          >
+            Gabung Sekarang
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-sm text-gray-700">
+      <div
+        class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <div>
+          <div class="text-2xl font-bold text-gray-900">
+            TARA<span class="text-yellow-400">●</span>
+          </div>
+          <p class="text-gray-500 mt-4">
+            Rumah bagi kreativitas dan inovasi seni Indonesia.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4">Navigasi</h3>
+          <ul class="space-y-2">
+            ブレ
+            <li>
+              <a href="/home" class="hover:text-black transition">Beranda</a>
+            </li>
+            <li>
+              <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+            </li>
+            <li>
+              <a href="/komunitas" class="hover:text-black transition"
+                >Komunitas</a
+              >
+            </li>
+            <li>
+              <a href="/proyek" class="hover:text-black transition">Proyek</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4">Eksplorasi</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/galeri" class="hover:text-black transition">Galeri</a>
+            </li>
+            <li>
+              <a href="/blog" class="hover:text-black transition">Blog</a>
+            </li>
+            <li>
+              <a href="/agenda" class="hover:text-black transition">Agenda</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4">Kontak</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/kontak" class="hover:text-black transition"
+                >Hubungi Kami</a
+              >
+            </li>
+            <li><a href="/faq" class="hover:text-black transition">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="border-t border-gray-200 text-center py-4 text-xs text-gray-400"
+      >
+        © 2025 TARA. Dibuat dengan semangat di Nusantara.
+      </div>
+    </footer>
+
+    <!-- JavaScript for Animations -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("animate-in");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
+        );
+
+        document
+          .querySelectorAll(".fade-section, .text-appear")
+          .forEach((item) => {
+            observer.observe(item);
+          });
+      });
+    </script>
+  </body>
+</html>

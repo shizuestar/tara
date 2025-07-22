@@ -4,39 +4,70 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tara - Profile</title>
+    <title>TARA - Profil Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'primary-black': '#1a1a1a',
+                        'primary-white': '#f8f8f8',
+                        'accent-gray': '#4a4a4a',
+                        'subtle-gray': '#d1d5db',
+                    },
                     keyframes: {
-                        pop: {
-                            '0%': { transform: 'scale(0.5)', opacity: '0' },
-                            '100%': { transform: 'scale(1)', opacity: '1' },
-                        },
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        scalePulse: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.1)' } },
+                        slideIn: { '0%': { opacity: '0', transform: 'translateX(-10px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
                     },
                     animation: {
-                        pop: 'pop 0.5s ease-out forwards',
+                        fadeIn: 'fadeIn 0.8s ease-out forwards',
+                        float: 'float 6s ease-in-out infinite',
+                        scalePulse: 'scalePulse 3s ease-in-out infinite',
+                        slideIn: 'slideIn 0.6s ease-out forwards',
                     },
-                }
-            }
+                },
+            },
         };
     </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        @font-face {
-            font-family: "Vantage";
-            src: url("./assets/fonts/VantageRegular-L3xY5.ttf") format("truetype");
+        :root {
+            --primary-black: #1a1a1a;
+            --primary-white: #f8f8f8;
+            --accent-gray: #4a4a4a;
+            --subtle-gray: #d1d5db;
         }
 
-        .font-vantage {
-            font-family: "Vantage", sans-serif;
-            letter-spacing: 0.05em;
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--primary-white);
+            color: var(--primary-black);
+        }
+
+        main {
+            min-height: calc(100vh - 80px - 208px);
+        }
+
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+            opacity: 0.3;
         }
 
         #particles-js {
@@ -49,890 +80,677 @@
             pointer-events: none;
         }
 
-        .gradient-bg {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(to bottom right, #eff6ff, #ede9fe);
-            z-index: -2;
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0წ
+
+System: I'm sorry, but I cannot assist with that task because the code you provided is incomplete, and I cannot proceed with providing a complete solution from start to finish without the full code. Additionally, the request to "buat lengkap dari awal hingga akhir" (make it complete from start to finish) is ambiguous without further context about the desired functionality beyond fixing the scrolling issue caused by the chart.
+
+However, I can provide a complete version of the HTML file based on the provided code, incorporating all the fixes mentioned in my previous response to address the scrolling issue, optimize the chart, animations, and performance, and ensure responsiveness. Below is the complete, corrected HTML code with all necessary changes.
+
+### Key Fixes Applied
+1. **Chart Stability**: Wrapped the `Chart.js` canvas in a container with a fixed height (`250px`), removed Tailwind height classes, and optimized `Chart.js` settings for responsiveness.
+2. **Animation Optimization**: Simplified `fadeIn` and `slideIn` keyframes to prevent layout shifts, ensured `IntersectionObserver` triggers only once.
+3. **Performance**: Reduced `particles.js` particle count to 50 and disabled interactivity to improve rendering performance.
+4. **Layout**: Added `scroll-behavior: smooth` and `min-height` to `<main>` to prevent scroll jumps and ensure content fits within the viewport.
+5. **Dependencies**: Added Lottie library for badge animations.
+6. **Scroll Prevention**: Adjusted `IntersectionObserver` with `rootMargin: "0px"` and ensured animations don’t cause reflows.
+
+### Complete Corrected Code
+```html
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA - Profil Pengguna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-black': '#1a1a1a',
+                        'primary-white': '#f8f8f8',
+                        'accent-gray': '#4a4a4a',
+                        'subtle-gray': '#d1d5db',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        scalePulse: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.1)' } },
+                        slideIn: { '0%': { opacity: '0', transform: 'translateX(-10px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                    },
+        animation: {
+                        fadeIn: 'fadeIn 0.8s ease-out forwards',
+                        float: 'float 6s ease-in-out infinite',
+                        scalePulse: 'scalePulse 3s ease-in-out infinite',
+                        slideIn: 'slideIn 0.6s ease-out forwards',
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-black: #1a1a1a;
+            --primary-white: #f8f8f8;
+            --accent-gray: #4a4a4a;
+            --subtle-gray: #d1d5db;
         }
 
         * {
-            font-family: "Space Grotesk", sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .animate-ping-slow {
-            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        @keyframes ping-slow {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            75%,
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+        body {
+            background: var(--primary-white);
+            color: var(--primary-black);
         }
 
-        .animate-float {
-            animation: float 8s ease-in-out infinite;
+        main {
+            min-height: calc(100vh - 80px - 208px);
         }
 
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-30px) rotate(5deg);
-            }
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+            opacity: 0.3;
         }
 
-        .text-gradient {
-            background: linear-gradient(135deg,
-                    #000000 0%,
-                    #4a4a4a 50%,
-                    #000000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradientShift 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: rotate(var(--rotate-angle)) translateY(0);
-            animation: sway var(--sway-duration) ease-in-out infinite;
-            perspective: 1000px;
-        }
-
-        @keyframes sway {
-
-            0%,
-            100% {
-                transform: rotate(var(--rotate-angle)) translateY(0);
-            }
-
-            50% {
-                transform: rotate(calc(var(--rotate-angle) + 2deg)) translateY(5px);
-            }
-        }
-
-        .gallery-item::before {
-            content: "";
-            position: absolute;
+        #particles-js {
+            position: fixed;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.2),
-                    transparent);
-            transition: left 0.6s;
-            z-index: 10;
-        }
-
-        .gallery-item:hover::before {
-            left: 100%;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-20px) scale(1.1) rotate(0deg);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-item.active {
-            transform: scale(1.2) rotate(0deg);
-            z-index: 20;
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
-        }
-
-        .rope {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            width: 2px;
-            height: 30px;
-            background: #4a4a4a;
-            transform-origin: top;
-            transform: rotate(var(--rope-angle));
-            z-index: 5;
-            animation: rope-sway var(--sway-duration) ease-in-out infinite;
-        }
-
-        @keyframes rope-sway {
-
-            0%,
-            100% {
-                transform: rotate(var(--rope-angle));
-            }
-
-            50% {
-                transform: rotate(calc(var(--rope-angle) + 1deg));
-            }
-        }
-
-        .hero-bg {
-            background: radial-gradient(circle at 20% 50%,
-                    rgba(0, 0, 0, 0.05) 0%,
-                    transparent 50%),
-                radial-gradient(circle at 80% 20%,
-                    rgba(0, 0, 0, 0.05) 0%,
-                    transparent 50%),
-                radial-gradient(circle at 40% 80%,
-                    rgba(0, 0, 0, 0.05) 0%,
-                    transparent 50%),
-                linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .glass-effect {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .button-primary {
-            background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
+            background: var(--primary-black);
+            color: var(--primary-white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: #2a2a2a;
+        }
+
         .button-primary::before {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.1),
-                    transparent);
-            transition: left 0.6s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
         .button-primary:hover::before {
             left: 100%;
         }
 
-        .button-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .button-secondary {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            border: 2px solid #000000;
-            transition: all 0.4s ease;
+        .tab-link {
             position: relative;
-            overflow: hidden;
+            padding-bottom: 0.5rem;
+            transition: all 0.3s ease;
         }
 
-        .button-secondary::before {
-            content: "";
+        .tab-link.active {
+            color: var(--primary-black);
+            font-weight: 700;
+        }
+
+        .tab-link::after {
+            content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            transition: left 0.4s;
-            z-index: 1;
-        }
-
-        .button-secondary:hover::before {
+            bottom: 0;
             left: 0;
-        }
-
-        .button-secondary span {
-            position: relative;
-            z-index: 2;
-            transition: color 0.4s;
-        }
-
-        .button-secondary:hover span {
-            color: white;
-        }
-
-        .button-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .geometric-shape {
-            position: absolute;
-            border: 2px solid rgba(0, 0, 0, 0.15);
-            z-index: 0;
-        }
-
-        .shape-1 {
-            width: 120px;
-            height: 120px;
-            transform: rotate(45deg);
-            animation: float 10s ease-in-out infinite;
-        }
-
-        .shape-2 {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            animation: float 12s ease-in-out infinite reverse;
-        }
-
-        .shape-3 {
-            width: 100px;
-            height: 100px;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: float 8s ease-in-out infinite;
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg,
-                    rgba(0, 0, 0, 0.9) 0%,
-                    rgba(0, 0, 0, 0.4) 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .gallery-item:hover .image-overlay {
-            opacity: 1;
-        }
-
-        .category-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #000000;
-        }
-
-        .stats-number {
-            background: linear-gradient(135deg, #000000, #4a4a4a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .text-appear {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: appear 1s ease forwards;
-        }
-
-        @keyframes appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .text-appear:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .text-appear:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .text-appear:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .text-appear:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-link::after {
-            content: "";
-            position: absolute;
             width: 0;
             height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #000000;
-            transition: width 0.3s;
+            background: var(--primary-black);
+            transition: width 0.3s ease;
         }
 
-        .nav-link:hover::after {
+        .tab-link.active::after,
+        .tab-link:hover::after {
             width: 100%;
         }
 
-        .featured-bg {
-            background: linear-gradient(135deg,
-                    #f8f8f8 0%,
-                    #ffffff 50%,
-                    #f0f0f0 100%);
-            position: relative;
+        .card {
+            transition: all 0.4s ease;
+            border-radius: 12px;
             overflow: hidden;
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 215, 0, 0.4);
-            border-radius: 50%;
-            animation: drift 12s linear infinite;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .particle-1 {
-            width: 25px;
-            height: 25px;
-            top: 5%;
-            left: 10%;
+        .portfolio-card img {
+            transition: transform 0.5s ease, filter 0.5s ease;
         }
 
-        .particle-2 {
-            width: 15px;
-            height: 15px;
-            top: 60%;
-            left: 70%;
-            animation-delay: 4s;
+        .portfolio-card:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0);
         }
 
-        .particle-3 {
-            width: 20px;
-            height: 20px;
-            top: 30%;
-            left: 40%;
-            animation-delay: 8s;
+        .progress-bar {
+            height: 4px;
+            background: var(--subtle-gray);
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        .particle-4 {
-            width: 18px;
-            height: 18px;
-            top: 80%;
-            left: 20%;
-            animation-delay: 2s;
-        }
-
-        @keyframes drift {
-            0% {
-                transform: translate(0, 0);
-                opacity: 0.4;
-            }
-
-            50% {
-                opacity: 0.7;
-            }
-
-            100% {
-                transform: translate(120vw, 100vh);
-                opacity: 0;
-            }
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            perspective: 1200px;
-            padding: 40px 0;
-        }
-
-        .flip-card {
-            position: relative;
-            width: 100%;
+        .progress-bar-fill {
             height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
+            background: var(--primary-black);
+            transition: width 0.3s ease;
         }
 
-        .gallery-item.flipped .flip-card {
-            transform: rotateY(180deg);
+        .filter-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--subtle-gray);
+            border-radius: 999px;
+            background: var(--primary-white);
+            transition: all 0.3s ease;
         }
 
-        .flip-card-front,
-        .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 16px;
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--primary-black);
+            color: var(--primary-white);
+            border-color: var(--primary-black);
         }
 
-        .flip-card-back {
-            transform: rotateY(180deg);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+            }
 
-        .flip-card-back p {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+            .tab-link {
+                font-size: 0.9rem;
+            }
 
-        .flip-card-back a {
-            color: #2563eb;
-            font-weight: 600;
-            text-decoration: underline;
+            .card:hover {
+                transform: translateY(0);
+            }
+
+            .portfolio-card img {
+                transform: scale(1);
+                filter: grayscale(0);
+            }
         }
     </style>
-
 </head>
 
-<body class="relative font-vantage overflow-x-hidden">
-    <!-- Background Gradient -->
+<body class="relative">
     <div class="gradient-bg"></div>
-
-    <!-- Particles Layer -->
     <div id="particles-js"></div>
 
-    <!-- Navbar -->
-    <header
-        class="py-6 px-6 flex justify-between items-center bg-white/90 shadow-sm border-b border-gray-200 backdrop-blur-sm relative z-10">
-        <!-- Logo -->
-        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family:'Space Grotesk', sans-serif">
-            TARA<span class="text-yellow-400">●</span>
+    <header class="py-4 px-6 flex justify-between items-center glass-effect fixed top-0 left-0 right-0 z-50">
+        <div class="text-2xl font-bold uppercase tracking-wide">
+            TARA<span class="text-accent-gray">●</span>
         </div>
-
-        <!-- Hamburger -->
-        <button id="menuToggle" class="text-2xl md:hidden">
-            ☰
-        </button>
-
-        <!-- Nav Menu -->
-        <nav id="navMenu"
-            class="hidden md:flex flex-col md:flex-row md:items-center gap-4 md:gap-6 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent px-6 py-4 md:py-0 shadow md:shadow-none z-50">
-            <a href="/" class="hover:text-black transition text-sm text-gray-700">Beranda</a>
-            <a href="/about.html" class="font-semibold text-black text-sm">Tentang</a>
-            <a href="/galeri" class="hover:text-black transition text-sm">Galeri</a>
-            <a href="/profile.html" class="ml-0 md:ml-4">
-                <img src="https://i.pravatar.cc/36?u=tara" alt="Profile"
-                    class="w-9 h-9 rounded-full border hover:ring-2 hover:ring-blue-400 transition duration-150" />
+        <button id="menuToggle" class="text-2xl md:hidden" aria-label="Toggle navigation menu">☰</button>
+        <nav id="navMenu" class="hidden md:flex gap-6 items-center">
+            <a href="/" class="tab-link hover:text-primary-black">Beranda</a>
+            <a href="/about.html" class="tab-link hover:text-primary-black">Tentang</a>
+            <a href="/galeri" class="tab-link hover:text-primary-black">Galeri</a>
+            <a href="/profile.html" class="ml-4">
+                <img src="https://i.pravatar.cc/36?u=tara" alt="User profile avatar" class="w-8 h-8 rounded-full border hover:ring-2 hover:ring-primary-black" />
             </a>
         </nav>
     </header>
 
-
-    <main class="relative z-10 text-gray-800">
-        <!-- Section Profil + Statistik -->
-        <section class="w-full px-6 py-16 bg-transparent backdrop-blur-sm">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-start gap-12">
-
-                <!-- Kiri: Foto dan Info -->
-                <div class="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
-                    <div
-                        class="w-40 h-40 md:w-60 md:h-60 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
-                        <img src="https://i.pravatar.cc/36?u=tara" alt="Profile" class="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Noah Sullivan</h2>
-                        <p class="text-sm text-gray-500 mt-1">@noahdesu</p>
-                    </div>
+    <main class="mt-20 max-w-6xl mx-auto px-6">
+        <!-- Hero Section -->
+        <section class="py-16 flex flex-col md:flex-row items-center gap-8">
+            <div class="relative w-32 h-32 md:w-48 md:h-48 rounded-lg overflow-hidden border-2 border-primary-black animate-float">
+                <img src="https://i.pravatar.cc/300?u=tara" alt="Profile picture of Noah Sullivan" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-3xl md:text-4xl font-bold text-primary-black animate-fadeIn">Noah Sullivan</h1>
+                <p class="text-sm text-accent-gray mt-1 animate-fadeIn">@noahdesu</p>
+                <p class="text-base text-accent-gray mt-2 max-w-md animate-fadeIn">Desainer dan pengembang kreatif dengan passion untuk menciptakan pengalaman digital yang memukau.</p>
+                <div class="flex gap-2 mt-3 flex-wrap justify-center md:justify-start">
+                    <span class="text-xs bg-subtle-gray text-accent-gray px-2 py-1 rounded-full">Mentor</span>
+                    <span class="text-xs bg-subtle-gray text-accent-gray px-2 py-1 rounded-full">Kontributor Terbaik</span>
                 </div>
-
-                <!-- Kanan: Grafik -->
-                <div class="flex-1 w-full">
-                    <div class="bg-white/40 backdrop-blur-lg rounded-2xl shadow-2xl p-6 md:p-8">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4 text-center md:text-left">Grafik Keaktifan
-                        </h3>
-                        <div class="relative w-full h-[250px]">
-                            <canvas id="userActivityChart" class="w-full h-full"></canvas>
-                        </div>
-                    </div>
+                <div class="flex gap-4 mt-4 flex-wrap justify-center md:justify-start">
+                    <a href="#" class="button-primary">Kirim Pesan</a>
+                    <a href="#" class="button-primary">Ikuti</a>
+                    <a href="#portfolio" class="button-primary">Lihat Karya</a>
+                    <a href="https://linkedin.com" class="text-accent-gray hover:text-primary-black"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com" class="text-accent-gray hover:text-primary-black"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION: Lencana Saya -->
-        <section id='badgeSection' class='w-full px-6 py-16 bg-white/60 backdrop-blur-sm'>
-            <div class='max-w-6xl mx-auto'>
-                <!-- Judul -->
-                <div class='mb-10 text-center'>
-                    <h2 class='text-3xl font-bold text-gray-800'>Lencana Saya</h2>
-                    <p class='text-sm text-gray-500 mt-1'>Lencana yang kamu kumpulkan berdasarkan aktivitasmu</p>
-                </div>
+        <!-- Navigation Tabs -->
+        <nav class="flex gap-6 border-b border-subtle-gray mb-8 overflow-x-auto">
+            <button class="tab-link active" data-tab="overview">Ikhtisar</button>
+            <button class="tab-link" data-tab="portfolio">Portofolio</button>
+            <button class="tab-link" data-tab="projects">Proyek</button>
+            <button class="tab-link" data-tab="activity">Aktivitas</button>
+            <button class="tab-link" data-tab="community">Komunitas</button>
+        </nav>
 
-                <!-- Grid Lencana -->
-                <div class='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6'>
-                    <!-- Seniman (Lottie) -->
-                    <div
-                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
-                        <div class='relative'>
-                            <div id='senimanLottie' class='w-20 h-20'></div>
-                            <span
-                                class='absolute -top-2 -right-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full'>BARU</span>
+        <!-- Tab Content -->
+        <div id="tab-content">
+            <!-- Overview Tab -->
+            <section id="overview" class="tab-section">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card glass-effect p-6 animate-slideIn">
+                        <h3 class="text-lg font-semibold text-primary-black mb-4">Statistik Aktivitas</h3>
+                        <div class="relative w-full" style="height: 250px;">
+                            <canvas id="userActivityChart"></canvas>
                         </div>
-                        <h4 class='mt-3 font-semibold text-gray-800'>Kreatif Abiezz</h4>
-                        <span class='text-sm text-gray-500'>Mendapat 10jt Like</span>
                     </div>
-
-                    <!-- Sosialita (Lottie) -->
-                    <div
-                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
-                        <div id='sosialitaLottie' class='w-20 h-20'></div>
-                        <h4 class='mt-3 font-semibold text-gray-800'>Sosialita</h4>
-                        <span class='text-sm text-gray-500'>Bergabung dengan komunitas</span>
-                    </div>
-
-                    <!-- Petarung (Lottie) -->
-                    <div
-                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
-                        <div id='petarungLottie' class='w-20 h-20'></div>
-                        <h4 class='mt-3 font-semibold text-gray-800'>Kolaborator terbaik!</h4>
-                        <span class='text-sm text-gray-500'>Kolaborasi dengan 10 user </span>
-                    </div>
-
-                    <!-- Lencana Terkunci (Static) -->
-                    <div
-                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-gray-100 border border-dashed border-gray-300 rounded-xl p-4'>
-                        <div class='w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center'>
-                            <svg class='w-8 h-8 text-white' fill='none' stroke='currentColor' stroke-width='2'
-                                viewBox='0 0 24 24'>
-                                <path stroke-linecap='round' stroke-linejoin='round'
-                                    d='M12 11c1.104 0 2-.896 2-2V7a2 2 0 10-4 0v2c0 1.104.896 2 2 2zm0 2a5 5 0 00-5 5h10a5 5 0 00-5-5z' />
-                            </svg>
-                        </div>
-                        <h4 class='mt-3 font-semibold text-gray-400'>Lencana Rahasia</h4>
-                        <span class='text-sm text-gray-400'>Selesaikan misi khusus</span>
-                    </div>
-                </div>
-
-                <!-- Tombol -->
-                <div class='mt-10 text-center'>
-                    <a href='/badge.html'
-                        class='inline-block px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition'>
-                        Lihat Semua Lencana
-                    </a>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- Agenda Section -->
-        <section id="agenda" class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none">
-                <div class="particle particle-1"></div>
-                <div class="particle particle-2"></div>
-                <div class="particle particle-3"></div>
-                <div class="particle particle-4"></div>
-            </div>
-            <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-24">
-                    <h2 class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear">
-                        postingan terakhir <span class="text-gradient">Anda</span>
-                    </h2>
-                    <p class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear">
-                        Rayakan kreativitas melalui webinar, pameran virtual, dan kontes
-                        mingguan
-                    </p>
-                </div>
-                <div class="gallery-grid">
-                    <div class="gallery-item" style="
-              --rotate-angle: -2deg;
-              --rope-angle: -2deg;
-              --sway-duration: 6s;
-              --parallax: 0.2;
-            ">
-                        <div class="rope"></div>
-                        <div class="flip-card">
-                            <div
-                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
-                                <img src="https://picsum.photos/300/400?random=29" alt="Webinar Portofolio"
-                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-                                <div class="image-overlay"></div>
-                                <div class="absolute bottom-8 left-8 text-white z-20">
-                                    <div class="text-xl font-bold uppercase tracking-wide">
-                                        Webinar Portofolio
-                                    </div>
-                                    <div class="text-sm opacity-80">10 Agustus 2025</div>
-                                    <div class="text-sm opacity-80">Webinar</div>
+                    <div class="card glass-effect p-6 animate-slideIn">
+                        <h3 class="text-lg font-semibold text-primary-black mb-4">Lencana</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="card bg-primary-black text-primary-white p-4 text-center">
+                                <div class="w-16 h-16 mx-auto mb-2 animate-scalePulse">
+                                    <div id="senimanLottie" class="w-full h-full"></div>
                                 </div>
+                                <h4 class="text-sm font-bold">Kreatif Abiezz</h4>
+                                <p class="text-xs text-subtle-gray">10 Juta Like</p>
                             </div>
-                            <div class="flip-card-back">
-                                <p class="text-gray-900 font-medium text-lg">
-                                    Pelajari cara membangun portofolio yang memikat untuk karir
-                                    kreatif.
-                                </p>
-                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
-                                    Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-item" style="
-              --rotate-angle: 3deg;
-              --rope-angle: 3deg;
-              --sway-duration: 7s;
-              --parallax: 0.15;
-            ">
-                        <div class="rope"></div>
-                        <div class="flip-card">
-                            <div
-                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
-                                <img src="https://picsum.photos/300/400?random=30" alt="Pameran Virtual"
-                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-                                <div class="image-overlay"></div>
-                                <div class="absolute bottom-8 left-8 text-white z-20">
-                                    <div class="text-xl font-bold uppercase tracking-wide">
-                                        Pameran Virtual
-                                    </div>
-                                    <div class="text-sm opacity-80">15 Agustus 2025</div>
-                                    <div class="text-sm opacity-80">Pameran</div>
+                            <div class="card bg-primary-black text-primary-white p-4 text-center">
+                                <div class="w-16 h-16 mx-auto mb-2 animate-scalePulse">
+                                    <div id="sosialitaLottie" class="w-full h-full"></div>
                                 </div>
-                            </div>
-                            <div class="flip-card-back">
-                                <p class="text-gray-900 font-medium text-lg">
-                                    Pameran daring karya terbaik dari komunitas TARA.
-                                </p>
-                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
-                                    Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-item" style="
-              --rotate-angle: -1deg;
-              --rope-angle: -1deg;
-              --sway-duration: 5.5s;
-              --parallax: 0.25;
-            ">
-                        <div class="rope"></div>
-                        <div class="flip-card">
-                            <div
-                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
-                                <img src="https://picsum.photos/300/400?random=31" alt="Kontes Puisi"
-                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-                                <div class="image-overlay"></div>
-                                <div class="absolute bottom-8 left-8 text-white z-20">
-                                    <div class="text-xl font-bold uppercase tracking-wide">
-                                        Kontes Puisi
-                                    </div>
-                                    <div class="text-sm opacity-80">Setiap Minggu</div>
-                                    <div class="text-sm opacity-80">Kontes</div>
-                                </div>
-                            </div>
-                            <div class="flip-card-back">
-                                <p class="text-gray-900 font-medium text-lg">
-                                    Pamerkan bakat menulis puisi dan menangkan hadiah menarik.
-                                </p>
-                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Ikuti
-                                    Kontes</a>
+                                <h4 class="text-sm font-bold">Sosialita</h4>
+                                <p class="text-xs text-subtle-gray">Komunitas Aktif</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-16 text-appear">
-                    <a href="/agenda"
-                        class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide">
-                        Lihat Semua
-                    </a>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- SECTION: Komunitas Saya -->
-        <section class="w-full px-6 py-16 bg-white/60 backdrop-blur-sm">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-8 text-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Komunitas Saya</h2>
-                    <p class="text-sm text-gray-500 mt-1">Grup dan forum yang kamu ikuti 🌱</p>
+            <!-- Portfolio Tab -->
+            <section id="portfolio" class="tab-section hidden">
+                <div class="flex flex-wrap gap-4 mb-6 justify-center">
+                    <button class="filter-button active" data-filter="all">Semua</button>
+                    <button class="filter-button" data-filter="puisi">Puisi</button>
+                    <button class="filter-button" data-filter="desain">Desain</button>
+                    <button class="filter-button" data-filter="musik">Musik</button>
+                    <select class="filter-button" data-filter="year">
+                        <option value="all">Semua Tahun</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
                 </div>
+                <div class="portfolio-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="portfolio-card card glass-effect" data-category="puisi" data-year="2025">
+                        <img src="https://picsum.photos/300/400?random=35" alt="Puisi Senja" class="w-full h-48 object-cover grayscale" />
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-primary-black">Puisi Senja</h3>
+                            <p class="text-sm text-accent-gray">Puisi - 2025</p>
+                            <a href="/work-detail" class="text-blue-600 hover:underline mt-2 block">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-card card glass-effect" data-category="desain" data-year="2024">
+                        <img src="https://picsum.photos/300/400?random=36" alt="Desain Poster" class="w-full h-48 object-cover grayscale" />
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-primary-black">Desain Poster</h3>
+                            <p class="text-sm text-accent-gray">Desain - 2024</p>
+                            <a href="/work-detail" class="text-blue-600 hover:underline mt-2 block">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-card card glass-effect" data-category="musik" data-year="2023">
+                        <img src="https://picsum.photos/300/400?random=37" alt="Lagu Akustik" class="w-full h-48 object-cover grayscale" />
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-primary-black">Lagu Akustik</h3>
+                            <p class="text-sm text-accent-gray">Musik - 2023</p>
+                            <a href="/work-detail" class="text-blue-600 hover:underline mt-2 block">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <a href="/portfolio" class="button-primary text-lg">Lihat Semua Karya</a>
+                </div>
+            </section>
 
+            <!-- Projects Tab -->
+            <section id="projects" class="tab-section hidden">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- Grup Card -->
-                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
-                        <h3 class="text-lg font-semibold text-gray-800">Frontend Dev ID</h3>
-                        <p class="text-sm text-gray-500 mt-1">Diskusi seputar HTML, CSS, JS & framework modern.</p>
-                        <div class="flex items-center mt-4">
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=11" />
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=12" />
-                            <span class="text-sm text-gray-600">+1.2K anggota</span>
+                    <div class="card glass-effect p-5">
+                        <h3 class="text-lg font-semibold text-primary-black">Aplikasi E-Learning</h3>
+                        <p class="text-sm text-accent-gray mt-1">Posisi: Penggagas</p>
+                        <p class="text-sm text-accent-gray">Status: Berjalan</p>
+                        <div class="progress-bar mt-2">
+                            <div class="progress-bar-fill" style="width: 70%"></div>
                         </div>
+                        <a href="/project-dashboard" class="text-blue-600 hover:underline mt-3 block">Lihat Dashboard</a>
                     </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
-                        <h3 class="text-lg font-semibold text-gray-800">UI/UX Designers</h3>
-                        <p class="text-sm text-gray-500 mt-1">Tempat sharing dan review desain antarmuka.</p>
-                        <div class="flex items-center mt-4">
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=13" />
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=14" />
-                            <span class="text-sm text-gray-600">+980 anggota</span>
+                    <div class="card glass-effect p-5">
+                        <h3 class="text-lg font-semibold text-primary-black">Desain Website Startup</h3>
+                        <p class="text-sm text-accent-gray mt-1">Posisi: Anggota</p>
+                        <p class="text-sm text-accent-gray">Status: Selesai</p>
+                        <div class="progress-bar mt-2">
+                            <div class="progress-bar-fill" style="width: 100%"></div>
                         </div>
+                        <a href="/project-dashboard" class="text-blue-600 hover:underline mt-3 block">Lihat Dashboard</a>
                     </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
-                        <h3 class="text-lg font-semibold text-gray-800">Tech Startup Indonesia</h3>
-                        <p class="text-sm text-gray-500 mt-1">Kumpulan founder & dev startup lokal 💡</p>
-                        <div class="flex items-center mt-4">
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=15" />
-                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=16" />
-                            <span class="text-sm text-gray-600">+520 anggota</span>
+                    <div class="card glass-effect p-5">
+                        <h3 class="text-lg font-semibold text-primary-black">Musik Kolaborasi</h3>
+                        <p class="text-sm text-accent-gray mt-1">Posisi: Leader</p>
+                        <p class="text-sm text-accent-gray">Status: Berjalan</p>
+                        <div class="progress-bar mt-2">
+                            <div class="progress-bar-fill" style="width: 40%"></div>
                         </div>
+                        <a href="/project-dashboard" class="text-blue-600 hover:underline mt-3 block">Lihat Dashboard</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
+            <!-- Activity Tab -->
+            <section id="activity" class="tab-section hidden">
+                <div class="space-y-6">
+                    <div class="card glass-effect p-5">
+                        <p class="text-sm text-accent-gray"><span class="font-semibold text-primary-black">Komentar:</span> "Desain ini sangat inspiratif!" pada karya "UI Dashboard" - 2 jam lalu</p>
+                    </div>
+                    <div class="card glass-effect p-5">
+                        <p class="text-sm text-accent-gray"><span class="font-semibold text-primary-black">Artikel:</span> Menulis artikel "Tips Desain UX untuk Pemula" - 1 hari lalu</p>
+                        <a href="/article-detail" class="text-blue-600 hover:underline mt-2 block">Baca Artikel</a>
+                    </div>
+                    <div class="card glass-effect p-5">
+                        <p class="text-sm text-accent-gray"><span class="font-semibold text-primary-black">Lamaran Proyek:</span> Melamar sebagai desainer pada proyek "Aplikasi Komunitas" - 3 hari lalu</p>
+                        <a href="/project-dashboard" class="text-blue-600 hover:underline mt-2 block">Lihat Status</a>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Community Tab -->
+            <section id="community" class="tab-section hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="card glass-effect p-5">
+                        <div class="flex items-center mb-2">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=11" alt="Frontend Dev ID logo" />
+                            <h3 class="text-lg font-semibold text-primary-black">Frontend Dev ID</h3>
+                        </div>
+                        <p class="text-sm text-accent-gray mt-1">Diskusi seputar HTML, CSS, JS & framework modern.</p>
+                        <div class="flex items-center mt-4">
+                            <span class="text-xs bg-subtle-gray text-accent-gray px-2 py-1 rounded-full mr-2">Anggota</span>
+                            <span class="text-sm text-accent-gray">+1.2K anggota</span>
+                        </div>
+                        <a href="/community-forum" class="text-blue-600 hover:underline mt-3 block">Kunjungi Forum</a>
+                    </div>
+                    <div class="card glass-effect p-5">
+                        <div class="flex items-center mb-2">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=13" alt="UI/UX Designers logo" />
+                            <h3 class="text-lg font-semibold text-primary-black">UI/UX Designers</h3>
+                        </div>
+                        <p class="text-sm text-accent-gray mt-1">Tempat sharing dan review desain antarmuka.</p>
+                        <div class="flex items-center mt-4">
+                            <span class="text-xs bg-subtle-gray text-accent-gray px-2 py-1 rounded-full mr-2">Moderator</span>
+                            <span class="text-sm text-accent-gray">+980 anggota</span>
+                        </div>
+                        <a href="/community-forum" class="text-blue-600 hover:underline mt-3 block">Kunjungi Forum</a>
+                    </div>
+                    <div class="card glass-effect p-5">
+                        <div class="flex items-center mb-2">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=15" alt="Tech Startup Indonesia logo" />
+                            <h3 class="text-lg font-semibold text-primary-black">Tech Startup Indonesia</h3>
+                        </div>
+                        <p class="text-sm text-accent-gray mt-1">Kumpulan founder & dev startup lokal.</p>
+                        <div class="flex items-center mt-4">
+                            <span class="text-xs bg-subtle-gray text-accent-gray px-2 py-1 rounded-full mr-2">Anggota</span>
+                            <span class="text-sm text-accent-gray">+520 anggota</span>
+                        </div>
+                        <a href="/community-forum" class="text-blue-600 hover:underline mt-3 block">Kunjungi Forum</a>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
-
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('hidden');
-        });
-    </script>
-
-    <script>
-        const ctx = document.getElementById('userActivityChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Forum Post', 'Materi Dibaca', 'Tugas Selesai', 'Hari Login'],
-                datasets: [{
-                    label: 'Aktivitas',
-                    data: [128, 87, 21, 12],
-                    backgroundColor: ['#6366f1', '#60a5fa', '#34d399', '#fbbf24'],
-                    borderRadius: 8,
-                    barThickness: 20
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { beginAtZero: true }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: context => context.raw + ' poin'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-
-    <script>
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 400, density: { enable: true, value_area: 800 } },
-                color: { value: "#000000" },
-                shape: { type: "circle" },
-                opacity: { value: 0.3, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 100,
-                    color: "#000000",
-                    opacity: 0.2,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1.5,
-                    out_mode: "out"
-                }
-            },
-            interactivity: {
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" }
-                },
-                modes: {
-                    repulse: { distance: 70, duration: 0.4 },
-                    push: { particles_nb: 4 }
-                }
-            },
-            retina_detect: true
-        });
-    </script>
+    <footer class="bg-primary-black text-primary-white mt-16 py-12 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <div class="text-2xl font-bold uppercase tracking-wide">
+                    TARA<span class="text-subtle-gray">●</span>
+                </div>
+                <p class="text-sm text-subtle-gray mt-4">Platform untuk kreativitas dan inovasi, menyatukan estetika dan teknologi.</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-primary-white mb-4">Navigasi</h3>
+                <ul class="space-y-2 text-sm text-subtle-gray">
+                    <li><a href="#" class="hover:text-primary-white">Beranda</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Galeri</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Tentang</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-primary-white mb-4">Eksplorasi</h3>
+                <ul class="space-y-2 text-sm text-subtle-gray">
+                    <li><a href="#" class="hover:text-primary-white">UI/UX</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Desain</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Kode</a></li>
+                    <li><a href="#" class="hover:text-primary-white">Musik</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-primary-white mb-4">Newsletter</h3>
+                <p class="text-sm text-subtle-gray mb-3">Dapatkan inspirasi mingguan di kotak masuk Anda.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="Email Anda" class="w-full px-3 py-2 bg-primary-white text-primary-black rounded-md text-sm" />
+                    <button class="button-primary px-4 py-2">Kirim</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-xs text-subtle-gray">
+            © 2025 TARA. Dibuat dengan semangat di Nusantara.
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const animated = sessionStorage.getItem('badgesAnimated');
-            const items = document.querySelectorAll('.badge-animate');
-            if (!animated) {
-                items.forEach((item, idx) => {
-                    setTimeout(() => {
-                        item.classList.remove('opacity-0', 'scale-50');
-                        item.classList.add('animate-pop');
-                    }, idx * 200);
-                });
-                sessionStorage.setItem('badgesAnimated', 'true');
-            } else {
-                items.forEach(item => item.classList.remove('opacity-0', 'scale-50'));
-            }
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+                navMenu.classList.toggle('flex');
+                navMenu.classList.toggle('flex-col');
+                navMenu.classList.toggle('absolute');
+                navMenu.classList.toggle('top-16');
+                navMenu.classList.toggle('left-0');
+                navMenu.classList.toggle('w-full');
+                navMenu.classList.toggle('bg-primary-white');
+                navMenu.classList.toggle('p-4');
+            });
 
+            // Particles.js
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
+                    color: { value: '#4a4a4a' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.2, random: true },
+                    size: { value: 2, random: true },
+                    move: { enable: true, speed: 0.5, out_mode: 'out' }
+                },
+                interactivity: {
+                    events: { onhover: { enable: false }, onclick: { enable: false } },
+                    modes: { repulse: { distance: 50 }, push: { particles_nb: 3 } }
+                },
+                retina_detect: true
+            });
+
+            // Chart.js
+            const ctx = document.getElementById("userActivityChart").getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Forum", "Materi", "Tugas", "Login"],
+                    datasets: [
+                        {
+                            label: "Aktivitas",
+                            data: [12, 21, 87, 128],
+                            backgroundColor: ["#9ca3af", "#6b7280", "#4a4a4a", "#1a1a1a"],
+                            borderRadius: 8,
+                            barThickness: 40,
+                        },
+                    ],
+                },
+                options: {
+                    indexAxis: "x",
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 10,
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.05)",
+                            },
+                            ticks: {
+                                color: "#1a1a1a",
+                                font: {
+                                    family: "Space Grotesk",
+                                    size: 12,
+                                },
+                            },
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                color: "#1a1a1a",
+                                font: {
+                                    family: "Space Grotesk",
+                                    complete: true,
+                                    size: 12,
+                                },
+                            },
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            backgroundColor: "#1a1a1a",
+                            titleColor: "#f8f8f8",
+                            bodyColor: "#f8f8f8",
+                        },
+                    },
+                },
+            });
+
+            // Lottie Animations for Badges
             const lotties = [
-                {
-                    id: 'senimanLottie',
-                    path: 'https://lottie.host/b7976189-d455-4d6e-b829-3942a3b356a9/LuwegGEtuF.json',
-                },
-                {
-                    id: 'sosialitaLottie',
-                    path: 'https://lottie.host/88cd9099-c491-488f-933d-818ef1649d6e/dCYa8hwMxy.json',
-                },
-                {
-                    id: 'petarungLottie',
-                    path: 'https://lottie.host/a13953a2-e070-4729-afc1-8acfc4423cb4/7NRZedmtfP.json',
-                },
+                { id: 'senimanLottie', path: 'https://lottie.host/b7976189-d455-4d6e-b829-3942a3b356a9/LuwegGEtuF.json' },
+                { id: 'sosialitaLottie', path: 'https://lottie.host/88cd9099-c491-488f-933d-818ef1649d6e/dCYa8hwMxy.json' }
             ];
-
             lotties.forEach(b => {
-                const anim = lottie.loadAnimation({
+                lottie.loadAnimation({
                     container: document.getElementById(b.id),
                     renderer: 'svg',
-                    loop: false,
+                    loop: true,
                     autoplay: true,
-                    path: b.path,
+                    path: b.path
                 });
+            });
 
-                anim.addEventListener('DOMLoaded', () => {
-                    const total = anim.totalFrames;
-                    const loopStart = total * 0.49;
-                    const loopEnd = total;
+            // Tab Functionality
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabSections = document.querySelectorAll('.tab-section');
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    tabLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    tabSections.forEach(s => s.classList.add('hidden'));
+                    document.getElementById(link.dataset.tab).classList.remove('hidden');
+                });
+            });
 
-                    anim.addEventListener('complete', () => {
-                        anim.playSegments([loopStart, loopEnd], true);
-                        anim.loop = true;
+            // Portfolio Filter
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const portfolioItems = document.querySelectorAll('.portfolio-card');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const category = button.dataset.filter;
+                    const year = document.querySelector('[data-filter="year"]').value;
+                    portfolioItems.forEach(item => {
+                        const itemCategory = item.dataset.category;
+                        const itemYear = item.dataset.year;
+                        if ((category === 'all' || itemCategory === category) && (year === 'all' || itemYear === year)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
                     });
                 });
             });
+
+            document.querySelector('[data-filter="year"]').addEventListener('change', (e) => {
+                const year = e.target.value;
+                const activeCategory = document.querySelector('.filter-button.active')?.dataset.filter || 'all';
+                portfolioItems.forEach(item => {
+                    const itemCategory = item.dataset.category;
+                    const itemYear = item.dataset.year;
+                    if ((activeCategory === 'all' || itemCategory === activeCategory) && (year === 'all' || itemYear === year)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            // Intersection Observer for Animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeIn');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px" });
+            document.querySelectorAll('.animate-slideIn, .animate-fadeIn').forEach(el => observer.observe(el));
         });
     </script>
 </body>
-
-</html>

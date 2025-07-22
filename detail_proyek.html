@@ -8,99 +8,150 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --background: #ffffff;
+            --card-bg: #f5f5f5;
+            --header-bg: #ffffff;
+            --text: #000000;
+            --text-secondary: #666666;
+            --border: #000000;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ffffff;
+            --secondary: #000000;
+            --background: #000000;
+            --card-bg: #1c1c1c;
+            --header-bg: #000000;
+            --text: #ffffff;
+            --text-secondary: #999999;
+            --border: #ffffff;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #f9fafb;
-            color: #1f2937;
+            background: var(--background);
+            color: var(--text);
             margin: 0;
             padding: 0;
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        *, *::before, *::after {
             box-sizing: border-box;
         }
-        *,
-        *::before,
-        *::after {
-            box-sizing: inherit;
-        }
-        .perspective {
-            perspective: 1200px;
-        }
-        .hover-3d {
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-        .hover-3d:hover {
-            transform: translateY(-6px) rotateX(4deg) rotateY(4deg);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-        #particles-js {
+
+        #particle-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.15;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        header {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+
         .project-header img {
             width: 100%;
             height: 450px;
             object-fit: cover;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            /* border: 1px solid var(--border); */
+            transition: opacity 0.3s ease;
         }
+
+        .project-header img:hover {
+            opacity: 0.9;
+        }
+
         .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            border-radius: 9999px;
+            border-radius: 6px;
             margin-right: 0.5rem;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
         }
+
         .badge-populer {
-            background: #fef08a;
-            color: #1f2937;
+            background: var(--primary);
+            color: var(--secondary);
         }
+
         .badge-baru {
-            background: #a7f3d0;
-            color: #065f46;
+            background: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--border);
         }
+
         .badge-open {
-            background: #10b981;
-            color: #ffffff;
+            background: var(--primary);
+            color: var(--secondary);
         }
+
         .badge-closed {
-            background: #ef4444;
-            color: #ffffff;
+            background: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--border);
         }
+
         .progress-bar {
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
+            height: 5px;
+            background: #e0e0e0;
+            border-radius: 2.5px;
             overflow: hidden;
         }
+
         .progress {
             height: 100%;
-            border-radius: 4px;
+            background: var(--primary);
+            border-radius: 2.5px;
             transition: width 0.4s ease;
         }
-        .member-card, .task-card, .comment-card, .notification-card, .recommended-project {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
+
+        .member-card, .task-card, .comment-card, .notification-card, .recommended-project, .creator-card, .goals-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .member-card:hover, .task-card:hover, .notification-card:hover, .recommended-project:hover, .creator-card:hover, .goals-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
         .timeline-event {
             position: relative;
             padding-left: 2.5rem;
             margin-bottom: 2rem;
         }
+
         .timeline-event::before {
             content: '';
             position: absolute;
@@ -108,11 +159,11 @@
             top: 0;
             width: 14px;
             height: 14px;
-            background: #3b82f6;
+            background: var(--primary);
             border-radius: 50%;
-            border: 3px solid #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--secondary);
         }
+
         .timeline-event::after {
             content: '';
             position: absolute;
@@ -120,126 +171,172 @@
             top: 1.25rem;
             width: 2px;
             height: calc(100% - 1.25rem);
-            background: #e5e7eb;
+            background: var(--border);
         }
+
         .action-btn, .join-btn {
-            padding: 0.75rem 2rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: var(--primary);
+            color: var(--secondary);
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
         }
+
         .action-btn:hover, .join-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            background: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
         }
+
         .notification-modal {
             position: fixed;
             top: 0;
             right: 0;
             height: 100%;
             width: 100%;
-            max-width: 450px;
-            background: #ffffff;
-            border-left: 1px solid #e5e7eb;
+            max-width: 360px;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border);
             z-index: 50;
             transform: translateX(100%);
             transition: transform 0.3s ease;
         }
+
         .notification-modal.open {
             transform: translateX(0);
         }
+
         .notification-modal .close-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 1.75rem;
-            color: #374151;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+
         .notification-modal .close-btn:hover {
-            transform: scale(1.15);
+            transform: rotate(90deg);
         }
-        .notification-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
+
         .notification-card.unread {
-            background: #f0f9ff;
-            border-left: 4px solid #3b82f6;
+            background: #d0d0d0;
         }
+
         .filter-btn {
-            padding: 0.5rem 1.25rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border: 2px solid #e5e7eb;
-            background: #ffffff;
-            color: #1f2937;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
+
         .filter-btn.active {
-            background: #1f2937;
-            color: #ffffff;
-            border-color: #3b82f6;
+            background: var(--primary);
+            color: var(--secondary);
+            border-color: var(--primary);
         }
+
         .filter-btn:hover {
-            background: #f3f4f6;
-            transform: scale(1.05);
+            background: var(--primary);
+            color: var(--secondary);
         }
-        .comment-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.75rem;
+
+        .comment-card {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
         }
+
+        .comment-card:last-child {
+            border-bottom: none;
+        }
+
+        .comment-card.hidden {
+            display: none;
+        }
+
         .comment-action-btn {
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: color 0.3s ease;
         }
+
         .comment-action-btn:hover {
-            color: #1f2937;
+            color: var(--text);
         }
+
         .comment-action-btn.liked {
             color: #ef4444;
         }
+
         .reply-container {
             margin-left: 2.5rem;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
+
+        .reply-form {
+            margin-top: 0.5rem;
+        }
+
+        .pagination-btn {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        .pagination-btn.active {
+            background: var(--primary);
+            color: var(--secondary);
+            border-color: var(--primary);
+        }
+
+        .pagination-btn:hover {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .pagination-btn.disabled {
+            color: var(--text-secondary);
+            border-color: var(--text-secondary);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
         .recommended-project img {
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 120px;
             object-fit: cover;
             border-radius: 8px;
         }
-        .recommended-project:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
+
         .notification-bar {
-            background: #f0f9ff;
-            border: 1px solid #bfdbfe;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.25rem;
             margin-bottom: 2rem;
             cursor: pointer;
         }
-        .tag {
-            color: #3b82f6;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .tag:hover {
-            text-decoration: underline;
-        }
+
         .join-modal {
             position: fixed;
             top: 0;
@@ -255,76 +352,119 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
+
         .join-modal.open {
             opacity: 1;
             visibility: visible;
         }
+
         .join-modal-content {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 2.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
             width: 100%;
             max-width: 550px;
             position: relative;
         }
+
         .join-modal-content .close-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 1.75rem;
-            color: #374151;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+
         .join-modal-content .close-btn:hover {
-            transform: scale(1.15);
+            transform: rotate(90deg);
         }
-        .creator-card {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-        }
-        .goals-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-        }
-        @media (max-width: 768px) {
-            .project-header img {
-                height: 300px;
-            }
-            .action-btn, .join-btn {
-                padding: 0.5rem 1.25rem;
-                font-size: 0.75rem;
-            }
+
+        @media (max-width: 1024px) {
             .notification-modal {
                 max-width: 100%;
             }
-            .join-modal-content {
-                margin: 1.5rem;
+            .project-header img {
+                height: 300px;
             }
-            .creator-card, .goals-card {
+            .join-modal-content {
+                margin: 1rem;
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+            .project-header img {
+                height: 200px;
+            }
+            .action-btn, .join-btn, .filter-btn, .pagination-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+            }
+            .creator-card, .goals-card, .member-card, .task-card, .comment-card, .recommended-project {
                 padding: 1rem;
+            }
+            .members-container, .tasks-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .project-header img {
+                height: 150px;
+            }
+            .action-btn, .join-btn, .filter-btn, .pagination-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .badge {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.6rem;
             }
         }
     </style>
 </head>
-<body class="relative overflow-x-hidden">
-    <div id="particles-js"></div>
+<body class="relative" data-theme="light">
+    <canvas id="particle-bg"></canvas>
+
+    <!-- Header -->
+    <header class="py-3 px-4">
+        <div class="container flex justify-between items-center">
+            <div class="text-xl font-bold uppercase tracking-tight">TARA</div>
+            <nav class="hidden md:flex space-x-4 text-sm text-text-secondary">
+                <a href="/" class="hover:text-text transition">Beranda</a>
+                <a href="/eksplor" class="hover:text-text transition">Eksplor</a>
+                <a href="/komunitas" class="hover:text-text transition">Komunitas</a>
+                <a href="/proyek" class="hover:text-text transition font-medium">Proyek</a>
+                <a href="/blog" class="hover:text-text transition">Blog</a>
+                <a href="/agenda" class="hover:text-text transition">Agenda</a>
+                <a href="/profil" class="hover:text-text transition">Profil</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <input type="text" id="search-input" placeholder="Cari karya, komunitas, proyek..." class="px-3 py-1.5 rounded border border-border text-sm text-text-secondary placeholder:text-text-secondary focus:outline-none focus:border-primary transition w-40 md:w-48" />
+                <i class="fas fa-bell text-text-secondary text-base cursor-pointer hover:text-text transition" onclick="toggleNotifications()"></i>
+                <i class="fas fa-moon theme-toggle cursor-pointer hover:text-text transition" onclick="toggleTheme()"></i>
+                <a href="/login" class="action-btn">Login</a>
+            </div>
+        </div>
+    </header>
 
     <!-- Notification Modal -->
     <div id="notification-modal" class="notification-modal">
         <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-        <div class="p-8">
-            <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi</h2>
-            <div class="flex gap-3 mb-6">
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-3">Notifikasi</h2>
+            <div class="flex gap-2 mb-3">
                 <button class="filter-btn active" data-filter="all">Semua</button>
                 <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
             </div>
-            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-6">Tandai Semua Dibaca</button>
-            <div id="notification-list" class="space-y-4"></div>
+            <button id="mark-all-read" class="action-btn mb-3">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-2"></div>
         </div>
     </div>
 
@@ -332,180 +472,134 @@
     <div id="join-modal" class="join-modal">
         <div class="join-modal-content">
             <i class="fas fa-times close-btn" onclick="toggleJoinModal()"></i>
-            <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Gabung Proyek</h2>
-            <p class="text-gray-600 mb-6">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek ini.</p>
-            <div class="space-y-6">
+            <h2 class="text-xl font-bold mb-3">Gabung Proyek</h2>
+            <p class="text-sm text-text-secondary mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek ini.</p>
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                    <input type="text" id="join-name" class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Masukkan nama Anda" />
+                    <label class="block text-sm font-medium">Nama Lengkap</label>
+                    <input type="text" id="join-name" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" placeholder="Masukkan nama Anda" />
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="join-email" class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Masukkan email Anda" />
+                    <label class="block text-sm font-medium">Email</label>
+                    <input type="email" id="join-email" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" placeholder="Masukkan email Anda" />
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Peran yang Diinginkan</label>
-                    <input type="text" id="join-role" class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Contoh: UI/UX Designer" />
+                    <label class="block text-sm font-medium">Peran yang Diinginkan</label>
+                    <input type="text" id="join-role" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" placeholder="Contoh: UI/UX Designer" />
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Pesan</label>
-                    <textarea id="join-message" class="w-full p-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="5" placeholder="Mengapa Anda ingin bergabung?"></textarea>
+                    <label class="block text-sm font-medium">Pesan</label>
+                    <textarea id="join-message" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" rows="5" placeholder="Mengapa Anda ingin bergabung?"></textarea>
                 </div>
-                <button id="submit-join" class="join-btn bg-blue-600 text-white hover:bg-blue-700 w-full">Kirim Pengajuan</button>
+                <button id="submit-join" class="join-btn w-full">Kirim Pengajuan</button>
             </div>
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-lg border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
-        <div class="text-3xl font-bold uppercase tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">
-            TARA<span class="text-blue-600">●</span>
-        </div>
-        <nav class="hidden md:flex space-x-8 text-base text-gray-600 font-medium">
-            <a href="/" class="hover:text-blue-600 transition">Beranda</a>
-            <a href="/eksplor" class="hover:text-blue-600 transition">Eksplor</a>
-            <a href="/komunitas" class="hover:text-blue-600 transition">Komunitas</a>
-            <a href="/proyek" class="hover:text-blue-600 transition font-bold">Proyek</a>
-            <a href="/blog" class="hover:text-blue-600 transition">Blog</a>
-            <a href="/agenda" class="hover:text-blue-600 transition">Agenda</a>
-            <a href="/profil" class="hover:text-blue-600 transition">Profil</a>
-        </nav>
-        <div class="flex items-center gap-6">
-            <input type="text" placeholder="Cari karya, komunitas, proyek..." class="px-4 py-2 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 transition" />
-            <i class="fas fa-bell text-gray-600 text-lg cursor-pointer hover:text-blue-600 transition" onclick="toggleNotifications()"></i>
-            <a href="/login" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition font-semibold">Login</a>
-        </div>
-    </header>
-
     <!-- Project Detail Section -->
-    <section class="pt-28 pb-16">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="pt-20 pb-12">
+        <div class="container">
             <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
-                <p class="text-sm text-gray-700">Notifikasi placeholder.</p>
+                <p class="text-sm">Notifikasi placeholder.</p>
             </div>
-            <div class="project-header mb-12 perspective">
-                <div class="inner hover-3d"></div>
+            <div class="project-header mb-8">
+                <div class="inner"></div>
             </div>
             <!-- Creator and Goals -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-                <div class="lg:col-span-1 creator-card hover-3d">
-                    <h2 class="text-xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Pembuat Proyek</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-1 creator-card">
+                    <h2 class="text-lg font-bold mb-3">Pembuat Proyek</h2>
                     <div class="flex items-center gap-4">
-                        <img src="" id="creator-avatar" alt="Pembuat" class="w-16 h-16 rounded-full" />
+                        <img src="" id="creator-avatar" alt="Pembuat" class="w-16 h-16 rounded-full border border-border" />
                         <div>
-                            <h3 class="text-lg font-semibold" id="creator-name"></h3>
-                            <p class="text-sm text-gray-600" id="creator-role"></p>
-                            <a href="" id="creator-profile" class="text-sm text-blue-600 hover:underline">Lihat Profil</a>
+                            <h3 class="text-base font-semibold" id="creator-name"></h3>
+                            <p class="text-sm text-text-secondary" id="creator-role"></p>
+                            <a href="" id="creator-profile" class="text-sm text-primary hover:underline">Lihat Profil</a>
                         </div>
                     </div>
                 </div>
-                <div class="lg:col-span-2 goals-card hover-3d">
-                    <h2 class="text-xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Tujuan Kolaborasi</h2>
-                    <p class="text-gray-600" id="collaboration-goals"></p>
+                <div class="lg:col-span-2 goals-card">
+                    <h2 class="text-lg font-bold mb-3">Tujuan Kolaborasi</h2>
+                    <p class="text-sm text-text-secondary" id="collaboration-goals"></p>
                 </div>
             </div>
             <!-- Team Members -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Anggota Tim</h2>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Anggota Tim</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container"></div>
             </div>
             <!-- Project Timeline -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Linimasa Proyek</h2>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Linimasa Proyek</h2>
                 <div class="timeline"></div>
             </div>
             <!-- Task Progress Tracker -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Progres Tugas</h2>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Progres Tugas</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 tasks-container"></div>
             </div>
             <!-- Comments Section -->
-            <div class="mb-12">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-3xl font-bold text-black" style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
-                    <button id="show-hidden-comments" class="join-btn bg-gray-600 text-white hover:bg-gray-700 hidden"><i class="fas fa-eye"></i> Tampilkan Komentar Tersembunyi</button>
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Komentar</h2>
+                    <button id="show-hidden-comments" class="join-btn hidden"><i class="fas fa-eye"></i> Tampilkan Komentar Tersembunyi</button>
                 </div>
-                <div class="mb-6">
-                    <textarea id="comment-input" class="w-full p-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="5" placeholder="Tulis komentar Anda..."></textarea>
-                    <button id="submit-comment" class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-3"><i class="fas fa-paper-plane"></i> Kirim Komentar</button>
+                <div class="mb-4 flex items-center gap-2">
+                    <input type="text" id="comment-input" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" placeholder="Tulis komentar Anda..." />
+                    <button id="submit-comment" class="join-btn"><i class="fas fa-paper-plane"></i></button>
                 </div>
                 <div class="comments-container"></div>
+                <div class="flex justify-center gap-2 mt-4" id="pagination-container"></div>
             </div>
             <!-- Recommended Collaborations -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">Rekomendasi Kolaborasi Lainnya</h2>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Rekomendasi Kolaborasi Lainnya</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects"></div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 text-gray-600 text-sm z-30">
-        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12">
-            <div class="col-span-1 sm:col-span-2">
-                <div class="text-3xl font-bold tracking-tight uppercase" style="font-family: 'Space Grotesk', sans-serif;">
-                    TARA<span class="text-blue-600">●</span>
-                </div>
-                <p class="text-gray-600 mt-4">Platform kolaborasi untuk karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
-                <div class="flex gap-6 mt-6 text-gray-600 text-lg">
-                    <a href="https://discord.gg/tara-community" class="hover:text-blue-600 transition" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                    <a href="https://wa.me/1234567890" class="hover:text-blue-600 transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="hover:text-blue-600 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-blue-600 transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-600 transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-600 transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
-                    <a href="#" class="hover:text-blue-600 transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                </div>
+    <footer class="text-text-secondary text-sm border-t border-border">
+        <div class="container py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div>
+                <div class="text-xl font-bold uppercase tracking-tight">TARA</div>
+                <p class="text-text-secondary mt-2 text-sm">Platform kreatif untuk kolaborasi inovatif.</p>
             </div>
             <div>
-                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
-                <ul class="space-y-3">
-                    <li><a href="/" class="hover:text-blue-600 transition">Beranda</a></li>
-                    <li><a href="/eksplor" class="hover:text-blue-600 transition">Eksplor Karya</a></li>
-                    <li><a href="/komunitas" class="hover:text-blue-600 transition">Komunitas</a></li>
-                    <li><a href="/proyek" class="hover:text-blue-600 transition">Proyek Sosial</a></li>
-                    <li><a href="/blog" class="hover:text-blue-600 transition">Blog</a></li>
-                    <li><a href="/agenda" class="hover:text-blue-600 transition">Agenda</a></li>
+                <h3 class="font-medium text-text mb-2 uppercase text-sm">Navigasi</h3>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/" class="hover:text-text transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-text transition">Eksplor</a></li>
+                    <li><a href="/komunitas" class="hover:text-text transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-text transition">Proyek</a></li>
                 </ul>
             </div>
             <div>
-                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
-                <ul class="space-y-3">
-                    <li><a href="/eksplor?kategori=coding" class="hover:text-blue-600 transition">Coding</a></li>
-                    <li><a href="/eksplor?kategori=musik" class="hover:text-blue-600 transition">Musik</a></li>
-                    <li><a href="/eksplor?kategori=desain" class="hover:text-blue-600 transition">Desain</a></li>
-                    <li><a href="/eksplor?kategori=sastra" class="hover:text-blue-600 transition">Sastra</a></li>
+                <h3 class="font-medium text-text mb-2 uppercase text-sm">Kategori</h3>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-text transition">Coding</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-text transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-text transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=sastra" class="hover:text-text transition">Sastra</a></li>
                 </ul>
             </div>
             <div>
-                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
-                <ul class="space-y-3">
-                    <li><a href="/proyek/submit" class="hover:text-blue-600 transition">Submit Karya</a></li>
-                    <li><a href="/komunitas/gabung" class="hover:text-blue-600 transition">Gabung Komunitas</a></li>
-                    <li><a href="/proyek/buat" class="hover:text-blue-600 transition">Buat Proyek</a></li>
-                    <li><a href="/kontak" class="hover:text-blue-600 transition">Kontak</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
-                <p class="text-gray-600 mb-4">Dapatkan inspirasi mingguan di kotak masuk Anda.</p>
-                <div class="flex items-center gap-3">
-                    <input type="email" placeholder="Email Anda..." class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                    <button class="px-4 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">Kirim</button>
+                <h3 class="font-medium text-text mb-2 uppercase text-sm">Newsletter</h3>
+                <p class="text-text-secondary mb-2 text-sm">Dapatkan inspirasi mingguan.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="Email..." class="w-full px-3 py-1.5 border border-border rounded text-sm focus:outline-none focus:border-primary" />
+                    <button class="action-btn">Kirim</button>
                 </div>
             </div>
         </div>
-        <div class="border-t border-gray-200 text-center py-6 text-xs text-gray-600">
-            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
-            <a href="/tentang" class="hover:text-blue-600 transition">Tentang Kami</a> |
-            <a href="/ketentuan" class="hover:text-blue-600 transition">Ketentuan Layanan</a> |
-            <a href="/privasi" class="hover:text-blue-600 transition">Privasi</a> |
-            <a href="/bantuan" class="hover:text-blue-600 transition">Bantuan</a>
+        <div class="border-t border-border text-center py-3 text-xs text-text-secondary">
+            © 2025 TARA. Dibuat dengan semangat.
         </div>
     </footer>
 
     <script>
-        // Simulated Project Data (updated with creator and collaboration goals)
+        // Simulated Project Data
         const projects = [
             {
                 id: 1,
@@ -554,6 +648,50 @@
                         avatar: "https://picsum.photos/50/50?commenter2",
                         time: "1 hari lalu",
                         text: "UI/UX-nya sangat menjanjikan. Semoga sukses untuk tim!",
+                        replies: [],
+                        hidden: false,
+                        likes: 3,
+                        likedBy: []
+                    },
+                    {
+                        id: 3,
+                        user: "Alice Brown",
+                        avatar: "https://picsum.photos/50/50?commenter3",
+                        time: "2 hari lalu",
+                        text: "Saya suka pendekatan gamifikasi dalam proyek ini!",
+                        replies: [],
+                        hidden: false,
+                        likes: 2,
+                        likedBy: []
+                    },
+                    {
+                        id: 4,
+                        user: "Bob Johnson",
+                        avatar: "https://picsum.photos/50/50?commenter4",
+                        time: "3 hari lalu",
+                        text: "Kapan kita bisa melihat demo aplikasinya?",
+                        replies: [],
+                        hidden: false,
+                        likes: 4,
+                        likedBy: []
+                    },
+                    {
+                        id: 5,
+                        user: "Emma Wilson",
+                        avatar: "https://picsum.photos/50/50?commenter5",
+                        time: "4 hari lalu",
+                        text: "Timnya luar biasa, teruskan kerja hebatnya!",
+                        replies: [],
+                        hidden: false,
+                        likes: 1,
+                        likedBy: []
+                    },
+                    {
+                        id: 6,
+                        user: "Michael Lee",
+                        avatar: "https://picsum.photos/50/50?commenter6",
+                        time: "5 hari lalu",
+                        text: "Saya tertarik untuk membantu di bagian backend.",
                         replies: [],
                         hidden: false,
                         likes: 3,
@@ -735,7 +873,11 @@
         ];
 
         // Simulated Current User
-        const currentUser = "User"; // Placeholder: Replace with actual user authentication
+        const currentUser = "User";
+
+        // Pagination State
+        let currentPage = 1;
+        const commentsPerPage = 5;
 
         // Get Project ID from URL Query Parameter
         function getProjectIdFromUrl() {
@@ -748,26 +890,27 @@
             const projectHeader = document.querySelector('.project-header .inner');
             projectHeader.innerHTML = `
                 <img src="${project.image}" alt="${project.name}" />
-                <div class="mt-6">
-                    <h1 class="text-4xl font-bold text-black" style="font-family: 'Space Grotesk', sans-serif;">${project.name}</h1>
-                    <div class="flex items-center gap-3 mt-3 flex-wrap">
-                        <span class="badge bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-100 text-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-800">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
+                <div class="mt-4">
+                    <h1 class="text-2xl font-bold">${project.name}</h1>
+                    <div class="flex items-center gap-2 mt-2 flex-wrap">
+                        <span class="badge">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
                         ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ''}
                         ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ''}
                         <span class="badge badge-${project.status === 'open' ? 'open' : 'closed'}">${project.status === 'open' ? 'Buka Kolaborasi' : 'Kolaborasi Ditutup'}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mt-3">Dibuat: ${project.created}</p>
-                    <p class="text-gray-700 mt-4 leading-relaxed">${project.description}</p>
-                    <p class="text-sm text-gray-600 mt-3">Progress: ${project.progress}%</p>
+                    <p class="text-sm text-text-secondary mt-2">Dibuat: ${project.created}</p>
+                    <p class="text-sm text-text-secondary mt-2">${project.description}</p>
+                    <p class="text-sm text-text-secondary mt-2">Progress: ${project.progress}%</p>
                     <div class="progress-bar mt-2">
-                        <div class="progress bg-${project.category === 'coding' ? 'blue' : project.category === 'musik' ? 'green' : project.category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${project.progress}%"></div>
+                        <div class="progress" style="width: ${project.progress}%"></div>
                     </div>
-                    <div class="flex gap-4 mt-6 flex-wrap">
-                        <button id="like-project-btn" class="join-btn bg-red-600 text-white hover:bg-red-700"><i class="fas fa-heart"></i> Suka (${project.likes})</button>
-                        <button id="bookmark-project-btn" class="join-btn bg-yellow-600 text-white hover:bg-yellow-700"><i class="fas fa-bookmark"></i> ${project.bookmarked ? 'Hapus Bookmark' : 'Bookmark'}</button>
-                        <button id="share-project-btn" class="join-btn bg-gray-600 text-white hover:bg-gray-700"><i class="fas fa-share"></i> Bagikan</button>
-                        ${project.status === 'open' ? `<button id="join-project-btn" class="join-btn bg-green-600 text-white hover:bg-green-700"><i class="fas fa-user-plus"></i> Gabung Proyek</button>` : ''}
-                        <button id="download-summary-btn" class="join-btn bg-blue-600 text-white hover:bg-blue-700"><i class="fas fa-download"></i> Unduh Ringkasan</button>
+                    <div class="flex gap-2 mt-4 flex-wrap">
+                        <button id="like-project-btn" class="join-btn"><i class="fas fa-heart"></i> Suka (${project.likes})</button>
+                        <button id="bookmark-project-btn" class="join-btn"><i class="fas fa-bookmark"></i> ${project.bookmarked ? 'Hapus Bookmark' : 'Bookmark'}</button>
+                        <button id="share-project-btn" class="join-btn"><i class="fas fa-share"></i> Bagikan</button>
+                        ${project.status === 'open' ? `<button id="join-project-btn" class="join-btn"><i class="fas fa-user-plus"></i> Gabung Proyek</button>` : ''}
+                        <button id="download-summary-btn" class="join-btn"><i class="fas fa-download"></i> Unduh Ringkasan</button>
+                        <a href="/proyek" id="back-to-projects-btn" class="join-btn"><i class="fas fa-arrow-left"></i> Kembali ke Proyek</a>
                     </div>
                 </div>
             `;
@@ -776,9 +919,8 @@
             document.getElementById('creator-role').textContent = project.creator.role;
             document.getElementById('creator-profile').href = project.creator.profileUrl;
             document.getElementById('collaboration-goals').textContent = project.collaborationGoals;
-            gsap.from(projectHeader, { opacity: 0, y: 50, duration: 1, ease: "power3.out" });
+            gsap.from(projectHeader, { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" });
 
-            // Add event listeners for buttons
             document.getElementById('like-project-btn').addEventListener('click', () => toggleProjectLike(project.id));
             document.getElementById('bookmark-project-btn').addEventListener('click', () => toggleBookmark(project.id));
             document.getElementById('share-project-btn').addEventListener('click', () => shareProject(project.id));
@@ -786,79 +928,84 @@
                 document.getElementById('join-project-btn').addEventListener('click', () => toggleJoinModal());
             }
             document.getElementById('download-summary-btn').addEventListener('click', () => downloadProjectSummary(project));
+            gsap.from("#back-to-projects-btn", { opacity: 0, x: -10, duration: 0.3, ease: "power2.out" });
         }
 
         // Render Team Members
         function renderMembers(members) {
             const membersContainer = document.querySelector('.members-container');
             membersContainer.innerHTML = members.map(member => `
-                <div class="member-card hover-3d">
-                    <img src="${member.avatar}" alt="${member.name}" class="w-20 h-20 rounded-full mb-3 mx-auto" />
-                    <h3 class="text-base font-semibold text-center">${member.name}</h3>
-                    <p class="text-sm text-gray-600 text-center">${member.role}</p>
-                    <a href="${member.profileUrl}" class="block text-sm text-blue-600 hover:underline text-center mt-2">Lihat Profil</a>
+                <div class="member-card">
+                    <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full mb-2 mx-auto border border-border" />
+                    <h3 class="text-sm font-semibold text-center">${member.name}</h3>
+                    <p class="text-sm text-text-secondary text-center">${member.role}</p>
+                    <a href="${member.profileUrl}" class="block text-sm text-primary hover:underline text-center mt-1">Lihat Profil</a>
                 </div>
             `).join('');
-            gsap.from(".member-card", { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+            gsap.from(".member-card", { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out" });
         }
 
         // Render Timeline
         function renderTimeline(timeline) {
             const timelineContainer = document.querySelector('.timeline');
             timelineContainer.innerHTML = timeline.map(event => `
-                <div class="timeline-event hover-3d">
-                    <p class="text-sm text-gray-500">${event.date}</p>
-                    <h3 class="text-lg font-semibold text-black">${event.title}</h3>
-                    <p class="text-gray-600">${event.description}</p>
+                <div class="timeline-event">
+                    <p class="text-sm text-text-secondary">${event.date}</p>
+                    <h3 class="text-base font-semibold">${event.title}</h3>
+                    <p class="text-sm text-text-secondary">${event.description}</p>
                 </div>
             `).join('');
-            gsap.from(".timeline-event", { opacity: 0, x: -30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+            gsap.from(".timeline-event", { opacity: 0, x: -20, duration: 0.5, stagger: 0.1, ease: "power2.out" });
         }
 
         // Render Tasks
-        function renderTasks(tasks, category) {
+        function renderTasks(tasks) {
             const tasksContainer = document.querySelector('.tasks-container');
             tasksContainer.innerHTML = tasks.map(task => `
-                <div class="task-card hover-3d">
+                <div class="task-card">
                     <h3 class="text-base font-semibold">${task.name}</h3>
-                    <p class="text-sm text-gray-600 mt-1">Progress: ${task.progress}%</p>
+                    <p class="text-sm text-text-secondary mt-1">Progress: ${task.progress}%</p>
                     <div class="progress-bar mt-2">
-                        <div class="progress bg-${category === 'coding' ? 'blue' : category === 'musik' ? 'green' : category === 'desain' ? 'yellow' : 'red'}-600" style="width: ${task.progress}%"></div>
+                        <div class="progress" style="width: ${task.progress}%"></div>
                     </div>
                 </div>
             `).join('');
-            gsap.from(".task-card", { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+            gsap.from(".task-card", { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out" });
         }
 
         // Render Comments
-        function renderComments(comments, projectId) {
+        function renderComments(comments, projectId, page = 1) {
             const commentsContainer = document.querySelector('.comments-container');
             const showHiddenCommentsBtn = document.getElementById('show-hidden-comments');
             const hasHiddenComments = comments.some(c => c.hidden || c.replies.some(r => r.hidden));
             showHiddenCommentsBtn.classList.toggle('hidden', !hasHiddenComments);
 
-            commentsContainer.innerHTML = comments.map(comment => `
-                <div class="comment-card hover-3d ${comment.hidden ? 'hidden' : ''}" data-comment-id="${comment.id}">
-                    <div class="flex gap-4">
-                        <img src="${comment.avatar}" alt="${comment.user}" class="w-12 h-12 rounded-full" />
+            // Pagination logic
+            const startIndex = (page - 1) * commentsPerPage;
+            const endIndex = startIndex + commentsPerPage;
+            const paginatedComments = comments.slice(startIndex, endIndex);
+
+            commentsContainer.innerHTML = paginatedComments.map(comment => `
+                <div class="comment-card ${comment.hidden ? 'hidden' : ''}" data-comment-id="${comment.id}">
+                    <div class="flex gap-3 items-start">
+                        <img src="${comment.avatar}" alt="${comment.user}" class="w-8 h-8 rounded-full border border-border" />
                         <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <h3 class="text-base font-semibold">${comment.user}</h3>
-                                    <p class="text-xs text-gray-500">${comment.time}</p>
-                                </div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${comment.user}</h3>
+                                <p class="text-xs text-text-secondary">${comment.time}</p>
                             </div>
-                            <p class="text-gray-700 mt-1">${comment.text}</p>
-                            <div class="comment-actions">
+                            <p class="text-sm mt-1">${comment.text}</p>
+                            <div class="flex items-center gap-3 mt-1">
                                 <span class="comment-action-btn" onclick="toggleReplyForm(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-reply"></i> Balas</span>
                                 ${comment.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${comment.id})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
                                 <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${comment.id})"><i class="fas fa-eye${comment.hidden ? '-slash' : ''}"></i> ${comment.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
-                                <span class="comment-action-btn" onclick="reportComment(${comment.id})"><i class="fas fa-flag"></i> Laporkan</span>
-                                <span class="comment-action-btn ${comment.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${comment.id})"><i class="fas fa-heart"></i> Suka (${comment.likes})</span>
+                                <span class="comment-action-btn ${comment.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${comment.id})"><i class="fas fa-heart"></i> ${comment.likes}</span>
                             </div>
-                            <div class="reply-form hidden mt-3" data-comment-id="${comment.id}">
-                                <textarea class="w-full p-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="3" placeholder="Tulis balasan Anda..."></textarea>
-                                <button class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-2" onclick="submitReply(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
+                            <div class="reply-form hidden" data-comment-id="${comment.id}">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" class="w-full px-3 py-2 border border-border rounded text-sm focus:outline-none focus:border-primary transition" placeholder="Tulis balasan Anda..." />
+                                    <button class="join-btn" onclick="submitReply(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-paper-plane"></i></button>
+                                </div>
                             </div>
                             <div class="reply-container">
                                 ${renderReplies(comment.replies, projectId, comment.id)}
@@ -867,36 +1014,27 @@
                     </div>
                 </div>
             `).join('');
-            gsap.from(".comment-card", { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+
+            renderPagination(comments.length, page, projectId);
+            gsap.from(".comment-card", { opacity: 0, y: 10, duration: 0.3, stagger: 0.1, ease: "power2.out" });
         }
 
         // Render Replies
         function renderReplies(replies, projectId, parentCommentId) {
             return replies.map(reply => `
-                <div class="comment-card hover-3d mt-3 ${reply.hidden ? 'hidden' : ''}" data-comment-id="${reply.id}">
-                    <div class="flex gap-4">
-                        <img src="${reply.avatar}" alt="${reply.user}" class="w-10 h-10 rounded-full" />
+                <div class="comment-card ${reply.hidden ? 'hidden' : ''} mt-2" data-comment-id="${reply.id}">
+                    <div class="flex gap-3 items-start">
+                        <img src="${reply.avatar}" alt="${reply.user}" class="w-8 h-8 rounded-full border border-border" />
                         <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <h3 class="text-sm font-semibold">${reply.user}</h3>
-                                    <p class="text-xs text-gray-500">${reply.time}</p>
-                                </div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${reply.user}</h3>
+                                <p class="text-xs text-text-secondary">${reply.time}</p>
                             </div>
-                            <p class="text-gray-700 mt-1">${reply.tag ? `<span class="tag" onclick="window.location.href='/profil/${reply.tag}'">@${reply.tag}</span> ` : ''}${reply.text}</p>
-                            <div class="comment-actions">
-                                <span class="comment-action-btn" onclick="toggleReplyForm(${projectId}, ${reply.id}, '${reply.user}', ${parentCommentId})"><i class="fas fa-reply"></i> Balas</span>
+                            <p class="text-sm mt-1"><span class="font-semibold" onclick="window.location.href='/profil/${reply.tag}'">@${reply.tag}</span> ${reply.text}</p>
+                            <div class="flex items-center gap-3 mt-1">
                                 ${reply.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
                                 <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-eye${reply.hidden ? '-slash' : ''}"></i> ${reply.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
-                                <span class="comment-action-btn" onclick="reportComment(${reply.id})"><i class="fas fa-flag"></i> Laporkan</span>
-                                <span class="comment-action-btn ${reply.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-heart"></i> Suka (${reply.likes})</span>
-                            </div>
-                            <div class="reply-form hidden mt-3" data-comment-id="${reply.id}">
-                                <textarea class="w-full p-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="3" placeholder="Tulis balasan Anda..."></textarea>
-                                <button class="join-btn bg-blue-600 text-white hover:bg-blue-700 mt-2" onclick="submitReply(${projectId}, ${reply.id}, '${reply.user}', ${parentCommentId})"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
-                            </div>
-                            <div class="reply-container">
-                                ${renderReplies(reply.replies || [], projectId, parentCommentId)}
+                                <span class="comment-action-btn ${reply.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-heart"></i> ${reply.likes}</span>
                             </div>
                         </div>
                     </div>
@@ -904,23 +1042,60 @@
             `).join('');
         }
 
+        // Render Pagination
+        function renderPagination(totalComments, currentPage, projectId) {
+            const paginationContainer = document.getElementById('pagination-container');
+            const totalPages = Math.ceil(totalComments / commentsPerPage);
+            let paginationHTML = '';
+
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}" onclick="changePage(${projectId}, ${currentPage - 1})"><i class="fas fa-chevron-left"></i></button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${projectId}, ${i})">${i}</button>
+                `;
+            }
+
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}" onclick="changePage(${projectId}, ${currentPage + 1})"><i class="fas fa-chevron-right"></i></button>
+            `;
+
+            paginationContainer.innerHTML = paginationHTML;
+            gsap.from(".pagination-btn", { opacity: 0, y: 10, duration: 0.3, stagger: 0.05, ease: "power2.out" });
+        }
+
+        // Change Page
+        function changePage(projectId, page) {
+            if (page < 1 || page > Math.ceil(projects.find(p => p.id === projectId).comments.length / commentsPerPage)) return;
+            currentPage = page;
+            const project = projects.find(p => p.id === projectId);
+            renderComments(project.comments, projectId, currentPage);
+        }
+
         // Render Recommended Projects
         function renderRecommendedProjects(currentProjectId) {
             const recommendedProjects = document.getElementById('recommended-projects');
             const recommendations = projects.filter(p => p.id !== currentProjectId && (p.populer || p.baru)).slice(0, 3);
             recommendedProjects.innerHTML = recommendations.length === 0 ?
-                '<p class="text-sm text-gray-500">Tidak ada rekomendasi saat ini.</p>' :
+                '<p class="text-sm text-text-secondary">Tidak ada rekomendasi saat ini.</p>' :
                 recommendations.map(p => `
-                    <div class="recommended-project hover-3d" onclick="window.location.href='detail-proyek.html?id=${p.id}'">
+                    <div class="recommended-project" onclick="window.location.href='detail-proyek.html?id=${p.id}'">
                         <img src="${p.image}" alt="${p.name}" />
-                        <div>
-                            <p class="text-base font-semibold text-gray-700">${p.name}</p>
-                            <p class="text-sm text-gray-500">${p.members.length} Anggota</p>
-                            <p class="text-sm text-gray-600 mt-1">${p.description.substring(0, 60)}...</p>
+                        <div class="p-4">
+                            <p class="text-base font-semibold">${p.name}</p>
+                            <p class="text-sm text-text-secondary">${p.members.length} Anggota</p>
+                            <p class="text-sm text-text-secondary mt-1">${p.description.substring(0, 60)}...</p>
                         </div>
                     </div>
                 `).join('');
-            gsap.from(".recommended-project", { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+            gsap.from(".recommended-project", { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out" });
         }
 
         // Render Notifications
@@ -929,18 +1104,18 @@
             notificationList.innerHTML = '';
             let filteredNotifications = filter === 'all' ? notifications : notifications.filter(n => !n.read);
             if (filteredNotifications.length === 0) {
-                notificationList.innerHTML = '<div class="text-center text-gray-600"><p class="text-sm">Tidak ada notifikasi.</p></div>';
+                notificationList.innerHTML = '<div class="text-center text-text-secondary"><p class="text-sm">Tidak ada notifikasi.</p></div>';
                 return;
             }
             filteredNotifications.forEach(notification => {
                 notificationList.innerHTML += `
                     <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
-                        <p class="text-gray-700">${notification.text}</p>
-                        <p class="text-xs text-gray-500 mt-1">${notification.time}</p>
+                        <p class="text-sm">${notification.text}</p>
+                        <p class="text-xs text-text-secondary mt-1">${notification.time}</p>
                     </div>
                 `;
             });
-            gsap.from(".notification-card", { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+            gsap.from(".notification-card", { opacity: 0, x: 20, duration: 0.5, stagger: 0.1, ease: "power2.out" });
         }
 
         // Toggle Notifications Modal
@@ -994,9 +1169,8 @@
                 document.getElementById('join-message').value = '';
                 anime({
                     targets: '#submit-join',
-                    scale: [1, 1.1, 1],
-                    backgroundColor: ['#2563eb', '#3b82f6'],
-                    duration: 300,
+                    scale: [1, 1.05, 1],
+                    duration: 200,
                     easing: 'easeOutQuad'
                 });
                 alert("Pengajuan Anda telah dikirim!");
@@ -1044,9 +1218,8 @@
             URL.revokeObjectURL(url);
             anime({
                 targets: '#download-summary-btn',
-                scale: [1, 1.2, 1],
-                backgroundColor: ['#2563eb', '#3b82f6'],
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
@@ -1064,9 +1237,8 @@
             });
             anime({
                 targets: '#bookmark-project-btn',
-                scale: [1, 1.2, 1],
-                backgroundColor: project.bookmarked ? ['#ca8a04', '#eab308'] : ['#ca8a04', '#a16207'],
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
@@ -1077,10 +1249,8 @@
             renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
             anime({
                 targets: '#mark-all-read',
-                scale: [1, 1.1, 1],
-                backgroundColor: ['#1f2937', '#374151', '#1f2937'],
-                color: ['#ffffff', '#facc15', '#ffffff'],
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
@@ -1100,8 +1270,8 @@
             const notificationBar = document.getElementById('notification-bar');
             gsap.to(notificationBar, {
                 opacity: 0,
-                y: -30,
-                duration: 0.5,
+                y: -20,
+                duration: 0.3,
                 ease: "power2.in",
                 onComplete: () => notificationBar.classList.add('hidden')
             });
@@ -1124,65 +1294,55 @@
                     likes: 0,
                     likedBy: []
                 });
-                renderComments(project.comments, projectId);
+                currentPage = 1; // Reset to first page after new comment
+                renderComments(project.comments, projectId, currentPage);
                 commentInput.value = '';
                 anime({
                     targets: '#submit-comment',
-                    scale: [1, 1.1, 1],
-                    backgroundColor: ['#2563eb', '#3b82f6'],
-                    duration: 300,
+                    scale: [1, 1.05, 1],
+                    duration: 200,
                     easing: 'easeOutQuad'
                 });
             }
         }
 
         // Toggle Reply Form
-        function toggleReplyForm(projectId, commentId, taggedUser, parentCommentId = null) {
+        function toggleReplyForm(projectId, commentId, taggedUser) {
             const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
             replyForm.classList.toggle('hidden');
             if (!replyForm.classList.contains('hidden')) {
-                const textarea = replyForm.querySelector('textarea');
-                textarea.value = `@${taggedUser} `;
-                textarea.focus();
-                gsap.from(replyForm, { opacity: 0, y: 20, duration: 0.3, ease: "power2.out" });
+                const input = replyForm.querySelector('input');
+                input.value = `@${taggedUser} `;
+                input.focus();
+                gsap.from(replyForm, { opacity: 0, y: 10, duration: 0.3, ease: "power2.out" });
             }
         }
 
         // Submit Reply
-        function submitReply(projectId, commentId, taggedUser, parentCommentId = null) {
+        function submitReply(projectId, commentId, taggedUser) {
             const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
-            const replyText = replyForm.querySelector('textarea').value.trim();
+            const replyText = replyForm.querySelector('input').value.trim();
             if (replyText) {
                 const project = projects.find(p => p.id === projectId);
-                let targetComment;
-                if (parentCommentId) {
-                    targetComment = project.comments.find(c => c.id === parentCommentId);
-                    let currentComment = targetComment.replies.find(r => r.id === commentId);
-                    if (!currentComment.replies) currentComment.replies = [];
-                    targetComment = currentComment;
-                } else {
-                    targetComment = project.comments.find(c => c.id === commentId);
-                }
-                targetComment.replies.unshift({
-                    id: (targetComment.replies.length + 1) * 1000 + commentId,
+                const comment = project.comments.find(c => c.id === commentId);
+                comment.replies.unshift({
+                    id: (comment.replies.length + 1) * 1000 + commentId,
                     user: currentUser,
                     avatar: "https://picsum.photos/50/50?user",
                     time: "Baru saja",
                     text: replyText.replace(`@${taggedUser}`, '').trim(),
                     tag: taggedUser,
-                    replies: [],
                     hidden: false,
                     likes: 0,
                     likedBy: []
                 });
-                renderComments(project.comments, projectId);
-                replyForm.querySelector('textarea').value = '';
+                renderComments(project.comments, projectId, currentPage);
+                replyForm.querySelector('input').value = '';
                 replyForm.classList.add('hidden');
                 anime({
                     targets: replyForm.querySelector('button'),
-                    scale: [1, 1.1, 1],
-                    backgroundColor: ['#2563eb', '#3b82f6'],
-                    duration: 300,
+                    scale: [1, 1.05, 1],
+                    duration: 200,
                     easing: 'easeOutQuad'
                 });
             }
@@ -1193,27 +1353,22 @@
             if (confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
                 const project = projects.find(p => p.id === projectId);
                 if (parentCommentId) {
-                    let parentComment = project.comments.find(c => c.id === parentCommentId);
-                    if (!parentComment) {
-                        project.comments.forEach(c => {
-                            c.replies.forEach(r => {
-                                if (r.id === parentCommentId) parentComment = r;
-                            });
-                        });
-                    }
+                    const parentComment = project.comments.find(c => c.id === parentCommentId);
                     parentComment.replies = parentComment.replies.filter(r => r.id !== commentId);
                 } else {
                     project.comments = project.comments.filter(c => c.id !== commentId);
+                    // Adjust current page if necessary
+                    const totalPages = Math.ceil(project.comments.length / commentsPerPage);
+                    if (currentPage > totalPages) currentPage = totalPages;
                 }
-                renderComments(project.comments, projectId);
+                renderComments(project.comments, projectId, currentPage);
                 anime({
                     targets: `.comment-card[data-comment-id="${commentId}"]`,
                     opacity: 0,
                     height: 0,
                     marginBottom: 0,
-                    duration: 300,
-                    easing: 'easeOutQuad',
-                    complete: () => renderComments(project.comments, projectId)
+                    duration: 200,
+                    easing: 'easeOutQuad'
                 });
             }
         }
@@ -1222,24 +1377,17 @@
         function toggleCommentVisibility(projectId, commentId, parentCommentId = null) {
             const project = projects.find(p => p.id === projectId);
             if (parentCommentId) {
-                let parentComment = project.comments.find(c => c.id === parentCommentId);
-                if (!parentComment) {
-                    project.comments.forEach(c => {
-                        c.replies.forEach(r => {
-                            if (r.id === parentCommentId) parentComment = r;
-                        });
-                    });
-                }
+                const parentComment = project.comments.find(c => c.id === parentCommentId);
                 const reply = parentComment.replies.find(r => r.id === commentId);
                 reply.hidden = !reply.hidden;
             } else {
                 const comment = project.comments.find(c => c.id === commentId);
                 comment.hidden = !comment.hidden;
             }
-            renderComments(project.comments, projectId);
+            renderComments(project.comments, projectId, currentPage);
             gsap.from(`.comment-card[data-comment-id="${commentId}"]`, {
                 opacity: 0,
-                y: 20,
+                y: 10,
                 duration: 0.3,
                 ease: "power2.out"
             });
@@ -1250,19 +1398,15 @@
             const project = projects.find(p => p.id === projectId);
             project.comments.forEach(comment => {
                 comment.hidden = false;
-                (comment.replies || []).forEach(reply => {
+                comment.replies.forEach(reply => {
                     reply.hidden = false;
-                    (reply.replies || []).forEach(nestedReply => {
-                        nestedReply.hidden = false;
-                    });
                 });
             });
-            renderComments(project.comments, projectId);
+            renderComments(project.comments, projectId, currentPage);
             anime({
                 targets: '#show-hidden-comments',
-                scale: [1, 1.1, 1],
-                backgroundColor: ['#4b5563', '#6b7280', '#4b5563'],
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
@@ -1272,14 +1416,7 @@
             const project = projects.find(p => p.id === projectId);
             let targetComment;
             if (parentCommentId) {
-                let parentComment = project.comments.find(c => c.id === parentCommentId);
-                if (!parentComment) {
-                    project.comments.forEach(c => {
-                        c.replies.forEach(r => {
-                            if (r.id === parentCommentId) parentComment = r;
-                        });
-                    });
-                }
+                const parentComment = project.comments.find(c => c.id === parentCommentId);
                 targetComment = parentComment.replies.find(r => r.id === commentId);
             } else {
                 targetComment = project.comments.find(c => c.id === commentId);
@@ -1291,12 +1428,11 @@
                 targetComment.likes++;
                 targetComment.likedBy.push(currentUser);
             }
-            renderComments(project.comments, projectId);
+            renderComments(project.comments, projectId, currentPage);
             anime({
                 targets: `.comment-card[data-comment-id="${commentId}"] .comment-action-btn.liked`,
-                scale: [1, 1.2, 1],
-                color: targetComment.likedBy.includes(currentUser) ? '#ef4444' : '#6b7280',
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
@@ -1315,63 +1451,136 @@
             renderProjectHeader(project);
             anime({
                 targets: '#like-project-btn',
-                scale: [1, 1.2, 1],
-                backgroundColor: project.likedBy.includes(currentUser) ? ['#dc2626', '#ef4444'] : ['#b91c1c', '#dc2626'],
-                duration: 300,
+                scale: [1, 1.05, 1],
+                duration: 200,
                 easing: 'easeOutQuad'
             });
         }
 
         // Share Project
         function shareProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
             const projectUrl = `${window.location.origin}/detail-proyek.html?id=${projectId}`;
-            navigator.clipboard.writeText(projectUrl).then(() => {
-                alert("Link proyek telah disalin ke clipboard!");
-                anime({
-                    targets: '#share-project-btn',
-                    scale: [1, 1.2, 1],
-                    backgroundColor: ['#4b5563', '#6b7280', '#4b5563'],
-                    duration: 300,
-                    easing: 'easeOutQuad'
-                });
-            }).catch(() => {
-                alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
-            });
+            const shareData = {
+                title: project.name,
+                text: project.description,
+                url: projectUrl
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => {
+                        // alert("Proyek berhasil dibagikan!");
+                        anime({
+                            targets: '#share-project-btn',
+                            scale: [1, 1.05, 1],
+                            duration: 200,
+                            easing: 'easeOutQuad'
+                        });
+                    })
+                    .catch(() => {
+                        // Fallback to copy link if share fails
+                        navigator.clipboard.writeText(projectUrl)
+                            .then(() => {
+                                alert("Link proyek telah disalin ke clipboard!");
+                                anime({
+                                    targets: '#share-project-btn',
+                                    scale: [1, 1.05, 1],
+                                    duration: 200,
+                                    easing: 'easeOutQuad'
+                                });
+                            })
+                            .catch(() => {
+                                alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
+                            });
+                    });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(projectUrl)
+                    .then(() => {
+                        alert("Link proyek telah disalin ke clipboard!");
+                        anime({
+                            targets: '#share-project-btn',
+                            scale: [1, 1.05, 1],
+                            duration: 200,
+                            easing: 'easeOutQuad'
+                        });
+                    })
+                    .catch(() => {
+                        alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
+                    });
+            }
         }
 
-        // Report Comment
-        function reportComment(commentId) {
-            alert(`Komentar dengan ID ${commentId} telah dilaporkan (placeholder).`);
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.dataset.theme;
+            body.dataset.theme = currentTheme === 'light' ? 'dark' : 'light';
+            document.querySelector('.theme-toggle').className = `fas fa-${currentTheme === 'light' ? 'sun' : 'moon'} theme-toggle cursor-pointer hover:text-text transition`;
+            initParticleAnimation();
         }
 
-        // Filter Notifications
-        const notificationFilterButtons = document.querySelectorAll('#notification-modal .filter-btn');
-        notificationFilterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                notificationFilterButtons.forEach(f => f.classList.remove('active'));
-                btn.classList.add('active');
-                renderNotifications(btn.dataset.filter);
-                anime({
-                    targets: btn,
-                    scale: [1, 1.1, 1],
-                    backgroundColor: ['#ffffff', '#1f2937'],
-                    color: ['#1f2937', '#ffffff'],
-                    duration: 300,
-                    easing: 'easeOutQuad'
+        // Particle Wave Animation
+        function initParticleAnimation() {
+            const canvas = document.getElementById('particle-bg');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const numParticles = 100;
+            const waveAmplitude = 50;
+            const waveFrequency = 0.01;
+            const waveSpeed = 0.02;
+
+            for (let i = 0; i < numParticles; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    baseY: Math.random() * canvas.height,
+                    size: 2 + Math.random() * 3,
+                    speed: 1 + Math.random() * 2,
+                    phase: Math.random() * Math.PI * 2
                 });
-            });
-        });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const color = document.body.dataset.theme === 'light' ? '#000000' : '#ffffff';
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.15;
+
+                particles.forEach(particle => {
+                    const waveY = particle.baseY + Math.sin(particle.x * waveFrequency + particle.phase) * waveAmplitude;
+                    particle.x += particle.speed;
+                    particle.y = waveY;
+
+                    if (particle.x > canvas.width) particle.x = -particle.size;
+
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    particle.phase += waveSpeed;
+                });
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
 
         // Initialize Page
         window.addEventListener('load', () => {
+            initParticleAnimation();
             const projectId = getProjectIdFromUrl();
             const project = projects.find(p => p.id === projectId);
 
             if (!project) {
                 document.querySelector('.project-header .inner').innerHTML = `
-                    <div class="text-center text-gray-600">
-                        <p class="text-xl font-semibold">Proyek tidak ditemukan.</p>
-                        <a href="/proyek" class="inline-block mt-6 px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition">Kembali ke Proyek</a>
+                    <div class="text-center text-text-secondary">
+                        <p class="text-lg font-semibold">Proyek tidak ditemukan.</p>
+                        <a href="/proyek" class="inline-block mt-4 action-btn">Kembali ke Proyek</a>
                     </div>
                 `;
                 return;
@@ -1380,33 +1589,34 @@
             renderProjectHeader(project);
             renderMembers(project.members);
             renderTimeline(project.timeline);
-            renderTasks(project.tasks, project.category);
-            renderComments(project.comments, projectId);
+            renderTasks(project.tasks);
+            renderComments(project.comments, projectId, currentPage);
             renderRecommendedProjects(projectId);
             renderNotifications();
 
-            // Add event listeners
             document.getElementById('submit-comment').addEventListener('click', () => submitComment(projectId));
             document.getElementById('show-hidden-comments').addEventListener('click', () => showAllHiddenComments(projectId));
             document.getElementById('submit-join').addEventListener('click', () => submitJoinRequest(projectId));
 
-            // Particles.js Initialization
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 60, density: { enable: true, value_area: 800 } },
-                    color: { value: "#3b82f6" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.3, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: { enable: false },
-                    move: { enable: true, speed: 0.8, direction: "top", random: false, straight: false, out_mode: "out" }
-                },
-                interactivity: {
-                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: false } },
-                    modes: { repulse: { distance: 120, duration: 0.4 } }
-                },
-                retina_detect: true
+            document.querySelectorAll('#notification-modal .filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#notification-modal .filter-btn').forEach(f => f.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderNotifications(btn.dataset.filter);
+                    anime({
+                        targets: btn,
+                        scale: [1, 1.05, 1],
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
             });
+        });
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('particle-bg');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
     </script>
 </body>
