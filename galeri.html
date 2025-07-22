@@ -1,356 +1,691 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TARA - Galeri</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lottie-web@5.12.0/build/player/lottie.min.js"></script>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA - Galeri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lottie-web@5.12.0/build/player/lottie.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
 
-  <style>
-    body { font-family: 'Outfit', sans-serif; }
+    <style>
+      body {
+        font-family: "Outfit", sans-serif;
+        background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
+      }
 
-    #ripple-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: transparent !important;
-    }
+      #ripple-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: transparent !important;
+      }
 
-    @keyframes fadeUp {
-      0% { transform: translateY(20px); opacity: 0.2; }
-      50% { transform: translateY(0); opacity: 0.4; }
-      100% { transform: translateY(20px); opacity: 0.2; }
-    }
-  </style>
-</head> 
+      @keyframes fadeUp {
+        0% {
+          transform: translateY(20px);
+          opacity: 0.2;
+        }
+        50% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        100% {
+          transform: translateY(20px);
+          opacity: 0.2;
+        }
+      }
 
-<body class="bg-white text-black relative overflow-x-hidden">
-  <div id="lottie-bg" class="fixed inset-0 -z-10 opacity-10 pointer-events-none"></div>
-  
-  <header class="p-6 border-b flex items-center justify-between">
-    <div class="text-2xl font-bold tracking-normal uppercase relative left-2" style="font-family: 'Space Grotesk', sans-serif;">
-      TARA<span class="text-yellow-400">●</span>
-    </div>
-    <nav class="hidden md:flex gap-4 text-sm">
-      <a href="#" class="hover:underline">Explore</a>
-      <a href="#" class="hover:underline">Directory</a>
-      <a href="#" class="hover:underline">Jobs</a>
-    </nav>
-    <div class="flex gap-2">
-      <input type="text" placeholder="Search" class="text-sm px-3 py-2 border rounded-md"/>
-    </div>
-  </header>
+      .gallery-img {
+        filter: grayscale(20%) contrast(1.1) brightness(1.05);
+        transition: all 0.4s ease-in-out;
+        transform: scale(1);
+      }
 
-  <section class="px-6 py-4 flex flex-wrap items-center gap-3 bg-gray-100">
-    <div class="flex flex-wrap gap-2">
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Awards</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Category</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Tag</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Technology</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Country</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Font</option></select>
-      <select class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium"><option>Color</option></select>
-    </div>
-    <div class="ml-auto flex items-center gap-2">
-      <div class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 font-semibold">1</div>
-      <button class="px-4 py-2 text-sm bg-white rounded-lg shadow-sm font-medium flex items-center gap-1 hover:bg-gray-200">
-        Reset filters
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582M20 20v-5h-.581M4 9a9 9 0 0116 0M4 15a9 9 0 0016 0" />
-        </svg>
-      </button>
-    </div>
-  </section>
+      .gallery-img:hover {
+        filter: grayscale(0%) contrast(1.2) brightness(1.15);
+        transform: scale(1.03);
+      }
 
-  <main class="px-6 py-4">
-    <h2 class="text-lg font-semibold mb-4" data-aos="fade-up">Kurasi <span class="font-bold">Portofolio Terbaik</span></h2>
-    <div id="portfolio-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 auto-rows-[140px] gap-2">
-      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
-        <img src="https://picsum.photos/seed/1/400/300" alt="Project 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+      .gallery-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.75),
+          rgba(0, 0, 0, 0.2)
+        );
+        opacity: 0;
+        transition: all 0.4s ease-in-out;
+        transform: scale(0.95);
+        border-radius: 12px;
+      }
+
+      .group:hover .gallery-overlay {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .project-title {
+        transform: translateY(15px);
+        transition: all 0.4s ease-in-out;
+        opacity: 0;
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: 0.5px;
+      }
+
+      .group:hover .project-title {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .project-details {
+        transform: translateY(20px);
+        transition: all 0.4s ease-in-out;
+        opacity: 0;
+        font-size: 0.9rem;
+      }
+
+      .group:hover .project-details {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .pagination-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #e5e5e5;
+        color: #333;
+        font-size: 1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .pagination-btn:hover {
+        background: #000;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .pagination-btn.active {
+        background: #000;
+        color: #fff;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .pagination-btn:disabled {
+        background: #f5f5f5;
+        color: #aaa;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-black relative overflow-x-hidden">
+    <div
+      id="lottie-bg"
+      class="fixed inset-0 -z-10 opacity-10 pointer-events-none"
+    ></div>
+
+    <header
+      class="p-6 border-b flex items-center justify-between bg-white/95 backdrop-blur-sm"
+    >
+      <div
+        class="text-2xl font-bold tracking-normal uppercase relative left-2"
+        style="font-family: 'Space Grotesk', sans-serif"
+      >
+        TARA<span class="text-yellow-400">●</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="#" class="hover:text-yellow-400 transition">Explore</a>
+        <a href="#" class="hover:text-yellow-400 transition">Directory</a>
+        <a href="#" class="hover:text-yellow-400 transition">Jobs</a>
+      </nav>
+      <div class="flex gap-2">
+        <input
+          type="text"
+          placeholder="Search"
+          class="text-sm px-4 py-2 border border-neutral-200 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+        />
+      </div>
+    </header>
+
+    <section
+      class="px-6 py-4 flex flex-wrap items-center gap-3 bg-gray-50/80 backdrop-blur-sm"
+    >
+      <div class="flex flex-wrap gap-2">
+        <select
+          id="category-filter"
+          class="px-4 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option value="">All Categories</option>
+          <option value="UI/UX">UI/UX</option>
+          <option value="Graphic Design">Graphic Design</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Illustration">Illustration</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Awards</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Tag</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Technology</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Country</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Font</option>
+        </select>
+        <select
+          class="px-7 py-2 rounded-lg bg-white shadow-sm text-sm font-medium focus:ring-2 focus:ring-yellow-400"
+        >
+          <option>Color</option>
+        </select>
+      </div>
+      <div class="ml-auto flex items-center gap-2">
+        <div
+          id="filter-count"
+          class="bg-yellow-400 text-white text-xs rounded-full px-2 py-1 font-semibold"
+        >
+          0
         </div>
-        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 1</div>
+        <button
+          id="reset-filters"
+          class="px-4 py-2 text-sm bg-white rounded-lg shadow-sm font-medium flex items-center gap-1 hover:bg-yellow-400 hover:text-white transition"
+        >
+          Reset filters
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 inline-block"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582M20 20v-5h-.581M4 9a9 9 0 0116 0M4 15a9 9 0 0016 0"
+            />
+          </svg>
+        </button>
       </div>
+    </section>
 
-      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-2" data-aos="fade-up">
-        <img src="https://picsum.photos/seed/2/400/600" alt="Project 2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+    <main class="px-6 py-8 max-w-7xl mx-auto" id="gallery-top">
+      <div
+        id="portfolio-gallery"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 auto-rows-[200px] gap-6"
+      ></div>
+      <div
+        id="pagination"
+        class="flex justify-center items-center gap-3 mt-12"
+      ></div>
+    </main>
+
+    <canvas
+      id="ripple-canvas"
+      class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"
+    ></canvas>
+
+    <footer
+      class="relative mt-12 bg-white border-t border-neutral-200 text-sm text-neutral-700 overflow-hidden"
+    >
+      <div class="absolute bottom-0 left-0 w-full h-56 pointer-events-none z-0">
+        <div
+          class="w-full h-full bg-gradient-to-t from-white via-white/80 to-transparent animate-[fadeUp_4s_infinite]"
+        ></div>
+      </div>
+      <div
+        class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10"
+      >
+        <div class="col-span-2">
+          <div
+            class="text-2xl font-bold tracking-normal uppercase"
+            style="font-family: 'Space Grotesk', sans-serif"
+          >
+            TARA<span class="text-yellow-400">●</span>
+          </div>
+          <p class="text-neutral-500 mb-4">
+            Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
+            depan. Temukan inspirasi. Bangun impresi.
+          </p>
+          <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Dribbble"
+            >
+              <i class="fab fa-dribbble"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Behance"
+            >
+              <i class="fab fa-behance"></i>
+            </a>
+          </div>
         </div>
-        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 2</div>
-      </div>
-
-      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-1" data-aos="fade-up">
-        <img src="https://picsum.photos/seed/3/800/300" alt="Project 3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        <div>
+          <h3 class="font-semibold text-black mb-4">Navigasi</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Beranda</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Galeri</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Tentang</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Kontak</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">FAQ</a>
+            </li>
+          </ul>
         </div>
-        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 3</div>
-      </div>
-
-      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-1 row-span-1" data-aos="fade-up">
-        <img src="https://picsum.photos/seed/4/400/300" alt="Project 4" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        <div>
+          <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">UI/UX</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >GSAP Effects</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Landing Page</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Microinteraction</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Typography</a
+              >
+            </li>
+          </ul>
         </div>
-        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 4</div>
-      </div>
-
-      <div class="relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group col-span-2 row-span-2" data-aos="fade-up">
-        <img src="https://picsum.photos/seed/5/800/600" alt="Project 5" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+        <div>
+          <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Submit Karya</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Gabung Kurator</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Sponsor & Iklan</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Media Partner</a
+              >
+            </li>
+          </ul>
         </div>
-        <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">Project 5</div>
-      </div>
-    </div>
-
-    <div id="pagination" class="flex justify-center items-center gap-2 mt-12"></div>
-  </main>
-
-  <canvas id="ripple-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
-
-  <footer class="relative mt-10 bg-white border-t border-neutral-200 text-sm text-neutral-700 overflow-hidden">
-    <div class="absolute bottom-0 left-0 w-full h-56 pointer-events-none z-0">
-      <div class="w-full h-full bg-gradient-to-t from-white via-white/80 to-transparent animate-[fadeUp_4s_infinite]"></div>
-    </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
-      <div class="col-span-2">
-        <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
-          TARA<span class="text-yellow-400">●</span>
-        </div>
-        <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan. Temukan inspirasi. Bangun impresi.</p>
-        <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
-          <a href="#" class="hover:text-black transition" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="hover:text-black transition" aria-label="Twitter">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="hover:text-black transition" aria-label="LinkedIn">
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a href="#" class="hover:text-black transition" aria-label="Dribbble">
-            <i class="fab fa-dribbble"></i>
-          </a>
-          <a href="#" class="hover:text-black transition" aria-label="Behance">
-            <i class="fab fa-behance"></i>
-          </a>
+        <div class="col-span-2 sm:col-span-1">
+          <h3 class="font-semibold text-black mb-4">Newsletter</h3>
+          <p class="text-neutral-500 mb-3">
+            Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.
+          </p>
+          <div class="flex items-center gap-2">
+            <input
+              type="email"
+              placeholder="Email Tuan..."
+              class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <button
+              class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-yellow-400 hover:text-black transition"
+            >
+              Kirim
+            </button>
+          </div>
         </div>
       </div>
-      <div>
-        <h3 class="font-semibold text-black mb-4">Navigasi</h3>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-black transition">Beranda</a></li>
-          <li><a href="#" class="hover:text-black transition">Galeri</a></li>
-          <li><a href="#" class="hover:text-black transition">Tentang</a></li>
-          <li><a href="#" class="hover:text-black transition">Kontak</a></li>
-          <li><a href="#" class="hover:text-black transition">FAQ</a></li>
-        </ul>
+      <div
+        class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400"
+      >
+        © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika,
+        teknologi, dan visi Tuan menyatu.
       </div>
-      <div>
-        <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-black transition">UI/UX</a></li>
-          <li><a href="#" class="hover:text-black transition">GSAP Effects</a></li>
-          <li><a href="#" class="hover:text-black transition">Landing Page</a></li>
-          <li><a href="#" class="hover:text-black transition">Microinteraction</a></li>
-          <li><a href="#" class="hover:text-black transition">Typography</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-black transition">Submit Karya</a></li>
-          <li><a href="#" class="hover:text-black transition">Gabung Kurator</a></li>
-          <li><a href="#" class="hover:text-black transition">Sponsor & Iklan</a></li>
-          <li><a href="#" class="hover:text-black transition">Media Partner</a></li>
-        </ul>
-      </div>
-      <div class="col-span-2 sm:col-span-1">
-        <h3 class="font-semibold text-black mb-4">Newsletter</h3>
-        <p class="text-neutral-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.</p>
-        <form class="flex items-center gap-2">
-          <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
-          <button type="submit" class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-neutral-800 transition">Kirim</button>
-        </form>
-      </div>
-    </div>
-    <div class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
-      © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
-    </div>
-  </footer>
+    </footer>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({ once: true, duration: 1000, easing: "ease-out-cubic" });
 
-    const totalProjects = 45;
-    const itemsPerPage = 15;
-    let currentPage = 1;
+      const totalProjects = 45;
+      const itemsPerPage = 15;
+      let currentPage = 1;
+      let currentCategory = "";
 
-    const gallery = document.getElementById("portfolio-gallery");
-    const pagination = document.getElementById("pagination");
+      const gallery = document.getElementById("portfolio-gallery");
+      const pagination = document.getElementById("pagination");
+      const categoryFilter = document.getElementById("category-filter");
+      const filterCount = document.getElementById("filter-count");
+      const resetFilters = document.getElementById("reset-filters");
 
-    function renderProjects(page) {
-      gallery.innerHTML = "";
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const projects = Array.from({ length: totalProjects }, (_, i) => ({
+      const projectsData = Array.from({ length: totalProjects }, (_, i) => ({
         title: `Project ${i + 1}`,
         image: `https://picsum.photos/seed/${i + 1}/400/300`,
-        height: ['row-span-1', 'row-span-2'][i % 2],
-        width: ['col-span-1', 'col-span-2'][i % 3 === 0 ? 1 : 0]
+        height: ["row-span-2", "row-span-3", "row-span-2"][
+          Math.floor(Math.random() * 3)
+        ],
+        width: ["col-span-1", "col-span-2", "col-span-1"][
+          Math.floor(Math.random() * 3)
+        ],
+        category: [
+          "UI/UX",
+          "Graphic Design",
+          "Web Development",
+          "Illustration",
+        ][i % 4],
       }));
-      projects.slice(start, end).forEach(project => {
-        const card = document.createElement('div');
-        card.className = `relative overflow-hidden rounded-lg shadow-sm bg-neutral-100 cursor-pointer group ${project.height} ${project.width}`;
-        card.setAttribute('data-aos', 'fade-up');
-        card.innerHTML = `
-          <img src="${project.image}" alt="image" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-            <button class="bg-white text-black text-sm font-semibold px-4 py-2 rounded shadow-md">Lihat Detail</button>
+
+      function renderProjects(page, category) {
+        gallery.innerHTML = "";
+        const filteredProjects = category
+          ? projectsData.filter((project) => project.category === category)
+          : projectsData;
+        const totalFiltered = filteredProjects.length;
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        filteredProjects.slice(start, end).forEach((project) => {
+          const card = document.createElement("div");
+          card.className = `relative overflow-hidden rounded-lg shadow-md bg-neutral-100 cursor-pointer group ${project.height} ${project.width}`;
+          card.setAttribute("data-aos", "fade-up");
+          card.setAttribute(
+            "data-aos-delay",
+            `${(filteredProjects.indexOf(project) % itemsPerPage) * 100}`
+          );
+          card.innerHTML = `
+          <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover gallery-img"/>
+          <div class="absolute inset-0 gallery-overlay flex flex-col items-center justify-center text-white p-6">
+            <h3 class="project-title text-xl font-semibold">${project.title}</h3>
+            <p class="project-details text-sm">${project.category}</p>
+            <button class="bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-lg shadow-md mt-4 hover:bg-yellow-400 hover:text-black transition">Lihat Detail</button>
           </div>
-          <div class="absolute bottom-2 left-2 bg-white/80 px-2 py-1 text-xs font-semibold rounded">${project.title}</div>
         `;
-        gallery.appendChild(card);
-      });
-      AOS.refresh();
-    }
-
-    function renderPagination() {
-      pagination.innerHTML = "";
-      const totalPages = Math.ceil(totalProjects / itemsPerPage);
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement("button");
-        btn.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-black text-white' : 'bg-gray-200'} hover:bg-black hover:text-white transition`;
-        btn.textContent = i;
-        btn.addEventListener("click", () => {
-          currentPage = i;
-          renderProjects(currentPage);
-          renderPagination();
+          gallery.appendChild(card);
         });
-        pagination.appendChild(btn);
+
+        AOS.refresh();
+        document
+          .getElementById("gallery-top")
+          .scrollIntoView({ behavior: "smooth" });
+        filterCount.textContent = category ? "1" : "0";
+        return totalFiltered;
       }
-    }
 
-    renderProjects(currentPage);
-    renderPagination();
+      function renderPagination(totalItems) {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    lottie.loadAnimation({
-      container: document.getElementById("lottie-bg"),
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: 'https://assets5.lottiefiles.com/packages/lf20_x62chJ.json'
-    });
-
-    const canvas = document.getElementById("ripple-canvas");
-    const ctx = canvas.getContext("2d");
-    let ripples = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    document.addEventListener("mousemove", (e) => {
-      ripples.push({ 
-        x: e.clientX, 
-        y: e.clientY, 
-        radius: 0, 
-        alpha: 0.8,
-        wavePhase: 0,
-        depth: Math.random() * 0.5 + 0.5, 
-        rippleSpeed: Math.random() * 0.5 + 1.2
-      });
-    });
-
-    function animateRipples() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      ripples.forEach((ripple, index) => {
-        const maxRadius = 80;
-        const waveAmplitude = 2;
-        const waveFrequency = 0.15;
-
-        for (let i = 0; i < 3; i++) {
-          const radiusOffset = i * 8;
-          const depthAlpha = ripple.alpha * (1 - i * 0.3) * ripple.depth;
-          
-          if (depthAlpha > 0) {
-            ctx.beginPath();
-            ctx.arc(
-              ripple.x + Math.sin(ripple.wavePhase + i * 0.5) * waveAmplitude,
-              ripple.y + Math.cos(ripple.wavePhase + i * 0.5) * waveAmplitude,
-              ripple.radius + radiusOffset,
-              0,
-              Math.PI * 2
+        const prevBtn = document.createElement("button");
+        prevBtn.className = `pagination-btn ${
+          currentPage === 1 ? "disabled" : ""
+        }`;
+        prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>`;
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderProjects(currentPage, currentCategory);
+            renderPagination(
+              currentCategory
+                ? projectsData.filter(
+                    (project) => project.category === currentCategory
+                  ).length
+                : totalProjects
             );
-            
-            const baseColor = i === 0 ? 
-              `rgba(173, 216, 230, ${depthAlpha})` :
-              i === 1 ? 
-              `rgba(224, 255, 255, ${depthAlpha * 0.7})` :
-              `rgba(240, 248, 255, ${depthAlpha * 0.4})`; 
-            
-            ctx.strokeStyle = baseColor;
-            ctx.lineWidth = i === 0 ? 2.5 : i === 1 ? 1.8 : 1.2;
-            ctx.stroke();
+          }
+        });
+        pagination.appendChild(prevBtn);
 
-            if (i === 0) {
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.className = `pagination-btn ${i === currentPage ? "active" : ""}`;
+          btn.textContent = i;
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            renderProjects(currentPage, currentCategory);
+            renderPagination(
+              currentCategory
+                ? projectsData.filter(
+                    (project) => project.category === currentCategory
+                  ).length
+                : totalProjects
+            );
+          });
+          pagination.appendChild(btn);
+        }
+
+        const nextBtn = document.createElement("button");
+        nextBtn.className = `pagination-btn ${
+          currentPage === totalPages ? "disabled" : ""
+        }`;
+        nextBtn.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderProjects(currentPage, currentCategory);
+            renderPagination(
+              currentCategory
+                ? projectsData.filter(
+                    (project) => project.category === currentCategory
+                  ).length
+                : totalProjects
+            );
+          }
+        });
+        pagination.appendChild(nextBtn);
+      }
+
+      categoryFilter.addEventListener("change", (e) => {
+        currentCategory = e.target.value;
+        currentPage = 1;
+        const totalFiltered = renderProjects(currentPage, currentCategory);
+        renderPagination(totalFiltered);
+      });
+
+      resetFilters.addEventListener("click", () => {
+        currentCategory = "";
+        currentPage = 1;
+        categoryFilter.value = "";
+        renderProjects(currentPage, currentCategory);
+        renderPagination(totalProjects);
+      });
+
+      renderProjects(currentPage, currentCategory);
+      renderPagination(totalProjects);
+
+      lottie.loadAnimation({
+        container: document.getElementById("lottie-bg"),
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "https://assets5.lottiefiles.com/packages/lf20_x62chJ.json",
+      });
+
+      const canvas = document.getElementById("ripple-canvas");
+      const ctx = canvas.getContext("2d");
+      let ripples = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      document.addEventListener("mousemove", (e) => {
+        ripples.push({
+          x: e.clientX,
+          y: e.clientY,
+          radius: 0,
+          alpha: 0.8,
+          wavePhase: 0,
+          depth: Math.random() * 0.5 + 0.5,
+          rippleSpeed: Math.random() * 0.5 + 1.2,
+        });
+      });
+
+      function animateRipples() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ripples.forEach((ripple, index) => {
+          const maxRadius = 80;
+          const waveAmplitude = 2;
+          const waveFrequency = 0.15;
+
+          for (let i = 0; i < 3; i++) {
+            const radiusOffset = i * 8;
+            const depthAlpha = ripple.alpha * (1 - i * 0.3) * ripple.depth;
+
+            if (depthAlpha > 0) {
               ctx.beginPath();
               ctx.arc(
-                ripple.x + Math.sin(ripple.wavePhase) * waveAmplitude,
-                ripple.y + Math.cos(ripple.wavePhase) * waveAmplitude,
-                ripple.radius - 2,
+                ripple.x + Math.sin(ripple.wavePhase + i * 0.5) * waveAmplitude,
+                ripple.y + Math.cos(ripple.wavePhase + i * 0.5) * waveAmplitude,
+                ripple.radius + radiusOffset,
                 0,
                 Math.PI * 2
               );
-              ctx.strokeStyle = `rgba(255, 255, 255, ${depthAlpha * 0.6})`;
-              ctx.lineWidth = 1;
+
+              const baseColor =
+                i === 0
+                  ? `rgba(173, 216, 230, ${depthAlpha})`
+                  : i === 1
+                  ? `rgba(224, 255, 255, ${depthAlpha * 0.7})`
+                  : `rgba(240, 248, 255, ${depthAlpha * 0.4})`;
+
+              ctx.strokeStyle = baseColor;
+              ctx.lineWidth = i === 0 ? 2.5 : i === 1 ? 1.8 : 1.2;
               ctx.stroke();
+
+              if (i === 0) {
+                ctx.beginPath();
+                ctx.arc(
+                  ripple.x + Math.sin(ripple.wavePhase) * waveAmplitude,
+                  ripple.y + Math.cos(ripple.wavePhase) * waveAmplitude,
+                  ripple.radius - 2,
+                  0,
+                  Math.PI * 2
+                );
+                ctx.strokeStyle = `rgba(255, 255, 255, ${depthAlpha * 0.6})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+              }
             }
           }
-        }
-        
-        // Add shimmering effect
-        if (ripple.radius > 10 && ripple.radius < 40) {
-          ctx.beginPath();
-          ctx.arc(
-            ripple.x + Math.sin(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
-            ripple.y + Math.cos(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
-            ripple.radius * 0.3,
-            0,
-            Math.PI * 2
-          );
-          ctx.fillStyle = `rgba(255, 255, 255, ${ripple.alpha * 0.3})`;
-          ctx.fill();
-        }
 
-        // Update ripple properties
-        ripple.radius += ripple.rippleSpeed;
-        ripple.alpha -= 0.006;
-        ripple.wavePhase += waveFrequency;
+          if (ripple.radius > 10 && ripple.radius < 40) {
+            ctx.beginPath();
+            ctx.arc(
+              ripple.x + Math.sin(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
+              ripple.y + Math.cos(ripple.wavePhase * 2) * (waveAmplitude * 0.5),
+              ripple.radius * 0.3,
+              0,
+              Math.PI * 2
+            );
+            ctx.fillStyle = `rgba(255, 255, 255, ${ripple.alpha * 0.3})`;
+            ctx.fill();
+          }
 
-        // Remove ripple when it fades out
-        if (ripple.alpha <= 0 || ripple.radius > maxRadius) {
-          ripples.splice(index, 1);
-        }
-      });
-      
-      requestAnimationFrame(animateRipples);
-    }
-    animateRipples();
-  </script>
-</body>
+          ripple.radius += ripple.rippleSpeed;
+          ripple.alpha -= 0.006;
+          ripple.wavePhase += waveFrequency;
+
+          if (ripple.alpha <= 0 || ripple.radius > maxRadius) {
+            ripples.splice(index, 1);
+          }
+        });
+
+        requestAnimationFrame(animateRipples);
+      }
+      animateRipples();
+    </script>
+  </body>
 </html>
