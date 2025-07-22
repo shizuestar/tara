@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TARA - Profil Saya</title>
+    <title>TARA - Profil Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -171,7 +171,7 @@
           #4a4a4a 50%,
           var(--primary-black) 100%
         );
-        -webpkit-background-clip: text;
+        -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         background-size: 200% 200%;
@@ -235,7 +235,7 @@
         content: "";
         position: absolute;
         top: 0;
-        left: -belirtilmek;
+        left: -100%;
         width: 100%;
         height: 100%;
         background: var(--primary-black);
@@ -675,17 +675,17 @@
           >Beranda</a
         >
         <a
-          href="/dashboard.html"
+          href="/about.html"
           class="nav-link font-semibold text-primary-black text-sm"
-          >Dashboard</a
+          >Tentang</a
         >
         <a href="/galeri" class="nav-link hover:text-primary-black text-sm"
           >Galeri</a
         >
         <a href="/profile.html" class="ml-2">
           <img
-            src="https://i.pravatar.cc/32?u=me"
-            alt="Your profile avatar"
+            src="https://i.pravatar.cc/32?u=tara"
+            alt="User profile avatar"
             class="w-8 h-8 rounded-full border hover:ring-2 hover:ring-blue-400"
           />
         </a>
@@ -701,8 +701,8 @@
           class="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary-white shadow-lg animate-float"
         >
           <img
-            src="https://i.pravatar.cc/300?u=me"
-            alt="Your profile picture"
+            src="https://i.pravatar.cc/300?u=tara"
+            alt="Profile picture of Noah Sullivan"
             class="w-full h-full object-cover"
           />
         </div>
@@ -710,11 +710,12 @@
           <h1
             class="text-2xl md:text-3xl font-bold text-primary-black text-appear"
           >
-            Nama Anda
+            Noah Sullivan
           </h1>
-          <p class="text-sm text-accent-gray mt-1 text-appear">@usernameanda</p>
+          <p class="text-sm text-accent-gray mt-1 text-appear">@noahdesu</p>
           <p class="text-sm text-accent-gray mt-2 max-w-sm text-appear">
-            Tulis sesuatu tentang diri Anda untuk menginspirasi orang lain.
+            Desainer dan pengembang kreatif dengan passion untuk menciptakan
+            pengalaman digital yang memukau.
           </p>
           <div
             class="flex gap-2 mt-2 flex-wrap justify-center md:justify-start"
@@ -731,7 +732,8 @@
           <div
             class="flex gap-3 mt-3 flex-wrap justify-center md:justify-start text-lg"
           >
-            <a href="/settings" class="button-primary">Pengaturan</a>
+            <a href="#" class="button-primary">Kirim Pesan</a>
+            <a href="#" class="button-primary">Ikuti</a>
             <a
               href="https://linkedin.com"
               class="text-accent-gray hover:text-primary-black"
@@ -792,7 +794,7 @@
               <h3
                 class="text-base font-semibold text-primary-black mb-3 text-center"
               >
-                Lencana Saya
+                Lencana
               </h3>
               <div class="grid grid-cols-2 sm:grid-cols-2 gap-4">
                 <div
@@ -951,10 +953,10 @@
           <div class="max-w-5xl mx-auto relative z-10">
             <div class="mb-6 text-center">
               <h2 class="text-2xl font-bold text-primary-black text-appear">
-                Portofolio Saya
+                Portofolio
               </h2>
               <p class="text-sm text-accent-gray mt-1 text-appear">
-                Karya terbaru yang telah Anda buat
+                Karya terbaru yang telah kamu buat
               </p>
             </div>
             <div class="flex flex-wrap gap-3 mb-4 justify-center">
@@ -1208,10 +1210,10 @@
           <div class="max-w-5xl mx-auto">
             <div class="mb-6 text-center">
               <h2 class="text-2xl font-bold text-primary-black text-appear">
-                Komunitas Saya
+                Komunitas
               </h2>
               <p class="text-sm text-accent-gray mt-1 text-appear">
-                Grup dan forum yang Anda ikuti 🌱
+                Grup dan forum yang kamu ikuti 🌱
               </p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1355,7 +1357,7 @@
             </li>
             <li>
               <a href="#" class="hover:text-primary-black transition"
-                >Dashboard</a
+                >Tentang</a
               >
             </li>
             <li>
