@@ -1,750 +1,1340 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Detail Karya - TARA (Fixed)</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA – Detail Galeri</title>
 
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- AnimeJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
 
-<style>
-  @font-face {
-    font-family: "Vantage";
-    src: url("./assets/fonts/VantageRegular-L3xY5.ttf") format("truetype");
-  }
-  .font-vantage { font-family: "Vantage", sans-serif; letter-spacing: .05em; }
+    <style>
+        :root {
+            --tara-accent: #facc15;
+            --tara-dark: #111827;
+            --tara-muted: #6b7280;
+        }
 
-  #particles-js-detail { position: fixed; inset:0; width:100%; height:100%; z-index:-1; }
+        html, body {
+            font-family: "Space Grotesk", sans-serif;
+            scroll-behavior: smooth;
+        }
 
-  /* Scrollbar komentar */
-  .custom-scrollbar::-webkit-scrollbar { width:6px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background:transparent; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background:rgba(120,120,120,.35); border-radius:4px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background:rgba(120,120,120,.55); }
-  .custom-scrollbar { scrollbar-width:thin; scrollbar-color:rgba(120,120,120,.4) transparent; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #ffffff;
+            color: var(--tara-dark);
+            box-sizing: border-box;
+        }
 
-  /* Kolom komentar fixed (desktop) */
-  #commentSection {
-    position: fixed;
-    top:0; right:0; bottom:0;
-    width:360px;
-    display:flex;
-    flex-direction:column;
-    background:rgba(255,255,255,.85);
-    backdrop-filter:blur(6px);
-    padding:1.25rem 1.25rem 0.75rem;
-    border-left:1px solid #e5e7eb;
-    z-index:80;
-    overflow:hidden;
-  }
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
 
-  /* Floating action bar (like/share) di kanan konten */
-  #floatingActions {
-    position:absolute;
-    top:1rem;
-    right:-4rem;
-    display:flex;
-    flex-direction:column;
-    gap:1rem;
-    z-index:20;
-  }
-  @media (max-width: 640px) {
-    #floatingActions { position:static; flex-direction:row; justify-content:flex-start; margin-top:1rem; right:auto; }
-  }
+        /* reading progress */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            background: var(--tara-accent);
+            z-index: 60;
+            transition: width .1s linear;
+        }
 
-  /* Close button offset karena panel fixed */
-  #closeButton { right:380px; }
+        /* particles bg */
+        #particles-js {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+        }
 
-  /* Responsive panel komentar */
-  @media (max-width: 1023px) {
-    #commentSection {
-      position:static;
-      width:100%;
-      height:auto;
-      max-height:none;
-      border-left:none;
-      border-top:1px solid #e5e7eb;
-      margin-top:2rem;
-      backdrop-filter:none;
-      background:rgba(255,255,255,.95);
-    }
-    #closeButton { right:1rem; }
-    #contentWrapper { padding-right:0 !important; }
-  }
+        /* hero */
+        .hero-wrapper {
+            max-width: min(100%, 900px);
+            margin-inline: auto;
+        }
 
-  #ui-overlay { position:fixed; inset:0; z-index:2147483647; pointer-events:none; }
-  #ui-overlay a { pointer-events:auto; }
+        .hero-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
 
-  /* Comment menu PORTAL */
-  #commentMenuPortal {
-    position:fixed;
-    z-index:9999;
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:8px;
-    box-shadow:0 4px 16px rgba(0,0,0,.12);
-    padding:4px 0;
-    width:160px;
-    display:none;
-  }
-  #commentMenuPortal.open { display:block; }
-  #commentMenuPortal button {
-    display:block;
-    width:100%;
-    padding:8px 12px;
-    text-align:left;
-    font-size:14px;
-    line-height:1.2;
-    background:transparent;
-    border:none;
-    cursor:pointer;
-  }
-  #commentMenuPortal button:hover { background:#f3f4f6; }
-  #commentMenuPortal button.menu-report { color:#dc2626; }
-  #commentMenuPortal.mobile {
-    width:100%;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    top:auto !important;
-    border-radius:16px 16px 0 0;
-    box-shadow:0 -4px 20px rgba(0,0,0,.25);
-  }
+        .hero-img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform .6s ease, filter .6s ease;
+            will-change: transform;
+        }
 
-  /* Placeholder komentar dibisukan */
-  .muted-placeholder {
-    cursor:pointer;
-    font-style:italic;
-    color:#9ca3af;
-    text-align:left;
-    width:100%;
-  }
-  .muted-placeholder:hover { text-decoration:underline; color:#6b7280; }
+        .hero-img-wrapper:hover img {
+            transform: scale(1.03);
+            filter: brightness(.95);
+        }
 
-  /* Thread container */
-  .comment-thread { margin-top:1rem; }
-  .comment-children {
-    margin-left:1.5rem; /* indent */
-    border-left:2px solid #e5e7eb;
-    padding-left:1rem;
-    margin-top:1rem;
-  }
-  .comment-item + .comment-item { margin-top:0.75rem; }
-  .toggle-replies-btn {
-    font-size:0.8rem;
-    color:#3b82f6;
-    cursor:pointer;
-    margin-top:0.5rem;
-    display:block;
-    text-align:left;
-  }
-  .toggle-replies-btn:hover { text-decoration:underline; }
+        /* floating actions */
+        .float-actions {
+            display: flex;
+            gap: .75rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
 
-  /* Gaya untuk konten yang direkomendasikan */
-  .recommended-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-    gap:1.5rem;
-  }
-  .recommended-item {
-    background-color:#ffffff;
-    border-radius:0.75rem;
-    box-shadow:0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow:hidden;
-    transition:transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
-  .recommended-item:hover {
-    transform:translateY(-5px);
-    box-shadow:0 10px 15px rgba(0, 0, 0, 0.15);
-  }
-  .recommended-item img {
-    width:100%; height:150px; object-fit:cover;
-  }
-  .recommended-item-info { padding:1rem; }
-  .recommended-item-info h3 {
-    font-weight:600; font-size:1rem; margin-bottom:0.5rem; color:#374151; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
-  }
-  .recommended-item-info p { font-size:0.875rem; color:#6b7280; }
-</style>
+        .float-actions button {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 9999px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            display: grid;
+            place-items: center;
+            font-size: .9rem;
+            line-height: 1;
+            transition: all .2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+        }
+
+        .float-actions button:hover {
+            background: var(--tara-dark);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .float-actions .badge {
+            position: absolute;
+            top: -.4rem;
+            right: -.4rem;
+            background: var(--tara-accent);
+            color: #000;
+            font-size: .65rem;
+            font-weight: 700;
+            line-height: 1;
+            padding: 0 .3rem;
+            border-radius: .375rem;
+        }
+
+        /* uploader section */
+        .uploader-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .uploader-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-align: left;
+        }
+
+        /* gallery content */
+        .gallery-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+            line-height: 1.2;
+        }
+
+        .gallery-content p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            color: #374151;
+        }
+
+        .gallery-content img {
+            margin: 2rem auto;
+            border-radius: .75rem;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-tags button {
+            padding: .25rem .75rem;
+            font-size: .75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            background: #f9fafb;
+            color: #374151;
+            transition: .2s;
+        }
+
+        .gallery-tags button:hover {
+            background: var(--tara-dark);
+            color: #fff;
+        }
+
+        /* comment panel */
+        .comment-panel {
+            position: sticky;
+            top: 6rem;
+            right: auto;
+            width: 100%;
+            max-height: calc(100vh - 8rem);
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+            z-index: 30;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment-panel-header {
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .75rem;
+        }
+
+        .comment-panel-header h3 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .comment-scroll {
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            padding-right: .25rem;
+        }
+
+        .comment-card {
+            position: relative;
+            padding: .75rem;
+            border: 1px solid #f3f4f6;
+            border-radius: .75rem;
+            background: #fff;
+            margin-bottom: .75rem;
+            font-size: .875rem;
+        }
+
+        .comment-card.reply {
+            margin-left: 1.75rem;
+            border-color: #e5e7eb;
+            background: #fcfcfc;
+        }
+
+        .comment-user {
+            font-weight: 600;
+            color: var(--tara-dark);
+        }
+
+        .comment-meta {
+            font-size: .7rem;
+            color: var(--tara-muted);
+            margin-top: .1rem;
+        }
+
+        .comment-actions {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            margin-top: .5rem;
+            font-size: .75rem;
+            color: var(--tara-muted);
+        }
+
+        .comment-actions button {
+            transition: .15s;
+        }
+
+        .comment-actions button:hover {
+            color: var(--tara-dark);
+        }
+
+        .comment-menu {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+        }
+
+        .comment-menu button {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            display: grid;
+            place-items: center;
+            font-size: .75rem;
+            color: var(--tara-muted);
+            transition: .15s;
+        }
+
+        .comment-menu button:hover {
+            color: var(--tara-dark);
+        }
+
+        .comment-menu-pop {
+            position: absolute;
+            top: 1.75rem;
+            right: 0;
+            min-width: 7.5rem;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: .5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+            padding: .25rem;
+            display: none;
+            z-index: 10;
+        }
+
+        .comment-menu-pop.open {
+            display: block;
+        }
+
+        .comment-menu-pop button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: .35rem .5rem;
+            font-size: .75rem;
+            color: #374151;
+            border-radius: .25rem;
+        }
+
+        .comment-menu-pop button:hover {
+            background: #f3f4f6;
+            color: #000;
+        }
+
+        .comment-like.active {
+            color: #ef4444;
+        }
+
+        /* new comment form */
+        .comment-form {
+            margin-top: .75rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: .75rem;
+        }
+
+        .comment-form textarea {
+            resize: none;
+            width: 100%;
+            min-height: 60px;
+            max-height: 160px;
+        }
+
+        .comment-char {
+            text-align: right;
+            font-size: .7rem;
+            color: var(--tara-muted);
+            margin-top: .25rem;
+        }
+
+        /* mobile comment toggle */
+        #mobile-comment-toggle {
+            z-index: 55;
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1rem;
+            padding: .5rem .875rem;
+            font-size: .875rem;
+            border-radius: 9999px;
+            background: var(--tara-dark);
+            color: #fff;
+            display: none;
+            align-items: center;
+            gap: .35rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+        }
+
+        #mobile-comment-toggle .count {
+            background: var(--tara-accent);
+            color: #000;
+            font-size: .75rem;
+            padding: 0 .4rem;
+            border-radius: .375rem;
+            font-weight: 700;
+        }
+
+        /* responsive */
+        @media (max-width:1023.98px) {
+            .comment-panel {
+                display: none;
+            }
+
+            #mobile-comment-toggle {
+                display: inline-flex;
+            }
+
+            .float-actions {
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+
+        /* show comment drawer on mobile */
+        .comment-drawer {
+            z-index: 70;
+            position: fixed;
+            inset: 0 0 auto 0;
+            bottom: 0;
+            background: #fff;
+            display: none;
+            flex-direction: column;
+            max-height: 85vh;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, .25);
+        }
+
+        .comment-drawer.open {
+            display: flex;
+        }
+
+        .comment-drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        .comment-drawer-body {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            overflow-y: auto;
+        }
+
+        .comment-drawer-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .comment-drawer-footer textarea {
+            resize: none;
+            width: 100%;
+            min-height: 60px;
+            max-height: 120px;
+        }
+
+        /* notification */
+        .notification-bar {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .notification-bar:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        .notification-icon:hover {
+            transform: scale(1.2);
+            color: #111827;
+        }
+
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-left: 1px solid #e5e7eb;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification-modal.open {
+            transform: translateX(0);
+        }
+
+        .notification-modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #374151;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .notification-modal .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .notification-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .notification-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-card.unread {
+            background: #f3f4f6;
+        }
+
+        .notification-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .notification-card .time {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            padding: 0.1rem 0.5rem;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Share Modal */
+        #share-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 120;
+        }
+
+        #share-modal.open {
+            display: flex;
+        }
+
+        .share-modal-content {
+            background: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 320px;
+            position: relative;
+        }
+
+        .share-modal-content button.close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.25rem;
+            color: #374151;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .share-modal-content a,
+        .share-modal-content button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .share-modal-content a:hover,
+        .share-modal-content button:hover {
+            filter: brightness(0.9);
+        }
+    </style>
 </head>
-<body class="bg-white text-black font-vantage tracking-wide min-h-screen relative overflow-x-hidden">
-<div id="particles-js-detail"></div>
+<body class="relative overflow-x-hidden">
+    <div id="reading-progress"></div>
+    <div id="particles-js"></div>
 
-<div id="ui-overlay">
-  <a href="index.html" id="closeButton" class="fixed top-4 p-3 bg-white/80 backdrop-blur-md rounded-full shadow-lg hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300 border border-gray-200" aria-label="Tutup detail & kembali">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-  </a>
-</div>
-
-<div id="contentWrapper" class="max-w-5xl mx-auto px-6 md:px-10 pt-8 pb-16 lg:pr-[380px]">
-  <div class="flex items-center justify-between mb-5 opacity-0" id="uploaderBar">
-    <div class="flex items-center gap-3">
-      <img id="uploaderAvatar" src="https://i.pravatar.cc/60?img=8" alt="Avatar" class="w-12 h-12 rounded-full border border-gray-300 shadow-sm object-cover">
-      <div>
-        <button type="button" id="uploaderNameBtn" class="font-semibold text-gray-800 hover:underline text-left" data-user="Nama Uploader">
-          <span id="uploaderName">Nama Uploader</span>
-        </button>
-        <p id="uploadTime" class="text-xs text-gray-500">Baru saja</p>
-      </div>
-    </div>
-    <button id="followBtn" class="px-4 py-1.5 text-sm bg-blue-600 text-white rounded-full hover:bg-blue-700 active:scale-[.96] transition font-medium">Follow</button>
-  </div>
-
-  <div id="detailContent" class="opacity-0 relative">
-    <div class="relative mb-4">
-      <img id="detailImage" src="" alt="Detail Karya" class="w-full h-[430px] md:h-[500px] object-cover rounded-xl shadow-lg transform scale-95 opacity-0 select-none" draggable="false" />
-
-      <div id="floatingActions" class="opacity-0">
-        <button id="shareButton" class="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition shadow-sm active:scale-95" aria-haspopup="dialog" aria-controls="shareModal" aria-label="Bagikan karya">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342A3 3 0 119 12c0 .482-.114.938-.316 1.342m0 0l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684z"/></svg>
-        </button>
-        <button id="likeButton" class="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition relative shadow-sm active:scale-95" aria-label="Suka karya ini">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-          <span id="likeCount" class="absolute -top-1 -right-1 text-xs bg-red-500 text-white rounded-full px-1 leading-none py-[2px]">0</span>
-        </button>
-      </div>
-    </div>
-
-    <h1 id="detailTitle" class="text-xl md:text-2xl font-bold uppercase tracking-wide mb-3 opacity-0"></h1>
-    <p id="detailDescription" class="text-gray-700 mb-8 leading-relaxed opacity-0">Deskripsi karya.</p>
-
-    <div id="recommendedContent" class="mt-12 opacity-0">
-      <h2 class="text-xl md:text-2xl font-bold uppercase tracking-wide mb-6">Karya Rekomendasi Lainnya</h2>
-      <div id="recommendedGrid" class="recommended-grid"></div>
-    </div>
-  </div>
-</div>
-
-<aside id="commentSection" class="opacity-0 translate-x-10" aria-label="Komentar">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-bold text-gray-800">Komentar</h2>
-    <span id="totalComments" class="text-xs text-gray-500"></span>
-  </div>
-
-  <div id="commentsList" class="flex-1 overflow-y-auto custom-scrollbar pr-1 mb-4" style="max-height: calc(100vh - 190px);">
-    <!-- Thread rendered here -->
-  </div>
-
-  <form id="commentForm" class="pt-3 border-t border-gray-200" autocomplete="off">
-    <input type="hidden" id="replyToId" value="">
-    <textarea id="commentInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-sm" rows="3" maxlength="300" placeholder="Tambahkan komentar... (Maks 300 karakter)"></textarea>
-    <div class="flex items-center justify-between mt-2">
-      <span id="charCount" class="text-[11px] text-gray-400 select-none">0/300</span>
-      <div class="space-x-2">
-        <button id="cancelReplyButton" type="button" class="hidden px-3 py-2 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 active:scale-95">Batal Balas</button>
-        <button id="postCommentButton" type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition active:scale-95">Kirim</button>
-      </div>
-    </div>
-  </form>
-</aside>
-
-<div id="commentMenuPortal" role="menu" aria-hidden="true">
-  <button type="button" class="menu-report">Laporkan</button>
-  <button type="button" class="menu-mute">Bisukan</button>
-  <button type="button" class="menu-reply">Balas</button>
-</div>
-
-<!-- Share Modal -->
-<div id="shareModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-[120]" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
-  <div class="bg-white rounded-lg p-6 w-80 shadow-xl relative">
-    <button id="closeModal" type="button" class="absolute top-2 right-2 text-gray-500 hover:text-black text-lg leading-none" aria-label="Tutup">✖</button>
-    <h3 id="shareModalTitle" class="text-xl font-bold mb-4">Bagikan Karya</h3>
-    <div class="space-y-3">
-      <a id="shareWA" href="#" class="block bg-green-500 text-white py-2 rounded text-center hover:bg-green-600">WhatsApp</a>
-      <a id="shareFB" href="#" class="block bg-blue-600 text-white py-2 rounded text-center hover:bg-blue-700">Facebook</a>
-      <a id="shareTW" href="#" class="block bg-sky-400 text-white py-2 rounded text-center hover:bg-sky-500">Twitter</a>
-      <button id="copyLink" class="block w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">Salin Link</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/*************************************************
- * UTIL: SAFE LOCALSTORAGE PARSE / STRINGIFY
- *************************************************/
-function lsGet(key, fallback) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
-}
-function lsSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch {/* ignore */}
-}
-
-/*************************************************
- * MAIN APP
- *************************************************/
-document.addEventListener('DOMContentLoaded', () => {
-  /* --------- ELEMENTS --------- */
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id') || 'default';
-
-  const detailTitle = document.getElementById('detailTitle');
-  const detailImage = document.getElementById('detailImage');
-  const detailDescription = document.getElementById('detailDescription');
-  const uploaderNameEl = document.getElementById('uploaderName');
-  const uploaderNameBtn = document.getElementById('uploaderNameBtn');
-  const uploadTime = document.getElementById('uploadTime');
-
-  const likeButton = document.getElementById('likeButton');
-  const likeCount = document.getElementById('likeCount');
-  const shareButton = document.getElementById('shareButton');
-  const shareModal = document.getElementById('shareModal');
-  const closeModal = document.getElementById('closeModal');
-  const copyLink = document.getElementById('copyLink');
-
-  const floatingActions = document.getElementById('floatingActions');
-
-  const commentSection = document.getElementById('commentSection');
-  const commentsList = document.getElementById('commentsList');
-  const commentForm = document.getElementById('commentForm');
-  const commentInput = document.getElementById('commentInput');
-  const postCommentBtn = document.getElementById('postCommentButton');
-  const cancelReplyBtn = document.getElementById('cancelReplyButton');
-  const charCount = document.getElementById('charCount');
-  const totalComments = document.getElementById('totalComments');
-  const replyToIdInput = document.getElementById('replyToId');
-
-  const commentMenuPortal = document.getElementById('commentMenuPortal');
-
-  const recommendedContent = document.getElementById('recommendedContent');
-  const recommendedGrid = document.getElementById('recommendedGrid');
-
-  /* --------- STATE --------- */
-  // Flat array of comments; hierarchical rendering done at runtime.
-  // {id, parentId|null, author, text, likes, muted, timestamp}
-  let comments = loadComments();
-
-  // Track expanded comment IDs (those whose children are visible)
-  const expanded = new Set();
-
-  // ID comment yang sedang dibalas (null jika tidak)
-  let replyToParentId = null;
-
-  /* --------- POPULATE KONTEN DETAIL --------- */
-  detailTitle.textContent = id === 'default' ? 'Karya Tanpa ID' : `Karya #${id}`;
-  detailImage.src = `https://picsum.photos/1200/800?random=${id}`;
-  detailDescription.textContent = `Ini adalah detail dari Karya #${id}. Sebuah representasi unik dari kreativitas dan inovasi yang dapat kamu kembangkan lagi.`;
-  const uploaderName = 'Uploader Contoh';
-  uploaderNameEl.textContent = uploaderName;
-  uploaderNameBtn.dataset.user = uploaderName;
-  uploadTime.textContent = 'Diposting hari ini';
-
-  uploaderNameBtn.addEventListener('click', () => {
-    const user = uploaderNameBtn.dataset.user || uploaderName;
-    window.location.href = `profil_user.html?username=${encodeURIComponent(user)}`;
-  });
-
-  /* --------- LIKE KARYA --------- */
-  let currentLikes = parseInt(localStorage.getItem(`likes_work_${id}`) || '0', 10);
-  likeCount.textContent = currentLikes;
-  likeButton.addEventListener('click', () => {
-    currentLikes++;
-    likeCount.textContent = currentLikes;
-    localStorage.setItem(`likes_work_${id}`, currentLikes);
-    gsap.from(likeButton, { scale: 0.78, duration: 0.22, ease: 'power2.out' });
-  });
-
-  /*************************************************
-   * COMMENT STORAGE
-   *************************************************/
-  function loadComments() {
-    const raw = lsGet(`comments_work_${id}`, []);
-    // Normalize objects & ensure required fields exist
-    return raw.map(c => ({
-      id: c.id || crypto.randomUUID(),
-      parentId: c.parentId || null,
-      author: c.author || 'Pengguna Anonim',
-      text: c.text || '',
-      likes: typeof c.likes === 'number' ? c.likes : 0,
-      muted: !!c.muted,
-      timestamp: c.timestamp || new Date().toISOString()
-    }));
-  }
-  function saveComments() { lsSet(`comments_work_${id}`, comments); }
-
-  /*************************************************
-   * COMMENT RENDERING (RECURSIVE)
-   *************************************************/
-  // Build lookup map parentId -> [children]
-  function buildChildrenMap() {
-    const map = new Map();
-    for (const c of comments) {
-      const p = c.parentId || null;
-      if (!map.has(p)) map.set(p, []);
-      map.get(p).push(c);
-    }
-    // sort each bucket: likes desc then timestamp asc
-    for (const arr of map.values()) {
-      arr.sort((a,b)=>{
-        if (a.parentId === null && b.parentId === null) {
-          // top-level sort by likes desc then ts asc
-          if (b.likes !== a.likes) return b.likes - a.likes;
-          return new Date(a.timestamp) - new Date(b.timestamp);
-        } else {
-          // replies: timestamp asc
-          return new Date(a.timestamp) - new Date(b.timestamp);
-        }
-      });
-    }
-    return map;
-  }
-
-  function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
-  }
-
-  function createCommentElement(c, depth) {
-    const item = document.createElement('div');
-    item.className = 'comment-item bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 relative';
-    item.dataset.id = c.id;
-    item.dataset.author = c.author;
-    item.dataset.depth = depth;
-
-    if (c.muted) {
-      item.innerHTML = `\n        <button type="button" class="muted-placeholder text-sm">Komentar disembunyikan (klik untuk tampilkan)</button>\n      `;
-      return item;
-    }
-
-    const ts = new Date(c.timestamp).toLocaleString('id-ID');
-    item.innerHTML = `
-      <button type="button" class="comment-author font-semibold text-gray-800 mb-1 break-words hover:underline text-left" data-user="${escapeHTML(c.author)}">${escapeHTML(c.author)}</button>
-      <p class="text-gray-700 text-sm whitespace-pre-line break-words mt-1">${escapeHTML(c.text)}</p>
-      <div class="mt-3 flex items-center justify-between text-xs text-gray-500">
-        <span>${ts}</span>
-        <div class="flex items-center gap-2">
-          <button type="button" class="like-comment flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-gray-200 hover:bg-red-50 transition text-[11px]" aria-label="Suka komentar">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-            <span class="like-count">${c.likes}</span>
-          </button>
-          <button type="button" class="comment-menu-btn px-2 py-1 rounded-md bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 text-[16px] leading-none" aria-haspopup="menu" aria-controls="commentMenuPortal">⋮</button>
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi</h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
         </div>
-      </div>`;
-    return item;
-  }
+    </div>
 
-  function renderThread(parentId, depth, childrenMap, animatedIds) {
-    const wrapper = document.createElement('div');
-    if (depth === 0) {
-      wrapper.className = 'comment-thread';
-    } else {
-      wrapper.className = 'comment-children';
-      wrapper.dataset.parent = parentId;
-      // collapsed state handled outside
-    }
+    <!-- Share Modal -->
+    <div id="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <div class="share-modal-content">
+           <span 
+                onclick="closeShareModal()" 
+                class="absolute top-[15px] right-[20px] cursor-pointer text-black bg-white rounded px-2 py-1 shadow-sm hover:bg-gray-100 transition"
+                >
+                X
+            </span>
 
-    const arr = childrenMap.get(parentId) || [];
-    for (const c of arr) {
-      const node = createCommentElement(c, depth);
-      wrapper.appendChild(node);
+            <h3 id="share-modal-title" class="text-xl font-bold mb-4">Bagikan Karya</h3>
+            <div class="space-y-3">
+                <a id="share-whatsapp" href="#" class="bg-green-500 text-white">WhatsApp</a>
+                <a id="share-instagram" href="#" class="bg-pink-500 text-white">Instagram</a>
+                <a id="share-x" href="#" class="bg-black text-white">X</a>
+                <button id="share-copy-link" class="bg-gray-600 text-white">Salin Link</button>
+            </div>
+        </div>
+    </div>
 
-      // If this comment has children, add toggle
-      const hasKids = (childrenMap.get(c.id) || []).length > 0;
-      if (hasKids) {
-        const toggleBtn = document.createElement('button');
-        toggleBtn.type = 'button';
-        toggleBtn.className = 'toggle-replies-btn';
-        toggleBtn.dataset.commentId = c.id;
-        const count = childrenMap.get(c.id).length;
-        const isOpen = expanded.has(c.id);
-        toggleBtn.textContent = isOpen ? `Sembunyikan Balasan (${count})` : `Lihat Balasan (${count})`;
-        node.appendChild(toggleBtn);
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+        <nav class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+                        <div class="relative">
+                            <span class="text-yellow-400 text-2xl">●</span>
+                            <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
+                        </div>
+                    </div>
 
-        if (isOpen) {
-          const subtree = renderThread(c.id, depth+1, childrenMap, animatedIds);
-          node.appendChild(subtree);
+                    <!-- Burger Icon Mobile -->
+                    <button id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
+                        <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+
+                    <!-- Menu Navigasi -->
+                    <div id="nav-menu" class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
+                        <a href="/index.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
+                        <a href="/galeri.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
+                        <a href="/komunitas.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
+                        <a href="/proyek.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
+                        <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+                        <a href="/agenda.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
+                        <div class="relative w-fit">
+                            <i class="fas fa-bell text-gray-500 cursor-pointer text-xl" onclick="toggleNotifications()"></i>
+                            <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-black text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center" id="unread-count">0</span>
+                        </div>
+                        <div class="relative group hidden md:block">
+                            <button class="flex items-center gap-1 text-gray-700 hover:text-black font-medium py-2">
+                                Guest
+                                <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-50">
+                                <a href="/login" class="block px-4 py-2 text-gray-900 hover:bg-gray-100">Login</a>
+                                <a href="/register" class="block px-4 py-2 text-gray-900 hover:bg-gray-100">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="w-full pt-32 pb-32 grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
+        <!-- Left Column - Gallery Content -->
+        <div class="lg:col-span-8">
+            <!-- Gallery Header / Hero -->
+            <section class="hero-wrapper px-4" id="gallery-hero">
+                <div class="uploader-section">
+                    <div class="uploader-info">
+                        <img id="gallery-uploader-avatar" src="https://i.pravatar.cc/60?img=22" alt="avatar" class="w-10 h-10 rounded-full object-cover" />
+                        <div class="text-left leading-tight">
+                            <div id="gallery-uploader-name" class="font-semibold text-[var(--tara-dark)] text-sm">Uploader Contoh</div>
+                            <div id="gallery-posted-rel" class="text-xs text-gray-500">Diposting hari ini</div>
+                        </div>
+                    </div>
+                    <button id="follow-btn" class="px-3 py-1 text-xs rounded-full bg-[var(--tara-accent)] text-black font-semibold hover:bg-yellow-300 transition">Follow</button>
+                </div>
+                <div class="flex flex-col items-center text-center gap-6">
+                    <!-- hero image -->
+                    <div class="hero-img-wrapper group" id="gallery-hero-image-wrapper">
+                        <img id="gallery-hero-image" src="https://picsum.photos/id/1015/1200/800" alt="Gambar Galeri" />
+                    </div>
+                    <!-- title -->
+                    <h1 id="gallery-title" class="text-3xl md:text-4xl font-bold max-w-3xl leading-tight" style="font-family:'Space Grotesk',sans-serif;">Judul Galeri</h1>
+                    <!-- floating actions -->
+                    <div class="float-actions" id="float-actions">
+                        <button id="float-share" title="Bagikan"><i class="fas fa-share"></i></button>
+                        <div class="relative">
+                            <button id="float-like" title="Suka"><i class="fas fa-heart"></i></button>
+                            <span id="float-like-badge" class="badge hidden">0</span>
+                        </div>
+                    </div>
+                    <!-- meta -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+                        <span id="gallery-date-meta"><i class="fas fa-calendar-alt mr-1"></i>–</span>
+                        <span id="gallery-views-meta"><i class="fas fa-eye mr-1"></i>0 Dilihat</span>
+                        <span id="gallery-category-meta" class="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-gray-700"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Description -->
+            <article id="gallery-body" class="gallery-content max-w-3xl mx-auto mt-16 px-4 prose prose-sm sm:prose-base lg:prose-lg prose-img:rounded-xl prose-headings:font-semibold prose-a:text-[var(--tara-dark)]">
+                <!-- description injected by JS -->
+            </article>
+
+            <!-- Gallery Tags -->
+            <section class="max-w-3xl mx-auto mt-10 px-4">
+                <div class="flex flex-wrap gap-2 gallery-tags" id="gallery-tags"></div>
+            </section>
+
+            <!-- Prev / Next -->
+            <nav class="max-w-3xl mx-auto mt-16 px-4 grid grid-cols-1 sm:grid-cols-2 gap-4" id="gallery-prev-next">
+                <!-- injected -->
+            </nav>
+
+            <!-- Recommended -->
+            <section class="max-w-6xl mx-auto mt-24 px-4" id="gallery-reco-wrapper">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center" style="font-family:'Space Grotesk',sans-serif;">Karya Galeri Lainnya<span class="text-[var(--tara-accent)] ml-1">●</span></h2>
+                <div id="gallery-reco" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- cards injected -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column - Comment Section -->
+        <div class="lg:col-span-4">
+            <!-- Desktop Comment Panel -->
+            <aside class="comment-panel" id="comment-panel" aria-labelledby="comment-panel-title">
+                <div class="comment-panel-header">
+                    <h3 id="comment-panel-title">Komentar</h3>
+                    <span id="comment-count-top" class="text-xs text-gray-500"></span>
+                </div>
+                <div class="comment-scroll" id="comment-list"></div>
+                <div class="comment-form" id="comment-form-desktop">
+                    <textarea id="new-comment-text" maxlength="300" placeholder="Tambahkan komentar... (Maks 300 karakter)" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+                    <div class="comment-char" id="comment-char-count">0/300</div>
+                    <button id="submit-comment" class="mt-2 w-full px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Mobile Comment Toggle -->
+    <button id="mobile-comment-toggle"><i class="fas fa-comments"></i><span>Komentar</span><span class="count" id="mobile-comment-count">0</span></button>
+
+    <!-- Mobile Comment Drawer -->
+    <div id="comment-drawer" class="comment-drawer" role="dialog" aria-modal="true" aria-labelledby="comment-drawer-title">
+        <div class="comment-drawer-header">
+            <span id="comment-drawer-title">Komentar</span>
+            <button id="comment-drawer-close" class="text-xl leading-none">×</button>
+        </div>
+        <div class="comment-drawer-body" id="comment-drawer-body"></div>
+        <div class="comment-drawer-footer">
+            <textarea id="new-comment-mobile" maxlength="300" placeholder="Tambahkan komentar..." class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+            <div class="comment-char" id="comment-char-count-mobile">0/300</div>
+            <button id="submit-comment-mobile" class="mt-2 w-full px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family:'Space Grotesk',sans-serif;">TARA<span class="text-[var(--tara-accent)]">●</span></div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=puisi" class="hover:text-black transition">Puisi</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" required />
+                    <button type="submit" class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        /* --------------------------------------------------
+           DEMO DATA (You can replace w/ real API)
+        -------------------------------------------------- */
+        const demoGalleryItems = [
+            {
+                id: 1,
+                title: "Karya Visual: Cahaya Senja",
+                category: "fotografi",
+                description: "Potret senja dengan nuansa hangat di tepi pantai.",
+                image: "https://picsum.photos/seed/gallery1/1200/800",
+                date: "2025-07-10",
+                views: 534,
+                tags: ["fotografi", "senja", "alam"],
+                body: [
+                    { t: "p", c: "Karya ini menangkap keindahan senja dengan permainan cahaya dan bayangan yang dramatis." },
+                    { t: "img", src: "https://picsum.photos/seed/gallery1b/1100/600", alt: "Detail senja" },
+                    { t: "p", c: "Fotografi ini menggunakan lensa 50mm dengan aperture f/2.8 untuk efek bokeh." }
+                ]
+            },
+            {
+                id: 2,
+                title: "Ilustrasi Digital: Dunia Fantasi",
+                category: "ilustrasi",
+                description: "Ilustrasi dunia fantasi dengan warna-warna cerah.",
+                image: "https://picsum.photos/seed/gallery2/1200/800",
+                date: "2025-07-08",
+                views: 880,
+                tags: ["ilustrasi", "fantasi", "digital"],
+                body: [
+                    { t: "p", c: "Karya ini dibuat menggunakan tablet grafis dan software Procreate." },
+                    { t: "img", src: "https://picsum.photos/seed/gallery2b/900/500", alt: "Detail ilustrasi" },
+                    { t: "p", c: "Inspirasi berasal dari mitologi lokal dan cerita rakyat." }
+                ]
+            },
+            {
+                id: 3,
+                title: "Desain UI: Aplikasi Modern",
+                category: "desain",
+                description: "Prototipe UI aplikasi dengan estetika minimalis.",
+                image: "https://picsum.photos/seed/gallery3/1200/800",
+                date: "2025-07-05",
+                views: 456,
+                tags: ["ui", "desain", "minimalis"],
+                body: [
+                    { t: "p", c: "Desain ini mengutamakan pengalaman pengguna dengan navigasi intuitif." },
+                    { t: "img", src: "https://picsum.photos/seed/gallery3b/1100/600", alt: "Prototipe UI" }
+                ]
+            },
+            {
+                id: 7,
+                title: "Karya #7: TV Tua di Bukit Pasir",
+                category: "fotografi",
+                description: "Representasi unik dari kreativitas dan inovasi.",
+                image: "https://picsum.photos/seed/tvpasir/1200/800",
+                date: "2025-07-19",
+                views: 1020,
+                tags: ["fotografi", "konsep", "retro"],
+                body: [
+                    { t: "p", c: "Gambar TV tabung yang tertanam di bukit pasir ini simbol transisi media lama ke dunia digital." },
+                    { t: "img", src: "https://picsum.photos/seed/tvpasir-b/1100/600", alt: "TV di pasir" },
+                    { t: "p", c: "Menggunakan lensa wide 24mm, aperture f/4, dan cahaya alami sore." }
+                ]
+            }
+        ];
+
+        // Quick map by id for lookup
+        const demoGalleryMap = new Map(demoGalleryItems.map(g => [g.id, g]));
+
+        /* --------------------------------------------------
+           Utility helpers
+        -------------------------------------------------- */
+        const qs = s => document.querySelector(s);
+        const qsa = s => [...document.querySelectorAll(s)];
+        function getQueryParam(name) { return new URLSearchParams(window.location.search).get(name); }
+        function fmtDateISOtoDisplay(iso) {
+            if (!iso) return "";
+            const d = new Date(iso);
+            const locale = 'id-ID';
+            return d.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
         }
-      }
+        function relDate(iso) {
+            const d = new Date(iso); const now = new Date();
+            const diff = (now - d) / 1000; // seconds
+            if (diff < 60) return "baru saja";
+            if (diff < 3600) return Math.floor(diff / 60) + " menit lalu";
+            if (diff < 86400) return Math.floor(diff / 3600) + " jam lalu";
+            if (diff < 172800) return "kemarin";
+            return fmtDateISOtoDisplay(iso);
+        }
 
-      if (animatedIds.includes(c.id)) {
-        gsap.fromTo(node, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' });
-      }
-    }
-    return wrapper;
-  }
+        function escapeHTML(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        /* --------------------------------------------------
+           Render Gallery Item
+        -------------------------------------------------- */
+        const galleryId = Number(getQueryParam('id') || 7); // default 7 to match blog page
+        const galleryData = demoGalleryMap.get(galleryId) || demoGalleryItems[0];
 
-  function renderComments(animatedIds = []) {
-    commentsList.innerHTML = '';
-    const map = buildChildrenMap();
-    // Render top-level (parentId=null)
-    const tree = renderThread(null, 0, map, animatedIds);
-    commentsList.appendChild(tree);
-    totalComments.textContent = `${comments.length} komentar`;
-  }
+        // hero + meta
+        qs('#gallery-title').textContent = galleryData.title;
+        qs('#gallery-hero-image').src = galleryData.image;
+        qs('#gallery-category-meta').textContent = galleryData.category.charAt(0).toUpperCase() + galleryData.category.slice(1);
+        qs('#gallery-date-meta').innerHTML = `<i class="fas fa-calendar-alt mr-1"></i>${fmtDateISOtoDisplay(galleryData.date)}`;
+        qs('#gallery-posted-rel').textContent = 'Diposting ' + relDate(galleryData.date);
+        qs('#gallery-views-meta').innerHTML = `<i class="fas fa-eye mr-1"></i>${galleryData.views.toLocaleString('id-ID')} Dilihat`;
 
-  /*************************************************
-   * COMMENT MENU PORTAL LOGIC
-   *************************************************/
-  let currentMenuCommentId = null;
-  function openCommentMenu(btn, commentId) {
-    currentMenuCommentId = commentId;
-
-    // Update menu text for Bisukan / Tampilkan
-    const idx = comments.findIndex(c => c.id === commentId);
-    if (idx !== -1) {
-      const isMuted = !!comments[idx].muted;
-      commentMenuPortal.querySelector('.menu-mute').textContent = isMuted ? 'Tampilkan' : 'Bisukan';
-    }
-
-    // Responsive: mobile bottom sheet
-    const isMobile = window.matchMedia('(max-width:640px)').matches;
-    if (isMobile) {
-      commentMenuPortal.classList.add('mobile');
-      commentMenuPortal.style.top = 'auto';
-      commentMenuPortal.style.left = '0';
-      commentMenuPortal.style.right = '0';
-      commentMenuPortal.style.bottom = '0';
-    } else {
-      commentMenuPortal.classList.remove('mobile');
-      const rect = btn.getBoundingClientRect();
-      const menuWidth = 160;
-      const menuHeight = 120; // approx
-      let top = rect.bottom + 4;
-      let left = rect.right - menuWidth;
-      if (left < 4) left = 4;
-      const vh = window.innerHeight;
-      if (top + menuHeight > vh) top = rect.top - menuHeight - 4;
-      if (top < 4) top = 4;
-      commentMenuPortal.style.top = top + 'px';
-      commentMenuPortal.style.left = left + 'px';
-      commentMenuPortal.style.right = 'auto';
-      commentMenuPortal.style.bottom = 'auto';
-    }
-
-    commentMenuPortal.classList.add('open');
-    commentMenuPortal.setAttribute('aria-hidden', 'false');
-  }
-  function closeCommentMenu() {
-    commentMenuPortal.classList.remove('open', 'mobile');
-    commentMenuPortal.setAttribute('aria-hidden', 'true');
-    currentMenuCommentId = null;
-  }
-
-  /* Menu portal actions */
-  commentMenuPortal.addEventListener('click', e => {
-    if (!currentMenuCommentId) return;
-    const idx = comments.findIndex(c => c.id === currentMenuCommentId);
-    if (idx === -1) return;
-
-    if (e.target.classList.contains('menu-report')) {
-      alert('Terima kasih, komentar telah dilaporkan (dummy).');
-    }
-    if (e.target.classList.contains('menu-reply')) {
-      const user = comments[idx].author;
-      prepareReply(comments[idx].id, user);
-    }
-    if (e.target.classList.contains('menu-mute')) {
-      comments[idx].muted = !comments[idx].muted; // toggle
-      saveComments();
-      renderComments([comments[idx].id]);
-    }
-    closeCommentMenu();
-  });
-
-  /* Close menu on outside click, scroll, resize */
-  document.addEventListener('click', e => {
-    if (e.target.closest('#commentMenuPortal')) return; // click inside
-    if (e.target.closest('.comment-menu-btn')) return; // handled in list
-    closeCommentMenu();
-  });
-  commentsList.addEventListener('scroll', closeCommentMenu);
-  window.addEventListener('resize', closeCommentMenu);
-
-  /*************************************************
-   * COMMENT LIST DELEGATED EVENTS
-   *************************************************/
-  commentsList.addEventListener('click', e => {
-    const item = e.target.closest('.comment-item');
-    const toggleBtnEl = e.target.closest('.toggle-replies-btn');
-    const menuBtnEl = e.target.closest('.comment-menu-btn');
-    const likeBtnEl = e.target.closest('.like-comment');
-
-    if (toggleBtnEl) {
-      const parentCommentId = toggleBtnEl.dataset.commentId;
-      if (expanded.has(parentCommentId)) { expanded.delete(parentCommentId); } else { expanded.add(parentCommentId); }
-      renderComments();
-      return;
-    }
-
-    if (!item) return;
-    const idComment = item.dataset.id;
-    const idx = comments.findIndex(c => c.id === idComment);
-    if (idx === -1) return;
-
-    /* Placeholder (unmute) */
-    if (e.target.classList.contains('muted-placeholder')) {
-      comments[idx].muted = false;
-      saveComments();
-      renderComments([comments[idx].id]);
-      return;
-    }
-
-    /* Klik nama → profil user */
-    if (e.target.classList.contains('comment-author')) {
-      const user = e.target.dataset.user || comments[idx].author;
-      window.location.href = `profil_user.html?username=${encodeURIComponent(user)}`;
-      return;
-    }
-
-    /* Like */
-    if (likeBtnEl) {
-      comments[idx].likes += 1;
-      saveComments();
-      renderComments([comments[idx].id]);
-      highlightComment(comments[idx].id);
-      return;
-    }
-
-    /* Menu button (open portal) */
-    if (menuBtnEl) {
-      openCommentMenu(menuBtnEl, idComment);
-      return;
-    }
-  });
-
-  function highlightComment(idTarget) {
-    const el = commentsList.querySelector(`[data-id="${idTarget}"]`);
-    if (!el) return;
-    gsap.fromTo(el, { boxShadow: '0 0 0 rgba(59,130,246,0)' }, { boxShadow: '0 0 14px rgba(59,130,246,.45)', duration: .45, yoyo: true, repeat: 1 });
-  }
-
-  /*************************************************
-   * REPLY HANDLING
-   *************************************************/
-  function prepareReply(parentId, username) {
-    replyToParentId = parentId;
-    replyToIdInput.value = parentId;
-    commentInput.value = `@${username} `;
-    updateCharCount();
-    commentInput.focus();
-    cancelReplyBtn.classList.remove('hidden');
-    // auto-expand parent so user sees context
-    expanded.add(parentId);
-    renderComments();
-  }
-  function cancelReply() {
-    replyToParentId = null;
-    replyToIdInput.value = '';
-    commentInput.value = '';
-    updateCharCount();
-    cancelReplyBtn.classList.add('hidden');
-  }
-  cancelReplyBtn.addEventListener('click', cancelReply);
-
-  /*************************************************
-   * FORM SUBMIT
-   *************************************************/
-  commentForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const text = commentInput.value.trim();
-    if (!text || text.length > 300) return;
-
-    const newComment = {
-      id: crypto.randomUUID(),
-      parentId: replyToParentId, // may be null
-      author: 'Pengguna Anonim', // TODO: ganti dgn user login
-      text,
-      likes: 0,
-      muted: false,
-      timestamp: new Date().toISOString()
-    };
-    comments.push(newComment);
-    saveComments();
-
-    // Expand parent chain so user sees reply
-    if (replyToParentId) expanded.add(replyToParentId);
-
-    renderComments([newComment.id]);
-    commentInput.value = '';
-    cancelReply();
-    commentsList.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  /* Counter */
-  commentInput.addEventListener('input', updateCharCount);
-  function updateCharCount() {
-    const len = commentInput.value.length;
-    charCount.textContent = `${len}/300`;
-    postCommentBtn.disabled = len === 0 || len > 300;
-  }
-  updateCharCount();
-
-  /*************************************************
-   * SHARE MODAL
-   *************************************************/
-  shareButton.addEventListener('click', () => {
-    shareModal.classList.remove('hidden');
-    gsap.fromTo(shareModal.querySelector('div'), { scale: .85, opacity: 0 }, { scale: 1, opacity: 1, duration: .3, ease: 'power2.out' });
-  });
-  closeModal.addEventListener('click', () => shareModal.classList.add('hidden'));
-  shareModal.addEventListener('click', e => { if (e.target === shareModal) shareModal.classList.add('hidden'); });
-  copyLink.addEventListener('click', () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link berhasil disalin!');
-  });
-
-  /*************************************************
-   * REKOMENDASI KONTEN
-   *************************************************/
-  function generateRecommendedContent() {
-    recommendedGrid.innerHTML = '';
-    const currentWorkId = parseInt(id);
-    const recommendations = [];
-    while (recommendations.length < 5) {
-      const randomId = Math.floor(Math.random() * 20) + 1; // Contoh range
-      if (randomId !== currentWorkId && !recommendations.some(item => item.id === randomId)) {
-        recommendations.push({
-          id: randomId,
-          title: `Karya Seni #${randomId}`,
-          description: `Jelajahi keindahan lain dari Karya #${randomId}.`,
-          imageUrl: `https://picsum.photos/300/200?random=${randomId}`
+        // tags
+        const tagWrap = qs('#gallery-tags');
+        (galleryData.tags || []).forEach(t => {
+            const btn = document.createElement('button'); btn.textContent = '#' + t; btn.addEventListener('click', () => { window.location.href = `/galeri?tag=${encodeURIComponent(t)}`; }); tagWrap.appendChild(btn);
         });
-      }
-    }
-    for (const item of recommendations) {
-      const a = document.createElement('a');
-      a.href = `detail.html?id=${item.id}`;
-      a.className = 'recommended-item block';
-      a.innerHTML = `
-        <img src="${item.imageUrl}" alt="${item.title}" loading="lazy">
-        <div class="recommended-item-info">
-          <h3 class="font-vantage">${item.title}</h3>
-          <p>${item.description}</p>
+
+        // body renderer
+        const bodyWrap = qs('#gallery-body');
+        galleryData.body.forEach(block => {
+            let el;
+            switch (block.t) {
+                case 'p': el = document.createElement('p'); el.textContent = block.c; break;
+                case 'img': el = document.createElement('img'); el.src = block.src; el.alt = block.alt || ''; break;
+                default: return;
+            }
+            bodyWrap.appendChild(el);
+        });
+
+        /* --------------------------------------------------
+           Prev / Next
+        -------------------------------------------------- */
+        const idx = demoGalleryItems.findIndex(g => g.id === galleryData.id);
+        const prev = demoGalleryItems[idx - 1];
+        const next = demoGalleryItems[idx + 1];
+        const pnWrap = qs('#gallery-prev-next');
+        if (prev) {
+            pnWrap.insertAdjacentHTML('beforeend', `<a href='detail_galeri.html?id=${prev.id}' class='group block p-4 border border-gray-200 rounded-lg hover:border-black transition text-left'>
+            <div class='text-xs text-gray-500 mb-1'>Karya Sebelumnya</div>
+            <div class='font-semibold group-hover:underline'>${prev.title}</div>
+        </a>`);
+        }
+        if (next) {
+            pnWrap.insertAdjacentHTML('beforeend', `<a href='detail_galeri.html?id=${next.id}' class='group block p-4 border border-gray-200 rounded-lg hover:border-black transition text-right sm:text-left'>
+            <div class='text-xs text-gray-500 mb-1'>Karya Selanjutnya</div>
+            <div class='font-semibold group-hover:underline'>${next.title}</div>
+        </a>`);
+        }
+
+        /* --------------------------------------------------
+           Recommended
+        -------------------------------------------------- */
+        const recoWrap = qs('#gallery-reco');
+        demoGalleryItems.filter(g => g.id !== galleryData.id).slice(0, 3).forEach(g => {
+            const html = `<a href='detail_galeri.html?id=${g.id}' class='block group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition'>
+            <img src='${g.image}' alt='${g.title}' class='w-full h-48 object-cover group-hover:scale-[1.03] group-hover:brightness-90 transition-transform duration-300' />
+            <div class='p-4 flex flex-col gap-2'>
+                <span class='inline-block px-2 py-1 bg-gray-100 text-xs text-gray-700 rounded-full mb-1'>${g.category.charAt(0).toUpperCase() + g.category.slice(1)}</span>
+                <h3 class='text-lg font-semibold text-black leading-snug group-hover:underline'>${g.title}</h3>
+                <p class='text-sm text-gray-600 line-clamp-2'>${g.description}</p>
+                <div class='mt-auto flex items-center gap-4 text-xs text-gray-500'>
+                    <span><i class='fas fa-calendar-alt mr-1'></i>${fmtDateISOtoDisplay(g.date)}</span>
+                    <span><i class='fas fa-eye mr-1'></i>${g.views} Dilihat</span>
+                </div>
+            </div>
+        </a>`;
+            recoWrap.insertAdjacentHTML('beforeend', html);
+        });
+
+        /* --------------------------------------------------
+           Comment Data (demo)
+        -------------------------------------------------- */
+        const demoComments = [
+            {
+                id: 101, user: "Pengguna Anonim", handle: "@anon", avatar: "https://i.pravatar.cc/60?img=5", text: `Ini Karya Galeri ID ${galleryId}`, dateISO: "2025-07-19T23:46:25", likes: 0, replies: [
+                    { id: 102, user: "Pengguna Lain", handle: "@pengguna", avatar: "https://i.pravatar.cc/60?img=14", text: "Keren banget konsepnya!", dateISO: "2025-07-19T23:46:30", likes: 0 }
+                ]
+            },
+            { id: 103, user: "Rizky", handle: "@rizky", avatar: "https://i.pravatar.cc/60?img=18", text: "Inspiratif! Apa teknik yang dipakai?", dateISO: "2025-07-20T08:12:10", likes: 2, replies: [] }
+        ];
+
+        /* --------------------------------------------------
+           Comment Rendering
+        -------------------------------------------------- */
+        function fmtDateTime(iso) {
+            const d = new Date(iso); return d.toLocaleString('id-ID', { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        function buildCommentHTML(c, { isReply = false } = {}) {
+            const cid = `c-${c.id}`;
+            const hasReplies = c.replies && c.replies.length > 0;
+            return `<div class='comment-card ${isReply ? 'reply' : ''}' data-id='${c.id}' id='${cid}'>
+            <div class='flex items-start gap-2'>
+                <img src='${c.avatar}' alt='${c.user}' class='w-8 h-8 rounded-full object-cover'/>
+                <div class='flex-1'>
+                    <div class='comment-user'>${c.user}</div>
+                    <div class='comment-meta'>${fmtDateTime(c.dateISO)}</div>
+                    <div class='mt-1 leading-relaxed'>${escapeHTML(c.text)}</div>
+                    <div class='comment-actions'>
+                        <button class='comment-like${c.likes > 0 ? ' active' : ''}' data-action='like'><i class='fas fa-heart mr-1'></i><span>${c.likes}</span></button>
+                        <button data-action='reply'>Balas</button>
+                        ${hasReplies && !isReply ? `<button data-action='toggle'>Lihat balasan (${c.replies.length})</button>` : ''}
+                    </div>
+                </div>
+            </div>
+            <div class='comment-menu'>
+                <button data-action='menu'><i class='fas fa-ellipsis-h'></i></button>
+                <div class='comment-menu-pop' role='menu'>
+                    <button data-action='report'>Laporkan</button>
+                    <button data-action='mute'>Bisukan</button>
+                    <button data-action='reply'>Balas</button>
+                </div>
+            </div>
+            ${hasReplies && !isReply ? `<div class='comment-replies hidden mt-3 space-y-2'>${c.replies.map(r => buildCommentHTML(r, { isReply: true })).join('')}</div>` : ''}
+            <div class='comment-reply-form hidden mt-3'>
+                <textarea maxlength='300' placeholder='Balas komentar...' class='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black'></textarea>
+                <div class='text-right mt-1'>
+                    <button data-action='cancel-reply' class='text-xs text-gray-500 hover:text-gray-800 mr-2'>Batal</button>
+                    <button data-action='submit-reply' class='text-xs px-3 py-1 bg-black text-white rounded-md'>Kirim</button>
+                </div>
+            </div>
         </div>`;
-      recommendedGrid.appendChild(a);
-    }
-  }
-  generateRecommendedContent();
+        }
 
-  /*************************************************
-   * INITIAL RENDER
-   *************************************************/
-  renderComments();
+        function renderCommentsDesktop() {
+            const wrap = qs('#comment-list');
+            wrap.innerHTML = demoComments.map(c => buildCommentHTML(c)).join('');
+            attachCommentEvents(wrap, false);
+        }
+        function renderCommentsMobile() {
+            const wrap = qs('#comment-drawer-body');
+            wrap.innerHTML = demoComments.map(c => buildCommentHTML(c)).join('');
+            attachCommentEvents(wrap, true);
+        }
+        function updateCommentCounts() {
+            const count = demoComments.length + demoComments.reduce((s, c) => s + (c.replies ? c.replies.length : 0), 0);
+            qs('#comment-count-top').textContent = `${count} komentar`;
+            qs('#mobile-comment-count').textContent = count;
+        }
 
-  /* Animasi Masuk */
-  gsap.to('#uploaderBar', { opacity: 1, y: 0, duration: .6 });
-  gsap.to('#detailContent', { opacity: 1, duration: .8, delay: .2 });
-  gsap.to('#detailImage', { scale: 1, opacity: 1, duration: .9, delay: .35, ease: 'power3.out' });
-  gsap.to('#detailTitle', { opacity: 1, y: 0, duration: .6, delay: .65 });
-  gsap.to('#detailDescription', { opacity: 1, y: 0, duration: .6, delay: .75 });
-  gsap.to('#recommendedContent', { opacity: 1, y: 0, duration: .6, delay: 1.0 });
-  gsap.to('#floatingActions', { opacity: 1, y: 0, duration: .6, delay: .9 });
-  gsap.to('#commentSection', { opacity: 1, x: 0, duration: .8, delay: 1, ease: 'power3.out' });
+        /* --------------------------------------------------
+           Comment Interactions
+        -------------------------------------------------- */
+        function attachCommentEvents(root, isMobile) {
+            root.querySelectorAll('[data-action="menu"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const pop = e.currentTarget.nextElementSibling; pop.classList.toggle('open');
+                });
+            });
+            root.querySelectorAll('[data-action="like"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const card = e.currentTarget.closest('.comment-card');
+                    const id = Number(card.dataset.id);
+                    const { comment, reply } = findCommentById(id);
+                    if (reply) { reply.likes++; } else if (comment) { comment.likes++; }
+                    e.currentTarget.classList.add('active');
+                    e.currentTarget.querySelector('span').textContent = (reply ? reply.likes : comment.likes);
+                    syncBadges();
+                });
+            });
+            root.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const card = e.currentTarget.closest('.comment-card');
+                    const rep = card.querySelector('.comment-replies');
+                    if (!rep) return; rep.classList.toggle('hidden');
+                    e.currentTarget.textContent = rep.classList.contains('hidden') ? `Lihat balasan (${rep.children.length})` : 'Sembunyikan Balas';
+                });
+            });
+            root.querySelectorAll('[data-action="reply"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const card = e.currentTarget.closest('.comment-card');
+                    card.querySelector('.comment-reply-form').classList.remove('hidden');
+                });
+            });
+            root.querySelectorAll('[data-action="cancel-reply"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const form = e.currentTarget.closest('.comment-reply-form');
+                    form.classList.add('hidden'); form.querySelector('textarea').value = '';
+                });
+            });
+            root.querySelectorAll('[data-action="submit-reply"]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const card = e.currentTarget.closest('.comment-card');
+                    const id = Number(card.dataset.id);
+                    const textarea = card.querySelector('.comment-reply-form textarea');
+                    const text = textarea.value.trim(); if (!text) return;
+                    addReply(id, text);
+                    renderCommentsDesktop(); renderCommentsMobile(); updateCommentCounts();
+                });
+            });
+            root.querySelectorAll('[data-action="report"]').forEach(btn => btn.addEventListener('click', () => alert('Dilaporkan (demo).')));
+            root.querySelectorAll('[data-action="mute"]').forEach(btn => btn.addEventListener('click', () => alert('Pengguna dibisukan (demo).')));
+        }
 
-  /* Particles */
-  particlesJS('particles-js-detail', {
-    particles: {
-      number: { value: 70 },
-      color: { value: '#cccccc' },
-      size: { value: 3, random: true },
-      line_linked: { enable: true, color: '#dddddd' },
-      move: { enable: true, speed: 2 }
-    }
-  });
-});
-</script>
+        function findCommentById(id) {
+            for (const c of demoComments) {
+                if (c.id === id) return { comment: c, reply: null };
+                for (const r of c.replies || []) { if (r.id === id) return { comment: c, reply: r }; }
+            }
+            return { comment: null, reply: null };
+        }
+        function addComment(text) {
+            const now = new Date();
+            demoComments.unshift({ id: Date.now(), user: "Anda", handle: "@anda", avatar: "https://i.pravatar.cc/60?u=self", text, dateISO: now.toISOString(), likes: 0, replies: [] });
+        }
+        function addReply(parentId, text) {
+            const now = new Date();
+            const { comment } = findCommentById(parentId); if (!comment) return;
+            comment.replies = comment.replies || [];
+            comment.replies.push({ id: Date.now(), user: "Anda", handle: "@anda", avatar: "https://i.pravatar.cc/60?u=self", text, dateISO: now.toISOString(), likes: 0 });
+        }
+        function syncBadges() {
+            const likeCount = Number(localStorage.getItem('tara-gallery-like-' + galleryData.id) || 0);
+            const badge = qs('#float-like-badge');
+            if (likeCount > 0) { badge.textContent = likeCount; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+        }
+
+        /* --------------------------------------------------
+           New Comment Forms
+        -------------------------------------------------- */
+        const newCommentText = qs('#new-comment-text');
+        const charCount = qs('#comment-char-count');
+        newCommentText?.addEventListener('input', () => { charCount.textContent = `${newCommentText.value.length}/300`; });
+        qs('#submit-comment')?.addEventListener('click', () => {
+            const text = newCommentText.value.trim(); if (!text) return;
+            addComment(text); newCommentText.value = ''; charCount.textContent = '0/300'; renderCommentsDesktop(); renderCommentsMobile(); updateCommentCounts();
+        });
+        const newCommentMobile = qs('#new-comment-mobile');
+        const charCountMobile = qs('#comment-char-count-mobile');
+        newCommentMobile?.addEventListener('input', () => { charCountMobile.textContent = `${newCommentMobile.value.length}/300`; });
+        qs('#submit-comment-mobile')?.addEventListener('click', () => {
+            const text = newCommentMobile.value.trim(); if (!text) return;
+            addComment(text); newCommentMobile.value = ''; charCountMobile.textContent = '0/300'; renderCommentsDesktop(); renderCommentsMobile(); updateCommentCounts();
+        });
+
+        /* --------------------------------------------------
+           Mobile Drawer Toggle
+        -------------------------------------------------- */
+        const drawer = qs('#comment-drawer');
+        qs('#mobile-comment-toggle').addEventListener('click', () => { drawer.classList.add('open'); });
+        qs('#comment-drawer-close').addEventListener('click', () => { drawer.classList.remove('open'); });
+
+        /* --------------------------------------------------
+           Floating Like / Share
+        -------------------------------------------------- */
+        const floatLikeBtn = qs('#float-like');
+        const floatShareBtn = qs('#float-share');
+        floatLikeBtn.addEventListener('click', () => {
+            const key = 'tara-gallery-like-' + galleryData.id; let count = Number(localStorage.getItem(key) || 0); count++; localStorage.setItem(key, count);
+            syncBadges();
+            anime({ targets: floatLikeBtn, scale: [1, 1.2, 1], duration: 300, easing: 'easeOutQuad' });
+        });
+        floatShareBtn.addEventListener('click', () => {
+            const modal = qs('#share-modal');
+            modal.classList.add('open');
+            gsap.fromTo(modal.querySelector('.share-modal-content'), { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
+        });
+        syncBadges();
+
+        /* --------------------------------------------------
+           Share Modal
+        -------------------------------------------------- */
+        const shareUrl = encodeURIComponent(window.location.href);
+        const shareTitle = encodeURIComponent(galleryData.title);
+        qs('#share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareTitle}%20${shareUrl}`;
+        qs('#share-instagram').href = `https://www.instagram.com/?url=${shareUrl}`; // Instagram doesn't support direct sharing with title
+        qs('#share-x').href = `https://x.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+        qs('#share-copy-link').addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link berhasil disalin!');
+            }).catch(() => {
+                alert('Gagal menyalin link.');
+            });
+        });
+        qs('#share-modal').addEventListener('click', e => {
+            if (e.target === qs('#share-modal')) closeShareModal();
+        });
+        qs('#share-modal').addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeShareModal();
+        });
+        function closeShareModal() {
+            const modal = qs('#share-modal');
+            modal.classList.remove('open');
+        }
+
+        /* --------------------------------------------------
+           Follow Button
+        -------------------------------------------------- */
+        const followBtn = qs('#follow-btn');
+        followBtn.addEventListener('click', () => {
+            const followed = followBtn.dataset.followed === '1';
+            followBtn.dataset.followed = followed ? '0' : '1';
+            followBtn.textContent = followed ? 'Follow' : 'Mengikuti';
+            anime({ targets: followBtn, scale: [1, 1.1, 1], duration: 300, easing: 'easeOutQuad' });
+        });
+
+        /* --------------------------------------------------
+           Reading Progress Bar
+        -------------------------------------------------- */
+        const progressBar = qs('#reading-progress');
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = p + "%";
+        }
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        updateProgress();
+
+        /* --------------------------------------------------
+           Particles
+        -------------------------------------------------- */
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 1000 } },
+                color: { value: '#4b5563' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.25, random: false },
+                size: { value: 2, random: false },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 0.4, direction: 'top', random: false, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: false } },
+                modes: { repulse: { distance: 100, duration: 0.4 } }
+            },
+            retina_detect: true
+        });
+
+        /* --------------------------------------------------
+           Animate in sections
+        -------------------------------------------------- */
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from('#gallery-hero-image-wrapper', { opacity: 0, y: 40, duration: 1, ease: 'power3.out' });
+        gsap.from('#gallery-body', { opacity: 0, y: 40, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '#gallery-body', start: 'top 80%' } });
+        gsap.from('#gallery-reco-wrapper', { opacity: 0, y: 40, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '#gallery-reco-wrapper', start: 'top 80%' } });
+
+        /* --------------------------------------------------
+           Notification Toggle
+        -------------------------------------------------- */
+        function toggleNotifications() {
+            const modal = document.getElementById('notification-modal');
+            const isOpen = modal.classList.contains('open');
+            modal.classList.toggle('open');
+            gsap.to(modal, {
+                x: isOpen ? '100%' : '0%',
+                duration: 0.3,
+                ease: "power2.out"
+            });
+            if (!isOpen) {
+                renderNotifications();
+            }
+        }
+
+        function renderNotifications() {
+            const notificationList = qs('#notification-list');
+            notificationList.innerHTML = '<p class="text-sm text-gray-600">Belum ada notifikasi</p>';
+        }
+
+        /* --------------------------------------------------
+           Initial Comment Render
+        -------------------------------------------------- */
+        renderCommentsDesktop();
+        renderCommentsMobile();
+        updateCommentCounts();
+
+        /* --------------------------------------------------
+           Set Active Navigation Link
+        -------------------------------------------------- */
+        const currentPath = window.location.pathname.split('/').pop() || 'detail_galeri.html';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href').split('/').pop();
+            if (href === 'galeri.html') {
+                link.classList.add('active');
+            }
+        });
+    </script>
 </body>
 </html>

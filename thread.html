@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TARA – Detail Aktivitas Komunitas</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       rel="stylesheet"
@@ -15,40 +13,18 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
       rel="stylesheet"
     />
-
     <style>
       body {
         font-family: "Outfit", sans-serif;
-        background: #ffffff; /* Changed to white */
+        background: #ffffff;
         color: #111;
         box-sizing: border-box;
       }
-
       *,
       *::before,
       *::after {
         box-sizing: inherit;
       }
-
-      .perspective {
-        perspective: 1200px;
-      }
-
-      .hover-3d {
-        transform-style: preserve-3d;
-        transition: transform 0.4s ease;
-        cursor: pointer;
-      }
-
-      .hover-3d .inner {
-        transform: rotateY(0deg) rotateX(0deg);
-        transition: transform 0.4s ease;
-      }
-
-      .hover-3d:hover .inner {
-        transform: rotateY(10deg) rotateX(5deg);
-      }
-
       .thread-container,
       .comment-container {
         background: #ffffff;
@@ -56,15 +32,7 @@
         border-radius: 1.5rem;
         padding: 2rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-
-      .thread-container:hover,
-      .comment-container:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      }
-
       .thread-header,
       .comment-header {
         display: flex;
@@ -73,7 +41,6 @@
         gap: 1rem;
         margin-bottom: 1.5rem;
       }
-
       .thread-header h1,
       .comment-header h3 {
         font-size: 1.75rem;
@@ -81,18 +48,10 @@
         color: #111;
         margin: 0;
         flex: 1;
-        transition: color 0.2s ease;
       }
-
       .comment-header h3 {
         font-size: 1.25rem;
       }
-
-      .thread-header h1:hover,
-      .comment-header h3:hover {
-        color: #374151;
-      }
-
       .thread-meta,
       .comment-meta {
         display: flex;
@@ -101,7 +60,6 @@
         font-size: 0.875rem;
         color: #6b7280;
       }
-
       .thread-content,
       .comment-content {
         font-size: 1rem;
@@ -109,39 +67,25 @@
         line-height: 1.6;
         margin-bottom: 1.5rem;
       }
-
       .attachment-container {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
         margin-top: 1rem;
       }
-
       .attachment-container img {
         max-width: 120px;
         height: auto;
         border-radius: 8px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease;
       }
-
-      .attachment-container img:hover {
-        transform: scale(1.05);
-      }
-
       .attachment-container a {
         color: #2563eb;
         text-decoration: none;
         font-weight: 500;
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
-        transition: background 0.2s ease;
       }
-
-      .attachment-container a:hover {
-        background: #e6f0ff;
-      }
-
       .thread-footer,
       .comment-footer {
         display: flex;
@@ -152,39 +96,24 @@
         padding-top: 1.5rem;
         border-top: 1px solid #e5e7eb;
       }
-
       .vote-container {
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-
       .vote-btn {
         cursor: pointer;
         font-size: 1rem;
         color: #6b7280;
-        transition: color 0.2s ease;
       }
-
-      .vote-btn:hover {
-        color: #f59e0b;
-      }
-
       .post-menu {
         position: relative;
       }
-
       .post-menu-btn {
         cursor: pointer;
         font-size: 1rem;
         color: #6b7280;
-        transition: color 0.2s ease;
       }
-
-      .post-menu-btn:hover {
-        color: #f59e0b;
-      }
-
       .post-menu-content {
         position: absolute;
         top: 100%;
@@ -197,45 +126,34 @@
         z-index: 10;
         display: none;
       }
-
       .post-menu-content.open {
         display: block;
       }
-
       .post-menu-item {
         padding: 0.5rem 1rem;
         font-size: 0.875rem;
         color: #374151;
         cursor: pointer;
-        transition: background 0.2s ease;
       }
-
-      .post-menu-item:hover {
-        background: #f9fafb;
-      }
-
       .post-menu-item.danger {
         color: #dc2626;
       }
-
       .notification-bar {
-        background: #ffffff; /* Changed to white */
-        border: 1px solid #e5e7eb; /* gray-200 for visibility */
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
         border-radius: 8px;
         padding: 1rem;
         margin-bottom: 1.5rem;
         cursor: pointer;
       }
-
       .comment-form-container {
-        background: #ffffff; /* Changed to white */
+        background: #ffffff;
         border: 1px solid #e5e7eb;
         border-radius: 1.5rem;
         padding: 1.5rem;
         margin-bottom: 2rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
-
       .comment-form textarea {
         width: 100%;
         min-height: 100px;
@@ -245,16 +163,12 @@
         font-size: 1rem;
         color: #4b5563;
         resize: vertical;
-        transition: border-color 0.2s ease;
         background: #f9fafb;
       }
-
       .comment-form textarea:focus {
         outline: none;
         border-color: #f59e0b;
-        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
       }
-
       .comment-form button {
         background: #111;
         color: white;
@@ -262,40 +176,29 @@
         border-radius: 8px;
         font-size: 0.875rem;
         font-weight: 500;
-        transition: background 0.2s ease;
       }
-
-      .comment-form button:hover {
-        background: #1f2937;
-      }
-
       @media (max-width: 768px) {
         .thread-container,
         .comment-container {
           padding: 1.5rem;
         }
-
         .thread-header h1,
         .comment-header h3 {
           font-size: 1.5rem;
         }
-
         .thread-footer,
         .comment-footer {
           flex-direction: column;
           align-items: flex-start;
           gap: 0.5rem;
         }
-
         .comment-form-container {
           padding: 1rem;
         }
       }
     </style>
   </head>
-
-  <body class="relative overflow-x-hidden perspective">
-    <!-- Header -->
+  <body>
     <header
       class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full"
     >
@@ -306,15 +209,12 @@
         TARA<span class="text-yellow-400">●</span>
       </div>
       <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
-        <a href="/" class="hover:text-black transition">Beranda</a>
-        <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
-        <a href="/komunitas" class="hover:text-black font-semibold transition"
-          >Komunitas</a
-        >
-        <a href="/proyek" class="hover:text-black transition">Proyek</a>
-        <a href="/blog" class="hover:text-black transition">Blog</a>
-        <a href="/agenda" class="hover:text-black transition">Agenda</a>
-        <a href="/profil" class="hover:text-black transition">Profil</a>
+        <a href="/">Beranda</a>
+        <a href="/eksplor">Eksplor</a>
+        <a href="/komunitas" class="font-semibold">Komunitas</a>
+        <a href="/proyek">Proyek</a>
+        <a href="/blog">Blog</a>
+        <a href="/agenda">Agenda</a>
       </nav>
       <div class="flex items-center gap-4">
         <input
@@ -324,230 +224,158 @@
         />
         <a
           href="/login"
-          class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition"
+          class="px-4 py-2 bg-black text-white text-sm rounded-full"
           >Login</a
         >
       </div>
     </header>
-
-    <!-- Thread Detail Section -->
-    <section class="relative pt-24 pb-12 bg-white perspective"> <!-- Changed to white -->
-      <div class="absolute inset-0 bg-white opacity-30 pointer-events-none"></div> <!-- Changed to white -->
-      <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <!-- Notification Bar -->
-        <div
-          id="notification-bar"
-          class="notification-bar hidden"
-          onclick="dismissNotification()"
-        >
+    <section class="pt-24 pb-12 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div id="notification-bar" class="notification-bar" onclick="dismissNotification()">
           <p class="text-sm text-gray-600">
             Selamat datang, Tuan! Nikmati detail aktivitas komunitas.
           </p>
         </div>
-
-        <!-- Main Content -->
         <div class="mb-8 flex items-center gap-3">
           <a
             href="/komunitas.html"
-            class="relative inline-block px-5 py-2 text-sm text-black border border-gray-200 rounded-full overflow-hidden group hover-3d"
+            class="px-5 py-2 text-sm text-black border border-gray-200 rounded-full"
             style="font-family: 'Space Grotesk', sans-serif;"
           >
-            <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-            <span class="relative z-10 group-hover:text-white transition-colors duration-300 inner">
-              ← Komunitas
-            </span>
+            ← Komunitas
           </a>
           <a
             id="community-link"
             href=""
-            class="relative inline-block px-5 py-2 text-sm text-gray-700 border border-gray-200 rounded-full overflow-hidden group hover-3d"
+            class="px-5 py-2 text-sm text-gray-700 border border-gray-200 rounded-full"
             style="font-family: 'Space Grotesk', sans-serif;"
           >
-            <span class="absolute inset-0 bg-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-            <span class="relative z-10 group-hover:text-white transition-colors duration-300 inner">
-              Kembali ke Komunitas
-            </span>
+            Kembali ke Komunitas
           </a>
         </div>
-
-        <!-- Thread Detail -->
-        <div id="thread-detail" class="thread-container hover-3d">
-          <div class="inner">
-            <div class="thread-header">
-              <h1 id="thread-title"></h1>
-              <div class="post-menu">
-                <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, 'thread')"></i>
-                <div class="post-menu-content" id="post-menu-thread">
-                  <div class="post-menu-item" onclick="sharePost()">Bagikan</div>
-                  <div class="post-menu-item" onclick="savePost()">Simpan</div>
-                  <div class="post-menu-item danger" onclick="reportPost()">Laporkan</div>
-                </div>
-              </div>
-            </div>
-            <div class="thread-meta">
-              <span id="thread-author"></span>
-              <span id="thread-time"></span>
-              <span id="thread-community"></span>
-            </div>
-            <div class="thread-content" id="thread-content"></div>
-            <div id="thread-attachments" class="attachment-container"></div>
-            <div class="thread-footer">
-              <div class="vote-container">
-                <i class="fas fa-arrow-up vote-btn" onclick="votePost(event, 'thread', 1)"></i>
-                <span id="thread-votes" class="text-sm text-gray-500">0</span>
-                <i class="fas fa-arrow-down vote-btn" onclick="votePost(event, 'thread', -1)"></i>
-              </div>
-              <div class="flex items-center gap-4">
-                <span id="thread-replies" class="text-xs text-gray-500"></span>
-                <span id="thread-last-activity" class="text-xs text-gray-500"></span>
+        <div id="thread-detail" class="thread-container">
+          <div class="thread-header">
+            <h1 id="thread-title"></h1>
+            <div class="post-menu">
+              <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, 'thread')"></i>
+              <div class="post-menu-content" id="post-menu-thread">
+                <div class="post-menu-item" onclick="sharePost()">Bagikan</div>
+                <div class="post-menu-item" onclick="savePost()">Simpan</div>
+                <div class="post-menu-item danger" onclick="reportPost()">Laporkan</div>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Comment Form -->
-        <div class="comment-form-container hover-3d mt-3">
-          <div class="inner">
-            <h3 class="font-semibold text-black mb-4">Tulis Komentar</h3>
-            <form class="comment-form" onsubmit="postComment(event)">
-              <textarea
-                placeholder="Tulis komentar Tuan..."
-                required
-                class="mb-4"
-              ></textarea>
-              <button type="submit">Kirim Komentar</button>
-            </form>
+          <div class="thread-meta">
+            <span id="thread-author"></span>
+            <span id="thread-time"></span>
+            <span id="thread-community"></span>
+          </div>
+          <div class="thread-content" id="thread-content"></div>
+          <div id="thread-attachments" class="attachment-container"></div>
+          <div class="thread-footer">
+            <div class="vote-container">
+              <i class="fas fa-arrow-up vote-btn" onclick="votePost(event, 'thread', 1)"></i>
+              <span id="thread-votes" class="text-sm text-gray-500">0</span>
+              <i class="fas fa-arrow-down vote-btn" onclick="votePost(event, 'thread', -1)"></i>
+            </div>
+            <div class="flex items-center gap-4">
+              <span id="thread-replies" class="text-xs text-gray-500"></span>
+              <span id="thread-last-activity" class="text-xs text-gray-500"></span>
+            </div>
           </div>
         </div>
-
-        <!-- Comments Section -->
-        <div id="comments-section" class="space-y-4">
-          <!-- Comments will be dynamically inserted here -->
+        <div class="comment-form-container mt-3">
+          <h3 class="font-semibold text-black mb-4">Tulis Komentar</h3>
+          <form class="comment-form" onsubmit="postComment(event)">
+            <textarea
+              placeholder="Tulis komentar Tuan..."
+              required
+              class="mb-4"
+            ></textarea>
+            <button type="submit">Kirim Komentar</button>
+          </form>
         </div>
+        <div id="comments-section" class="space-y-4"></div>
       </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-neutral-200 text-sm text-neutral-600">
-      <div
-        class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10"
-      >
-        <div class="col-span-1 sm:col-span-2">
-          <div
-            class="text-2xl font-bold tracking-normal uppercase"
-            style="font-family: 'Space Grotesk', sans-serif"
-          >
+    <footer class="mt-12 bg-white border-t border-neutral-200 text-sm text-neutral-700">
+      <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
+        <div class="col-span-2">
+          <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif">
             TARA<span class="text-yellow-400">●</span>
           </div>
-          <p class="text-neutral-500 mt-4">
+          <p class="text-neutral-500 mb-4">
             Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
-            depan.
+            depan. Temukan inspirasi. Bangun impresi.
           </p>
-          <div class="flex gap-4 mt-4 text-neutral-600 text-lg">
-            <a href="#" class="hover:text-black transition" aria-label="Instagram"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="Twitter"
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="LinkedIn"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="Dribbble"
-              ><i class="fab fa-dribbble"></i
-            ></a>
-            <a href="#" class="hover:text-black transition" aria-label="Behance"
-              ><i class="fab fa-behance"></i
-            ></a>
+          <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
+            <a href="#" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" aria-label="Dribbble">
+              <i class="fab fa-dribbble"></i>
+            </a>
+            <a href="#" aria-label="Behance">
+              <i stuartscholarship.org
+            </a>
           </div>
         </div>
         <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+          <h3 class="font-semibold text-black mb-4">Navigasi</h3>
           <ul class="space-y-2">
-            <li><a href="/" class="hover:text-black transition">Beranda</a></li>
-            <li>
-              <a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a>
-            </li>
-            <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
-            <li>
-              <a href="/proyek" class="hover:text-black transition">Proyek Sosial</a>
-            </li>
-            <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
-            <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+            <li><a href="#">Beranda</a></li>
+            <li><a href="#">Galeri</a></li>
+            <li><a href="#">Tentang</a></li>
+            <li><a href="#">Kontak</a></li>
+            <li><a href="#">FAQ</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+          <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
           <ul class="space-y-2">
-            <li>
-              <a href="/eksplor?kategori=puisi" class="hover:text-black transition"
-                >Puisi</a
-              >
-            </li>
-            <li>
-              <a href="/eksplor?kategori=desain" class="hover:text-black transition"
-                >Desain</a
-              >
-            </li>
-            <li>
-              <a href="/eksplor?kategori=musik" class="hover:text-black transition"
-                >Musik</a
-              >
-            </li>
-            <li>
-              <a href="/eksplor?kategori=coding" class="hover:text-black transition"
-                >Coding</a
-              >
-            </li>
+            <li><a href="#">UI/UX</a></li>
+            <li><a href="#">Efek GSAP</a></li>
+            <li><a href="#">Halaman Utama</a></li>
+            <li><a href="#">Mikrointeraksi</a></li>
+            <li><a href="#">Tipografi</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+          <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
           <ul class="space-y-2">
-            <li>
-              <a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a>
-            </li>
-            <li>
-              <a href="/komunitas/gabung" class="hover:text-black transition"
-                >Gabung Komunitas</a
-              >
-            </li>
-            <li>
-              <a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a>
-            </li>
-            <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+            <li><a href="#">Kirim Karya</a></li>
+            <li><a href="#">Gabung Kurator</a></li>
+            <li><a href="#">Sponsor & Iklan</a></li>
+            <li><a href="#">Mitra Media</a></li>
           </ul>
         </div>
-        <div>
-          <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+        <div class="col-span-2 sm:col-span-1">
+          <h3 class="font-semibold text-black mb-4">Newsletter</h3>
           <p class="text-neutral-500 mb-3">
-            Dapatkan inspirasi mingguan di kotak masuk Tuan.
+            Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Tuan.
           </p>
           <div class="flex items-center gap-2">
-            <input
-              type="email"
-              placeholder="Email Tuan..."
-              class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-            <button class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">
+            <input type="email" placeholder="Email Tuan..."
+              class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+            <button
+              class="px-4 py-2 bg-black text-white text-sm rounded-md">
               Kirim
             </button>
           </div>
         </div>
       </div>
-      <div
-        class="border-t border-neutral-200 text-center py-4 text-xs text-neutral-400"
-      >
-        © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
-        <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
-        <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
-        <a href="/privasi" class="hover:text-black transition">Privasi</a> |
-        <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+      <div class="border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
+        © 2025 TARA. Dirakit dengan semangat di bumi Nusantara. Estetika,
+        teknologi, dan visi Tuan menyatu.
       </div>
     </footer>
-
     <script>
-      // Simulated Community Posts Data
       const communityPosts = [
         {
           id: 1,
@@ -580,37 +408,36 @@
           author: "Admin Tara",
         },
       ];
-const communities = [
-  {
-    id: 1,
-    name: "Komunitas Puisi",
-    category: "Puisi",
-    description:
-      "Berbagi kata, menenun makna dalam puisi. Bergabunglah untuk mengeksplorasi keindahan bahasa dan emosi.",
-    members: 1200,
-    image: "https://picsum.photos/600/400?poetry",
-    badge: "populer",
-    joined: true,
-    createdDate: "Januari 2023",
-    creator: "Rudi Santoso",
-    onlineMembers: 50,
-  },
-  {
-    id: 999,
-    name: "Komunitas Umum",
-    category: "Umum",
-    description:
-      "Tempat untuk berbagai diskusi kreatif dan kolaborasi lintas kategori.",
-    members: 100,
-    image: "https://picsum.photos/600/400?general",
-    badge: null,
-    joined: false,
-    createdDate: "Oktober 2024",
-    creator: "Admin Tara",
-    onlineMembers: 10,
-  },
-];
-      // Simulated Comments Data
+      const communities = [
+        {
+          id: 1,
+          name: "Komunitas Puisi",
+          category: "Puisi",
+          description:
+            "Berbagi kata, menenun makna dalam puisi. Bergabunglah untuk mengeksplorasi keindahan bahasa dan emosi.",
+          members: 1200,
+          image: "https://picsum.photos/600/400?poetry",
+          badge: "populer",
+          joined: true,
+          createdDate: "Januari 2023",
+          creator: "Rudi Santoso",
+          onlineMembers: 50,
+        },
+        {
+          id: 999,
+          name: "Komunitas Umum",
+          category: "Umum",
+          description:
+            "Tempat untuk berbagai diskusi kreatif dan kolaborasi lintas kategori.",
+          members: 100,
+          image: "https://picsum.photos/600/400?general",
+          badge: null,
+          joined: false,
+          createdDate: "Oktober 2024",
+          creator: "Admin Tara",
+          onlineMembers: 10,
+        },
+      ];
       const comments = [
         {
           id: 1,
@@ -640,16 +467,12 @@ const communities = [
           attachments: [],
         },
       ];
-
-      // Get Thread and Community ID from URL
       function getThreadParams() {
         const params = new URLSearchParams(window.location.search);
         const threadId = parseInt(params.get("thread")) || 999;
         const communityId = parseInt(params.get("community")) || 999;
         return { threadId, communityId };
       }
-
-      // Render Thread Details
       function renderThreadDetails() {
         const { threadId, communityId } = getThreadParams();
         const thread =
@@ -658,13 +481,12 @@ const communities = [
         const community =
           communities.find((c) => c.id === communityId) ||
           communities.find((c) => c.id === 999);
-
         document.getElementById("thread-title").textContent = thread.title;
-        document.getElementById("thread-author").textContent = `Diposting oleh ${thread.author}`;
+        document.getElementById("thread-author").innerHTML = `Diposting oleh <a href="sudah_login/profil_user.html" class="text-blue-600">${thread.author}</a>`;
         document.getElementById("thread-time").textContent = thread.time;
         document.getElementById(
           "thread-community"
-        ).innerHTML = `<a href="/forum.html?community=${community.id}" class="text-blue-600 hover:underline">${community.name}</a>`;
+        ).innerHTML = `<a href="/forum.html?community=${community.id}" class="text-blue-600">${community.name}</a>`;
         document.getElementById("thread-content").textContent = thread.content;
         document.getElementById("thread-votes").textContent = thread.votes;
         document.getElementById(
@@ -676,7 +498,6 @@ const communities = [
         document.getElementById(
           "community-link"
         ).href = `/forum.html?community=${community.id}`;
-
         const attachmentsContainer = document.getElementById("thread-attachments");
         attachmentsContainer.innerHTML = thread.attachments
           .map((att) =>
@@ -685,31 +506,20 @@ const communities = [
               : `<a href="${att.url}" target="_blank">${att.text}</a>`
           )
           .join("");
-
         if (thread.pinned) {
           document.getElementById("thread-title").innerHTML += `
             <i class="fas fa-thumbtack text-yellow-400 ml-2" title="Postingan Disematkan"></i>
           `;
         }
-
-        gsap.from(".thread-container", {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          ease: "power3.out",
-        });
-
         renderComments();
       }
-
-      // Render Comments
       function renderComments() {
         const { threadId } = getThreadParams();
         const threadComments = comments.filter((c) => c.threadId === threadId);
         const commentsContainer = document.getElementById("comments-section");
         commentsContainer.innerHTML = threadComments
           .map(
-            (comment, index) => `
+            (comment) => `
           <div class="comment-container">
             <div class="comment-header">
               <h3>${comment.author}</h3>
@@ -746,17 +556,7 @@ const communities = [
         `
           )
           .join("");
-
-        gsap.from(".comment-container", {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          ease: "power3.out",
-          stagger: 0.1,
-        });
       }
-
-      // Toggle Post Menu
       function togglePostMenu(event, id) {
         event.preventDefault();
         const menu = document.getElementById(`post-menu-${id}`);
@@ -766,16 +566,8 @@ const communities = [
           .forEach((m) => m.classList.remove("open"));
         if (!isOpen) {
           menu.classList.add("open");
-          gsap.from(menu, {
-            opacity: 0,
-            y: -10,
-            duration: 0.2,
-            ease: "power2.out",
-          });
         }
       }
-
-      // Share Post
       function sharePost() {
         const { threadId, communityId } = getThreadParams();
         const url = `/forum.html?community=${communityId}&thread=${threadId}`;
@@ -783,43 +575,19 @@ const communities = [
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = "Link aktivitas telah disalin, Tuan!";
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Save Post
       function savePost() {
         const { threadId } = getThreadParams();
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Aktivitas ${threadId} telah disimpan, Tuan!`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Report Post
       function reportPost() {
         const { threadId } = getThreadParams();
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Aktivitas ${threadId} telah dilaporkan, Tuan.`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Vote Post
       function votePost(event, id, value) {
         event.preventDefault();
         const { threadId } = getThreadParams();
@@ -830,22 +598,13 @@ const communities = [
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Suara Tuan telah diberikan!`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Post Comment
       function postComment(event) {
         event.preventDefault();
         const { threadId } = getThreadParams();
         const textarea = event.target.querySelector("textarea");
         const content = textarea.value.trim();
         if (!content) return;
-
         const newComment = {
           id: comments.length + 1,
           threadId: threadId,
@@ -855,27 +614,16 @@ const communities = [
           votes: 0,
           attachments: [],
         };
-
         comments.push(newComment);
         const post = communityPosts.find((p) => p.id === threadId);
         post.replies += 1;
         post.lastActivity = new Date().toISOString();
-
         textarea.value = "";
         renderThreadDetails();
-
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = "Komentar Tuan telah diposting!";
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Share Comment
       function shareComment(commentId) {
         const { threadId, communityId } = getThreadParams();
         const url = `/forum.html?community=${communityId}&thread=${threadId}#comment-${commentId}`;
@@ -883,41 +631,17 @@ const communities = [
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = "Link komentar telah disalin, Tuan!";
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Save Comment
       function saveComment(commentId) {
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Komentar ${commentId} telah disimpan, Tuan!`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Report Comment
       function reportComment(commentId) {
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Komentar ${commentId} telah dilaporkan, Tuan.`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Vote Comment
       function voteComment(event, commentId, value) {
         event.preventDefault();
         const comment = comments.find((c) => c.id === commentId);
@@ -926,31 +650,13 @@ const communities = [
         const notificationBar = document.getElementById("notification-bar");
         notificationBar.querySelector("p").textContent = `Suara Tuan telah diberikan untuk komentar!`;
         notificationBar.classList.remove("hidden");
-        gsap.from(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
       }
-
-      // Dismiss Notification Bar
       function dismissNotification() {
         const notificationBar = document.getElementById("notification-bar");
-        gsap.to(notificationBar, {
-          opacity: 0,
-          y: -20,
-          duration: 0.5,
-          ease: "power2.in",
-          onComplete: () => {
-            notificationBar.classList.add("hidden");
-            notificationBar.querySelector("p").textContent =
-              "Selamat datang, Tuan! Nikmati detail aktivitas komunitas.";
-          },
-        });
+        notificationBar.classList.add("hidden");
+        notificationBar.querySelector("p").textContent =
+          "Selamat datang, Tuan! Nikmati detail aktivitas komunitas.";
       }
-
-      // Close Post Menus on Click Outside
       document.addEventListener("click", (event) => {
         if (!event.target.closest(".post-menu")) {
           document
@@ -958,8 +664,6 @@ const communities = [
             .forEach((m) => m.classList.remove("open"));
         }
       });
-
-      // Initialize
       document.getElementById("notification-bar").classList.remove("hidden");
       renderThreadDetails();
     </script>

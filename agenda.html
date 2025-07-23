@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TARA – Art Gallery Showcase</title>
 
+    <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -234,95 +235,40 @@
             transform: scale(1.05);
         }
 
-        /* Navbar Styling */
-        header {
-            padding: 1.5rem 2rem;
-            background: #FFFFFF;
-            border-bottom: 1px solid #000000;
-            position: fixed;
-            top: 0;
+        /* Glass effect untuk navbar */
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
             left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
             width: 100%;
-            z-index: 40;
         }
 
-        .navbar-logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #000000;
-        }
-
-        nav a {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #000000;
-            padding: 0.5rem 0.75rem;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-
-        nav a:hover {
-            color: #000000;
-            transform: scale(1.05);
-        }
-
-        .search-input {
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="%23000000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 11.65a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" /></svg>') no-repeat 0.75rem center;
-            background-size: 1rem;
-            border: 1px solid #000000;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            color: #000000;
-            background-color: #FFFFFF;
-            width: 200px;
-            transition: transform 0.2s ease;
-        }
-
-        .search-input:hover {
-            transform: scale(1.02);
-        }
-
-        .search-input::placeholder {
-            color: #800000;
-        }
-
-        .login-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            background: #000000;
-            color: #FFFFFF;
-            font-size: 0.875rem;
+        .nav-link.active {
+            color: #1a202c;
             font-weight: 600;
-            transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        .login-btn:hover {
-            background: #000000;
-            transform: scale(1.05);
-        }
-
-        /* Mobile Menu Styling */
-        #mobileMenuOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 30;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        #mobileMenuOverlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #mobileMenu {
-            width: 75%;
-            max-width: 260px;
-            background: #FFFFFF;
-            border-left: 1px solid #000000;
+        .nav-link.active::after {
+            width: 100%;
         }
 
         /* Hero Section */
@@ -412,6 +358,8 @@
             main {
                 flex-direction: row;
                 align-items: flex-start;
+                position: relative;
+                z-index: 10;
             }
 
             .event-card {
@@ -573,30 +521,12 @@
         }
 
         /* notif end */
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-link::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #000000;
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
     </style>
 </head>
 
 <body class="relative overflow-x-hidden">
     <div id="particles-js"></div>
+
     <!-- Notification Modal -->
     <div id="notification-modal" class="notification-modal">
         <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
@@ -613,31 +543,25 @@
             <div id="notification-list" class="space-y-4"></div>
         </div>
     </div>
-    <!-- Navigation -->
-    <header
-        class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
         <nav class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
             <div class="max-w-7xl mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <!-- Logo and Search Bar Container -->
-                    <div class="flex items-center gap-6 flex-1">
-                        <!-- Logo -->
-                        <div class="flex items-center gap-3">
-                            <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
-                            <div class="relative">
-                                <span class="text-yellow-400 text-2xl">●</span>
-                                <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
-                            </div>
-                        </div>
-                        <!-- Search Bar -->
-                        <div class="relative flex-1 max-w-[calc(100%-200px)]">
-                            <input type="text" placeholder="Cari..."
-                                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 text-gray-900 text-sm" />
-                            <i
-                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                    <!-- Logo -->
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+                        <div class="relative">
+                            <span class="text-yellow-400 text-2xl">●</span>
+                            <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
                         </div>
                     </div>
-
+                    <!-- Search Bar -->
+                    <div class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
+                        <input type="text" placeholder="Cari..."
+                            class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm" />
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                    </div>
                     <!-- Burger Icon Mobile -->
                     <button id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
                         <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -645,7 +569,6 @@
                                 d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-
                     <!-- Menu Navigasi -->
                     <div id="nav-menu"
                         class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
@@ -661,84 +584,71 @@
                             class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
                         <a href="/agenda.html"
                             class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
-
-                        <div class="relative">
-                            <i class="fas fa-bell text-gray-500 cursor-pointer" onclick="toggleNotifications()"></i>
-                            <span class="notification-badge" id="unread-count">0</span>
-                        </div>
-
-                        <!-- Guest Dropdown (only show on md and above) -->
-                        <div class="relative group hidden md:block">
-                            <button class="flex items-center gap-1 text-gray-700 hover:text-black font-medium py-2">
-                                Guest
-                                <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            <div
-                                class="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-50">
-                                <a href="/login" class="block px-4 py-2 text-gray-900 hover:bg-gray-100">Login</a>
-                                <a href="/register" class="block px-4 py-2 text-gray-900 hover:bg-gray-100">Sign Up</a>
-                            </div>
-                        </div>
+                            
+                        <div class="hidden md:flex items-center gap-2">
+                                <a 
+                                    href="/login" 
+                                    class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                                    Log In
+                                </a>
+                                <a 
+                                    href="/register" 
+                                    class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition">
+                                    Sign Up
+                                </a>
+                                </div>
                     </div>
                 </div>
             </div>
         </nav>
-        <script>
-            const burger = document.getElementById('burger-toggle');
-            const navMenu = document.getElementById('nav-menu');
-
-            burger.addEventListener('click', () => {
-                navMenu.classList.toggle('hidden');
-            });
-            // Toggle Notifications Modal
-            function toggleNotifications() {
-                const modal = document.getElementById('notification-modal');
-                const isOpen = modal.classList.contains('open');
-                modal.classList.toggle('open');
-                gsap.to(modal, {
-                    x: isOpen ? '100%' : '0%',
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-                if (!isOpen) {
-                    renderNotifications();
-                }
-            }
-        </script>
     </header>
+    
+    <script>
+        const burger = document.getElementById('burger-toggle');
+        const navMenu = document.getElementById('nav-menu');
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenuOverlay" class="fixed inset-0 z-30 hidden"></div>
-    <div id="mobileMenu" class="fixed top-0 right-0 h-full shadow-lg z-50 transform translate-x-full md:hidden">
-        <div class="p-4 flex justify-end">
-            <button id="closeMobileMenuBtn" class="text-black focus:outline-none" aria-label="Close mobile menu">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-        </div>
-        <nav class="flex flex-col p-4 space-y-4">
-            <a href="/" class="text-lg font-semibold text-black hover:text-black transition">Beranda</a>
-            <a href="/eksplor" class="text-lg font-semibold text-black hover:text-black transition">Eksplor</a>
-            <a href="/komunitas" class="text-lg font-semibold text-black hover:text-black transition">Komunitas</a>
-            <a href="/proyek" class="text-lg font-semibold text-black hover:text-black transition">Proyek</a>
-            <a href="/blog" class="text-lg font-semibold text-black hover:text-black transition">Blog</a>
-            <a href="/agenda" class="text-lg font-semibold text-black hover:text-black transition">Agenda</a>
-            <a href="/profil" class="text-lg font-semibold text-black hover:text-black transition">Profil</a>
-            <hr class="border-black">
-            <a href="/login" class="text-lg font-semibold text-black hover:text-black transition">Login</a>
-        </nav>
-    </div>
+        burger.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+        });
+
+        function toggleNotifications() {
+            const modal = document.getElementById('notification-modal');
+            const isOpen = modal.classList.contains('open');
+            modal.classList.toggle('open');
+            gsap.to(modal, {
+                x: isOpen ? '100%' : '0%',
+                duration: 0.3,
+                ease: "power2.out"
+            });
+            if (!isOpen) {
+                renderNotifications();
+            }
+        }
+
+        // Set active navigation link
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const isDetailPage = window.location.search.includes('id=');
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href').split('/').pop();
+            const isActive =
+                href === currentPath ||
+                (href === 'blog.html' && isDetailPage && currentPath === 'blog.html') ||
+                (href === 'komunitas.html' && isDetailPage && currentPath === 'komunitas.html') ||
+                (href === 'galeri.html' && isDetailPage && currentPath === 'galeri.html') ||
+                (href === 'agenda.html' && isDetailPage && currentPath === 'agenda.html');
+            if (isActive) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+
 
     <!-- Hero Section -->
     <section class="hero relative bg-cover bg-center"
         style="background-image: url('https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=compress&cs=tinysrgb&w=1260');">
         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
             <div class="text-center text-white hero-content">
-                <h1 class="text-4xl md:text-6xl font-bold font-['Space Grotesk'] text-white mb-4">Agenda Yang di Adakan TARA
-                </h1>
+                <h1 class="text-4xl md:text-6xl font-bold font-['Space Grotesk'] text-white mb-4">TARA Art Showcase</h1>
                 <p class="text-lg md:text-2xl mt-2 mb-6">Explore Upcoming Exhibitions & Events</p>
                 <a href="#eventCardsList"
                     class="mt-4 inline-block bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-black transition transform hover:scale-105">Discover
@@ -747,7 +657,7 @@
         </div>
     </section>
 
-    <main class="pt-24 relative bottom-24 flex flex-col md:flex-row min-h-screen px-4">
+    <main class="pt-24 flex flex-col md:flex-row min-h-screen px-4">
         <aside id="sidebar" class="w-full md:w-64 p-4">
             <button id="toggleSidebar" class="md:hidden text-black mb-4"><i
                     class="fas fa-filter mr-2"></i>Filters</button>
@@ -758,7 +668,7 @@
                     <p class="text-xs text-neutral-600 mb-3">Ikuti pameran terkini untuk inspirasi seni</p>
                     <ul class="space-y-2">
                         <li>
-                            <a href="detail_event1.html" class="block p-2 rounded-lg transition">
+                            <a href="detail_event.html?id=1" class="block p-2 rounded-lg transition">
                                 <p class="text-sm font-semibold text-black">Abstract Expressionism</p>
                                 <p class="text-xs text-neutral-600 mt-1">25 Jul 2025 · TARA Gallery</p>
                             </a>
@@ -818,15 +728,14 @@
                         <img src="https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600"
                             alt="Abstract Expressionism Exhibit at TARA Gallery" class="card-image" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Available'" />
-                        <a href="detail_event1.html" class="image-overlay">View Exhibition</a>
+                        <a href="detail_event.html?id=1" class="image-overlay">View Exhibition</a>
                     </div>
                     <div class="card-text">
                         <h2 class="text-gradient">Abstract Expressionism Exhibit</h2>
                         <p class="flex items-center mb-1"><i class="far fa-calendar-alt mr-2"></i>
                             <strong>Tanggal:</strong> 25 Jul 2025
                         </p>
-                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong>
-                            10:00
+                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong> 10:00
                             - 14:00</p>
                         <p class="flex items-center mb-2"><i class="fas fa-map-marker-alt mr-2"></i>
                             <strong>Lokasi:</strong> TARA Gallery
@@ -847,8 +756,7 @@
                         <p class="flex items-center mb-1"><i class="far fa-calendar-alt mr-2"></i>
                             <strong>Tanggal:</strong> 30 Jul 2025
                         </p>
-                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong>
-                            11:00
+                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong> 11:00
                             - 16:00</p>
                         <p class="flex items-center mb-2"><i class="fas fa-map-marker-alt mr-2"></i>
                             <strong>Lokasi:</strong> Downtown Gallery
@@ -869,8 +777,7 @@
                         <p class="flex items-center mb-1"><i class="far fa-calendar-alt mr-2"></i>
                             <strong>Tanggal:</strong> 18 Jul 2025
                         </p>
-                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong>
-                            15:00
+                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong> 15:00
                             - 17:00</p>
                         <p class="flex items-center mb-2"><i class="fas fa-globe mr-2"></i> <strong>Lokasi:</strong>
                             Zoom</p>
@@ -890,13 +797,10 @@
                         <p class="flex items-center mb-1"><i class="far fa-calendar-alt mr-2"></i>
                             <strong>Tanggal:</strong> 28 Jul 2025
                         </p>
-                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong>
-                            09:00
+                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong> 09:00
                             - 17:00</p>
-                        <p class="flex items-center mb-2"><i class="fas fa-building mr-2"></i>
-                            <strong>Lokasi:</strong>
-                            TARA Studio
-                        </p>
+                        <p class="flex items-center mb-2"><i class="fas fa-building mr-2"></i> <strong>Lokasi:</strong>
+                            TARA Studio</p>
                         <p>Captivating moments captured by emerging photographers.</p>
                     </div>
                 </div>
@@ -913,8 +817,7 @@
                         <p class="flex items-center mb-1"><i class="far fa-calendar-alt mr-2"></i>
                             <strong>Tanggal:</strong> 15 Aug 2025
                         </p>
-                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong>
-                            13:00
+                        <p class="flex items-center mb-1"><i class="far fa-clock mr-2"></i> <strong>Jam:</strong> 13:00
                             - 16:00</p>
                         <p class="flex items-center mb-2"><i class="fas fa-globe mr-2"></i> <strong>Lokasi:</strong>
                             Webex</p>
@@ -940,8 +843,7 @@
                     style="font-family: 'Space Grotesk', sans-serif;">
                     TARA<span class="text-yellow-400">●</span>
                 </div>
-                <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web
-                    masa
+                <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
                     depan. Temukan inspirasi. Bangun impresi.</p>
                 <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
                     <a href="#" class="hover:text-black transition" aria-label="Instagram">
@@ -992,8 +894,7 @@
             </div>
             <div class="col-span-2 sm:col-span-1">
                 <h3 class="font-semibold text-black mb-4">Newsletter</h3>
-                <p class="text-neutral-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.
-                </p>
+                <p class="text-neutral-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.</p>
                 <div class="flex items-center gap-2">
                     <input type="email" placeholder="Email Tuan..."
                         class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
@@ -1006,6 +907,30 @@
             © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
         </div>
     </footer>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="fixed inset-0 hidden">
+        <div class="modal-content">
+            <div class="flex justify-end">
+                <button id="closeModalBtn" class="text-black hover:text-black transform hover:scale-110 transition"
+                    aria-label="Close modal">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div id="modalContent" class="text-left">
+                <img id="modalImage" src="" alt="" class="w-full h-40 object-cover rounded-lg mb-3" loading="lazy"
+                    onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Available'" />
+                <h2 id="modalTitle" class="text-xl font-bold font-['Space Grotesk'] mb-3 text-gradient"></h2>
+                <p id="modalDate" class="text-black mb-2 text-sm"></p>
+                <p id="modalTime" class="text-black mb-2 text-sm"></p>
+                <p id="modalLocation" class="text-black mb-3 text-sm"></p>
+                <p id="modalDescription" class="text-black text-sm"></p>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Initialize particles.js
@@ -1038,46 +963,6 @@
                 },
                 retina_detect: true
             });
-        });
-
-        // Mobile Menu Logic
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMobileMenuBtn = document.getElementById('closeMobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('translate-x-full');
-            mobileMenuOverlay.classList.remove('hidden');
-            mobileMenuOverlay.classList.add('open');
-            anime({
-                targets: '#mobileMenu',
-                translateX: [300, 0],
-                easing: 'easeOutQuad',
-                duration: 300
-            });
-        });
-
-        closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-        function closeMobileMenu() {
-            anime({
-                targets: '#mobileMenu',
-                translateX: [0, 300],
-                easing: 'easeOutQuad',
-                duration: 300,
-                complete: () => {
-                    mobileMenu.classList.add('translate-x-full');
-                    mobileMenuOverlay.classList.remove('open');
-                    mobileMenuOverlay.classList.add('hidden');
-                }
-            });
-        }
-
-        // Sidebar Toggle for Mobile
-        document.getElementById('toggleSidebar').addEventListener('click', () => {
-            document.querySelector('#sidebar > div').classList.toggle('hidden');
         });
 
         // Filter Functionality
@@ -1177,12 +1062,92 @@
             });
         });
 
+        // Modal Logic
+        const modal = document.getElementById('eventModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalContent = {
+            1: {
+                title: 'Abstract Expressionism Exhibit',
+                image: 'https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600',
+                date: '25 Jul 2025',
+                time: '10:00 - 14:00',
+                location: 'TARA Gallery',
+                description: 'Explore vibrant abstract works with a guided tour by the curator.'
+            },
+            2: {
+                title: 'Modern Sculpture Exhibit',
+                image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600',
+                date: '30 Jul 2025',
+                time: '11:00 - 16:00',
+                location: 'Downtown Gallery',
+                description: 'Discover bold sculptural forms in an immersive setting.'
+            },
+            3: {
+                title: 'Digital Art Symposium',
+                image: 'https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600',
+                date: '18 Jul 2025',
+                time: '15:00 - 17:00',
+                location: 'Zoom',
+                description: 'Join artists discussing the future of digital creativity.'
+            },
+            4: {
+                title: 'Photography Showcase',
+                image: 'https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600',
+                date: '28 Jul 2025',
+                time: '09:00 - 17:00',
+                location: 'TARA Studio',
+                description: 'Captivating moments captured by emerging photographers.'
+            },
+            5: {
+                title: 'Contemporary Painting Workshop',
+                image: 'https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600',
+                date: '15 Aug 2025',
+                time: '13:00 - 16:00',
+                location: 'Webex',
+                description: 'Learn painting techniques with renowned artists.'
+            }
+        };
+
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.querySelector('.image-overlay').addEventListener('click', (e) => {
+                e.preventDefault();
+                const eventId = card.dataset.eventId;
+                window.location.href = `detail_event.html?id=${eventId}`;
+            });
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modal.classList.remove('show');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        });
+
+        // Modal Keyboard Navigation
+        modal.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+
+   
+
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', () => {
-            gsap.fromTo(".hero",
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.3 }
-            );
             gsap.fromTo(".hero-content",
                 { opacity: 0, scale: 0.9 },
                 { opacity: 1, scale: 1, duration: 1, ease: "power3.out", delay: 0.5 }
@@ -1194,10 +1159,6 @@
             gsap.fromTo(".event-card",
                 { opacity: 0, y: 40 },
                 { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.15, delay: 0.2 }
-            );
-            gsap.fromTo("header",
-                { opacity: 0, y: -30 },
-                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.05 }
             );
             gsap.fromTo("footer",
                 { opacity: 0, y: 30 },
