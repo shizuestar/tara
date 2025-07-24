@@ -9,8 +9,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=family"
+      rel="stylesheet"
+    />
     <style>
       body {
         font-family: "Space Grotesk", sans-serif;
@@ -19,9 +25,13 @@
         box-sizing: border-box;
         overflow-x: hidden;
       }
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         box-sizing: inherit;
       }
+
       #particles-js {
         position: fixed;
         top: 0;
@@ -31,22 +41,27 @@
         z-index: -1;
         opacity: 0.4;
       }
+
       .event-card {
         background: #ffffff;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
         padding: 1rem;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
       }
+
       .event-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       }
+
       .event-detail-container {
         opacity: 0;
         transform: translateY(20px);
       }
+
       .btn-primary {
         padding: 0.5rem 1.5rem;
         border-radius: 9999px;
@@ -56,13 +71,16 @@
         color: #ffffff;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .btn-primary:hover {
         background: #374151;
       }
+
       .btn-primary:disabled {
         background: #6b7280;
         cursor: not-allowed;
       }
+
       .btn-preorder {
         padding: 0.75rem 2rem;
         border-radius: 9999px;
@@ -72,10 +90,12 @@
         color: #111827;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .btn-preorder:hover {
         background: #eab308;
         transform: scale(1.05);
       }
+
       .btn-secondary {
         padding: 0.5rem 1.5rem;
         border-radius: 9999px;
@@ -86,10 +106,12 @@
         color: #374151;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .btn-secondary:hover {
         background: #e5e7eb;
         color: #1f2937;
       }
+
       .event-status {
         display: inline-block;
         padding: 0.3rem 0.8rem;
@@ -97,34 +119,42 @@
         font-size: 0.8rem;
         font-weight: 500;
       }
+
       .event-status.upcoming {
         background: #fef3c7;
         color: #92400e;
       }
+
       .event-status.ongoing {
         background: #d1fae5;
         color: #065f46;
       }
+
       .event-status.past {
         background: #f3f4f6;
         color: #6b7280;
       }
+
       .gallery-container {
         position: relative;
         overflow: hidden;
       }
+
       .gallery-slider {
         display: flex;
         transition: transform 0.5s ease;
       }
+
       .gallery-image {
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         width: 100%;
         flex-shrink: 0;
       }
+
       .gallery-image:hover {
         transform: scale(1.05);
       }
+
       .gallery-btn {
         position: absolute;
         top: 50%;
@@ -136,33 +166,40 @@
         cursor: pointer;
         z-index: 10;
       }
+
       .gallery-btn-left {
         left: 0;
       }
+
       .gallery-btn-right {
         right: 0;
       }
+
       .map-container {
         border-radius: 0.75rem;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         border: 1px solid #e5e7eb;
       }
+
       .countdown-timer {
         font-family: "Space Grotesk", sans-serif;
         font-size: 1.2rem;
         color: #111827;
       }
+
       .organizer-info {
         border-top: 1px solid #e5e7eb;
         padding-top: 1.5rem;
       }
+
       .ticket-info {
         background: #f9fafb;
         padding: 1rem;
         border-radius: 0.5rem;
         border: 1px solid #e5e7eb;
       }
+
       .tag {
         display: inline-block;
         padding: 0.3rem 0.8rem;
@@ -175,18 +212,22 @@
         margin-right: 0.5rem;
         transition: background 0.3s ease;
       }
+
       .tag:hover {
         background: #e5e7eb;
       }
+
       .comment-section {
         border-top: 1px solid #e5e7eb;
         padding-top: 1.5rem;
       }
+
       .comment-form {
         display: flex;
         flex-direction: column;
         gap: 1rem;
       }
+
       .comment-form textarea {
         border: 1px solid #e5e7eb;
         border-radius: 0.5rem;
@@ -195,10 +236,12 @@
         font-family: "Space Grotesk", sans-serif;
         color: #111827;
       }
+
       .comment {
         border-bottom: 1px solid #e5e7eb;
         padding: 1rem 0;
       }
+
       .social-share-btn {
         padding: 0.5rem 1rem;
         border-radius: 9999px;
@@ -209,11 +252,14 @@
         color: #374151;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .social-share-btn:hover {
         background: #e5e7eb;
         color: #1f2937;
       }
-      #paymentModal, #preorderModal {
+
+      #paymentModal,
+      #preorderModal {
         position: fixed;
         top: 0;
         left: 0;
@@ -225,6 +271,7 @@
         justify-content: center;
         z-index: 50;
       }
+
       .modal-content {
         background: #ffffff;
         border: 1px solid #e5e7eb;
@@ -234,19 +281,23 @@
         width: 90%;
         position: relative;
       }
+
       .modal-content h2 {
         font-size: 1.5rem;
         font-weight: 600;
         color: #111827;
         margin-bottom: 1rem;
       }
+
       .modal-content label {
         font-size: 0.9rem;
         color: #111827;
         margin-bottom: 0.5rem;
         display: block;
       }
-      .modal-content select, .modal-content input {
+
+      .modal-content select,
+      .modal-content input {
         width: 100%;
         padding: 0.5rem;
         border: 1px solid #e5e7eb;
@@ -255,11 +306,14 @@
         color: #111827;
         margin-bottom: 1rem;
       }
-      .modal-content select:focus, .modal-content input:focus {
+
+      .modal-content select:focus,
+      .modal-content input:focus {
         outline: none;
         border-color: #111827;
         box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.2);
       }
+
       .modal-content .close-modal {
         position: absolute;
         top: 1rem;
@@ -270,140 +324,425 @@
         color: #111827;
         cursor: pointer;
       }
+
       .modal-content .total-price {
         font-size: 1.1rem;
         font-weight: 500;
         color: #111827;
         margin-bottom: 1rem;
       }
+
       @media (max-width: 767px) {
         .event-detail-container {
           padding: 1rem;
         }
-        .btn-primary, .btn-secondary, .social-share-btn {
+
+        .btn-primary,
+        .btn-secondary,
+        .social-share-btn {
           font-size: 0.75rem;
           padding: 0.4rem 1rem;
         }
+
         .btn-preorder {
           font-size: 0.85rem;
           padding: 0.5rem 1.5rem;
         }
-        .event-status, .tag {
+
+        .event-status,
+        .tag {
           font-size: 0.7rem;
         }
+
         .countdown-timer {
           font-size: 1rem;
         }
+
         .modal-content {
           padding: 1rem;
           width: 95%;
         }
+
         .modal-content h2 {
           font-size: 1.2rem;
         }
-        .modal-content select, .modal-content input {
+
+        .modal-content select,
+        .modal-content input {
           font-size: 0.8rem;
         }
       }
+
+      /* notification */
+      .notification-bar {
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .notification-bar:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .notification-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+        position: relative;
+      }
+
+      .notification-icon:hover {
+        transform: scale(1.2);
+        color: #111827;
+      }
+
+      .notification-modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        max-width: 400px;
+        background: #ffffff;
+        border-left: 1px solid #e5e7eb;
+        z-index: 50;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .notification-modal.open {
+        transform: translateX(0);
+      }
+
+      .notification-modal .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #374151;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .notification-modal .close-btn:hover {
+        transform: scale(1.2);
+      }
+
+      .notification-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .notification-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .notification-card.unread {
+        background: #f3f4f6;
+      }
+
+      .notification-card p {
+        font-size: 0.9rem;
+        color: #4b5563;
+      }
+
+      .notification-card .time {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #111827;
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 9999px;
+        padding: 0.1rem 0.5rem;
+      }
+
+      .sidebar-notification-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+      }
+
+      /* notif end */
+
+      .nav-link {
+        position: relative;
+        transition: color 0.3s;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #000000;
+        transition: width 0.3s;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-link.active {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
     </style>
   </head>
+
   <body class="relative overflow-x-hidden">
     <div id="particles-js"></div>
-
-    <!-- Header -->
-    <header class="py-6 px-8 flex justify-between items-center bg-white border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
-      <div class="text-2xl font-bold uppercase tracking-wide">
-        TARA<span class="text-[#facc15]">●</span>
-      </div>
-      <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
-        <a href="/" class="hover:text-gray-900 transition">Beranda</a>
-        <a href="/eksplor" class="hover:text-gray-900 transition">Eksplor</a>
-        <a href="/komunitas" class="hover:text-gray-900 transition">Komunitas</a>
-        <a href="/proyek" class="hover:text-gray-900 transition">Proyek</a>
-        <a href="/blog" class="hover:text-gray-900 transition">Blog</a>
-        <a href="/agenda" class="hover:text-gray-900 transition font-semibold">Agenda</a>
-        <a href="/profil" class="hover:text-gray-900 transition">Profil</a>
-      </nav>
-      <div class="flex items-center gap-4">
-        <input type="text" placeholder="Cari event..." class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 transition" />
-        <a href="/login" class="btn-primary">Login</a>
-        <button id="mobileMenuBtn" class="md:hidden text-gray-900 focus:outline-none" aria-label="Open mobile menu">
-          <i class="fas fa-bars text-lg"></i>
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+      <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+      <div class="p-6">
+        <h2
+          class="text-2xl font-bold text-black mb-4"
+          style="font-family: 'Space Grotesk', sans-serif"
+        >
+          Notifikasi
+        </h2>
+        <div class="flex gap-2 mb-4">
+          <button class="filter-btn active" data-filter="all">Semua</button>
+          <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+        </div>
+        <button
+          id="mark-all-read"
+          class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4"
+        >
+          Tandai Semua Dibaca
         </button>
+        <div id="notification-list" class="space-y-4"></div>
       </div>
+    </div>
+    <!-- Header -->
+    <header
+      class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full"
+    >
+      <nav
+        class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm"
+      >
+        <div class="max-w-7xl mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+              <div class="relative">
+                <span class="text-yellow-400 text-2xl">●</span>
+                <span
+                  class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow"
+                  >●</span
+                >
+              </div>
+            </div>
+            <!-- Search Bar -->
+            <div class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
+              <input
+                type="text"
+                placeholder="Cari..."
+                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm"
+              />
+              <i
+                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              ></i>
+            </div>
+            <!-- Burger Icon Mobile -->
+            <button
+              aria-label="Mobile"
+              id="burger-toggle"
+              class="md:hidden focus:outline-none z-[60] relative"
+            >
+              <svg
+                class="w-7 h-7 text-gray-900"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <!-- Menu Navigasi -->
+            <div
+              id="nav-menu"
+              class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300"
+            >
+              <a
+                href="/index.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Beranda</a
+              >
+              <a
+                href="/galeri.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Galeri</a
+              >
+              <a
+                href="/komunitas.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Komunitas</a
+              >
+              <a
+                href="/proyek.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Proyek</a
+              >
+              <a
+                href="/blog.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Blog</a
+              >
+              <a
+                href="/agenda.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Agenda</a
+              >
+
+              <div
+                class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0"
+              >
+                <!-- Log In -->
+                <a
+                  href="/login"
+                  class="px-5 py-2.5 rounded-full border border-black text-black bg-white hover:bg-black hover:text-white transition duration-300 shadow-sm hover:shadow-lg text-sm font-semibold tracking-wide text-center w-full md:w-auto"
+                >
+                  Log In
+                </a>
+
+                <!-- Sign Up -->
+                <a
+                  href="/register"
+                  class="px-5 py-2.5 rounded-full bg-black text-white border border-black hover:bg-white hover:text-black transition duration-300 shadow-sm hover:shadow-lg text-sm font-semibold tracking-wide text-center w-full md:w-auto"
+                >
+                  Sign Up
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden opacity-0 transition-opacity duration-300"></div>
-    <div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-white border-l border-gray-200 shadow-lg z-50 transform translate-x-full transition-transform duration-300 md:hidden">
-      <div class="p-4 flex justify-end">
-        <button id="closeMobileMenuBtn" class="text-gray-900 focus:outline-none" aria-label="Close mobile menu">
-          <i class="fas fa-times text-lg"></i>
-        </button>
-      </div>
-      <nav class="flex flex-col p-4 space-y-4">
-        <a href="/" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Beranda</a>
-        <a href="/eksplor" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Eksplor</a>
-        <a href="/komunitas" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Komunitas</a>
-        <a href="/proyek" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Proyek</a>
-        <a href="/blog" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Blog</a>
-        <a href="/agenda" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Agenda</a>
-        <a href="/profil" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Profil</a>
-        <hr class="border-gray-200" />
-        <a href="/login" class="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">Login</a>
-      </nav>
-    </div>
+    <script>
+      const burger = document.getElementById("burger-toggle");
+      const navMenu = document.getElementById("nav-menu");
+
+      burger.addEventListener("click", () => {
+        navMenu.classList.toggle("hidden");
+      });
+
+      function toggleNotifications() {
+        const modal = document.getElementById("notification-modal");
+        const isOpen = modal.classList.contains("open");
+        modal.classList.toggle("open");
+        gsap.to(modal, {
+          x: isOpen ? "100%" : "0%",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        if (!isOpen) {
+          renderNotifications();
+        }
+      }
+      // Set active navigation link
+      const currentPath =
+        window.location.pathname.split("/").pop() || "index.html";
+      const isBlogDetail =
+        currentPath === "agenda.html" || window.location.search.includes("id="); // Check if on blog detail page
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        const href = link.getAttribute("href").split("/").pop();
+        if (href === currentPath || (href === "agenda.html" && isBlogDetail)) {
+          link.classList.add("active");
+        }
+      });
+    </script>
 
     <!-- Payment Modal -->
-    <div id="paymentModal">
+    <div
+      id="paymentModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      style="display: none"
+    >
       <div class="modal-content">
-        <button class="close-modal" aria-label="Close payment modal">
-          <i class="fas fa-times"></i>
-        </button>
+        <button class="close-modal"><i class="fas fa-times"></i></button>
         <h2>Pembayaran Tiket</h2>
-        <div id="paymentForm">
-          <label for="ticketQuantity">Jumlah Tiket</label>
-          <select id="ticketQuantity" name="ticketQuantity"></select>
-          <label for="paymentMethod">Metode Pembayaran</label>
-          <select id="paymentMethod" name="paymentMethod">
-            <option value="" disabled selected>Pilih metode pembayaran</option>
-            <option value="credit-card">Kartu Kredit</option>
-            <option value="bank-transfer">Transfer Bank</option>
-            <option value="e-wallet">E-Wallet</option>
-          </select>
-          <div id="paymentDetails"></div>
-          <div class="total-price">Total: Rp 0</div>
-          <div class="flex gap-4">
-            <button id="payNowBtn" class="btn-primary" disabled>Bayar Sekarang</button>
-            <button id="cancelPaymentBtn" class="btn-secondary">Batal</button>
-          </div>
+        <label for="ticketQuantity">Jumlah Tiket</label>
+        <select id="ticketQuantity">
+          <option value="" disabled selected>Pilih jumlah tiket</option>
+        </select>
+        <label for="paymentMethod">Metode Pembayaran</label>
+        <select id="paymentMethod">
+          <option value="" disabled selected>Pilih metode</option>
+          <option value="credit-card">Kartu Kredit</option>
+          <option value="bank-transfer">Transfer Bank</option>
+          <option value="e-wallet">E-Wallet</option>
+        </select>
+        <div id="paymentDetails"></div>
+        <div class="total-price">Total: Rp 0</div>
+        <div class="flex gap-4">
+          <button id="payNowBtn" class="btn-primary" disabled>
+            Bayar Sekarang
+          </button>
+          <button id="cancelPaymentBtn" class="btn-secondary">Batal</button>
         </div>
       </div>
     </div>
 
     <!-- Pre-Order Modal -->
-    <div id="preorderModal">
+    <div
+      id="preorderModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      style="display: none"
+    >
       <div class="modal-content">
-        <button class="close-modal" aria-label="Close pre-order modal">
-          <i class="fas fa-times"></i>
-        </button>
+        <button class="close-modal"><i class="fas fa-times"></i></button>
         <h2>Pre-Order Tiket</h2>
-        <div id="preorderForm">
-          <label for="preorderEmail">Email</label>
-          <input type="email" id="preorderEmail" placeholder="Masukkan email Tuan" required />
-          <label for="preorderQuantity">Jumlah Tiket</label>
-          <select id="preorderQuantity" name="preorderQuantity">
-            <option value="" disabled selected>Pilih jumlah tiket</option>
-            <option value="1">1 Tiket</option>
-            <option value="2">2 Tiket</option>
-            <option value="3">3 Tiket</option>
-            <option value="4">4 Tiket</option>
-            <option value="5">5 Tiket</option>
-          </select>
-          <div class="flex gap-4">
-            <button id="submitPreorderBtn" class="btn-primary" disabled>Pre-Order Sekarang</button>
-            <button id="cancelPreorderBtn" class="btn-secondary">Batal</button>
-          </div>
+        <label for="preorderEmail">Email</label>
+        <input
+          type="email"
+          id="preorderEmail"
+          placeholder="Masukkan email Tuan"
+        />
+        <label for="preorderQuantity">Jumlah Tiket</label>
+        <select id="preorderQuantity">
+          <option value="" disabled selected>Pilih jumlah tiket</option>
+          <option value="1">1 Tiket</option>
+          <option value="2">2 Tiket</option>
+          <option value="3">3 Tiket</option>
+          <option value="4">4 Tiket</option>
+          <option value="5">5 Tiket</option>
+        </select>
+        <div class="flex gap-4">
+          <button id="submitPreorderBtn" class="btn-primary" disabled>
+            Pre-Order Sekarang
+          </button>
+          <button id="cancelPreorderBtn" class="btn-secondary">Batal</button>
         </div>
       </div>
     </div>
@@ -411,35 +750,52 @@
     <!-- Main Content -->
     <main class="pt-24 pb-12 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="event-detail-container bg-white p-6 md:p-10 rounded-lg border border-gray-200 shadow-xl">
-          <div id="event-detail-content" class="flex flex-col md:flex-row gap-6">
+        <div
+          class="event-detail-container bg-white p-6 md:p-10 rounded-lg border border-gray-200 shadow-xl"
+        >
+          <div
+            id="event-detail-content"
+            class="flex flex-col md:flex-row gap-6"
+          >
             <p>Memuat detail event...</p>
           </div>
           <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/agenda" class="btn-primary inline-flex items-center">
               <i class="fas fa-arrow-left mr-2"></i> Kembali ke Daftar Event
             </a>
-            <button id="shareBtn" class="btn-secondary inline-flex items-center">
+            <button
+              id="shareBtn"
+              class="btn-secondary inline-flex items-center"
+            >
               <i class="fas fa-share-alt mr-2"></i> Bagikan
             </button>
-            <button id="bookmarkBtn" class="btn-secondary inline-flex items-center">
+            <button
+              id="bookmarkBtn"
+              class="btn-secondary inline-flex items-center"
+            >
               <i class="far fa-bookmark mr-2"></i> Bookmark
             </button>
           </div>
           <div id="social-share" class="mt-4 flex gap-4 justify-center"></div>
           <!-- Additional Event Info -->
           <div id="event-additional-info" class="mt-10">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Tambahan</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+              Informasi Tambahan
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div id="event-map" class="map-container"></div>
               <div id="event-organizer-ticket" class="space-y-6">
                 <div id="event-countdown"></div>
                 <div class="organizer-info">
-                  <h3 class="text-lg font-semibold text-gray-900 mb-2">Penyelenggara</h3>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                    Penyelenggara
+                  </h3>
                   <p class="text-gray-700"></p>
                 </div>
                 <div class="ticket-info">
-                  <h3 class="text-lg font-semibold text-gray-900 mb-2">Harga Tiket</h3>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                    Harga Tiket
+                  </h3>
                   <p class="text-gray-700"></p>
                 </div>
               </div>
@@ -450,20 +806,31 @@
             </div>
           </div>
           <!-- Comment Section -->
-<div id="comment-section" class="mt-10 comment-section">
-  <h2 class="text-2xl font-bold text-gray-900 mb-6">Komentar</h2>
-  <div class="comment-form">
-    <textarea id="commentInput" rows="4" placeholder="Tulis komentar Tuan..." class="w-full text-gray-700"></textarea>
-    <button id="submitComment" class="bg-gray-100 text-gray-700 font-semibold text-sm py-2 px-5 rounded-full hover:bg-gray-200 hover:text-gray-900 transition-all duration-300 ease-in-out">
-      <i class="fas fa-comment mr-2"></i> Kirim Komentar
-    </button>
-  </div>
-  <div id="comments-list" class="mt-6"></div>
-</div>
+          <div id="comment-section" class="mt-10 comment-section">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Komentar</h2>
+            <div class="comment-form">
+              <textarea
+                id="commentInput"
+                rows="4"
+                placeholder="Tulis komentar Tuan..."
+                class="w-full text-gray-700"
+              ></textarea>
+              <button
+                id="submitComment"
+                class="bg-gray-100 text-gray-700 font-semibold text-sm py-2 px-5 rounded-full hover:bg-gray-200 hover:text-gray-900 transition-all duration-300 ease-in-out"
+              >
+                <i class="fas fa-comment mr-2"></i> Kirim Komentar
+              </button>
+            </div>
+            <div id="comments-list" class="mt-6"></div>
+          </div>
           <!-- Related Events -->
           <div id="related-events" class="mt-12">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Event Terkait</h2>
-            <div id="related-events-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div
+              id="related-events-list"
+              class="grid grid-cols-1 md:grid-cols-3 gap-6"
+            ></div>
           </div>
         </div>
       </div>
@@ -471,1023 +838,1234 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
-      <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div
+        class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10"
+      >
         <div class="col-span-1 sm:col-span-2">
           <div class="text-2xl font-bold tracking-normal uppercase">
             TARA<span class="text-[#facc15]">●</span>
           </div>
-          <p class="mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+          <p class="mt-4">
+            Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
+            depan.
+          </p>
           <div class="flex gap-4 mt-4 text-gray-700 text-lg">
-            <a href="#" class="hover:text-gray-900 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-gray-900 transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="hover:text-gray-900 transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="hover:text-gray-900 transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
-            <a href="#" class="hover:text-gray-900 transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+            <a
+              href="#"
+              class="hover:text-gray-900 transition"
+              aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="#"
+              class="hover:text-gray-900 transition"
+              aria-label="Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="#"
+              class="hover:text-gray-900 transition"
+              aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a
+              href="#"
+              class="hover:text-gray-900 transition"
+              aria-label="Dribbble"
+              ><i class="fab fa-dribbble"></i
+            ></a>
+            <a
+              href="#"
+              class="hover:text-gray-900 transition"
+              aria-label="Behance"
+              ><i class="fab fa-behance"></i
+            ></a>
           </div>
         </div>
         <div>
           <h3 class="font-semibold text-gray-900 mb-4 uppercase">Navigasi</h3>
           <ul class="space-y-2">
-            <li><a href="/" class="hover:text-gray-900 transition">Beranda</a></li>
-            <li><a href="/eksplor" class="hover:text-gray-900 transition">Eksplor Karya</a></li>
-            <li><a href="/komunitas" class="hover:text-gray-900 transition">Komunitas</a></li>
-            <li><a href="/proyek" class="hover:text-gray-900 transition">Proyek Sosial</a></li>
-            <li><a href="/blog" class="hover:text-gray-900 transition">Blog</a></li>
-            <li><a href="/agenda" class="hover:text-gray-900 transition">Agenda</a></li>
+            <li>
+              <a href="/" class="hover:text-gray-900 transition">Beranda</a>
+            </li>
+            <li>
+              <a href="/eksplor" class="hover:text-gray-900 transition"
+                >Eksplor Karya</a
+              >
+            </li>
+            <li>
+              <a href="/komunitas" class="hover:text-gray-900 transition"
+                >Komunitas</a
+              >
+            </li>
+            <li>
+              <a href="/proyek" class="hover:text-gray-900 transition"
+                >Proyek Sosial</a
+              >
+            </li>
+            <li>
+              <a href="/blog" class="hover:text-gray-900 transition">Blog</a>
+            </li>
+            <li>
+              <a href="/agenda" class="hover:text-gray-900 transition"
+                >Agenda</a
+              >
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="font-semibold text-gray-900 mb-4 uppercase">Eksplorasi</h3>
           <ul class="space-y-2">
-            <li><a href="/eksplor?kategori=painting" class="hover:text-gray-900 transition">Painting</a></li>
-            <li><a href="/eksplor?kategori=sculpture" class="hover:text-gray-900 transition">Sculpture</a></li>
-            <li><a href="/eksplor?kategori=digital-art" class="hover:text-gray-900 transition">Digital Art</a></li>
-            <li><a href="/eksplor?kategori=photography" class="hover:text-gray-900 transition">Photography</a></li>
+            <li>
+              <a
+                href="/eksplor?kategori=painting"
+                class="hover:text-gray-900 transition"
+                >Painting</a
+              >
+            </li>
+            <li>
+              <a
+                href="/eksplor?kategori=sculpture"
+                class="hover:text-gray-900 transition"
+                >Sculpture</a
+              >
+            </li>
+            <li>
+              <a
+                href="/eksplor?kategori=digital-art"
+                class="hover:text-gray-900 transition"
+                >Digital Art</a
+              >
+            </li>
+            <li>
+              <a
+                href="/eksplor?kategori=photography"
+                class="hover:text-gray-900 transition"
+                >Photography</a
+              >
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="font-semibold text-gray-900 mb-4 uppercase">Kolaborasi</h3>
           <ul class="space-y-2">
-            <li><a href="/proyek/submit" class="hover:text-gray-900 transition">Submit Karya</a></li>
-            <li><a href="/komunitas/gabung" class="hover:text-gray-900 transition">Gabung Komunitas</a></li>
-            <li><a href="/proyek/buat" class="hover:text-gray-900 transition">Buat Proyek</a></li>
-            <li><a href="/kontak" class="hover:text-gray-900 transition">Kontak</a></li>
+            <li>
+              <a href="/proyek/submit" class="hover:text-gray-900 transition"
+                >Submit Karya</a
+              >
+            </li>
+            <li>
+              <a href="/komunitas/gabung" class="hover:text-gray-900 transition"
+                >Gabung Komunitas</a
+              >
+            </li>
+            <li>
+              <a href="/proyek/buat" class="hover:text-gray-900 transition"
+                >Buat Proyek</a
+              >
+            </li>
+            <li>
+              <a href="/kontak" class="hover:text-gray-900 transition"
+                >Kontak</a
+              >
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="font-semibold text-gray-900 mb-4 uppercase">Newsletter</h3>
           <p class="mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
           <div class="flex items-center gap-2">
-            <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900" />
+            <input
+              type="email"
+              placeholder="Email Tuan..."
+              class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            />
             <button class="btn-primary">Kirim</button>
           </div>
         </div>
       </div>
-      <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+      <div
+        class="border-t border-gray-200 text-center py-4 text-xs text-gray-700"
+      >
         © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
-        <a href="/tentang" class="hover:text-gray-900 transition">Tentang Kami</a> |
-        <a href="/ketentuan" class="hover:text-gray-900 transition">Ketentuan Layanan</a> |
+        <a href="/tentang" class="hover:text-gray-900 transition"
+          >Tentang Kami</a
+        >
+        |
+        <a href="/ketentuan" class="hover:text-gray-900 transition"
+          >Ketentuan Layanan</a
+        >
+        |
         <a href="/privasi" class="hover:text-gray-900 transition">Privasi</a> |
         <a href="/bantuan" class="hover:text-gray-900 transition">Bantuan</a>
       </div>
     </footer>
 
-<script>
-// Data Event
-const eventsData = [
-  {
-    id: 1,
-    title: "Abstract Expressionism Exhibit",
-    image: "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
-    images: [
-      "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
-      "https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=compress&cs=tinysrgb&w=600",
-      "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
-    ],
-    date: "2025-07-25",
-    time: "10:00 - 14:00 WIB",
-    location: "TARA Gallery, Jakarta",
-    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.309070928172!2d106.82199931525864!3d-6.222999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3f8a0a8a8e5%3A0x4f6f8a8e5a8a8e5!2sJakarta%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
-    description: "Explore vibrant abstract works with a guided tour by the curator. This exhibition showcases bold colors and dynamic forms from leading contemporary artists.",
-    category: "painting",
-    registrationLink: "https://example.com/register-painting",
-    organizer: {
-      name: "TARA Art Collective",
-      email: "events@tara-art.id",
-      profileLink: "/organizer/tara-art",
-    },
-    ticketPrice: "Rp 100.000",
-    ticketStock: 50,
-    tags: ["#Painting", "#AbstractArt", "#Exhibition"],
-  },
-  {
-    id: 2,
-    title: "Modern Sculpture Exhibit",
-    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600",
-    images: [
-      "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600",
-      "https://images.unsplash.com/photo-1541343672885-9be0a6db1d2a?auto=compress&cs=tinysrgb&w=600",
-    ],
-    date: "2025-07-30",
-    time: "11:00 - 16:00 WIB",
-    location: "Downtown Gallery, Surabaya",
-    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.692071928172!2d112.73799931525864!3d-7.261999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f8a8e5a8a8e5%3A0x4f6f8a8e5a8a8e5!2sSurabaya%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
-    description: "Discover bold sculptural forms in an immersive setting, featuring works by emerging and established sculptors.",
-    category: "sculpture",
-    registrationLink: "https://example.com/register-sculpture",
-    organizer: {
-      name: "Surabaya Art Hub",
-      email: "info@surabaya-arthub.id",
-      profileLink: "/organizer/surabaya-arthub",
-    },
-    ticketPrice: "Rp 150.000",
-    ticketStock: 20,
-    tags: ["#Sculpture", "#ModernArt", "#Exhibition"],
-  },
-  {
-    id: 3,
-    title: "Digital Art Symposium",
-    image: "https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600",
-    images: ["https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600"],
-    date: "2025-07-22",
-    time: "15:00 - 17:00 WIB",
-    location: "Online (via Zoom)",
-    mapUrl: null,
-    description: "Join artists discussing the future of digital creativity, exploring new tools and techniques in digital art.",
-    category: "digital-art",
-    registrationLink: "https://example.com/register-digitalart",
-    organizer: {
-      name: "Digital Art Indonesia",
-      email: "events@digitalart.id",
-      profileLink: "/organizer/digital-art",
-    },
-    ticketPrice: "Gratis",
-    ticketStock: 100,
-    tags: ["#DigitalArt", "#Symposium", "#Online"],
-  },
-  {
-    id: 4,
-    title: "Photography Showcase",
-    image: "https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600",
-    images: [
-      "https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600",
-      "https://images.unsplash.com/photo-1509023464722-18d996393ca8?auto=compress&cs=tinysrgb&w=600",
-    ],
-    date: "2025-07-28",
-    time: "09:00 - 17:00 WIB",
-    location: "TARA Studio, Yogyakarta",
-    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.692071928172!2d110.35799931525864!3d-7.781999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a578a8e5a8e5%3A0x4f6f8a8e5a8a8e5!2sYogyakarta%20Tech%20Hub!5e0!3m2!1sen!2sid!4v1669999999999",
-    description: "Captivating moments captured by emerging photographers, showcasing diverse perspectives and techniques.",
-    category: "photography",
-    registrationLink: "https://example.com/register-photography",
-    organizer: {
-      name: "Yogyakarta Photo Collective",
-      email: "contact@yogya-photo.id",
-      profileLink: "/organizer/yogya-photo",
-    },
-    ticketPrice: "Rp 120.000",
-    ticketStock: 0,
-    tags: ["#Photography", "#Showcase", "#Art"],
-  },
-  {
-    id: 5,
-    title: "Contemporary Painting Workshop",
-    image: "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
-    images: [
-      "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
-      "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
-    ],
-    date: "2025-08-15",
-    time: "13:00 - 16:00 WIB",
-    location: "Online (via Webex)",
-    mapUrl: null,
-    description: "Learn painting techniques with renowned artists in this interactive online workshop.",
-    category: "painting",
-    registrationLink: "https://example.com/register-painting-workshop",
-    organizer: {
-      name: "TARA Art Collective",
-      email: "events@tara-art.id",
-      profileLink: "/organizer/tara-art",
-    },
-    ticketPrice: "Rp 80.000",
-    ticketStock: 30,
-    tags: ["#Painting", "#Workshop", "#Online"],
-  },
-];
+    <script>
+      // Data Event
+      const eventsData = [
+        {
+          id: 1,
+          title: "Abstract Expressionism Exhibit",
+          image:
+            "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
+          images: [
+            "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
+            "https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=compress&cs=tinysrgb&w=600",
+            "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
+          ],
+          date: "2025-07-25",
+          time: "10:00 - 14:00 WIB",
+          location: "TARA Gallery, Jakarta",
+          mapUrl:
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.309070928172!2d106.82199931525864!3d-6.222999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3f8a0a8a8e5%3A0x4f6f8a8e5a8a8e5!2sJakarta%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
+          description:
+            "Explore vibrant abstract works with a guided tour by the curator. This exhibition showcases bold colors and dynamic forms from leading contemporary artists.",
+          category: "painting",
+          registrationLink: "https://example.com/register-painting",
+          organizer: {
+            name: "TARA Art Collective",
+            email: "events@tara-art.id",
+            profileLink: "/organizer/tara-art",
+          },
+          ticketPrice: "Rp 100.000",
+          ticketStock: 50,
+          tags: ["#Painting", "#AbstractArt", "#Exhibition"],
+        },
+        {
+          id: 2,
+          title: "Modern Sculpture Exhibit",
+          image:
+            "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600",
+          images: [
+            "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=compress&cs=tinysrgb&w=600",
+            "https://images.unsplash.com/photo-1541343672885-9be0a6db1d2a?auto=compress&cs=tinysrgb&w=600",
+          ],
+          date: "2025-07-30",
+          time: "11:00 - 16:00 WIB",
+          location: "Downtown Gallery, Surabaya",
+          mapUrl:
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.692071928172!2d112.73799931525864!3d-7.261999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f8a8e5a8a8e5%3A0x4f6f8a8e5a8a8e5!2sSurabaya%20Convention%20Center!5e0!3m2!1sen!2sid!4v1669999999999",
+          description:
+            "Discover bold sculptural forms in an immersive setting, featuring works by emerging and established sculptors.",
+          category: "sculpture",
+          registrationLink: "https://example.com/register-sculpture",
+          organizer: {
+            name: "Surabaya Art Hub",
+            email: "info@surabaya-arthub.id",
+            profileLink: "/organizer/surabaya-arthub",
+          },
+          ticketPrice: "Rp 150.000",
+          ticketStock: 20,
+          tags: ["#Sculpture", "#ModernArt", "#Exhibition"],
+        },
+        {
+          id: 3,
+          title: "Digital Art Symposium",
+          image:
+            "https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600",
+          images: [
+            "https://images.unsplash.com/photo-1618005182380-4c0e9b451873?auto=compress&cs=tinysrgb&w=600",
+          ],
+          date: "2025-07-22",
+          time: "15:00 - 17:00 WIB",
+          location: "Online (via Zoom)",
+          mapUrl: null,
+          description:
+            "Join artists discussing the future of digital creativity, exploring new tools and techniques in digital art.",
+          category: "digital-art",
+          registrationLink: "https://example.com/register-digitalart",
+          organizer: {
+            name: "Digital Art Indonesia",
+            email: "events@digitalart.id",
+            profileLink: "/organizer/digital-art",
+          },
+          ticketPrice: "Gratis",
+          ticketStock: 100,
+          tags: ["#DigitalArt", "#Symposium", "#Online"],
+        },
+        {
+          id: 4,
+          title: "Photography Showcase",
+          image:
+            "https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600",
+          images: [
+            "https://images.unsplash.com/photo-1558978441-5e2b1b4d8188?auto=compress&cs=tinysrgb&w=600",
+            "https://images.unsplash.com/photo-1509023464722-18d996393ca8?auto=compress&cs=tinysrgb&w=600",
+          ],
+          date: "2025-07-28",
+          time: "09:00 - 17:00 WIB",
+          location: "TARA Studio, Yogyakarta",
+          mapUrl:
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.692071928172!2d110.35799931525864!3d-7.781999995493392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a578a8e5a8e5%3A0x4f6f8a8e5a8a8e5!2sYogyakarta%20Tech%20Hub!5e0!3m2!1sen!2sid!4v1669999999999",
+          description:
+            "Captivating moments captured by emerging photographers, showcasing diverse perspectives and techniques.",
+          category: "photography",
+          registrationLink: "https://example.com/register-photography",
+          organizer: {
+            name: "Yogyakarta Photo Collective",
+            email: "contact@yogya-photo.id",
+            profileLink: "/organizer/yogya-photo",
+          },
+          ticketPrice: "Rp 120.000",
+          ticketStock: 0,
+          tags: ["#Photography", "#Showcase", "#Art"],
+        },
+        {
+          id: 5,
+          title: "Contemporary Painting Workshop",
+          image:
+            "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
+          images: [
+            "https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600",
+            "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=600",
+          ],
+          date: "2025-08-15",
+          time: "13:00 - 16:00 WIB",
+          location: "Online (via Webex)",
+          mapUrl: null,
+          description:
+            "Learn painting techniques with renowned artists in this interactive online workshop.",
+          category: "painting",
+          registrationLink: "https://example.com/register-painting-workshop",
+          organizer: {
+            name: "TARA Art Collective",
+            email: "events@tara-art.id",
+            profileLink: "/organizer/tara-art",
+          },
+          ticketPrice: "Rp 80.000",
+          ticketStock: 30,
+          tags: ["#Painting", "#Workshop", "#Online"],
+        },
+      ];
 
-// Mobile Menu Logic
-const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-const closeMobileMenuBtn = document.getElementById("closeMobileMenuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
-
-mobileMenuBtn.addEventListener("click", () => {
-  mobileMenu.classList.remove("translate-x-full");
-  mobileMenuOverlay.classList.remove("hidden");
-  mobileMenuOverlay.classList.add("opacity-100");
-  anime({
-    targets: "#mobileMenu",
-    translateX: [300, 0],
-    easing: "easeOutQuad",
-    duration: 300,
-  });
-});
-
-closeMobileMenuBtn.addEventListener("click", () => {
-  closeMobileMenu();
-});
-
-mobileMenuOverlay.addEventListener("click", () => {
-  closeMobileMenu();
-});
-
-function closeMobileMenu() {
-  anime({
-    targets: "#mobileMenu",
-    translateX: [0, 300],
-    easing: "easeOutQuad",
-    duration: 300,
-    complete: () => {
-      mobileMenu.classList.add("translate-x-full");
-      mobileMenuOverlay.classList.remove("opacity-100");
-      mobileMenuOverlay.classList.add("hidden");
-    },
-  });
-}
-
-// Get Event ID from URL
-function getEventIdFromUrl() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-    if (isNaN(id) || id < 1) {
-      console.warn("Invalid or missing event ID in URL");
-      return null;
-    }
-    return id;
-  } catch (error) {
-    console.error("Error parsing URL parameters:", error);
-    return null;
-  }
-}
-
-// Determine Event Status
-function getEventStatus(eventDate) {
-  try {
-    const today = new Date(); // Use current time
-    const eventDateObj = new Date(eventDate);
-    if (eventDateObj > today) return { text: "Upcoming", class: "upcoming" };
-    if (eventDateObj.toDateString() === today.toDateString())
-      return { text: "Ongoing", class: "ongoing" };
-    return { text: "Past", class: "past" };
-  } catch (error) {
-    console.error("Error determining event status:", error);
-    return { text: "Unknown", class: "past" };
-  }
-}
-
-// Determine Ticket Availability
-function getTicketAvailability(stock, isUpcoming) {
-  if (stock === 0 && isUpcoming) return { text: "Sold Out", class: "past" };
-  if (stock === 0) return { text: "Sold Out", class: "past" };
-  if (stock <= 10) return { text: "Limited", class: "upcoming" };
-  return { text: "Available", class: "ongoing" };
-}
-
-// Countdown Timer
-function startCountdown(eventDate, elementId) {
-  try {
-    const eventDateObj = new Date(eventDate);
-    const today = new Date(); // Use current time
-    if (eventDateObj <= today)
-      return '<p class="text-gray-700">Event telah dimulai!</p>';
-
-    const countdown = setInterval(() => {
-      const now = new Date();
-      const distance = eventDateObj - now;
-      if (distance < 0) {
-        clearInterval(countdown);
-        document.getElementById(elementId).innerHTML =
-          '<p class="text-gray-700">Event telah dimulai!</p>';
-        return;
-      }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById(elementId).innerHTML = `
-        <div class="countdown-timer">
-          <span>${days} Hari </span>
-          <span>${hours} Jam </span>
-          <span>${minutes} Menit </span>
-          <span>${seconds} Detik</span>
-        </div>
-      `;
-    }, 1000);
-    return `<div class="countdown-timer">Memuat countdown...</div>`;
-  } catch (error) {
-    console.error("Error starting countdown:", error);
-    return '<p class="text-gray-700">Gagal memuat countdown.</p>';
-  }
-}
-
-// Display Event Detail
-function displayEventDetail() {
-  const eventId = getEventIdFromUrl();
-  const container = document.getElementById("event-detail-content");
-  const mapContainer = document.getElementById("event-map");
-  const organizerTicketContainer = document.getElementById("event-organizer-ticket");
-  const tagsContainer = document.getElementById("event-tags")?.querySelector("div");
-  const socialShareContainer = document.getElementById("social-share");
-
-  if (!container || !mapContainer || !organizerTicketContainer || !tagsContainer || !socialShareContainer) {
-    console.error("Required DOM elements are missing");
-    if (container) {
-      container.innerHTML = `
-        <div class="text-center w-full">
-          <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Halaman</h2>
-          <p class="text-gray-700">Maaf, Tuan, elemen halaman tidak ditemukan. Silakan coba lagi nanti.</p>
-        </div>
-      `;
-      gsap.fromTo(
-        ".event-detail-container",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-      );
-    }
-    return;
-  }
-
-  try {
-    const event = eventsData.find((e) => e.id === eventId);
-    if (!event) {
-      container.innerHTML = `
-        <div class="text-center w-full">
-          <h2 class="text-3xl font-bold text-red-600 mb-4">Event Tidak Ditemukan!</h2>
-          <p class="text-gray-700">Maaf, Tuan, event dengan ID tersebut tidak tersedia. Silakan pilih acara lain.</p>
-        </div>
-      `;
-      mapContainer.innerHTML = "";
-      organizerTicketContainer.innerHTML = "";
-      tagsContainer.innerHTML = "";
-      socialShareContainer.innerHTML = "";
-      gsap.fromTo(
-        ".event-detail-container",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-      );
-      console.warn("Event not found for ID:", eventId);
-      return;
-    }
-
-    const status = getEventStatus(event.date);
-    const storedStock = JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) || event.ticketStock;
-    const ticketAvailability = getTicketAvailability(storedStock, status.text === "Upcoming");
-    const isBookmarked = localStorage.getItem(`bookmark_${event.id}`) === "true";
-
-    container.innerHTML = `
-      <div class="w-full md:w-1/2 flex-shrink-0">
-        <div class="gallery-container">
-          <button class="gallery-btn gallery-btn-left"><i class="fas fa-chevron-left"></i></button>
-          <div class="gallery-slider" id="gallerySlider">
-            ${event.images.map((img) => `<img src="${img}" alt="${event.title}" class="gallery-image">`).join("")}
-          </div>
-          <button class="gallery-btn gallery-btn-right"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      </div>
-      <div class="w-full md:w-1/2">
-        <span class="event-status ${status.class} mb-4">${status.text}</span>
-        <h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">${event.title}</h1>
-        <p class="text-gray-700 mb-2"><i class="far fa-calendar-alt mr-2 text-[#facc15]"></i> <strong>Tanggal:</strong> ${event.date}</p>
-        <p class="text-gray-700 mb-2"><i class="far fa-clock mr-2 text-[#facc15]"></i> <strong>Waktu:</strong> ${event.time}</p>
-        <p class="text-gray-700 mb-4"><i class="fas fa-map-marker-alt mr-2 text-[#facc15]"></i> <strong>Lokasi:</strong> ${event.location}</p>
-        <p class="text-gray-800 leading-relaxed mb-6">${event.description}</p>
-        <a href="${event.registrationLink}" target="_blank" class="btn-primary inline-flex items-center">
-          <i class="fas fa-external-link-alt mr-2"></i> Daftar Sekarang!
-        </a>
-      </div>
-    `;
-
-    mapContainer.innerHTML = event.mapUrl
-      ? `<iframe src="${event.mapUrl}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`
-      : '<p class="text-gray-700">Event ini diselenggarakan secara online.</p>';
-
-    organizerTicketContainer.innerHTML = `
-      <div id="event-countdown">${startCountdown(event.date, "event-countdown")}</div>
-      <div class="organizer-info">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Penyelenggara</h3>
-        <p class="text-gray-700 mb-1"><strong>Nama:</strong> ${event.organizer.name}</p>
-        <p class="text-gray-700 mb-1"><strong>Email:</strong> <a href="mailto:${event.organizer.email}" class="text-[#facc15] hover:underline">${event.organizer.email}</a></p>
-        <p class="text-gray-700"><strong>Profil:</strong> <a href="${event.organizer.profileLink}" class="text-[#facc15] hover:underline">Lihat Profil</a></p>
-      </div>
-      <div class="ticket-info">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Harga Tiket</h3>
-        <p class="text-gray-700 mb-2">${event.ticketPrice}</p>
-        <p class="text-gray-700 mb-2"><strong>Ketersediaan:</strong> <span id="ticketAvailability" class="event-status ${ticketAvailability.class}">${ticketAvailability.text}</span></p>
-        ${
-          storedStock > 0
-            ? `<button id="buyTicketBtn" class="btn-primary inline-flex items-center mt-2" data-event-id="${event.id}"><i class="fas fa-ticket-alt mr-2"></i> Beli Tiket</button>`
-            : ""
+      // Get Event ID from URL
+      function getEventIdFromUrl() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const id = parseInt(params.get("id"));
+          if (isNaN(id) || id < 1) {
+            console.warn("Invalid or missing event ID in URL");
+            return null;
+          }
+          return id;
+        } catch (error) {
+          console.error("Error parsing URL parameters:", error);
+          return null;
         }
-        <button id="preorderTicketBtn" class="bg-yellow-400 text-gray-900 font-semibold text-sm py-3 px-6 rounded-full hover:bg-yellow-500 hover:scale-105 transition-all duration-300 ease-in-out mt-2" data-event-id="${event.id}">
-          <i class="fas fa-ticket-alt mr-2"></i> Pre-Order Tiket
-        </button>
-      </div>
-    `;
-
-    tagsContainer.innerHTML = event.tags
-      .map((tag) => `<a href="/eksplor?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a>`)
-      .join("");
-
-    socialShareContainer.innerHTML = `
-      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(event.title + " - " + event.description + " " + window.location.href)}" target="_blank" class="social-share-btn"><i class="fab fa-twitter mr-2"></i> Twitter</a>
-      <a href="https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}" target="_blank" class="social-share-btn"><i class="fab fa-instagram mr-2"></i> Instagram</a>
-      <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(event.title + " - " + event.description + " " + window.location.href)}" target="_blank" class="social-share-btn"><i class="fab fa-whatsapp mr-2"></i> WhatsApp</a>
-    `;
-
-    document.title = `${event.title} - TARA`;
-    const bookmarkBtn = document.getElementById("bookmarkBtn");
-    if (bookmarkBtn) {
-      bookmarkBtn.innerHTML = `
-        <i class="${isBookmarked ? "fas" : "far"} fa-bookmark mr-2"></i> ${isBookmarked ? "Bookmarked" : "Bookmark"}
-      `;
-    }
-
-    // Gallery Slider Logic
-    const slider = document.getElementById("gallerySlider");
-    if (slider) {
-      let currentSlide = 0;
-      const slides = slider.querySelectorAll(".gallery-image");
-      const totalSlides = slides.length;
-      const leftBtn = document.querySelector(".gallery-btn-left");
-      const rightBtn = document.querySelector(".gallery-btn-right");
-
-      if (leftBtn) {
-        leftBtn.addEventListener("click", () => {
-          if (currentSlide > 0) {
-            currentSlide--;
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-          }
-        });
       }
-      if (rightBtn) {
-        rightBtn.addEventListener("click", () => {
-          if (currentSlide < totalSlides - 1) {
-            currentSlide++;
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-          }
-        });
+
+      // Determine Event Status
+      function getEventStatus(eventDate) {
+        try {
+          const today = new Date();
+          const eventDateObj = new Date(eventDate);
+          if (eventDateObj > today)
+            return { text: "Upcoming", class: "upcoming" };
+          if (eventDateObj.toDateString() === today.toDateString())
+            return { text: "Ongoing", class: "ongoing" };
+          return { text: "Past", class: "past" };
+        } catch (error) {
+          console.error("Error determining event status:", error);
+          return { text: "Unknown", class: "past" };
+        }
       }
-      setInterval(() => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-      }, 5000);
-    }
 
-    // Payment Modal Logic
-    const buyTicketBtn = document.getElementById("buyTicketBtn");
-    if (buyTicketBtn) {
-      buyTicketBtn.addEventListener("click", () => {
-        openPaymentModal(event);
-      });
-    }
+      // Determine Ticket Availability
+      function getTicketAvailability(stock, isUpcoming) {
+        if (stock === 0 && isUpcoming)
+          return { text: "Sold Out", class: "past" };
+        if (stock === 0) return { text: "Sold Out", class: "past" };
+        if (stock <= 10) return { text: "Limited", class: "upcoming" };
+        return { text: "Available", class: "ongoing" };
+      }
 
-    // Pre-Order Modal Logic
-    const preorderTicketBtn = document.getElementById("preorderTicketBtn");
-    if (preorderTicketBtn) {
-      preorderTicketBtn.addEventListener("click", () => {
-        openPreorderModal(event);
-      });
-    }
+      // Countdown Timer
+      function startCountdown(eventDate, elementId) {
+        try {
+          const eventDateObj = new Date(eventDate);
+          const today = new Date();
+          if (eventDateObj <= today)
+            return '<p class="text-gray-700">Event telah dimulai!</p>';
 
-    // Comment Submit Logic
-    const submitCommentBtn = document.getElementById("submitComment");
-    if (submitCommentBtn) {
-      submitCommentBtn.addEventListener("click", () => {
-        const commentInput = document.getElementById("commentInput");
-        const commentText = commentInput?.value.trim();
-        if (commentText) {
-          try {
-            const comments = JSON.parse(localStorage.getItem(`comments_${eventId}`)) || [];
-            comments.push({
-              user: "Pengunjung",
-              text: commentText,
-              timestamp: new Date().toLocaleString("id-ID"),
+          const countdown = setInterval(() => {
+            const now = new Date();
+            const distance = eventDateObj - now;
+            if (distance < 0) {
+              clearInterval(countdown);
+              document.getElementById(elementId).innerHTML =
+                '<p class="text-gray-700">Event telah dimulai!</p>';
+              return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+              (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+              (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById(elementId).innerHTML = `
+              <div class="countdown-timer">
+                <span>${days} Hari </span>
+                <span>${hours} Jam </span>
+                <span>${minutes} Menit </span>
+                <span>${seconds} Detik</span>
+              </div>
+            `;
+          }, 1000);
+          return `<div class="countdown-timer">Memuat countdown...</div>`;
+        } catch (error) {
+          console.error("Error starting countdown:", error);
+          return '<p class="text-gray-700">Gagal memuat countdown.</p>';
+        }
+      }
+
+      // Display Event Detail
+      function displayEventDetail() {
+        const eventId = getEventIdFromUrl();
+        const container = document.getElementById("event-detail-content");
+        const mapContainer = document.getElementById("event-map");
+        const organizerTicketContainer = document.getElementById(
+          "event-organizer-ticket"
+        );
+        const tagsContainer = document
+          .getElementById("event-tags")
+          ?.querySelector("div");
+        const socialShareContainer = document.getElementById("social-share");
+
+        if (
+          !container ||
+          !mapContainer ||
+          !organizerTicketContainer ||
+          !tagsContainer ||
+          !socialShareContainer
+        ) {
+          console.error("Required DOM elements are missing");
+          if (container) {
+            container.innerHTML = `
+              <div class="text-center w-full">
+                <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Halaman</h2>
+                <p class="text-gray-700">Maaf, Tuan, elemen halaman tidak ditemukan. Silakan coba lagi nanti.</p>
+              </div>
+            `;
+            gsap.fromTo(
+              ".event-detail-container",
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+            );
+          }
+          return;
+        }
+
+        try {
+          const event = eventsData.find((e) => e.id === eventId);
+          if (!event) {
+            container.innerHTML = `
+              <div class="text-center w-full">
+                <h2 class="text-3xl font-bold text-red-600 mb-4">Event Tidak Ditemukan!</h2>
+                <p class="text-gray-700">Maaf, Tuan, event dengan ID tersebut tidak tersedia. Silakan pilih acara lain.</p>
+              </div>
+            `;
+            mapContainer.innerHTML = "";
+            organizerTicketContainer.innerHTML = "";
+            tagsContainer.innerHTML = "";
+            socialShareContainer.innerHTML = "";
+            gsap.fromTo(
+              ".event-detail-container",
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+            );
+            console.warn("Event not found for ID:", eventId);
+            return;
+          }
+
+          const status = getEventStatus(event.date);
+          const storedStock =
+            JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) ||
+            event.ticketStock;
+          const ticketAvailability = getTicketAvailability(
+            storedStock,
+            status.text === "Upcoming"
+          );
+          const isBookmarked =
+            localStorage.getItem(`bookmark_${event.id}`) === "true";
+
+          container.innerHTML = `
+            <div class="w-full md:w-1/2 flex-shrink-0">
+              <div class="gallery-container">
+                <button class="gallery-btn gallery-btn-left"><i class="fas fa-chevron-left"></i></button>
+                <div class="gallery-slider" id="gallerySlider">
+                  ${event.images
+                    .map(
+                      (img) =>
+                        `<img src="${img}" alt="${event.title}" class="gallery-image">`
+                    )
+                    .join("")}
+                </div>
+                <button class="gallery-btn gallery-btn-right"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <span class="event-status ${status.class} mb-4">${
+            status.text
+          }</span>
+              <h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">${
+                event.title
+              }</h1>
+              <p class="text-gray-700 mb-2"><i class="far fa-calendar-alt mr-2 text-[#facc15]"></i> <strong>Tanggal:</strong> ${
+                event.date
+              }</p>
+              <p class="text-gray-700 mb-2"><i class="far fa-clock mr-2 text-[#facc15]"></i> <strong>Waktu:</strong> ${
+                event.time
+              }</p>
+              <p class="text-gray-700 mb-4"><i class="fas fa-map-marker-alt mr-2 text-[#facc15]"></i> <strong>Lokasi:</strong> ${
+                event.location
+              }</p>
+              <p class="text-gray-800 leading-relaxed mb-6">${
+                event.description
+              }</p>
+              <a href="${
+                event.registrationLink
+              }" target="_blank" class="btn-primary inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i> Daftar Sekarang!
+              </a>
+            </div>
+          `;
+
+          mapContainer.innerHTML = event.mapUrl
+            ? `<iframe src="${event.mapUrl}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`
+            : '<p class="text-gray-700">Event ini diselenggarakan secara online.</p>';
+
+          organizerTicketContainer.innerHTML = `
+            <div id="event-countdown">${startCountdown(
+              event.date,
+              "event-countdown"
+            )}</div>
+            <div class="organizer-info">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Penyelenggara</h3>
+              <p class="text-gray-700 mb-1"><strong>Nama:</strong> ${
+                event.organizer.name
+              }</p>
+              <p class="text-gray-700 mb-1"><strong>Email:</strong> <a href="mailto:${
+                event.organizer.email
+              }" class="text-[#facc15] hover:underline">${
+            event.organizer.email
+          }</a></p>
+              <p class="text-gray-700"><strong>Profil:</strong> <a href="${
+                event.organizer.profileLink
+              }" class="text-[#facc15] hover:underline">Lihat Profil</a></p>
+            </div>
+            <div class="ticket-info">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Harga Tiket</h3>
+              <p class="text-gray-700 mb-2">${event.ticketPrice}</p>
+              <p class="text-gray-700 mb-2"><strong>Ketersediaan:</strong> <span id="ticketAvailability" class="event-status ${
+                ticketAvailability.class
+              }">${ticketAvailability.text}</span></p>
+              ${
+                storedStock > 0
+                  ? `<button id="buyTicketBtn" class="btn-primary inline-flex items-center mt-2" data-event-id="${event.id}"><i class="fas fa-ticket-alt mr-2"></i> Beli Tiket</button>`
+                  : ""
+              }
+              <button id="preorderTicketBtn" class="btn-preorder inline-flex items-center mt-2" data-event-id="${
+                event.id
+              }">
+                <i class="fas fa-ticket-alt mr-2"></i> Pre-Order Tiket
+              </button>
+            </div>
+          `;
+
+          tagsContainer.innerHTML = event.tags
+            .map(
+              (tag) =>
+                `<a href="/eksplor?tag=${encodeURIComponent(
+                  tag
+                )}" class="tag">${tag}</a>`
+            )
+            .join("");
+
+          socialShareContainer.innerHTML = `
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
+              event.title +
+                " - " +
+                event.description +
+                " " +
+                window.location.href
+            )}" target="_blank" class="social-share-btn"><i class="fab fa-twitter mr-2"></i> Twitter</a>
+            <a href="https://www.instagram.com/?url=${encodeURIComponent(
+              window.location.href
+            )}" target="_blank" class="social-share-btn"><i class="fab fa-instagram mr-2"></i> Instagram</a>
+            <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(
+              event.title +
+                " - " +
+                event.description +
+                " " +
+                window.location.href
+            )}" target="_blank" class="social-share-btn"><i class="fab fa-whatsapp mr-2"></i> WhatsApp</a>
+          `;
+
+          document.title = `${event.title} - TARA`;
+          const bookmarkBtn = document.getElementById("bookmarkBtn");
+          if (bookmarkBtn) {
+            bookmarkBtn.innerHTML = `
+              <i class="${
+                isBookmarked ? "fas" : "far"
+              } fa-bookmark mr-2"></i> ${
+              isBookmarked ? "Bookmarked" : "Bookmark"
+            }
+            `;
+          }
+
+          // Gallery Slider Logic
+          const slider = document.getElementById("gallerySlider");
+          if (slider) {
+            let currentSlide = 0;
+            const slides = slider.querySelectorAll(".gallery-image");
+            const totalSlides = slides.length;
+            const leftBtn = document.querySelector(".gallery-btn-left");
+            const rightBtn = document.querySelector(".gallery-btn-right");
+
+            if (leftBtn) {
+              leftBtn.addEventListener("click", () => {
+                if (currentSlide > 0) {
+                  currentSlide--;
+                  slider.style.transform = `translateX(-${
+                    currentSlide * 100
+                  }%)`;
+                }
+              });
+            }
+            if (rightBtn) {
+              rightBtn.addEventListener("click", () => {
+                if (currentSlide < totalSlides - 1) {
+                  currentSlide++;
+                  slider.style.transform = `translateX(-${
+                    currentSlide * 100
+                  }%)`;
+                }
+              });
+            }
+            setInterval(() => {
+              currentSlide = (currentSlide + 1) % totalSlides;
+              slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }, 5000);
+          }
+
+          // Payment Modal Logic
+          const buyTicketBtn = document.getElementById("buyTicketBtn");
+          if (buyTicketBtn) {
+            buyTicketBtn.addEventListener("click", () => {
+              openPaymentModal(event);
             });
-            localStorage.setItem(`comments_${eventId}`, JSON.stringify(comments));
-            commentInput.value = "";
-            displayComments(eventId);
+          }
+
+          // Pre-Order Modal Logic
+          const preorderTicketBtn =
+            document.getElementById("preorderTicketBtn");
+          if (preorderTicketBtn) {
+            preorderTicketBtn.addEventListener("click", () => {
+              openPreorderModal(event);
+            });
+          }
+
+          // Comment Submit Logic
+          const submitCommentBtn = document.getElementById("submitComment");
+          if (submitCommentBtn) {
+            submitCommentBtn.addEventListener("click", () => {
+              const commentInput = document.getElementById("commentInput");
+              const commentText = commentInput?.value.trim();
+              if (commentText) {
+                try {
+                  const comments =
+                    JSON.parse(localStorage.getItem(`comments_${eventId}`)) ||
+                    [];
+                  comments.push({
+                    user: "Pengunjung",
+                    text: commentText,
+                    timestamp: new Date().toLocaleString("id-ID"),
+                  });
+                  localStorage.setItem(
+                    `comments_${eventId}`,
+                    JSON.stringify(comments)
+                  );
+                  commentInput.value = "";
+                  displayComments(eventId);
+                  anime({
+                    targets: "#comments-list .comment:last-child",
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 500,
+                    easing: "easeOutQuad",
+                  });
+                } catch (error) {
+                  console.error("Error submitting comment:", error);
+                  alert("Gagal mengirim komentar, Tuan. Silakan coba lagi.");
+                }
+              }
+            });
+          }
+
+          // GSAP Animations
+          gsap.fromTo(
+            ".event-detail-container",
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+          );
+          gsap.from(".gallery-image", {
+            opacity: 0,
+            scale: 0.9,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+          });
+          gsap.from(
+            ".event-detail-container h1, .event-detail-container p, .event-detail-container a, .event-detail-container button, .event-status",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: "power3.out",
+              delay: 0.4,
+            }
+          );
+          gsap.from("#event-additional-info > div > div, #event-tags", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#event-additional-info",
+              start: "top 80%",
+            },
+          });
+          gsap.from("#comment-section, #comment-section > div", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#comment-section",
+              start: "top 80%",
+            },
+          });
+          gsap.from("#preorderTicketBtn", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.6,
+          });
+          gsap.to("#preorderTicketBtn", {
+            scale: [1, 1.1, 1],
+            duration: 1.5,
+            repeat: -1,
+            ease: "power1.inOut",
+            delay: 1,
+          });
+
+          // Display Related Events
+          displayRelatedEvents(event.category, event.id);
+
+          // Display Comments
+          displayComments(event.id);
+        } catch (error) {
+          console.error("Error displaying event details:", error);
+          container.innerHTML = `
+            <div class="text-center w-full">
+              <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Event</h2>
+              <p class="text-gray-700">Maaf, Tuan, terjadi kesalahan saat memuat detail event. Silakan coba lagi nanti.</p>
+            </div>
+          `;
+          mapContainer.innerHTML = "";
+          organizerTicketContainer.innerHTML = "";
+          tagsContainer.innerHTML = "";
+          socialShareContainer.innerHTML = "";
+          gsap.fromTo(
+            ".event-detail-container",
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+          );
+        }
+      }
+
+      // Display Related Events
+      function displayRelatedEvents(category, currentEventId) {
+        const relatedEventsList = document.getElementById(
+          "related-events-list"
+        );
+        try {
+          const relatedEvents = eventsData
+            .filter((e) => e.category === category && e.id !== currentEventId)
+            .slice(0, 3);
+
+          if (relatedEvents.length === 0) {
+            relatedEventsList.innerHTML = `
+              <p class="text-gray-600 text-center">Tidak ada event terkait saat ini.</p>
+            `;
+            return;
+          }
+
+          relatedEventsList.innerHTML = relatedEvents
+            .map(
+              (event) => `
+                <a href="?id=${event.id}" class="event-card">
+                  <img src="${event.image}" alt="${event.title}" class="w-full h-40 object-cover rounded-lg mb-4">
+                  <h3 class="text-lg font-semibold text-gray-900">${event.title}</h3>
+                  <p class="text-sm text-gray-600">${event.date} | ${event.time}</p>
+                  <p class="text-sm text-gray-600">${event.location}</p>
+                </a>
+              `
+            )
+            .join("");
+
+          gsap.from(".event-card", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#related-events",
+              start: "top 80%",
+            },
+          });
+        } catch (error) {
+          console.error("Error displaying related events:", error);
+          relatedEventsList.innerHTML = `
+            <p class="text-gray-600 text-center">Gagal memuat event terkait.</p>
+          `;
+        }
+      }
+
+      // Share Event
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        const eventId = getEventIdFromUrl();
+        const event = eventsData.find((e) => e.id === eventId);
+        if (event) {
+          const shareUrl = window.location.href;
+          if (navigator.share) {
+            navigator.share({
+              title: event.title,
+              text: event.description,
+              url: shareUrl,
+            });
+          } else {
+            navigator.clipboard.writeText(shareUrl);
             anime({
-              targets: "#comments-list .comment:last-child",
-              opacity: [0, 1],
-              translateY: [20, 0],
-              duration: 500,
+              targets: "#shareBtn",
+              scale: [1, 1.1, 1],
+              backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
+              color: ["#374151", "#FFFFFF", "#374151"],
+              duration: 300,
               easing: "easeOutQuad",
             });
-          } catch (error) {
-            console.error("Error submitting comment:", error);
-            alert("Gagal mengirim komentar, Tuan. Silakan coba lagi.");
+            alert("Link event telah disalin ke clipboard!");
           }
         }
       });
-    }
 
-    // GSAP Animations
-    gsap.fromTo(
-      ".event-detail-container",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-    );
-    gsap.from(".gallery-image", {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
-    });
-    gsap.from(".event-detail-container h1, .event-detail-container p, .event-detail-container a, .event-detail-container button, .event-status", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
-      delay: 0.4,
-    });
-    gsap.from("#event-additional-info > div > div, #event-tags", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#event-additional-info",
-        start: "top 80%",
-      },
-    });
-    gsap.from("#comment-section, #comment-section > div", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#comment-section",
-        start: "top 80%",
-      },
-    });
-    gsap.from("#preorderTicketBtn", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.6,
-    });
-    gsap.to("#preorderTicketBtn", {
-      scale: [1, 1.1, 1],
-      duration: 1.5,
-      repeat: -1,
-      ease: "power1.inOut",
-      delay: 1,
-    });
-
-    // Display Related Events
-    displayRelatedEvents(event.category, event.id);
-
-    // Display Comments
-    displayComments(event.id);
-  } catch (error) {
-    console.error("Error displaying event details:", error);
-    container.innerHTML = `
-      <div class="text-center w-full">
-        <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Event</h2>
-        <p class="text-gray-700">Maaf, Tuan, terjadi kesalahan saat memuat detail event. Silakan coba lagi nanti.</p>
-      </div>
-    `;
-    mapContainer.innerHTML = "";
-    organizerTicketContainer.innerHTML = "";
-    tagsContainer.innerHTML = "";
-    socialShareContainer.innerHTML = "";
-    gsap.fromTo(
-      ".event-detail-container",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-    );
-  }
-}
-
-// Display Related Events
-function displayRelatedEvents(category, currentEventId) {
-  const relatedEventsList = document.getElementById("related-events-list");
-  try {
-    const relatedEvents = eventsData
-      .filter((e) => e.category === category && e.id !== currentEventId)
-      .slice(0, 3);
-
-    if (relatedEvents.length === 0) {
-      relatedEventsList.innerHTML = `
-        <p class="text-gray-600 text-center">Tidak ada event terkait saat ini.</p>
-      `;
-      return;
-    }
-
-    relatedEventsList.innerHTML = relatedEvents
-      .map(
-        (event) => `
-          <a href="?id=${event.id}" class="event-card">
-            <img src="${event.image}" alt="${event.title}" class="w-full h-40 object-cover rounded-lg mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">${event.title}</h3>
-            <p class="text-sm text-gray-600">${event.date} | ${event.time}</p>
-            <p class="text-sm text-gray-600">${event.location}</p>
-          </a>
-        `
-      )
-      .join("");
-
-    gsap.from(".event-card", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#related-events",
-        start: "top 80%",
-      },
-    });
-  } catch (error) {
-    console.error("Error displaying related events:", error);
-    relatedEventsList.innerHTML = `
-      <p class="text-gray-600 text-center">Gagal memuat event terkait.</p>
-    `;
-  }
-}
-
-// Share Event
-document.getElementById("shareBtn").addEventListener("click", () => {
-  const eventId = getEventIdFromUrl();
-  const event = eventsData.find((e) => e.id === eventId);
-  if (event) {
-    const shareUrl = window.location.href;
-    if (navigator.share) {
-      navigator.share({
-        title: event.title,
-        text: event.description,
-        url: shareUrl,
+      // Bookmark Event
+      document.getElementById("bookmarkBtn").addEventListener("click", () => {
+        const eventId = getEventIdFromUrl();
+        const isBookmarked =
+          localStorage.getItem(`bookmark_${eventId}`) === "true";
+        localStorage.setItem(`bookmark_${eventId}`, !isBookmarked);
+        const bookmarkBtn = document.getElementById("bookmarkBtn");
+        if (bookmarkBtn) {
+          bookmarkBtn.innerHTML = `
+            <i class="${!isBookmarked ? "fas" : "far"} fa-bookmark mr-2"></i> ${
+            !isBookmarked ? "Bookmarked" : "Bookmark"
+          }
+          `;
+          anime({
+            targets: "#bookmarkBtn",
+            scale: [1, 1.1, 1],
+            backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
+            color: ["#374151", "#FFFFFF", "#374151"],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
+        }
       });
-    } else {
-      navigator.clipboard.writeText(shareUrl);
-      anime({
-        targets: "#shareBtn",
-        scale: [1, 1.1, 1],
-        backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
-        color: ["#374151", "#FFFFFF", "#374151"],
-        duration: 300,
-        easing: "easeOutQuad",
-      });
-      alert("Link event telah disalin ke clipboard!");
-    }
-  }
-});
 
-// Bookmark Event
-
-
-document.getElementById("bookmarkBtn").addEventListener("click", () => {
-  const eventId = getEventIdFromUrl();
-  const isBookmarked = localStorage.getItem(`bookmark_${eventId}`) === "true";
-  localStorage.setItem(`bookmark_${eventId}`, !isBookmarked);
-  const bookmarkBtn = document.getElementById("bookmarkBtn");
-  if (bookmarkBtn) {
-    bookmarkBtn.innerHTML = `
-      <i class="${!isBookmarked ? "fas" : "far"} fa-bookmark mr-2"></i> ${!isBookmarked ? "Bookmarked" : "Bookmark JunoBookmark"}
-    `;
-    anime({
-      targets: "#bookmarkBtn",
-      scale: [1, 1.1, 1],
-      backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
-      color: ["#374151", "#FFFFFF", "#374151"],
-      duration: 300,
-      easing: "easeOutQuad",
-    });
-  }
-});
-
-// Comment Section Logic
-function displayComments(eventId) {
-  const commentsList = document.getElementById("comments-list");
-  try {
-    const comments = JSON.parse(localStorage.getItem(`comments_${eventId}`)) || [
-      {
-        user: "Pengunjung",
-        text: "Acara ini sangat menarik! Saya menantikan tur kurator.",
-        timestamp: new Date("2025-07-20T10:00:00+07:00").toLocaleString("id-ID"),
-      },
-      {
-        user: "Seniman",
-        text: "Senang bisa berpartisipasi. Galeri ini luar biasa!",
-        timestamp: new Date("2025-07-20T12:00:00+07:00").toLocaleString("id-ID"),
-      },
-    ];
-    commentsList.innerHTML = comments
-      .map(
-        (comment) => `
-          <div class="comment">
-            <p class="text-gray-900 font-semibold">${comment.user}</p>
-            <p class="text-gray-700">${comment.text}</p>
-            <p class="text-sm text-gray-600">${comment.timestamp}</p>
-          </div>
-        `
-      )
-      .join("");
-  } catch (error) {
-    console.error("Error displaying comments:", error);
-    commentsList.innerHTML = `
-      <p class="text-gray-600 text-center">Gagal memuat komentar.</p>
-    `;
-  }
-}
-
-// Payment Modal Logic
-function openPaymentModal(event) {
-  const modal = document.getElementById("paymentModal");
-  const ticketQuantitySelect = document.getElementById("ticketQuantity");
-  const paymentMethodSelect = document.getElementById("paymentMethod");
-  const paymentDetailsDiv = document.getElementById("paymentDetails");
-  const totalPriceDiv = document.querySelector(".total-price");
-  const payNowBtn = document.getElementById("payNowBtn");
-  const ticketPrice = parseInt(event.ticketPrice.replace("Rp ", "").replace(".", "") || 0);
-
-  try {
-    // Populate ticket quantity options
-    const storedStock = JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) || event.ticketStock;
-    const maxTickets = Math.min(storedStock, 5);
-    ticketQuantitySelect.innerHTML = '<option value="" disabled selected>Pilih jumlah tiket</option>';
-    for (let i = 1; i <= maxTickets; i++) {
-      ticketQuantitySelect.innerHTML += `<option value="${i}">${i} Tiket</option>`;
-    }
-
-    // Update total price
-    function updateTotalPrice() {
-      const quantity = parseInt(ticketQuantitySelect.value) || 0;
-      const total = quantity * ticketPrice;
-      totalPriceDiv.textContent = `Total: Rp ${total.toLocaleString("id-ID")}`;
-      validateForm();
-    }
-
-    // Update payment details based on method
-    function updatePaymentDetails() {
-      const method = paymentMethodSelect.value;
-      paymentDetailsDiv.innerHTML = "";
-      if (method === "credit-card") {
-        paymentDetailsDiv.innerHTML = `
-          <label for="cardNumber">Nomor Kartu</label>
-          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-          <label for="cardExpiry">Tanggal Kadaluarsa</label>
-          <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
-          <label for="cardCVC">CVC</label>
-          <input type="text" id="cardCVC" placeholder="123" maxlength="3">
-        `;
-      } else if (method === "bank-transfer") {
-        paymentDetailsDiv.innerHTML = `
-          <label for="bankName">Nama Bank</label>
-          <select id="bankName">
-            <option value="" disabled selected>Pilih bank</option>
-            <option value="bca">BCA</option>
-            <option value="mandiri">Mandiri</option>
-            <option value="bni">BNI</option>
-            <option value="bri">BRI</option>
-          </select>
-        `;
-      } else if (method === "e-wallet") {
-        paymentDetailsDiv.innerHTML = `
-          <label for="ewalletProvider">Penyedia E-Wallet</label>
-          <select id="ewalletProvider">
-            <option value="" disabled selected>Pilih e-wallet</option>
-            <option value="ovo">OVO</option>
-            <option value="gopay">GoPay</option>
-            <option value="dana">Dana</option>
-          </select>
-        `;
+      // Comment Section Logic
+      function displayComments(eventId) {
+        const commentsList = document.getElementById("comments-list");
+        try {
+          const comments = JSON.parse(
+            localStorage.getItem(`comments_${eventId}`)
+          ) || [
+            {
+              user: "Pengunjung",
+              text: "Acara ini sangat menarik! Saya menantikan tur kurator.",
+              timestamp: new Date("2025-07-20T10:00:00+07:00").toLocaleString(
+                "id-ID"
+              ),
+            },
+            {
+              user: "Seniman",
+              text: "Senang bisa berpartisipasi. Galeri ini luar biasa!",
+              timestamp: new Date("2025-07-20T12:00:00+07:00").toLocaleString(
+                "id-ID"
+              ),
+            },
+          ];
+          commentsList.innerHTML = comments
+            .map(
+              (comment) => `
+                <div class="comment">
+                  <p class="text-gray-900 font-semibold">${comment.user}</p>
+                  <p class="text-gray-700">${comment.text}</p>
+                  <p class="text-sm text-gray-600">${comment.timestamp}</p>
+                </div>
+              `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Error displaying comments:", error);
+          commentsList.innerHTML = `
+            <p class="text-gray-600 text-center">Gagal memuat komentar.</p>
+          `;
+        }
       }
-      validateForm();
-      anime({
-        targets: "#paymentDetails input, #paymentDetails select",
-        translateY: [20, 0],
-        opacity: [0, 1],
-        duration: 300,
-        easing: "easeOutQuad",
-        delay: anime.stagger(100),
-      });
-    }
 
-    // Validate form
-    function validateForm() {
-      const quantity = ticketQuantitySelect.value;
-      const method = paymentMethodSelect.value;
-      let isValid = quantity && method;
-      if (method === "credit-card") {
-        const cardNumber = document.getElementById("cardNumber")?.value;
-        const cardExpiry = document.getElementById("cardExpiry")?.value;
-        const cardCVC = document.getElementById("cardCVC")?.value;
-        isValid =
-          isValid &&
-          cardNumber &&
-          cardNumber.length >= 16 &&
-          cardExpiry &&
-          cardExpiry.match(/^\d{2}\/\d{2}$/) &&
-          cardCVC &&
-          cardCVC.length === 3;
-      } else if (method === "bank-transfer") {
-        const bankName = document.getElementById("bankName")?.value;
-        isValid = isValid && bankName;
-      } else if (method === "e-wallet") {
-        const ewalletProvider = document.getElementById("ewalletProvider")?.value;
-        isValid = isValid && ewalletProvider;
+      // Payment Modal Logic
+      function openPaymentModal(event) {
+        const modal = document.getElementById("paymentModal");
+        const ticketQuantitySelect = document.getElementById("ticketQuantity");
+        const paymentMethodSelect = document.getElementById("paymentMethod");
+        const paymentDetailsDiv = document.getElementById("paymentDetails");
+        const totalPriceDiv = document.querySelector(".total-price");
+        const payNowBtn = document.getElementById("payNowBtn");
+        const ticketPrice = parseInt(
+          event.ticketPrice.replace("Rp ", "").replace(".", "") || 0
+        );
+
+        try {
+          // Populate ticket quantity options
+          const storedStock =
+            JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) ||
+            event.ticketStock;
+          const maxTickets = Math.min(storedStock, 5);
+          ticketQuantitySelect.innerHTML =
+            '<option value="" disabled selected>Pilih jumlah tiket</option>';
+          for (let i = 1; i <= maxTickets; i++) {
+            ticketQuantitySelect.innerHTML += `<option value="${i}">${i} Tiket</option>`;
+          }
+
+          // Update total price
+          function updateTotalPrice() {
+            const quantity = parseInt(ticketQuantitySelect.value) || 0;
+            const total = quantity * ticketPrice;
+            totalPriceDiv.textContent = `Total: Rp ${total.toLocaleString(
+              "id-ID"
+            )}`;
+            validateForm();
+          }
+
+          // Update payment details based on method
+          function updatePaymentDetails() {
+            const method = paymentMethodSelect.value;
+            paymentDetailsDiv.innerHTML = "";
+            if (method === "credit-card") {
+              paymentDetailsDiv.innerHTML = `
+                <label for="cardNumber">Nomor Kartu</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                <label for="cardExpiry">Tanggal Kadaluarsa</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                <label for="cardCVC">CVC</label>
+                <input type="text" id="cardCVC" placeholder="123" maxlength="3">
+              `;
+            } else if (method === "bank-transfer") {
+              paymentDetailsDiv.innerHTML = `
+                <label for="bankName">Nama Bank</label>
+                <select id="bankName">
+                  <option value="" disabled selected>Pilih bank</option>
+                  <option value="bca">BCA</option>
+                  <option value="mandiri">Mandiri</option>
+                  <option value="bni">BNI</option>
+                  <option value="bri">BRI</option>
+                </select>
+              `;
+            } else if (method === "e-wallet") {
+              paymentDetailsDiv.innerHTML = `
+                <label for="ewalletProvider">Penyedia E-Wallet</label>
+                <select id="ewalletProvider">
+                  <option value="" disabled selected>Pilih e-wallet</option>
+                  <option value="ovo">OVO</option>
+                  <option value="gopay">GoPay</option>
+                  <option value="dana">Dana</option>
+                </select>
+              `;
+            }
+            validateForm();
+            anime({
+              targets: "#paymentDetails input, #paymentDetails select",
+              translateY: [20, 0],
+              opacity: [0, 1],
+              duration: 300,
+              easing: "easeOutQuad",
+              delay: anime.stagger(100),
+            });
+          }
+
+          // Validate form
+          function validateForm() {
+            const quantity = ticketQuantitySelect.value;
+            const method = paymentMethodSelect.value;
+            let isValid = quantity && method;
+            if (method === "credit-card") {
+              const cardNumber = document.getElementById("cardNumber")?.value;
+              const cardExpiry = document.getElementById("cardExpiry")?.value;
+              const cardCVC = document.getElementById("cardCVC")?.value;
+              isValid =
+                isValid &&
+                cardNumber &&
+                cardNumber.length >= 16 &&
+                cardExpiry &&
+                cardExpiry.match(/^\d{2}\/\d{2}$/) &&
+                cardCVC &&
+                cardCVC.length === 3;
+            } else if (method === "bank-transfer") {
+              const bankName = document.getElementById("bankName")?.value;
+              isValid = isValid && bankName;
+            } else if (method === "e-wallet") {
+              const ewalletProvider =
+                document.getElementById("ewalletProvider")?.value;
+              isValid = isValid && ewalletProvider;
+            }
+            payNowBtn.disabled = !isValid;
+          }
+
+          // Event listeners for form inputs
+          ticketQuantitySelect.addEventListener("change", updateTotalPrice);
+          paymentMethodSelect.addEventListener("change", updatePaymentDetails);
+          paymentDetailsDiv.addEventListener("input", validateForm);
+
+          // Initialize modal
+          updateTotalPrice();
+          updatePaymentDetails();
+          modal.style.display = "flex";
+          anime({
+            targets: ".modal-content",
+            scale: [0.8, 1],
+            opacity: [0, 1],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
+
+          // Close modal
+          document
+            .querySelector("#paymentModal .close-modal")
+            .addEventListener("click", closePaymentModal);
+          document
+            .getElementById("cancelPaymentBtn")
+            .addEventListener("click", closePaymentModal);
+
+          // Pay now
+          payNowBtn.addEventListener("click", () => {
+            const quantity = parseInt(ticketQuantitySelect.value);
+            const storedStock =
+              JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) ||
+              event.ticketStock;
+            const newStock = storedStock - quantity;
+            localStorage.setItem(`ticketStock_${event.id}`, newStock);
+            alert(`Pembayaran berhasil untuk ${quantity} tiket!`);
+            closePaymentModal();
+            displayEventDetail();
+          });
+        } catch (error) {
+          console.error("Error opening payment modal:", error);
+          alert("Gagal membuka modal pembayaran, Tuan. Silakan coba lagi.");
+        }
       }
-      payNowBtn.disabled = !isValid;
-    }
 
-    // Event listeners for form inputs
-    ticketQuantitySelect.addEventListener("change", updateTotalPrice);
-    paymentMethodSelect.addEventListener("change", updatePaymentDetails);
-    paymentDetailsDiv.addEventListener("input", validateForm);
+      function closePaymentModal() {
+        const modal = document.getElementById("paymentModal");
+        anime({
+          targets: "#paymentModal .modal-content",
+          scale: [1, 0.8],
+          opacity: [1, 0],
+          duration: 300,
+          easing: "easeOutQuad",
+          complete: () => {
+            modal.style.display = "none";
+          },
+        });
+      }
 
-    // Initialize modal
-    updateTotalPrice();
-    updatePaymentDetails();
-    modal.style.display = "flex";
-    anime({
-      targets: ".modal-content",
-      scale: [0.8, 1],
-      opacity: [0, 1],
-      duration: 300,
-      easing: "easeOutQuad",
-    });
+      // Pre-Order Modal Logic
+      function openPreorderModal(event) {
+        const modal = document.getElementById("preorderModal");
+        const preorderEmailInput = document.getElementById("preorderEmail");
+        const preorderQuantitySelect =
+          document.getElementById("preorderQuantity");
+        const submitPreorderBtn = document.getElementById("submitPreorderBtn");
 
-    // Close modal
-    document.querySelector("#paymentModal .close-modal").addEventListener("click", closePaymentModal);
-    document.getElementById("cancelPaymentBtn").addEventListener("click", closePaymentModal);
+        try {
+          // Validate form
+          function validatePreorderForm() {
+            const email = preorderEmailInput.value;
+            const quantity = preorderQuantitySelect.value;
+            const isValid =
+              email && email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) && quantity;
+            submitPreorderBtn.disabled = !isValid;
+          }
 
-    // Pay now
-    payNowBtn.addEventListener("click", () => {
-      const quantity = parseInt(ticketQuantitySelect.value);
-      const storedStock = JSON.parse(localStorage.getItem(`ticketStock_${event.id}`)) || event.ticketStock;
-      const newStock = storedStock - quantity;
-      localStorage.setItem(`ticketStock_${event.id}`, newStock);
-      alert(`Pembayaran berhasil untuk ${quantity} tiket!`);
-      closePaymentModal();
-      displayEventDetail();
-    });
-  } catch (error) {
-    console.error("Error opening payment modal:", error);
-    alert("Gagal membuka modal pembayaran, Tuan. Silakan coba lagi.");
-  }
-}
+          // Event listeners for form inputs
+          preorderEmailInput.addEventListener("input", validatePreorderForm);
+          preorderQuantitySelect.addEventListener(
+            "change",
+            validatePreorderForm
+          );
 
-function closePaymentModal() {
-  const modal = document.getElementById("paymentModal");
-  anime({
-    targets: "#paymentModal .modal-content",
-    scale: [1, 0.8],
-    opacity: [1, 0],
-    duration: 300,
-    easing: "easeOutQuad",
-    complete: () => {
-      modal.style.display = "none";
-    },
-  });
-}
+          // Initialize modal
+          preorderEmailInput.value = "";
+          preorderQuantitySelect.value = "";
+          submitPreorderBtn.disabled = true;
+          modal.style.display = "flex";
+          anime({
+            targets: "#preorderModal .modal-content",
+            scale: [0.8, 1],
+            opacity: [0, 1],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
 
-// Pre-Order Modal Logic
-function openPreorderModal(event) {
-  const modal = document.getElementById("preorderModal");
-  const preorderEmailInput = document.getElementById("preorderEmail");
-  const preorderQuantitySelect = document.getElementById("preorderQuantity");
-  const submitPreorderBtn = document.getElementById("submitPreorderBtn");
+          // Close modal
+          document
+            .querySelector("#preorderModal .close-modal")
+            .addEventListener("click", closePreorderModal);
+          document
+            .getElementById("cancelPreorderBtn")
+            .addEventListener("click", closePreorderModal);
 
-  try {
-    // Validate form
-    function validatePreorderForm() {
-      const email = preorderEmailInput.value;
-      const quantity = preorderQuantitySelect.value;
-      const isValid = email && email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) && quantity;
-      submitPreorderBtn.disabled = !isValid;
-    }
+          // Submit pre-order
+          submitPreorderBtn.addEventListener("click", () => {
+            const email = preorderEmailInput.value;
+            const quantity = parseInt(preorderQuantitySelect.value);
+            const preorders =
+              JSON.parse(localStorage.getItem(`preorder_${event.id}`)) || [];
+            preorders.push({
+              email,
+              quantity,
+              timestamp: new Date().toLocaleString("id-ID"),
+            });
+            localStorage.setItem(
+              `preorder_${event.id}`,
+              JSON.stringify(preorders)
+            );
+            alert(
+              `Pre-order berhasil untuk ${quantity} tiket! Kami akan menghubungi Tuan di ${email} ketika tiket tersedia.`
+            );
+            closePreorderModal();
+          });
+        } catch (error) {
+          console.error("Error opening preorder modal:", error);
+          alert("Gagal membuka modal pre-order, Tuan. Silakan coba lagi.");
+        }
+      }
 
-    // Event listeners for form inputs
-    preorderEmailInput.addEventListener("input", validatePreorderForm);
-    preorderQuantitySelect.addEventListener("change", validatePreorderForm);
+      function closePreorderModal() {
+        const modal = document.getElementById("preorderModal");
+        try {
+          anime({
+            targets: "#preorderModal .modal-content",
+            scale: [1, 0.8],
+            opacity: [1, 0],
+            duration: 300,
+            easing: "easeOutQuad",
+            complete: () => {
+              modal.style.display = "none";
+            },
+          });
+        } catch (error) {
+          console.error("Error closing preorder modal:", error);
+          modal.style.display = "none";
+        }
+      }
 
-    // Initialize modal
-    preorderEmailInput.value = "";
-    preorderQuantitySelect.value = "";
-    submitPreorderBtn.disabled = true;
-    modal.style.display = "flex";
-    anime({
-      targets: "#preorderModal .modal-content",
-      scale: [0.8, 1],
-      opacity: [0, 1],
-      duration: 300,
-      easing: "easeOutQuad",
-    });
-
-    // Close modal
-    document.querySelector("#preorderModal .close-modal").addEventListener("click", closePreorderModal);
-    document.getElementById("cancelPreorderBtn").addEventListener("click", closePreorderModal);
-
-    // Submit pre-order
-    submitPreorderBtn.addEventListener("click", () => {
-      const email = preorderEmailInput.value;
-      const quantity = parseInt(preorderQuantitySelect.value);
-      const preorders = JSON.parse(localStorage.getItem(`preorder_${event.id}`)) || [];
-      preorders.push({
-        email,
-        quantity,
-        timestamp: new Date().toLocaleString("id-ID"),
+      // Particles.js I
+      // Particles.js Initialization
+      window.addEventListener("load", () => {
+        try {
+          particlesJS("particles-js", {
+            particles: {
+              number: {
+                value: 50,
+                density: { enable: true, value_area: 1000 },
+              },
+              color: { value: "#4B5563" },
+              shape: { type: "circle" },
+              opacity: { value: 0.4, random: true },
+              size: { value: 2, random: true },
+              line_linked: { enable: false },
+              move: {
+                enable: true,
+                speed: 0.5,
+                direction: "top",
+                random: false,
+                straight: false,
+                out_mode: "out",
+              },
+            },
+            interactivity: {
+              events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: false },
+              },
+              modes: {
+                repulse: { distance: 100, duration: 0.4 },
+              },
+            },
+            retina_detect: true,
+          });
+        } catch (error) {
+          console.error("Error initializing Particles.js:", error);
+        }
       });
-      localStorage.setItem(`preorder_${event.id}`, JSON.stringify(preorders));
-      alert(`Pre-order berhasil untuk ${quantity} tiket! Kami akan menghubungi Tuan di ${email} ketika tiket tersedia.`);
-      closePreorderModal();
-    });
-  } catch (error) {
-    console.error("Error opening preorder modal:", error);
-    alert("Gagal membuka modal pre-order, Tuan. Silakan coba lagi.");
-  }
-}
 
-function closePreorderModal() {
-  const modal = document.getElementById("preorderModal");
-  try {
-    anime({
-      targets: "#preorderModal .modal-content",
-      scale: [1, 0.8],
-      opacity: [1, 0],
-      duration: 300,
-      easing: "easeOutQuad",
-      complete: () => {
-        modal.style.display = "none";
-      },
-    });
-  } catch (error) {
-    console.error("Error closing preorder modal:", error);
-    modal.style.display = "none";
-  }
-}
-
-// Particles.js Initialization
-window.addEventListener("load", () => {
-  try {
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 50, density: { enable: true, value_area: 1000 } },
-        color: { value: "#4B5563" },
-        shape: { type: "circle" },
-        opacity: { value: 0.4, random: true },
-        size: { value: 2, random: true },
-        line_linked: { enable: false },
-        move: {
-          enable: true,
-          speed: 0.5,
-          direction: "top",
-          random: false,
-          straight: false,
-          out_mode: "out",
-        },
-      },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: false },
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-        },
-      },
-      retina_detect: true,
-    });
-  } catch (error) {
-    console.error("Error initializing Particles.js:", error);
-  }
-});
-
-// Page Initialization
-document.addEventListener("DOMContentLoaded", () => {
-  try {
-    const container = document.getElementById("event-detail-content");
-    if (!container) {
-      console.error("Event detail container not found");
-      container.innerHTML = `
+      // Page Initialization
+      document.addEventListener("DOMContentLoaded", () => {
+        try {
+          const container = document.getElementById("event-detail-content");
+          if (!container) {
+            console.error("Event detail container not found");
+            container.innerHTML = `
         <div class="text-center w-full">
           <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Halaman</h2>
           <p class="text-gray-700">Maaf, Tuan, elemen halaman tidak ditemukan. Silakan coba lagi nanti.</p>
         </div>
       `;
-      gsap.fromTo(
-        ".event-detail-container",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-      );
-      return;
-    }
-    displayEventDetail();
-  } catch (error) {
-    console.error("Error initializing page:", error);
-    const container = document.getElementById("event-detail-content");
-    if (container) {
-      container.innerHTML = `
+            gsap.fromTo(
+              ".event-detail-container",
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+            );
+            return;
+          }
+          displayEventDetail();
+        } catch (error) {
+          console.error("Error initializing page:", error);
+          const container = document.getElementById("event-detail-content");
+          if (container) {
+            container.innerHTML = `
         <div class="text-center w-full">
           <h2 class="text-3xl font-bold text-red-600 mb-4">Kesalahan Memuat Halaman</h2>
           <p class="text-gray-700">Maaf, Tuan, terjadi kesalahan saat memuat halaman. Silakan coba lagi nanti.</p>
         </div>
       `;
-      gsap.fromTo(
-        ".event-detail-container",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
-      );
-    }
-  }
-});
-</script>
+            gsap.fromTo(
+              ".event-detail-container",
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+            );
+          }
+        }
+      });
+    </script>
   </body>
 </html>
