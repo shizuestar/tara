@@ -668,7 +668,7 @@
                     </div>
 
                     <!-- Burger Icon Mobile -->
-                    <button id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
+                    <button aria-label="af" id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
                         <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -705,11 +705,14 @@
     </header>
 
     <main class="w-full pt-32 pb-32 grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
+        
         <!-- Left Column - Gallery Content -->
         <div class="lg:col-span-8">
+        
             <!-- Gallery Header / Hero -->
             <section class="hero-wrapper px-4" id="gallery-hero">
                 <div class="uploader-section">
+                    <a href="sudah_login/profil_user.html">
                     <div class="uploader-info">
                         <img id="gallery-uploader-avatar" src="https://i.pravatar.cc/60?img=22" alt="avatar" class="w-10 h-10 rounded-full object-cover" />
                         <div class="text-left leading-tight">
@@ -717,6 +720,7 @@
                             <div id="gallery-posted-rel" class="text-xs text-gray-500">Diposting hari ini</div>
                         </div>
                     </div>
+                    </a>
                     <button id="follow-btn" class="px-3 py-1 text-xs rounded-full bg-[var(--tara-accent)] text-black font-semibold hover:bg-yellow-300 transition">Follow</button>
                 </div>
                 <div class="flex flex-col items-center text-center gap-6">
@@ -726,14 +730,32 @@
                     </div>
                     <!-- title -->
                     <h1 id="gallery-title" class="text-3xl md:text-4xl font-bold max-w-3xl leading-tight" style="font-family:'Space Grotesk',sans-serif;">Judul Galeri</h1>
-                    <!-- floating actions -->
+                    
+                    <!-- Floating Actions Lengkap -->
                     <div class="float-actions" id="float-actions">
-                        <button id="float-share" title="Bagikan"><i class="fas fa-share"></i></button>
-                        <div class="relative">
-                            <button id="float-like" title="Suka"><i class="fas fa-heart"></i></button>
-                            <span id="float-like-badge" class="badge hidden">0</span>
-                        </div>
+                    <!-- Bagikan -->
+                    <button id="float-share" title="Bagikan">
+                        <i class="fas fa-share"></i>
+                    </button>
+
+                    <!-- Suka -->
+                    <div class="relative">
+                        <button id="float-like" title="Suka">
+                        <i class="fas fa-heart"></i>
+                        </button>
+                        <span id="float-like-badge" class="badge hidden">0</span>
                     </div>
+
+                    <!-- Simpan (Bookmark) -->
+                    <div class="relative">
+                        <button id="float-bookmark" title="Simpan">
+                        <i class="fas fa-bookmark"></i>
+                        </button>
+                        <span id="float-bookmark-badge" class="badge hidden">0</span>
+                    </div>
+
+                    </div>
+
                     <!-- meta -->
                     <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
                         <span id="gallery-date-meta"><i class="fas fa-calendar-alt mr-1"></i>–</span>

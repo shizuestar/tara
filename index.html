@@ -1967,8 +1967,7 @@
 
 <body class="hero-bg min-h-screen">
     <div id="loadingScreen">
-        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
-            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
         <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik...</p>
     </div>
     <script>
@@ -2006,6 +2005,7 @@
             <div id="notification-list" class="space-y-4"></div>
         </div>
     </div>
+    
     <!-- Header -->
     <header
         class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
@@ -2021,9 +2021,7 @@
                         </div>
                     </div>
 
-
-                    <!-- Burger Icon Mobile -->
-                    <button id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
+                    <button aria-label="Buka Navigasi" id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
                         <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16" />
@@ -2046,21 +2044,23 @@
                         <a href="/agenda.html"
                             class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
 
-                        <div class="hidden md:flex items-center gap-2">
-                            <a href="/login"
-                                class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
-                                Log In
-                            </a>
-                            <a href="/register"
-                                class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition">
-                                Sign Up
-                            </a>
-                        </div>
+                            <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
+                                <a href="/login"
+                                    class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center">
+                                    Log In
+                                </a>
+                                <a href="/register"
+                                    class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center">
+                                    Sign Up
+                                </a>
+                            </div>
+
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <script>
         const burger = document.getElementById('burger-toggle');
         const navMenu = document.getElementById('nav-menu');
@@ -2143,19 +2143,20 @@
             </div>
             <div class="grid grid-cols-3 gap-8 pt-8 border-t-2 border-gray-200 text-appear">
                 <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">1000+</div>
+                    <div class="stats-number text-4xl font-bold mb-3" data-target="1000">0</div>
                     <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
                         Karya Seni
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">500+</div>
+                    <div class="stats-number text-4xl font-bold mb-3" data-target="500">0</div>
                     <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
                         Kreator
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="stats-number text-4xl font-bold mb-3">50K+</div>
+                    <div class="stats-number text-4xl font-bold mb-3" data-target="50000">0</div>
+
                     <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
                         Pengunjung
                     </div>
@@ -3075,9 +3076,10 @@
                     Gabung Sekarang
                 </a>
                 <a href="/learn_more"
-                    class="button-secondary px-12 py-5 rounded-full font-bold text-xl uppercase hover:text-white tracking-wide text-appear">
-                    Pelajari Lebih Lanjut
+                class="button-secondary px-12 py-5 rounded-full font-bold text-xl uppercase tracking-wide text-appear">
+                <span>Pelajari Lebih Lanjut</span>
                 </a>
+
             </div>
         </div>
     </section>
@@ -3179,39 +3181,6 @@
             answer.classList.toggle('show');
             toggleIcon.textContent = answer.classList.contains('show') ? '−' : '+';
         }
-    </script>
-
-
-    <!-- JavaScript for Fade Animation and Button Hover -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Fade-in animation for sections
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("animate-in");
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                },
-                { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
-            );
-
-            // Observe fade sections and text-appear elements
-            document.querySelectorAll(".fade-section, .text-appear").forEach((item) => {
-                observer.observe(item);
-            });
-
-            // Button hover animation
-            const joinButton = document.getElementById("join-button");
-            joinButton.addEventListener("mouseover", () => {
-                joinButton.classList.add("animate-pulse");
-            });
-            joinButton.addEventListener("mouseout", () => {
-                joinButton.classList.remove("animate-pulse");
-            });
-        });
     </script>
 
     <style>
@@ -3323,6 +3292,64 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("animate-in");
+                observer.unobserve(entry.target);
+            }
+            });
+        },
+        { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
+        );
+
+        document.querySelectorAll(".fade-section, .text-appear").forEach((item) => {
+        observer.observe(item);
+        });
+
+        const joinButton = document.getElementById("join-button");
+        if (joinButton) {
+        joinButton.addEventListener("mouseover", () => {
+            joinButton.classList.add("animate-pulse");
+        });
+        joinButton.addEventListener("mouseout", () => {
+            joinButton.classList.remove("animate-pulse");
+        });
+        }
+
+        // 🔢 Counter animation with 'K' format
+        const counters = document.querySelectorAll(".stats-number");
+
+        counters.forEach((counter) => {
+        const target = +counter.getAttribute("data-target");
+        let count = 0;
+        const steps = 30;
+        const increment = Math.ceil(target / steps);
+
+        const updateCount = () => {
+            count += increment;
+            if (count < target) {
+            counter.innerText = formatK(count);
+            setTimeout(updateCount, 50);
+            } else {
+            counter.innerText = formatK(target);
+            }
+        };
+
+        const formatK = (val) => {
+            if (val >= 1000) {
+            return (val / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
+            } else {
+            return val + "+";
+            }
+        };
+
+        updateCount();
+        });
+    });
+
         document.addEventListener("DOMContentLoaded", () => {
             const mobileMenuButton = document.querySelector(".md\\:hidden");
             const nav = document.querySelector("nav");

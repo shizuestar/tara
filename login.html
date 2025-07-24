@@ -11,232 +11,210 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-<style>
-  body {
-    font-family: "Space Grotesk", sans-serif;
-    background: rgba(255, 255, 255, 0.25);
-    overflow: hidden;
-  }
+    <style>
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: rgba(255, 255, 255, 0.25);
+        overflow: hidden;
+      }
 
-  .main-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-  }
+      .main-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+      }
 
-  .left-section {
-    position: relative;
-    overflow: hidden;
-    height: 100vh;
-    background: linear-gradient(135deg, #f7fafc, #ffffff);
-    flex: 1;
-  }
+      .left-section {
+        position: relative;
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(135deg, #f7fafc, #ffffff);
+        flex: 1;
+      }
 
-  .right-section {
-    width: 390px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.25); /* Transparent background */
-    backdrop-filter: blur(20px); /* Glassmorphism blur effect */
-    border-left: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
-    padding: 0 1px;
-  }
+      .right-section {
+        width: 390px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0 1px;
+      }
 
-  #three-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
+      #three-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
 
-  .card-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-    z-index: 1;
-    overflow: hidden;
-    align-content: start;
-  }
+      .card-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px;
+        z-index: 1;
+        overflow: hidden;
+        align-content: start;
+        opacity: 0;
+      }
 
-  .card-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: 200vh;
-  }
+      .card-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 200vh;
+      }
 
-  .card {
-    border-radius: 1.5rem;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: scale(0.8) translateY(50px);
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
+      .card {
+        border-radius: 1.5rem;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-  .card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    border-radius: 1.5rem;
-    z-index: 1;
-    transition: all 0.4s ease;
-  }
+      .card:hover {
+        transform: scale(1.03) translateY(-8px);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
+      }
 
-  .card:hover {
-    transform: scale(1.03) translateY(-8px);
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
-  }
+      .card-small {
+        width: 100%;
+        height: 200px;
+      }
+      .card-medium {
+        width: 100%;
+        height: 250px;
+      }
+      .card-large {
+        width: 100%;
+        height: 300px;
+      }
+      .card-xl {
+        width: 100%;
+        height: 350px;
+      }
 
-  .card:hover::before {
-    background: rgba(255, 255, 255, 0.15);
-  }
+      .tara-container {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
 
-  .card-small {
-    width: 100%;
-    height: 200px;
-  }
-  .card-medium {
-    width: 100%;
-    height: 250px;
-  }
-  .card-large {
-    width: 100%;
-    height: 300px;
-  }
-  .card-xl {
-    width: 100%;
-    height: 350px;
-  }
+      .tara-text {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 7rem;
+        font-weight: 700;
+        letter-spacing: 0.25rem;
+        color: #1a202c;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+      }
 
-  .tara-container {
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
+      .tara-letter {
+        transform-style: preserve-3d;
+        transition: transform 0.4s ease, filter 0.4s ease;
+      }
 
-  .tara-text {
-    display: flex;
-    gap: 0.6rem;
-    font-size: 7rem;
-    font-weight: 700;
-    letter-spacing: 0.25rem;
-    color: #1a202c;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-  }
+      .tara-dot {
+        font-size: 0.9em;
+        color: #f6e05e;
+        animation: pulse 2s infinite alternate;
+      }
 
-  .tara-letter {
-    transform-style: preserve-3d;
-    transition: transform 0.4s ease, filter 0.4s ease;
-  }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
 
-  .tara-dot {
-    font-size: 0.9em;
-    color: #f6e05e;
-    animation: pulse 2s infinite alternate;
-  }
+      .description {
+        max-width: 24rem;
+        text-align: center;
+        color: #2d3748;
+        font-weight: 300;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        opacity: 0.9;
+      }
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-    100% {
-      transform: scale(1.2);
-      opacity: 1;
-    }
-  }
+      .form-container {
+        background: linear-gradient(145deg, #ffffff, #f7fafc);
+        border-radius: 2rem;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-  .description {
-    max-width: 24rem;
-    text-align: center;
-    color: #2d3748;
-    font-weight: 300;
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
-    opacity: 0.9;
-  }
+      .form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+      }
 
-  .form-container {
-    background: linear-gradient(145deg, #ffffff, #f7fafc); /* Retained for readability */
-    border-radius: 2rem;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+      .form-input {
+        transition: all 0.3s ease;
+      }
 
-  .form-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-  }
+      .form-input:focus {
+        border-color: #4a5568;
+        box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
+      }
 
-  .form-input {
-    transition: all 0.3s ease;
-  }
+      .form-button {
+        transition: all 0.3s ease;
+      }
 
-  .form-input:focus {
-    border-color: #4a5568;
-    box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
-  }
+      .form-button:hover {
+        background: #2d3748;
+        transform: translateY(-2px);
+      }
 
-  .form-button {
-    transition: all 0.3s ease;
-  }
+      .social-button {
+        transition: all 0.3s ease;
+      }
 
-  .form-button:hover {
-    background: #2d3748;
-    transform: translateY(-2px);
-  }
+      .social-button:hover {
+        background: #f7fafc;
+        transform: translateY(-2px);
+      }
 
-  .social-button {
-    transition: all 0.3s ease;
-  }
-
-  .social-button:hover {
-    background: #f7fafc;
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 768px) {
-    .main-container {
-      flex-direction: column;
-    }
-    .right-section {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.25); /* Maintain transparency on mobile */
-      backdrop-filter: blur(20px); /* Maintain blur on mobile */
-      border-left: none; /* Remove border for mobile */
-      border-top: 1px solid rgba(255, 255, 255, 0.2); /* Add top border for mobile */
-    }
-  }
-</style>
+      @media (max-width: 768px) {
+        .main-container {
+          flex-direction: column;
+        }
+        .right-section {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(20px);
+          border-left: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+      }
+    </style>
   </head>
   <body>
     <main class="main-container">
@@ -294,7 +272,7 @@
             </button>
           </form>
           <div
-            class="my-6 border-t border-gray-100 text-center text-xs text-gray-400 relative"
+            class="my-6 border-t border-gray-200 text-center text-xs text-gray-400 relative"
           >
             <span
               class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2"
@@ -346,7 +324,6 @@
       </div>
     </main>
     <script>
-      // Three.js Particle System
       const canvas = document.getElementById("three-canvas");
       if (canvas) {
         const scene = new THREE.Scene();
@@ -418,7 +395,6 @@
         });
       }
 
-      // Structured Card System
       const cardSection = document.getElementById("card-section");
       const numberOfColumns = 4;
       const cardsPerColumn = 8;
@@ -496,27 +472,6 @@
         }
       }
 
-      function animateCardsAppearance() {
-        cardColumns.forEach((column, colIndex) => {
-          const cards = column.querySelectorAll(".card");
-          cards.forEach((card, cardIndex) => {
-            if (cardIndex < cardsPerColumn) {
-              anime({
-                targets: card,
-                opacity: [0, 1],
-                scale: [0.8, 1],
-                translateY: [50, 0],
-                duration: 800,
-                delay: colIndex * 100 + cardIndex * 150,
-                easing: "easeOutCubic",
-              });
-            } else {
-              anime.set(card, { opacity: 1, scale: 1, translateY: 0 });
-            }
-          });
-        });
-      }
-
       function startInfiniteScroll() {
         cardColumns.forEach((column, index) => {
           const cards = column.querySelectorAll(".card");
@@ -538,12 +493,13 @@
         });
       }
 
-      // TARA text animation
       const taraLetters = document.querySelectorAll(
         "#tara-text .tara-letter, #tara-text .tara-dot"
       );
       const taraContainer = document.querySelector(".tara-container");
+      const leftSection = document.querySelector(".left-section");
 
+      createCardColumns();
       anime({
         targets: taraLetters,
         translateY: [50, 0],
@@ -563,11 +519,10 @@
               easing: "easeInCubic",
               complete: function () {
                 taraContainer.style.display = "none";
-                createCardColumns();
-                animateCardsAppearance();
-                setTimeout(() => {
-                  startInfiniteScroll();
-                }, 2000);
+                leftSection.style.backdropFilter = "blur(20px)";
+                leftSection.style.background = "rgba(255, 255, 255, 0.25)";
+                cardSection.style.opacity = 1;
+                startInfiniteScroll();
               },
             });
           }, 1500);
@@ -598,7 +553,6 @@
         });
       });
 
-      // Transition to register page
       const registerLink = document.getElementById("register-link");
       registerLink.addEventListener("click", (e) => {
         e.preventDefault();

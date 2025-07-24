@@ -202,36 +202,120 @@
     <header
       class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full"
     >
-      <div
-        class="text-2xl font-bold uppercase tracking-wide"
-        style="font-family: 'Space Grotesk', sans-serif"
+      <nav
+        class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm"
       >
-        TARA<span class="text-yellow-400">●</span>
-      </div>
-      <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
-        <a href="/">Beranda</a>
-        <a href="/eksplor">Eksplor</a>
-        <a href="/komunitas" class="font-semibold">Komunitas</a>
-        <a href="/proyek">Proyek</a>
-        <a href="/blog">Blog</a>
-        <a href="/agenda">Agenda</a>
+        <div class="max-w-7xl mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+              <div class="relative">
+                <span class="text-yellow-400 text-2xl">●</span>
+                <span
+                  class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow"
+                  >●</span
+                >
+              </div>
+            </div>
+            <!-- Search Bar -->
+            <div class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
+              <input
+                type="text"
+                placeholder="Cari..."
+                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm"
+              />
+              <i
+                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              ></i>
+            </div>
+            <!-- Burger Icon Mobile -->
+            <button
+              aria-label="Toggle Navigation"
+              id="burger-toggle"
+              class="md:hidden focus:outline-none z-[60] relative"
+            >
+              <svg
+                class="w-7 h-7 text-gray-900"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <!-- Menu Navigasi -->
+            <div
+              id="nav-menu"
+              class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300"
+            >
+              <a
+                href="/index.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Beranda</a
+              >
+              <a
+                href="/galeri.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Galeri</a
+              >
+              <a
+                href="/komunitas.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Komunitas</a
+              >
+              <a
+                href="/proyek.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Proyek</a
+              >
+              <a
+                href="/blog.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Blog</a
+              >
+              <a
+                href="/agenda.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Agenda</a
+              >
+
+              <div
+                class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0"
+              >
+                <!-- Log In -->
+                <a
+                  href="/login"
+                  class="px-5 py-2.5 rounded-full border border-black text-black bg-white hover:bg-black hover:text-white transition duration-300 shadow-sm hover:shadow-lg text-sm font-semibold tracking-wide text-center w-full md:w-auto"
+                >
+                  Log In
+                </a>
+
+                <!-- Sign Up -->
+                <a
+                  href="/register"
+                  class="px-5 py-2.5 rounded-full bg-black text-white border border-black hover:bg-white hover:text-black transition duration-300 shadow-sm hover:shadow-lg text-sm font-semibold tracking-wide text-center w-full md:w-auto"
+                >
+                  Sign Up
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
-      <div class="flex items-center gap-4">
-        <input
-          type="text"
-          placeholder="Cari karya, komunitas, proyek..."
-          class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-        />
-        <a
-          href="/login"
-          class="px-4 py-2 bg-black text-white text-sm rounded-full"
-          >Login</a
-        >
-      </div>
     </header>
     <section class="pt-24 pb-12 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <div id="notification-bar" class="notification-bar" onclick="dismissNotification()">
+        <div
+          id="notification-bar"
+          class="notification-bar"
+          onclick="dismissNotification()"
+        >
           <p class="text-sm text-gray-600">
             Selamat datang, Tuan! Nikmati detail aktivitas komunitas.
           </p>
@@ -240,7 +324,7 @@
           <a
             href="/komunitas.html"
             class="px-5 py-2 text-sm text-black border border-gray-200 rounded-full"
-            style="font-family: 'Space Grotesk', sans-serif;"
+            style="font-family: 'Space Grotesk', sans-serif"
           >
             ← Komunitas
           </a>
@@ -248,7 +332,7 @@
             id="community-link"
             href=""
             class="px-5 py-2 text-sm text-gray-700 border border-gray-200 rounded-full"
-            style="font-family: 'Space Grotesk', sans-serif;"
+            style="font-family: 'Space Grotesk', sans-serif"
           >
             Kembali ke Komunitas
           </a>
@@ -257,11 +341,16 @@
           <div class="thread-header">
             <h1 id="thread-title"></h1>
             <div class="post-menu">
-              <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, 'thread')"></i>
+              <i
+                class="fas fa-ellipsis-h post-menu-btn"
+                onclick="togglePostMenu(event, 'thread')"
+              ></i>
               <div class="post-menu-content" id="post-menu-thread">
                 <div class="post-menu-item" onclick="sharePost()">Bagikan</div>
                 <div class="post-menu-item" onclick="savePost()">Simpan</div>
-                <div class="post-menu-item danger" onclick="reportPost()">Laporkan</div>
+                <div class="post-menu-item danger" onclick="reportPost()">
+                  Laporkan
+                </div>
               </div>
             </div>
           </div>
@@ -274,13 +363,22 @@
           <div id="thread-attachments" class="attachment-container"></div>
           <div class="thread-footer">
             <div class="vote-container">
-              <i class="fas fa-arrow-up vote-btn" onclick="votePost(event, 'thread', 1)"></i>
+              <i
+                class="fas fa-arrow-up vote-btn"
+                onclick="votePost(event, 'thread', 1)"
+              ></i>
               <span id="thread-votes" class="text-sm text-gray-500">0</span>
-              <i class="fas fa-arrow-down vote-btn" onclick="votePost(event, 'thread', -1)"></i>
+              <i
+                class="fas fa-arrow-down vote-btn"
+                onclick="votePost(event, 'thread', -1)"
+              ></i>
             </div>
             <div class="flex items-center gap-4">
               <span id="thread-replies" class="text-xs text-gray-500"></span>
-              <span id="thread-last-activity" class="text-xs text-gray-500"></span>
+              <span
+                id="thread-last-activity"
+                class="text-xs text-gray-500"
+              ></span>
             </div>
           </div>
         </div>
@@ -298,10 +396,22 @@
         <div id="comments-section" class="space-y-4"></div>
       </div>
     </section>
-    <footer class="mt-12 bg-white border-t border-neutral-200 text-sm text-neutral-700">
-      <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
+    <footer
+      class="relative mt-12 bg-white border-t border-neutral-200 text-sm text-neutral-700 overflow-hidden"
+    >
+      <div class="absolute bottom-0 left-0 w-full h-56 pointer-events-none z-0">
+        <div
+          class="w-full h-full bg-gradient-to-t from-white via-white/80 to-transparent animate-[fadeUp_4s_infinite]"
+        ></div>
+      </div>
+      <div
+        class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10"
+      >
         <div class="col-span-2">
-          <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif">
+          <div
+            class="text-2xl font-bold tracking-normal uppercase"
+            style="font-family: 'Space Grotesk', sans-serif"
+          >
             TARA<span class="text-yellow-400">●</span>
           </div>
           <p class="text-neutral-500 mb-4">
@@ -309,50 +419,110 @@
             depan. Temukan inspirasi. Bangun impresi.
           </p>
           <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
-            <a href="#" aria-label="Instagram">
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Instagram"
+            >
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" aria-label="Twitter">
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Twitter"
+            >
               <i class="fab fa-twitter"></i>
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="LinkedIn"
+            >
               <i class="fab fa-linkedin"></i>
             </a>
-            <a href="#" aria-label="Dribbble">
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Dribbble"
+            >
               <i class="fab fa-dribbble"></i>
             </a>
-            <a href="#" aria-label="Behance">
-              <i stuartscholarship.org
+            <a
+              href="#"
+              class="hover:text-yellow-400 transition"
+              aria-label="Behance"
+            >
+              <i class="fab fa-behance"></i>
             </a>
           </div>
         </div>
         <div>
           <h3 class="font-semibold text-black mb-4">Navigasi</h3>
           <ul class="space-y-2">
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Galeri</a></li>
-            <li><a href="#">Tentang</a></li>
-            <li><a href="#">Kontak</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Beranda</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Galeri</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Tentang</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Kontak</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">FAQ</a>
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
           <ul class="space-y-2">
-            <li><a href="#">UI/UX</a></li>
-            <li><a href="#">Efek GSAP</a></li>
-            <li><a href="#">Halaman Utama</a></li>
-            <li><a href="#">Mikrointeraksi</a></li>
-            <li><a href="#">Tipografi</a></li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">UI/UX</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Efek GSAP</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Halaman Utama</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Mikrointeraksi</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition">Tipografi</a>
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
           <ul class="space-y-2">
-            <li><a href="#">Kirim Karya</a></li>
-            <li><a href="#">Gabung Kurator</a></li>
-            <li><a href="#">Sponsor & Iklan</a></li>
-            <li><a href="#">Mitra Media</a></li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Kirim Karya</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Gabung Kurator</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Sponsor & Iklan</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-yellow-400 transition"
+                >Mitra Media</a
+              >
+            </li>
           </ul>
         </div>
         <div class="col-span-2 sm:col-span-1">
@@ -361,16 +531,22 @@
             Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Tuan.
           </p>
           <div class="flex items-center gap-2">
-            <input type="email" placeholder="Email Tuan..."
-              class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+            <input
+              type="email"
+              placeholder="Email Tuan..."
+              class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
             <button
-              class="px-4 py-2 bg-black text-white text-sm rounded-md">
+              class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-yellow-400 hover:text-black transition"
+            >
               Kirim
             </button>
           </div>
         </div>
       </div>
-      <div class="border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
+      <div
+        class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400"
+      >
         © 2025 TARA. Dirakit dengan semangat di bumi Nusantara. Estetika,
         teknologi, dan visi Tuan menyatu.
       </div>
@@ -443,7 +619,8 @@
           id: 1,
           threadId: 1,
           author: "Siti Nurhaliza",
-          content: "Puisi ini benar-benar menyentuh! Mengingatkan saya pada senja di kampung halaman.",
+          content:
+            "Puisi ini benar-benar menyentuh! Mengingatkan saya pada senja di kampung halaman.",
           time: "1 jam lalu",
           votes: 10,
           attachments: [],
@@ -452,7 +629,8 @@
           id: 2,
           threadId: 1,
           author: "Budi Hartono",
-          content: "Bagus sekali! Apakah ada rencana untuk membuat antologi puisi?",
+          content:
+            "Bagus sekali! Apakah ada rencana untuk membuat antologi puisi?",
           time: "30 menit lalu",
           votes: 5,
           attachments: [],
@@ -482,7 +660,9 @@
           communities.find((c) => c.id === communityId) ||
           communities.find((c) => c.id === 999);
         document.getElementById("thread-title").textContent = thread.title;
-        document.getElementById("thread-author").innerHTML = `Diposting oleh <a href="sudah_login/profil_user.html" class="text-blue-600">${thread.author}</a>`;
+        document.getElementById(
+          "thread-author"
+        ).innerHTML = `Diposting oleh <a href="sudah_login/profil_user.html" class="text-blue-600">${thread.author}</a>`;
         document.getElementById("thread-time").textContent = thread.time;
         document.getElementById(
           "thread-community"
@@ -498,7 +678,8 @@
         document.getElementById(
           "community-link"
         ).href = `/forum.html?community=${community.id}`;
-        const attachmentsContainer = document.getElementById("thread-attachments");
+        const attachmentsContainer =
+          document.getElementById("thread-attachments");
         attachmentsContainer.innerHTML = thread.attachments
           .map((att) =>
             att.type === "image"
@@ -524,11 +705,21 @@
             <div class="comment-header">
               <h3>${comment.author}</h3>
               <div class="post-menu">
-                <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, 'comment-${comment.id}')"></i>
-                <div class="post-menu-content" id="post-menu-comment-${comment.id}">
-                  <div class="post-menu-item" onclick="shareComment(${comment.id})">Bagikan</div>
-                  <div class="post-menu-item" onclick="saveComment(${comment.id})">Simpan</div>
-                  <div class="post-menu-item danger" onclick="reportComment(${comment.id})">Laporkan</div>
+                <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, 'comment-${
+                  comment.id
+                }')"></i>
+                <div class="post-menu-content" id="post-menu-comment-${
+                  comment.id
+                }">
+                  <div class="post-menu-item" onclick="shareComment(${
+                    comment.id
+                  })">Bagikan</div>
+                  <div class="post-menu-item" onclick="saveComment(${
+                    comment.id
+                  })">Simpan</div>
+                  <div class="post-menu-item danger" onclick="reportComment(${
+                    comment.id
+                  })">Laporkan</div>
                 </div>
               </div>
             </div>
@@ -547,9 +738,13 @@
             </div>
             <div class="comment-footer">
               <div class="vote-container">
-                <i class="fas fa-arrow-up vote-btn" onclick="voteComment(event, ${comment.id}, 1)"></i>
+                <i class="fas fa-arrow-up vote-btn" onclick="voteComment(event, ${
+                  comment.id
+                }, 1)"></i>
                 <span class="text-sm text-gray-500">${comment.votes}</span>
-                <i class="fas fa-arrow-down vote-btn" onclick="voteComment(event, ${comment.id}, -1)"></i>
+                <i class="fas fa-arrow-down vote-btn" onclick="voteComment(event, ${
+                  comment.id
+                }, -1)"></i>
               </div>
             </div>
           </div>
@@ -573,19 +768,24 @@
         const url = `/forum.html?community=${communityId}&thread=${threadId}`;
         navigator.clipboard.writeText(window.location.origin + url);
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = "Link aktivitas telah disalin, Tuan!";
+        notificationBar.querySelector("p").textContent =
+          "Link aktivitas telah disalin, Tuan!";
         notificationBar.classList.remove("hidden");
       }
       function savePost() {
         const { threadId } = getThreadParams();
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Aktivitas ${threadId} telah disimpan, Tuan!`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Aktivitas ${threadId} telah disimpan, Tuan!`;
         notificationBar.classList.remove("hidden");
       }
       function reportPost() {
         const { threadId } = getThreadParams();
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Aktivitas ${threadId} telah dilaporkan, Tuan.`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Aktivitas ${threadId} telah dilaporkan, Tuan.`;
         notificationBar.classList.remove("hidden");
       }
       function votePost(event, id, value) {
@@ -596,7 +796,9 @@
         post.lastActivity = new Date().toISOString();
         renderThreadDetails();
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Suara Tuan telah diberikan!`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Suara Tuan telah diberikan!`;
         notificationBar.classList.remove("hidden");
       }
       function postComment(event) {
@@ -621,7 +823,8 @@
         textarea.value = "";
         renderThreadDetails();
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = "Komentar Tuan telah diposting!";
+        notificationBar.querySelector("p").textContent =
+          "Komentar Tuan telah diposting!";
         notificationBar.classList.remove("hidden");
       }
       function shareComment(commentId) {
@@ -629,17 +832,22 @@
         const url = `/forum.html?community=${communityId}&thread=${threadId}#comment-${commentId}`;
         navigator.clipboard.writeText(window.location.origin + url);
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = "Link komentar telah disalin, Tuan!";
+        notificationBar.querySelector("p").textContent =
+          "Link komentar telah disalin, Tuan!";
         notificationBar.classList.remove("hidden");
       }
       function saveComment(commentId) {
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Komentar ${commentId} telah disimpan, Tuan!`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Komentar ${commentId} telah disimpan, Tuan!`;
         notificationBar.classList.remove("hidden");
       }
       function reportComment(commentId) {
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Komentar ${commentId} telah dilaporkan, Tuan.`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Komentar ${commentId} telah dilaporkan, Tuan.`;
         notificationBar.classList.remove("hidden");
       }
       function voteComment(event, commentId, value) {
@@ -648,7 +856,9 @@
         comment.votes += value;
         renderComments();
         const notificationBar = document.getElementById("notification-bar");
-        notificationBar.querySelector("p").textContent = `Suara Tuan telah diberikan untuk komentar!`;
+        notificationBar.querySelector(
+          "p"
+        ).textContent = `Suara Tuan telah diberikan untuk komentar!`;
         notificationBar.classList.remove("hidden");
       }
       function dismissNotification() {
