@@ -4,23 +4,60 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TARA - Gallery Showcase (Edisi Kocak Tanpa Potong!)</title>
+    <title>Tara - Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                    },
+                    animation: {
+                        pop: 'pop 0.5s ease-out forwards',
+                    },
+                }
+            }
+        };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        * {
-            font-family: "Space Grotesk", sans-serif;
+        @font-face {
+            font-family: "Vantage";
+            src: url("./assets/fonts/VantageRegular-L3xY5.ttf") format("truetype");
         }
 
-        :root {
-            --primary-black: #000000;
-            --primary-white: #ffffff;
-            --gray-light: #f5f6f5;
-            --gray-dark: #1a1a1a;
-            --accent-silver: #b0b0b0;
-            --accent-platinum: #e5e5e5;
+        .font-vantage {
+            font-family: "Vantage", sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(to bottom right, #eff6ff, #ede9fe);
+            z-index: -2;
+        }
+
+        * {
+            font-family: "Space Grotesk", sans-serif;
         }
 
         .animate-ping-slow {
@@ -57,7 +94,10 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, #000000 0%, #4a4a4a 50%, #000000 100%);
+            background: linear-gradient(135deg,
+                    #000000 0%,
+                    #4a4a4a 50%,
+                    #000000 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -105,7 +145,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
             transition: left 0.6s;
             z-index: 10;
         }
@@ -151,9 +194,15 @@
         }
 
         .hero-bg {
-            background: radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+            background: radial-gradient(circle at 20% 50%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
+                radial-gradient(circle at 80% 20%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
+                radial-gradient(circle at 40% 80%,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    transparent 50%),
                 linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
         }
 
@@ -178,7 +227,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    transparent);
             transition: left 0.6s;
         }
 
@@ -236,870 +288,647 @@
             z-index: 0;
         }
 
-        #loadingScreen {
-            position: fixed;
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            transform: rotate(45deg);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float 8s ease-in-out infinite;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .image-overlay {
+            position: absolute;
             inset: 0;
-            z-index: 50;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            opacity: 1;
+            background: linear-gradient(45deg,
+                    rgba(0, 0, 0, 0.9) 0%,
+                    rgba(0, 0, 0, 0.4) 100%);
+            opacity: 0;
             transition: opacity 0.5s ease;
         }
 
-        #loadingScreen.hidden {
+        .gallery-item:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #000000;
+        }
+
+        .stats-number {
+            background: linear-gradient(135deg, #000000, #4a4a4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-appear {
             opacity: 0;
-            display: none;
+            transform: translateY(30px);
+            animation: appear 1s ease forwards;
         }
 
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* Projects section */
-        .projects-section {
-            min-height: 100vh;
-            position: relative;
-            padding: 8rem 2rem 6rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            z-index: 1;
-        }
-
-        .projects-header {
-            text-align: center;
-            margin-bottom: 10rem;
-            position: relative;
-            perspective: 1200px;
-        }
-
-        .projects-title {
-            font-size: clamp(3rem, 10vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -4px;
-            margin-bottom: 2.5rem;
-            position: relative;
-            color: #1a1a1a;
-            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
-            animation: titlePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes titlePulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.02);
-            }
-        }
-
-        .projects-title::after {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #1a1a1a, transparent);
-            opacity: 0;
-            animation: fadeInLine 1.5s ease-out 0.8s forwards;
-        }
-
-        @keyframes fadeInLine {
+        @keyframes appear {
             to {
                 opacity: 1;
-                width: 150px;
+                transform: translateY(0);
             }
         }
 
-        .projects-subtitle {
-            font-size: clamp(1.2rem, 2.8vw, 1.6rem);
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            font-weight: 400;
-            line-height: 1.8;
-            opacity: 0;
-            animation: fadeInUp 1.2s ease-out 0.6s forwards;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        .text-appear:nth-child(1) {
+            animation-delay: 0.1s;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 8rem;
-            perspective: 1500px;
+        .text-appear:nth-child(2) {
+            animation-delay: 0.2s;
         }
 
-        .project-card {
-            position: relative;
-            transform: rotate(var(--rotate-angle)) translateY(40px);
-            opacity: 0;
-            animation: cardFadeIn 1s ease-out forwards;
-            z-index: 2;
-        }
-
-        .project-card:nth-child(1) {
+        .text-appear:nth-child(3) {
             animation-delay: 0.3s;
-            --rotate-angle: -2deg;
-            --sway-duration: 6s;
-            grid-column: 1 / 2;
-            grid-row: 1 / 3;
         }
 
-        .project-card:nth-child(2) {
-            animation-delay: 0.5s;
-            --rotate-angle: 3deg;
-            --sway-duration: 7s;
-            grid-column: 2 / 3;
-            grid-row: 1 / 2;
+        .text-appear:nth-child(4) {
+            animation-delay: 0.4s;
         }
 
-        .project-card:nth-child(3) {
-            animation-delay: 0.7s;
-            --rotate-angle: -1deg;
-            --sway-duration: 5.5s;
-            grid-column: 3 / 4;
-            grid-row: 1 / 2;
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
         }
 
-        .project-card:nth-child(4) {
-            animation-delay: 0.9s;
-            --rotate-angle: 2deg;
-            --sway-duration: 6.5s;
-            grid-column: 2 / 4;
-            grid-row: 2 / 3;
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
         }
 
-        @keyframes cardFadeIn {
-            to {
-                opacity: 1;
-                transform: rotate(0deg) translateY(0);
-            }
+        .nav-link:hover::after {
+            width: 100%;
         }
 
-        .project-card:hover {
-            transform: translateY(-15px) scale(1.05) rotate(0deg);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .project-image {
+        .featured-bg {
+            background: linear-gradient(135deg,
+                    #f8f8f8 0%,
+                    #ffffff 50%,
+                    #f0f0f0 100%);
             position: relative;
             overflow: hidden;
-            background: #e8e8e8;
-            border: 4px solid #1a1a1a;
-            border-radius: 12px;
-            aspect-ratio: var(--aspect-ratio);
         }
 
-        .project-card:nth-child(1) .project-image {
-            aspect-ratio: 3/4;
+        .particle {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.4);
+            border-radius: 50%;
+            animation: drift 12s linear infinite;
         }
 
-        .project-card:nth-child(2) .project-image,
-        .project-card:nth-child(3) .project-image {
-            aspect-ratio: 1/1;
+        .particle-1 {
+            width: 25px;
+            height: 25px;
+            top: 5%;
+            left: 10%;
         }
 
-        .project-card:nth-child(4) .project-image {
-            aspect-ratio: 2/1;
+        .particle-2 {
+            width: 15px;
+            height: 15px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 4s;
         }
 
-        .project-image img {
+        .particle-3 {
+            width: 20px;
+            height: 20px;
+            top: 30%;
+            left: 40%;
+            animation-delay: 8s;
+        }
+
+        .particle-4 {
+            width: 18px;
+            height: 18px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(120vw, 100vh);
+                opacity: 0;
+            }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1200px;
+            padding: 40px 0;
+        }
+
+        .flip-card {
+            position: relative;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: all 0.7s ease;
-            filter: grayscale(100%) contrast(1.3);
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
         }
 
-        .project-card:hover .project-image img {
-            transform: scale(1.1);
-            filter: grayscale(0%) contrast(1);
+        .gallery-item.flipped .flip-card {
+            transform: rotateY(180deg);
         }
 
-        .project-image::after {
-            content: '';
+        .flip-card-front,
+        .flip-card-back {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
         }
 
-        .project-card:hover .project-image::after {
-            opacity: 1;
-        }
-
-        .project-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #ffffff, transparent);
-            border: 2px solid #1a1a1a;
-            border-radius: 50%;
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            font-size: 20px;
-            color: #1a1a1a;
-            opacity: 0.6;
-            transition: all 0.5s ease;
+            align-items: center;
         }
 
-        .project-card:hover .project-icon {
-            transform: rotate(360deg) scale(1.2);
-            opacity: 1;
-            background: radial-gradient(circle, #1a1a1a, transparent);
-            color: #ffffff;
-        }
-
-        .project-content {
-            padding: 2rem;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.9);
-            border-top: 2px solid #1a1a1a;
-            border-radius: 0 0 12px 12px;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            color: #1a1a1a;
-            letter-spacing: -0.8px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .project-stats {
-            font-size: 0.9rem;
-            color: #333;
+        .flip-card-back p {
+            text-align: center;
             margin-bottom: 1rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .project-stats::before {
-            content: '\f0c0';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 0.9rem;
-            color: #1a1a1a;
-        }
-
-        .project-description {
-            display: block;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            max-height: 0;
-            overflow: hidden;
-        }
-
-        .project-card:hover .project-description {
-            opacity: 1;
-            transform: translateY(0);
-            max-height: 500px;
-        }
-
-        .project-needs {
-            font-size: 0.95rem;
-            color: #1a1a1a;
+        .flip-card-back a {
+            color: #2563eb;
             font-weight: 600;
-            margin-bottom: 0.7rem;
-            position: relative;
-            padding-left: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            max-height: 0;
-            overflow: hidden;
-        }
-
-        .project-card:hover .project-needs {
-            opacity: 1;
-            transform: translateY(0);
-            max-height: 500px;
-        }
-
-        .project-needs::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            top: 3px;
-            color: #1a1a1a;
-        }
-
-        /* Blog section */
-        .blog-section {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .blog-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .blog-title {
-            font-size: clamp(2.5rem, 8vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            color: #1a1a1a;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .blog-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .blog-card {
-            background: #ffffff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .blog-image img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .blog-card:hover .blog-image img {
-            transform: scale(1.1);
-        }
-
-        .blog-content {
-            padding: 1.5rem;
-        }
-
-        .blog-meta {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .blog-meta::before {
-            content: '\f073';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #1a1a1a;
-        }
-
-        .blog-title-card {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 0.5rem;
-        }
-
-        .blog-excerpt {
-            font-size: 0.95rem;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Agenda section */
-        .agenda-section {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .agenda-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .agenda-title {
-            font-size: clamp(2.5rem, 8vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            color: #1a1a1a;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .agenda-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .agenda-card {
-            background: #ffffff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-        }
-
-        .agenda-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .agenda-image img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .agenda-card:hover .agenda-image img {
-            transform: scale(1.1);
-        }
-
-        .agenda-content {
-            padding: 1.5rem;
-        }
-
-        .agenda-meta {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .agenda-meta::before {
-            content: '\f073';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #1a1a1a;
-        }
-
-        .agenda-title-card {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 0.5rem;
-        }
-
-        .agenda-excerpt {
-            font-size: 0.95rem;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Mobile nav */
-        .mobile-nav-active {
-            transform: translateX(0);
-            opacity: 1;
+            text-decoration: underline;
         }
     </style>
+
 </head>
 
-<body class="bg-gray-light">
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="hidden">
-        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
-            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
-        <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik... Sabun apa yang paling genit?</p>
-    </div>
+<body class="relative font-vantage overflow-x-hidden">
+    <!-- Background Gradient -->
+    <div class="gradient-bg"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-gray-dark">TARA</a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-dark hover:text-primary-black">Beranda</a>
-                    <a href="/proyek" class="text-gray-dark hover:text-primary-black">Proyek</a>
-                    <a href="/blog" class="text-gray-dark hover:text-primary-black">Blog</a>
-                    <a href="/tentang" class="text-gray-dark hover:text-primary-black">Tentang</a>
-                    <a href="/kontak" class="text-gray-dark hover:text-primary-black">Kontak</a>
-                </div>
-                <div class="md:hidden">
-                    <button class="text-gray-dark hover:text-primary-black focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            <div
-                class="md:hidden absolute top-16 left-0 w-full bg-white/90 backdrop-blur-md shadow-md transform -translate-x-full opacity-0 transition-all duration-300">
-                <div class="flex flex-col space-y-4 p-4">
-                    <a href="index.html" class="text-gray-dark hover:text-primary-black">Beranda</a>
-                    <a href="/proyek" class="text-gray-dark hover:text-primary-black">Proyek</a>
-                    <a href="/blog" class="text-gray-dark hover:text-primary-black">Blog</a>
-                    <a href="/tentang" class="text-gray-dark hover:text-primary-black">Tentang</a>
-                    <a href="/kontak" class="text-gray-dark hover:text-primary-black">Kontak</a>
-                </div>
-            </div>
+    <!-- Particles Layer -->
+    <div id="particles-js"></div>
+
+    <!-- Navbar -->
+    <header
+        class="py-6 px-6 flex justify-between items-center bg-white/90 shadow-sm border-b border-gray-200 backdrop-blur-sm relative z-10">
+        <!-- Logo -->
+        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family:'Space Grotesk', sans-serif">
+            TARA<span class="text-yellow-400">●</span>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        <div class="geometric-shape w-64 h-64 rounded-full -top-32 -left-16 animate-float"></div>
-        <div class="geometric-shape w-48 h-48 rounded-[20%] top-1/4 right-1/4 animate-float"
-            style="animation-delay: 2s;"></div>
-        <div class="geometric-shape w-96 h-96 rounded-[30%] bottom-1/4 left-1/3 animate-float"
-            style="animation-delay: 4s;"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-dark mb-6 text-gradient">
-                TARA - Kreasi Tanpa Batas
-            </h1>
-            <p class="text-lg sm:text-xl md:text-2xl text-gray-dark max-w-3xl mx-auto mb-8">
-                Platform kolaborasi untuk mewujudkan ide-ide kreatif menjadi kenyataan. Yuk, wujudkan proyek impianmu
-                bersama komunitas TARA!
-            </p>
-            <div class="flex justify-center space-x-4">
-                <a href="/proyek"
-                    class="button-primary text-white px-6 py-3 rounded-full font-semibold text-lg">Jelajahi Proyek</a>
-                <a href="/kontak" class="button-secondary px-6 py-3 rounded-full font-semibold text-lg"><span>Gabung
-                        Sekarang</span></a>
-            </div>
-        </div>
-    </section>
+        <!-- Hamburger -->
+        <button id="menuToggle" class="text-2xl md:hidden">
+            ☰
+        </button>
 
-    <!-- Community Section -->
-    <section class="py-16 bg-gray-light">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-dark mb-4">Komunitas Keren Kami</h2>
-                <p class="text-lg text-gray-dark max-w-2xl mx-auto">
-                    Bergabunglah dengan ribuan kreator dari berbagai bidang untuk berkolaborasi dan menginspirasi!
-                </p>
-            </div>
-            <div class="relative overflow-hidden">
-                <div class="gallery-container flex space-x-4 transition-transform duration-500 ease-in-out">
-                    <div class="gallery-item w-64 h-96 flex-shrink-0 relative"
-                        style="--rotate-angle: -3deg; --sway-duration: 5s;">
-                        <div class="rope" style="--rope-angle: -3deg;"></div>
-                        <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Community 1"
-                            class="w-full h-full object-cover rounded-lg shadow-lg" />
+        <!-- Nav Menu -->
+        <nav id="navMenu"
+            class="hidden md:flex flex-col md:flex-row md:items-center gap-4 md:gap-6 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent px-6 py-4 md:py-0 shadow md:shadow-none z-50">
+            <a href="/" class="hover:text-black transition text-sm text-gray-700">Beranda</a>
+            <a href="/about.html" class="font-semibold text-black text-sm">Tentang</a>
+            <a href="/galeri" class="hover:text-black transition text-sm">Galeri</a>
+            <a href="/profile.html" class="ml-0 md:ml-4">
+                <img src="https://i.pravatar.cc/36?u=tara" alt="Profile"
+                    class="w-9 h-9 rounded-full border hover:ring-2 hover:ring-blue-400 transition duration-150" />
+            </a>
+        </nav>
+    </header>
+
+
+    <main class="relative z-10 text-gray-800">
+        <!-- Section Profil + Statistik -->
+        <section class="w-full px-6 py-16 bg-transparent backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-start gap-12">
+
+                <!-- Kiri: Foto dan Info -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
+                    <div
+                        class="w-40 h-40 md:w-60 md:h-60 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
+                        <img src="https://i.pravatar.cc/36?u=tara" alt="Profile" class="w-full h-full object-cover" />
                     </div>
-                    <div class="gallery-item w-64 h-96 flex-shrink-0 relative"
-                        style="--rotate-angle: 2deg; --sway-duration: 6s;">
-                        <div class="rope" style="--rope-angle: 2deg;"></div>
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2b6e3c" alt="Community 2"
-                            class="w-full h-full object-cover rounded-lg shadow-lg" />
-                    </div>
-                    <div class="gallery-item w-64 h-96 flex-shrink-0 relative"
-                        style="--rotate-angle: -1deg; --sway-duration: 5.5s;">
-                        <div class="rope" style="--rope-angle: -1deg;"></div>
-                        <img src="https://images.unsplash.com/photo-1531482615713-2afd674bf4ac" alt="Community 3"
-                            class="w-full h-full object-cover rounded-lg shadow-lg" />
-                    </div>
-                    <div class="gallery-item w-64 h-96 flex-shrink-0 relative"
-                        style="--rotate-angle: 3deg; --sway-duration: 6.5s;">
-                        <div class="rope" style="--rope-angle: 3deg;"></div>
-                        <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Community 4"
-                            class="w-full h-full object-cover rounded-lg shadow-lg" />
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Noah Sullivan</h2>
+                        <p class="text-sm text-gray-500 mt-1">@noahdesu</p>
                     </div>
                 </div>
-                <button
-                    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white z-10"
-                    onclick="moveCarousel(-1)">
-                    <i class="fas fa-chevron-left text-gray-dark"></i>
-                </button>
-                <button
-                    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white z-10"
-                    onclick="moveCarousel(1)">
-                    <i class="fas fa-chevron-right text-gray-dark"></i>
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section class="projects-section bg-gray-light">
-        <div class="projects-header">
-            <h2 class="projects-title">Proyek Unggulan</h2>
-            <p class="projects-subtitle">Lihat karya-karya luar biasa dari komunitas kami yang siap menginspirasi!</p>
-        </div>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Project 1" />
-                    <div class="project-icon"><i class="fas fa-star"></i></div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Proyek Inovasi Teknologi</h3>
-                    <p class="project-stats">120+ Kolaborator</p>
-                    <p class="project-description">Membangun solusi teknologi untuk masa depan yang lebih baik.</p>
-                    <p class="project-needs">Butuh: Developer, Desainer UI/UX</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2b6e3c" alt="Project 2" />
-                    <div class="project-icon"><i class="fas fa-code"></i></div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Aplikasi Mobile Keren</h3>
-                    <p class="project-stats">80+ Kolaborator</p>
-                    <p class="project-description">Aplikasi mobile untuk memudahkan hidup sehari-hari.</p>
-                    <p class="project-needs">Butuh: Programmer Flutter, Tester</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd674bf4ac" alt="Project 3" />
-                    <div class="project-icon"><i class="fas fa-paint-brush"></i></div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Desain Kreatif</h3>
-                    <p class="project-stats">50+ Kolaborator</p>
-                    <p class="project-description">Menciptakan desain visual yang memukau untuk brand.</p>
-                    <p class="project-needs">Butuh: Illustrator, Animator</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Project 4" />
-                    <div class="project-icon"><i class="fas fa-rocket"></i></div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Startup Impian</h3>
-                    <p class="project-stats">200+ Kolaborator</p>
-                    <p class="project-description">Membangun startup teknologi yang mengubah dunia.</p>
-                    <p class="project-needs">Butuh: Investor, Marketer</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section class="blog-section bg-gray-light">
-        <div class="blog-header">
-            <h2 class="blog-title">Artikel & Inspirasi</h2>
-            <p class="blog-subtitle">Dapatkan wawasan dan tips dari komunitas kami.</p>
-        </div>
-        <div class="blog-grid">
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Blog 1" />
-                </div>
-                <div class="blog-content">
-                    <p class="blog-meta">12 Okt 2023</p>
-                    <h3 class="blog-title-card">Cara Memulai Proyek Kreatif</h3>
-                    <p class="blog-excerpt">Panduan langkah demi langkah untuk memulai proyek impianmu.</p>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2b6e3c" alt="Blog 2" />
-                </div>
-                <div class="blog-content">
-                    <p class="blog-meta">5 Nov 2023</p>
-                    <h3 class="blog-title-card">Tips Kolaborasi Efektif</h3>
-                    <p class="blog-excerpt">Cara bekerja sama dengan tim untuk hasil maksimal.</p>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd674bf4ac" alt="Blog 3" />
-                </div>
-                <div class="blog-content">
-                    <p class="blog-meta">20 Des 2023</p>
-                    <h3 class="blog-title-card">Inspirasi Desain 2024</h3>
-                    <p class="blog-excerpt">Tren desain terbaru yang wajib kamu ketahui.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Agenda Section -->
-    <section class="agenda-section bg-gray-light">
-        <div class="agenda-header">
-            <h2 class="agenda-title">Agenda Mendatang</h2>
-            <p class="blog-subtitle">Jangan lewatkan acara seru dari komunitas TARA!</p>
-        </div>
-        <div class="agenda-grid">
-            <div class="agenda-card">
-                <div class="agenda-image">
-                    <img src="https://images.unsplash.com/photo-1516321310762-479e93c67a07" alt="Agenda 1" />
-                </div>
-                <div class="agenda-content">
-                    <p class="agenda-meta">15 Jan 2024</p>
-                    <h3 class="agenda-title-card">Workshop Kreatif</h3>
-                    <p class="agenda-excerpt">Belajar membuat proyek kreatif dari nol.</p>
-                </div>
-            </div>
-            <div class="agenda-card">
-                <div class="agenda-image">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2b6e3c" alt="Agenda 2" />
-                </div>
-                <div class="agenda-content">
-                    <p class="agenda-meta">22 Feb 2024</p>
-                    <h3 class="agenda-title-card">Hackathon TARA</h3>
-                    <p class="agenda-excerpt">Kompetisi coding dengan hadiah menarik.</p>
-                </div>
-            </div>
-            <div class="agenda-card">
-                <div class="agenda-image">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd674bf4ac" alt="Agenda 3" />
-                </div>
-                <div class="agenda-content">
-                    <p class="agenda-meta">10 Mar 2024</p>
-                    <h3 class="agenda-title-card">Pameran Proyek</h3>
-                    <p class="agenda-excerpt">Pamerkan karya terbaikmu di acara tahunan kami.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-dark text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">TARA</h3>
-                    <p class="text-gray-400">Platform kolaborasi untuk kreator dari semua bidang.</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/proyek" class="text-gray-400 hover:text-white">Proyek</a></li>
-                        <li><a href="/blog" class="text-gray-400 hover:text-white">Blog</a></li>
-                        <li><a href="/tentang" class="text-gray-400 hover:text-white">Tentang</a></li>
-                        <li><a href="/kontak" class="text-gray-400 hover:text-white">Kontak</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Hubungi Kami</h3>
-                    <p class="text-gray-400">Email: halo@tara.id</p>
-                    <p class="text-gray-400">Telepon: +62 123 456 7890</p>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                <!-- Kanan: Grafik -->
+                <div class="flex-1 w-full">
+                    <div class="bg-white/40 backdrop-blur-lg rounded-2xl shadow-2xl p-6 md:p-8">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4 text-center md:text-left">Grafik Keaktifan
+                        </h3>
+                        <div class="relative w-full h-[250px]">
+                            <canvas id="userActivityChart" class="w-full h-full"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-8 text-center text-gray-400">
-                &copy; 2023 TARA. Sabun apa yang paling genit? Sabun colek!
-            </div>
-        </div>
-    </footer>
+        </section>
 
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <!-- SECTION: Lencana Saya -->
+        <section id='badgeSection' class='w-full px-6 py-16 bg-white/60 backdrop-blur-sm'>
+            <div class='max-w-6xl mx-auto'>
+                <!-- Judul -->
+                <div class='mb-10 text-center'>
+                    <h2 class='text-3xl font-bold text-gray-800'>Lencana Saya</h2>
+                    <p class='text-sm text-gray-500 mt-1'>Lencana yang kamu kumpulkan berdasarkan aktivitasmu</p>
+                </div>
+
+                <!-- Grid Lencana -->
+                <div class='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6'>
+                    <!-- Seniman (Lottie) -->
+                    <div
+                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
+                        <div class='relative'>
+                            <div id='senimanLottie' class='w-20 h-20'></div>
+                            <span
+                                class='absolute -top-2 -right-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full'>BARU</span>
+                        </div>
+                        <h4 class='mt-3 font-semibold text-gray-800'>Kreatif Abiezz</h4>
+                        <span class='text-sm text-gray-500'>Mendapat 10jt Like</span>
+                    </div>
+
+                    <!-- Sosialita (Lottie) -->
+                    <div
+                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
+                        <div id='sosialitaLottie' class='w-20 h-20'></div>
+                        <h4 class='mt-3 font-semibold text-gray-800'>Sosialita</h4>
+                        <span class='text-sm text-gray-500'>Bergabung dengan komunitas</span>
+                    </div>
+
+                    <!-- Petarung (Lottie) -->
+                    <div
+                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-white shadow-md rounded-xl p-4'>
+                        <div id='petarungLottie' class='w-20 h-20'></div>
+                        <h4 class='mt-3 font-semibold text-gray-800'>Kolaborator terbaik!</h4>
+                        <span class='text-sm text-gray-500'>Kolaborasi dengan 10 user </span>
+                    </div>
+
+                    <!-- Lencana Terkunci (Static) -->
+                    <div
+                        class='badge-animate opacity-0 scale-50 flex flex-col items-center bg-gray-100 border border-dashed border-gray-300 rounded-xl p-4'>
+                        <div class='w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center'>
+                            <svg class='w-8 h-8 text-white' fill='none' stroke='currentColor' stroke-width='2'
+                                viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round'
+                                    d='M12 11c1.104 0 2-.896 2-2V7a2 2 0 10-4 0v2c0 1.104.896 2 2 2zm0 2a5 5 0 00-5 5h10a5 5 0 00-5-5z' />
+                            </svg>
+                        </div>
+                        <h4 class='mt-3 font-semibold text-gray-400'>Lencana Rahasia</h4>
+                        <span class='text-sm text-gray-400'>Selesaikan misi khusus</span>
+                    </div>
+                </div>
+
+                <!-- Tombol -->
+                <div class='mt-10 text-center'>
+                    <a href='/badge.html'
+                        class='inline-block px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition'>
+                        Lihat Semua Lencana
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Agenda Section -->
+        <section id="agenda" class="py-32 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+            </div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-24">
+                    <h2 class="text-6xl md:text-8xl font-bold text-gray-900 mb-10 uppercase tracking-tight text-appear">
+                        postingan terakhir <span class="text-gradient">Anda</span>
+                    </h2>
+                    <p class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-appear">
+                        Rayakan kreativitas melalui webinar, pameran virtual, dan kontes
+                        mingguan
+                    </p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" style="
+              --rotate-angle: -2deg;
+              --rope-angle: -2deg;
+              --sway-duration: 6s;
+              --parallax: 0.2;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=29" alt="Webinar Portofolio"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Webinar Portofolio
+                                    </div>
+                                    <div class="text-sm opacity-80">10 Agustus 2025</div>
+                                    <div class="text-sm opacity-80">Webinar</div>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pelajari cara membangun portofolio yang memikat untuk karir
+                                    kreatif.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
+                                    Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" style="
+              --rotate-angle: 3deg;
+              --rope-angle: 3deg;
+              --sway-duration: 7s;
+              --parallax: 0.15;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=30" alt="Pameran Virtual"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Pameran Virtual
+                                    </div>
+                                    <div class="text-sm opacity-80">15 Agustus 2025</div>
+                                    <div class="text-sm opacity-80">Pameran</div>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pameran daring karya terbaik dari komunitas TARA.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Daftar
+                                    Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" style="
+              --rotate-angle: -1deg;
+              --rope-angle: -1deg;
+              --sway-duration: 5.5s;
+              --parallax: 0.25;
+            ">
+                        <div class="rope"></div>
+                        <div class="flip-card">
+                            <div
+                                class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-3xl">
+                                <img src="https://picsum.photos/300/400?random=31" alt="Kontes Puisi"
+                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <div class="image-overlay"></div>
+                                <div class="absolute bottom-8 left-8 text-white z-20">
+                                    <div class="text-xl font-bold uppercase tracking-wide">
+                                        Kontes Puisi
+                                    </div>
+                                    <div class="text-sm opacity-80">Setiap Minggu</div>
+                                    <div class="text-sm opacity-80">Kontes</div>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="text-gray-900 font-medium text-lg">
+                                    Pamerkan bakat menulis puisi dan menangkan hadiah menarik.
+                                </p>
+                                <a href="/event-detail" class="text-blue-600 font-semibold hover:underline mt-4">Ikuti
+                                    Kontes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-16 text-appear">
+                    <a href="/agenda"
+                        class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide">
+                        Lihat Semua
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Komunitas Saya -->
+        <section class="w-full px-6 py-16 bg-white/60 backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-8 text-center">
+                    <h2 class="text-3xl font-bold text-gray-800">Komunitas Saya</h2>
+                    <p class="text-sm text-gray-500 mt-1">Grup dan forum yang kamu ikuti 🌱</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Grup Card -->
+                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
+                        <h3 class="text-lg font-semibold text-gray-800">Frontend Dev ID</h3>
+                        <p class="text-sm text-gray-500 mt-1">Diskusi seputar HTML, CSS, JS & framework modern.</p>
+                        <div class="flex items-center mt-4">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=11" />
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=12" />
+                            <span class="text-sm text-gray-600">+1.2K anggota</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
+                        <h3 class="text-lg font-semibold text-gray-800">UI/UX Designers</h3>
+                        <p class="text-sm text-gray-500 mt-1">Tempat sharing dan review desain antarmuka.</p>
+                        <div class="flex items-center mt-4">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=13" />
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=14" />
+                            <span class="text-sm text-gray-600">+980 anggota</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
+                        <h3 class="text-lg font-semibold text-gray-800">Tech Startup Indonesia</h3>
+                        <p class="text-sm text-gray-500 mt-1">Kumpulan founder & dev startup lokal 💡</p>
+                        <div class="flex items-center mt-4">
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=15" />
+                            <img class="w-8 h-8 rounded-full mr-2" src="https://i.pravatar.cc/32?img=16" />
+                            <span class="text-sm text-gray-600">+520 anggota</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Loading Screen Logic (Kocak Edition!)
-            const loadingScreen = document.getElementById("loadingScreen");
-            if (!sessionStorage.getItem("hasVisitedIndex")) {
-                // Pertama kali buka, tampilin loading screen biar kece
-                loadingScreen.classList.remove("hidden");
-                setTimeout(() => {
-                    // Fade out biar kayak film Hollywood
-                    loadingScreen.style.opacity = "0";
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <script>
+        const ctx = document.getElementById('userActivityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Forum Post', 'Materi Dibaca', 'Tugas Selesai', 'Hari Login'],
+                datasets: [{
+                    label: 'Aktivitas',
+                    data: [128, 87, 21, 12],
+                    backgroundColor: ['#6366f1', '#60a5fa', '#34d399', '#fbbf24'],
+                    borderRadius: 8,
+                    barThickness: 20
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: context => context.raw + ' poin'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 400, density: { enable: true, value_area: 800 } },
+                color: { value: "#000000" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 100,
+                    color: "#000000",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    out_mode: "out"
+                }
+            },
+            interactivity: {
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                },
+                modes: {
+                    repulse: { distance: 70, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const animated = sessionStorage.getItem('badgesAnimated');
+            const items = document.querySelectorAll('.badge-animate');
+            if (!animated) {
+                items.forEach((item, idx) => {
                     setTimeout(() => {
-                        loadingScreen.classList.add("hidden");
-                        // Tandain di sessionStorage biar ga muncul lagi
-                        sessionStorage.setItem("hasVisitedIndex", "true");
-                        console.log("Loading selesai bro, sabun colek mode: ON!");
-                    }, 500); // Match durasi transisi opacity
-                }, 3000); // Loading 3 detik, cukup buat bikin penasaran
+                        item.classList.remove('opacity-0', 'scale-50');
+                        item.classList.add('animate-pop');
+                    }, idx * 200);
+                });
+                sessionStorage.setItem('badgesAnimated', 'true');
             } else {
-                // Udah pernah buka, sembunyiin loading screen
-                loadingScreen.classList.add("hidden");
-                console.log("Udah pernah mampir, ga usah loading lagi, santai aja!");
+                items.forEach(item => item.classList.remove('opacity-0', 'scale-50'));
             }
 
-            // Mobile Menu
-            const mobileMenuButton = document.querySelector(".md\\:hidden");
-            const nav = document.querySelector("nav > div > div:nth-child(2)");
-            mobileMenuButton.addEventListener("click", () => {
-                nav.classList.toggle("mobile-nav-active");
-                console.log("Menu dibuka! Apa kabar hamburger menu?");
-            });
+            const lotties = [
+                {
+                    id: 'senimanLottie',
+                    path: 'https://lottie.host/b7976189-d455-4d6e-b829-3942a3b356a9/LuwegGEtuF.json',
+                },
+                {
+                    id: 'sosialitaLottie',
+                    path: 'https://lottie.host/88cd9099-c491-488f-933d-818ef1649d6e/dCYa8hwMxy.json',
+                },
+                {
+                    id: 'petarungLottie',
+                    path: 'https://lottie.host/a13953a2-e070-4729-afc1-8acfc4423cb4/7NRZedmtfP.json',
+                },
+            ];
 
-            // Gallery Carousel
-            const galleryContainer = document.querySelector(".gallery-container");
-            let currentIndex = 0;
-            const items = document.querySelectorAll(".gallery-item");
-            const totalItems = items.length;
-
-            window.moveCarousel = (direction) => {
-                currentIndex += direction;
-                if (currentIndex < 0) currentIndex = totalItems - 1;
-                if (currentIndex >= totalItems) currentIndex = 0;
-                const offset = -currentIndex * (items[0].offsetWidth + 16);
-                galleryContainer.style.transform = `translateX(${offset}px)`;
-                items.forEach((item, index) => {
-                    item.classList.toggle("active", index === currentIndex);
+            lotties.forEach(b => {
+                const anim = lottie.loadAnimation({
+                    container: document.getElementById(b.id),
+                    renderer: 'svg',
+                    loop: false,
+                    autoplay: true,
+                    path: b.path,
                 });
-                console.log("Slide carousel! Kocak ga slide ini?");
-            };
 
-            // Auto-advance carousel
-            setInterval(() => moveCarousel(1), 5000);
+                anim.addEventListener('DOMLoaded', () => {
+                    const total = anim.totalFrames;
+                    const loopStart = total * 0.49;
+                    const loopEnd = total;
 
-            // Smooth Scroll for Anchor Links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const target = document.querySelector(anchor.getAttribute("href"));
-                    target.scrollIntoView({ behavior: "smooth" });
-                    console.log("Smooth scroll aktivasi! Lembut kayak sabun colek!");
+                    anim.addEventListener('complete', () => {
+                        anim.playSegments([loopStart, loopEnd], true);
+                        anim.loop = true;
+                    });
                 });
             });
         });

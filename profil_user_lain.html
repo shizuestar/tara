@@ -654,41 +654,111 @@
     <div class="gradient-bg"></div>
     <div id="particles-js"></div>
 
+    <!-- Header -->
     <header
-      class="py-4 px-4 flex justify-between items-center glass-effect fixed top-0 left-0 right-0 z-50"
+      class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full"
     >
-      <div
-        class="text-xl font-bold uppercase tracking-wide"
-        style="font-family: 'Space Grotesk', sans-serif"
+      <nav
+        class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm"
       >
-        TARA<span class="text-yellow-400">●</span>
-      </div>
-      <button
-        id="menuToggle"
-        class="text-xl md:hidden"
-        aria-label="Toggle navigation menu"
-      >
-        ☰
-      </button>
-      <nav id="navMenu" class="hidden md:flex gap-4 items-center">
-        <a href="/" class="nav-link hover:text-primary-black text-sm"
-          >Beranda</a
-        >
-        <a
-          href="/about.html"
-          class="nav-link font-semibold text-primary-black text-sm"
-          >Tentang</a
-        >
-        <a href="/galeri" class="nav-link hover:text-primary-black text-sm"
-          >Galeri</a
-        >
-        <a href="/profile.html" class="ml-2">
-          <img
-            src="https://i.pravatar.cc/32?u=tara"
-            alt="User profile avatar"
-            class="w-8 h-8 rounded-full border hover:ring-2 hover:ring-blue-400"
-          />
-        </a>
+        <div class="max-w-7xl mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+              <div class="relative">
+                <span class="text-yellow-400 text-2xl">●</span>
+                <span
+                  class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow"
+                  >●</span
+                >
+              </div>
+            </div>
+            <!-- Search Bar -->
+            <div class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
+              <input
+                type="text"
+                placeholder="Cari..."
+                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm"
+              />
+              <i
+                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              ></i>
+            </div>
+            <!-- Burger Icon Mobile -->
+            <button aria-label="asdasd"
+              id="burger-toggle"
+              class="md:hidden focus:outline-none z-[60] relative"
+            >
+              <svg
+                class="w-7 h-7 text-gray-900"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <!-- Menu Navigasi -->
+            <div
+              id="nav-menu"
+              class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300"
+            >
+              <a
+                href="/index.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Beranda</a
+              >
+              <a
+                href="/galeri.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Galeri</a
+              >
+              <a
+                href="/komunitas.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Komunitas</a
+              >
+              <a
+                href="/proyek.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Proyek</a
+              >
+              <a
+                href="/blog.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Blog</a
+              >
+              <a
+                href="/agenda.html"
+                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
+                >Agenda</a
+              >
+
+              <div
+                class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0"
+              >
+                <a
+                  href="/login"
+                  class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center"
+                >
+                  Log In
+                </a>
+                <a
+                  href="/register"
+                  class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center"
+                >
+                  Sign Up
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
 
@@ -1425,21 +1495,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Mobile Menu Toggle
-        const menuToggle = document.getElementById("menuToggle");
-        const navMenu = document.getElementById("navMenu");
-        menuToggle.addEventListener("click", () => {
-          navMenu.classList.toggle("hidden");
-          navMenu.classList.toggle("flex");
-          navMenu.classList.toggle("flex-col");
-          navMenu.classList.toggle("absolute");
-          navMenu.classList.toggle("top-12");
-          navMenu.classList.toggle("left-0");
-          navMenu.classList.toggle("w-full");
-          navMenu.classList.toggle("bg-primary-white");
-          navMenu.classList.toggle("p-4");
-          navMenu.classList.toggle("mobile-nav-active");
-        });
+     
 
         // Particles.js
         particlesJS("particles-js", {

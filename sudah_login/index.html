@@ -1962,11 +1962,225 @@
         }
 
         /* notif end */
+        /* Styling kursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(128, 128, 128, 0.4) 50%, transparent 100%);
+        }
+
+        /* Efek smoke saat hover */
+        .cursor.hover {
+            transform: scale(2) translate(-25%, -25%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(200, 200, 200, 0.6) 30%, rgba(128, 128, 128, 0.3) 60%, transparent 100%);
+            border: none;
+            animation: smokeEffect 0.8s ease-out infinite;
+            box-shadow:
+                0 0 20px rgba(128, 128, 128, 0.4),
+                0 0 40px rgba(128, 128, 128, 0.2),
+                0 0 60px rgba(128, 128, 128, 0.1);
+        }
+
+        /* Animasi smoke effect */
+        @keyframes smokeEffect {
+            0% {
+                opacity: 0.8;
+                transform: scale(2) translate(-25%, -25%) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(2.5) translate(-20%, -20%) rotate(180deg);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(2) translate(-25%, -25%) rotate(360deg);
+            }
+        }
+
+        /* Tambahan efek partikel smoke */
+        .cursor::before,
+        .cursor::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .cursor.hover::before {
+            animation: smokeParticle1 1.2s ease-out infinite;
+            background: radial-gradient(circle, transparent 40%, rgba(150, 150, 150, 0.3) 70%, transparent 100%);
+        }
+
+        .cursor.hover::after {
+            animation: smokeParticle2 1.5s ease-out infinite reverse;
+            background: radial-gradient(circle, transparent 30%, rgba(180, 180, 180, 0.2) 60%, transparent 100%);
+        }
+
+        /* Animasi partikel smoke 1 */
+        @keyframes smokeParticle1 {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(0deg);
+            }
+
+            30% {
+                opacity: 0.6;
+                transform: scale(1.8) rotate(120deg);
+            }
+
+            70% {
+                opacity: 0.3;
+                transform: scale(3) rotate(240deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(4) rotate(360deg);
+            }
+        }
+
+        /* Animasi partikel smoke 2 */
+        @keyframes smokeParticle2 {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotate(0deg);
+            }
+
+            40% {
+                opacity: 0.4;
+                transform: scale(2.2) rotate(-150deg);
+            }
+
+            80% {
+                opacity: 0.2;
+                transform: scale(3.5) rotate(-300deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(4.5) rotate(-360deg);
+            }
+        }
+
+        /* Efek smoke trail (jejak asap) */
+        .cursor.hover {
+            position: relative;
+        }
+
+        .cursor.hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 20%, rgba(128, 128, 128, 0.1) 40%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: smokeTrail 2s ease-out infinite;
+            z-index: -1;
+        }
+
+        /* Animasi smoke trail */
+        @keyframes smokeTrail {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+
+            20% {
+                opacity: 50;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            60% {
+                opacity: 70;
+                transform: translate(-50%, -50%) scale(2);
+            }
+
+            100% {
+                opacity: 100;
+                transform: translate(-50%, -50%) scale(3);
+            }
+        }
+
+        .cursor.smoke-variant {
+            background: radial-gradient(ellipse 150% 100%, rgba(240, 240, 240, 0.8) 0%, rgba(180, 180, 180, 0.4) 40%, rgba(120, 120, 120, 0.2) 70%, transparent 100%);
+            filter: blur(1px);
+            animation: smokeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes smokeFloat {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            33% {
+                transform: translate(-50%, -50%) translateY(-5px) rotate(120deg);
+                opacity: 0.6;
+            }
+
+            66% {
+                transform: translate(-50%, -50%) translateY(3px) rotate(240deg);
+                opacity: 0.7;
+            }
+        }
     </style>
 </head>
 
 <body class="hero-bg min-h-screen">
-   <div id="loadingScreen">
+    <div class="cursor" id="cursor"></div>
+
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        const speed = 0.2;
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * speed;
+            cursorY += (mouseY - cursorY) * speed;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        const hoverElements = document.querySelectorAll('a, button, .hover-target'); // tambahkan kelas tambahan kalau perlu
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        animateCursor();
+    </script>
+    <div id="loadingScreen">
         <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
             background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
         <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik...</p>
@@ -2143,10 +2357,10 @@
                 dari talenta Indonesia.
             </p>
             <div class="flex flex-col sm:flex-row gap-6 mb-16 text-appear">
-                <a href="./register"
+                <!-- <a href="./register"
                     class="button-primary px-10 py-5 text-white rounded-full font-bold text-lg uppercase tracking-wide">
                     Gabung Sekarang
-                </a>
+                </a> -->
                 <a href="./galeri"
                     class="button-secondary px-10 py-5 rounded-full font-bold text-lg uppercase tracking-wide">
                     <span>Jelajahi Karya</span>

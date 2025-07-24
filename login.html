@@ -246,7 +246,7 @@
               ><span class="text-yellow-400">●</span>
             </div>
           </div>
-          <form action="/index.html" method="GET" class="space-y-5">
+          <form action="/sudah_login/index.html" method="GET" class="space-y-5">
             <input
               type="email"
               placeholder="Email"
@@ -445,11 +445,11 @@
             cardElement.addEventListener("mouseenter", () => {
               anime({
                 targets: cardElement,
-                scale: 1.03,
-                translateY: -8,
-                rotateZ: Math.random() * 2 - 1,
-                duration: 300,
-                easing: "easeOutCubic",
+                scale: 1.02, // Reduced scale for more relaxed feel
+                translateY: -5, // Reduced translation
+                rotateZ: Math.random() * 1 - 0.5, // Subtler rotation
+                duration: 500, // Slower duration
+                easing: "easeOutQuad", // Gentler easing
               });
             });
 
@@ -459,8 +459,8 @@
                 scale: 1,
                 translateY: 0,
                 rotateZ: 0,
-                duration: 300,
-                easing: "easeOutCubic",
+                duration: 500, // Slower duration
+                easing: "easeOutQuad", // Gentler easing
               });
             });
 
@@ -480,7 +480,7 @@
             totalHeight += cards[i].offsetHeight + 20;
           }
 
-          let duration = index === 1 || index === 3 ? 20000 : 28000;
+          let duration = index === 1 || index === 3 ? 30000 : 40000; // Increased duration for slower, more relaxed scroll
 
           anime({
             targets: column,
@@ -498,6 +498,7 @@
       );
       const taraContainer = document.querySelector(".tara-container");
       const leftSection = document.querySelector(".left-section");
+      const rightSection = document.querySelector(".right-section");
 
       createCardColumns();
       anime({
@@ -521,6 +522,8 @@
                 taraContainer.style.display = "none";
                 leftSection.style.backdropFilter = "blur(20px)";
                 leftSection.style.background = "rgba(255, 255, 255, 0.25)";
+                rightSection.style.backdropFilter = "blur(20px)"; // Apply blur to right section
+                rightSection.style.background = "rgba(255, 255, 255, 0.25)"; // Match left section background
                 cardSection.style.opacity = 1;
                 startInfiniteScroll();
               },
