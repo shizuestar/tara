@@ -754,15 +754,73 @@
         let currentPage = 1;
         const projectsPerPage = 3;
 
-        // Render Projects
-        function renderProjects(filter = 'all', sort = 'default', search = '') {
-            const projectList = document.getElementById('project-list');
-            projectList.innerHTML = '';
+        // Filter Button Event Listener for Projects
+        function initializeProjectFilterButtons() {
+            const filterButtons = document.querySelectorAll(".filter-btn:not(#notification-modal .filter-btn)");
+            filterButtons.forEach((btn) => {
+                btn.removeEventListener("click", handleProjectFilterClick); // Cegah duplikasi listener
+                btn.addEventListener("click", handleProjectFilterClick);
+            });
 
-            let filteredProjects = filter === 'all' ? projects :
-                filter === 'populer' ? projects.filter(p => p.populer) :
-                    filter === 'baru' ? projects.filter(p => p.baru) :
-                        projects.filter(p => p.category === filter);
+            function handleProjectFilterClick() {
+                const isActive = this.classList.contains("active");
+                console.log(`Tombol filter proyek ${this.dataset.filter} diklik, aktif: ${isActive}`);
+                
+                filterButtons.forEach((f) => f.classList.remove("active"));
+                if (isActive) {
+                    renderProjects("all", document.querySelector('.sort-btn.active')?.dataset.sort || "default", document.getElementById("search-input")?.value || "");
+                } else {
+                    this.classList.add("active");
+                    renderProjects(this.dataset.filter, document.querySelector('.sort-btn.active')?.dataset.sort || "default", document.getElementById("search-input")?.value || "");
+                    anime({
+                        targets: this,
+                        scale: [1, 1.05, 1],
+                        duration: 200,
+                        easing: "easeOutQuad"
+                    });
+                }
+            }
+        }
+
+        // Filter Button Event Listener for Notifications
+        function initializeNotificationFilterButtons() {
+            const notificationFilterButtons = document.querySelectorAll("#notification-modal .filter-btn");
+            notificationFilterButtons.forEach((btn) => {
+                btn.removeEventListener("click", handleNotificationFilterClick); // Cegah duplikasi listener
+                btn.addEventListener("click", handleNotificationFilterClick);
+            });
+
+            function handleNotificationFilterClick() {
+                const isActive = this.classList.contains("active");
+                console.log(`Tombol filter notifikasi ${this.dataset.filter} diklik, aktif: ${isActive}`);
+                
+                notificationFilterButtons.forEach((f) => f.classList.remove("active"));
+                if (isActive) {
+                    renderNotifications("all");
+                } else {
+                    this.classList.add("active");
+                    renderNotifications(this.dataset.filter);
+                    anime({
+                        targets: this,
+                        scale: [1, 1.05, 1],
+                        duration: 200,
+                        easing: "easeOutQuad"
+                    });
+                }
+            }
+        }
+
+        // Render Projects
+        function renderProjects(filter = "all", sort = "default", search = "") {
+            const projectList = document.getElementById("project-list");
+            if (!projectList) return;
+            console.log("Clearing project list, filter:", filter);
+            projectList.innerHTML = "";
+
+            let filteredProjects = filter === "all" ? projects :
+                filter === "populer" ? projects.filter(p => p.populer) :
+                filter === "baru" ? projects.filter(p => p.baru) :
+                projects.filter(p => p.category === filter);
 
             if (search) {
                 filteredProjects = filteredProjects.filter(p =>
@@ -772,8 +830,8 @@
             }
 
             filteredProjects = [...filteredProjects].sort((a, b) => {
-                if (sort === 'progress') return b.progress - a.progress;
-                if (sort === 'members') return b.members.length - a.members.length;
+                if (sort === "progress") return b.progress - a.progress;
+                if (sort === "members") return b.members.length - a.members.length;
                 return a.id - b.id;
             });
 
@@ -781,6 +839,7 @@
             const end = start + projectsPerPage;
             const paginatedProjects = filteredProjects.slice(start, end);
 
+            console.log("Rendering", paginatedProjects.length, "projects");
             if (paginatedProjects.length === 0) {
                 projectList.innerHTML = '<div class="text-center text-gray-600 col-span-full"><p class="text-lg">Tidak ada proyek ditemukan.</p></div>';
                 updatePagination(filteredProjects.length);
@@ -800,8 +859,8 @@
                             </div>
                             <div class="flex flex-wrap gap-2 mb-3">
                                 <span class="badge">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
-                                ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ''}
-                                ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ''}
+                                ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ""}
+                                ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ""}
                             </div>
                             <p class="text-base text-gray-600 line-clamp-2">${project.description}</p>
                             <div class="progress-circle">
@@ -829,13 +888,13 @@
                 ease: "power2.out"
             });
             anime({
-                targets: '.progress-ring',
+                targets: ".progress-ring",
                 strokeDashoffset: [anime.setDashoffset, (el) => {
                     const circumference = 2 * Math.PI * 27;
-                    const progress = parseInt(el.getAttribute('stroke-dashoffset'));
+                    const progress = parseInt(el.getAttribute("stroke-dashoffset"));
                     return progress;
                 }],
-                easing: 'easeInOutSine',
+                easing: "easeInOutSine",
                 duration: 1000,
                 delay: (el, i) => i * 100
             });
@@ -845,93 +904,105 @@
         function updatePagination(totalProjects) {
             const totalPages = Math.max(1, Math.ceil(totalProjects / projectsPerPage));
             currentPage = Math.min(currentPage, totalPages);
-            const paginationContainer = document.getElementById('pagination-container');
+            const paginationContainer = document.getElementById("pagination-container");
+            if (!paginationContainer) return;
             paginationContainer.innerHTML = `
-                <button class="pagination-btn" data-page="prev" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i> Prev</button>
+                <button class="pagination-btn" data-page="prev" ${currentPage === 1 ? "disabled" : ""}><i class="fas fa-chevron-left"></i> Prev</button>
                 ${Array.from({ length: totalPages }, (_, i) => `
-                    <button class="pagination-btn ${currentPage === i + 1 ? 'active' : ''}" data-page="${i + 1}">${i + 1}</button>
-                `).join('')}
-                <button class="pagination-btn" data-page="next" ${currentPage === totalPages || totalProjects === 0 ? 'disabled' : ''}><i class="fas fa-chevron-right"></i> Next</button>
+                    <button class="pagination-btn ${currentPage === i + 1 ? "active" : ""}" data-page="${i + 1}">${i + 1}</button>
+                `).join("")}
+                <button class="pagination-btn" data-page="next" ${currentPage === totalPages || totalProjects === 0 ? "disabled" : ""}><i class="fas fa-chevron-right"></i> Next</button>
             `;
         }
 
         // Render Notifications
-        function renderNotifications(filter = 'all') {
-            const notificationList = document.getElementById('notification-list');
-            notificationList.innerHTML = '';
+        function renderNotifications(filter = "all") {
+            const notificationList = document.getElementById("notification-list");
+            if (!notificationList) return;
+            console.log("Rendering notifications, filter:", filter);
+            notificationList.innerHTML = "";
 
-            let filteredNotifications = filter === 'all' ? notifications : notifications.filter(n => !n.read);
+            let filteredNotifications = filter === "all" ? notifications : notifications.filter(n => !n.read);
 
             if (filteredNotifications.length === 0) {
-                notificationList.innerHTML = '<div class="text-center text-gray-600"><p class="text-base">Tidak ada notifikasi.</p></div>';
-                updateUnreadCount();
-                return;
-            }
-
-            filteredNotifications.forEach(notification => {
-                notificationList.innerHTML += `
-                    <div class="notification-card ${notification.read ? '' : 'unread'}">
-                        <p class="text-base">${notification.text}</p>
-                        <p class="text-sm text-gray-600 mt-1">${notification.time}</p>
+                notificationList.innerHTML = `
+                    <div class="text-center text-gray-600">
+                        <p class="text-base">Tidak ada notifikasi ${filter === "all" ? "" : "belum dibaca"}.</p>
                     </div>
                 `;
-            });
+            } else {
+                filteredNotifications.forEach(notification => {
+                    notificationList.innerHTML += `
+                        <div class="notification-card ${notification.read ? "" : "unread"}">
+                            <p class="text-base">${notification.text}</p>
+                            <p class="text-sm text-gray-600 mt-1">${notification.time}</p>
+                        </div>
+                    `;
+                });
+            }
 
             updateUnreadCount();
-            gsap.from(".notification-card", {
-                opacity: 0,
-                x: 20,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power2.out"
-            });
+            if (filteredNotifications.length > 0) {
+                gsap.from(".notification-card", {
+                    opacity: 0,
+                    x: 20,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: "power2.out"
+                });
+            }
         }
 
         // Update Unread Notification Count
         function updateUnreadCount() {
             const unreadCount = notifications.filter(n => !n.read).length;
-            document.getElementById('unread-count').textContent = unreadCount;
+            const unreadCountElement = document.getElementById("unread-count");
+            if (unreadCountElement) unreadCountElement.textContent = unreadCount;
         }
 
         // Toggle Notifications
         function toggleNotifications() {
-            const modal = document.getElementById('notification-modal');
-            const isOpen = modal.classList.contains('open');
-            modal.classList.toggle('open');
+            const modal = document.getElementById("notification-modal");
+            if (!modal) return;
+            const isOpen = modal.classList.contains("open");
+            modal.classList.toggle("open");
             gsap.to(modal, {
-                x: isOpen ? '100%' : '0%',
+                x: isOpen ? "100%" : "0%",
                 duration: 0.3,
                 ease: "power2.out"
             });
-            if (!isOpen) renderNotifications();
+            if (!isOpen) {
+                const activeFilter = document.querySelector("#notification-modal .filter-btn.active")?.dataset.filter || "all";
+                renderNotifications(activeFilter);
+            }
         }
 
         // Mark All as Read
         function markAllAsRead() {
             notifications.forEach(n => n.read = true);
-            renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+            renderNotifications(document.querySelector("#notification-modal .filter-btn.active")?.dataset.filter || "all");
             updateUnreadCount();
             anime({
-                targets: '#mark-all-read',
+                targets: "#mark-all-read",
                 scale: [1, 1.05, 1],
                 duration: 200,
-                easing: 'easeOutQuad'
+                easing: "easeOutQuad"
             });
         }
 
         // Apply Filters and Sort
         function applyFiltersAndSort() {
-            const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-            const activeSort = document.querySelector('.sort-btn.active')?.dataset.sort || 'default';
-            const searchQuery = document.getElementById('search-input').value;
+            const activeFilter = document.querySelector(".filter-btn:not(#notification-modal .filter-btn).active")?.dataset.filter || "all";
+            const activeSort = document.querySelector(".sort-btn.active")?.dataset.sort || "default";
+            const searchQuery = document.getElementById("search-input")?.value || "";
             currentPage = 1;
             renderProjects(activeFilter, activeSort, searchQuery);
         }
 
         // Particle Wave Animation
         function initParticleAnimation() {
-            const canvas = document.getElementById('particle-bg');
-            const ctx = canvas.getContext('2d');
+            const canvas = document.getElementById("particle-bg");
+            const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
@@ -957,7 +1028,7 @@
             function animate() {
                 if (!isAnimating) return;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#1a202c';
+                ctx.fillStyle = "#1a202c";
                 ctx.globalAlpha = 0.1;
 
                 particles.forEach(particle => {
@@ -979,11 +1050,11 @@
 
             animate();
 
-            window.addEventListener('blur', () => {
+            window.addEventListener("blur", () => {
                 isAnimating = false;
             });
 
-            window.addEventListener('focus', () => {
+            window.addEventListener("focus", () => {
                 if (!isAnimating) {
                     isAnimating = true;
                     animate();
@@ -991,138 +1062,155 @@
             });
         }
 
-        // Event Listeners
-        window.addEventListener('load', () => {
+        // Initialize
+        function initialize() {
             initParticleAnimation();
             renderProjects();
             renderNotifications();
             updateUnreadCount();
 
             // Set active navigation link
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-link').forEach(link => {
-                const href = link.getAttribute('href').split('/').pop();
-                if (href === currentPath) {
-                    link.classList.add('active');
+            const currentPath = window.location.pathname.split("/").pop() || "index.html";
+            const isDetailPage = window.location.search.includes("id=");
+            document.querySelectorAll(".nav-link").forEach(link => {
+                const href = link.getAttribute("href").split("/").pop();
+                const isActive =
+                    href === currentPath ||
+                    (href === "proyek.html" && isDetailPage && currentPath === "proyek.html");
+                if (isActive) {
+                    link.classList.add("active");
                 }
             });
 
-
-            // Filter Buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.filter-btn').forEach(f => f.classList.remove('active'));
-                    btn.classList.add('active');
-                    applyFiltersAndSort();
-                    anime({
-                        targets: btn,
-                        scale: [1, 1.05, 1],
-                        duration: 200,
-                        easing: 'easeOutQuad'
-                    });
+            // Burger Menu Toggle
+            const burger = document.getElementById("burger-toggle");
+            const navMenu = document.getElementById("nav-menu");
+            if (burger && navMenu) {
+                burger.addEventListener("click", () => {
+                    navMenu.classList.toggle("hidden");
                 });
-            });
+            }
+
+            // Initialize Filter and Sort Buttons
+            initializeProjectFilterButtons();
+            initializeNotificationFilterButtons();
 
             // Sort Buttons
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.sort-btn').forEach(f => f.classList.remove('active'));
-                    btn.classList.add('active');
-                    applyFiltersAndSort();
-                    anime({
-                        targets: btn,
-                        scale: [1, 1.05, 1],
-                        duration: 200,
-                        easing: 'easeOutQuad'
-                    });
-                });
+            document.querySelectorAll(".sort-btn").forEach(btn => {
+                btn.removeEventListener("click", handleSortClick);
+                btn.addEventListener("click", handleSortClick);
             });
 
+            function handleSortClick() {
+                document.querySelectorAll(".sort-btn").forEach(f => f.classList.remove("active"));
+                this.classList.add("active");
+                applyFiltersAndSort();
+                anime({
+                    targets: this,
+                    scale: [1, 1.05, 1],
+                    duration: 200,
+                    easing: "easeOutQuad"
+                });
+            }
+
             // Search Input
-            const searchInput = document.getElementById('search-input');
+            const searchInput = document.getElementById("search-input");
             if (searchInput) {
-                searchInput.addEventListener('input', applyFiltersAndSort);
+                searchInput.addEventListener("input", applyFiltersAndSort);
             }
 
             // Pagination
-            document.getElementById('pagination-container').addEventListener('click', (e) => {
-                const btn = e.target.closest('.pagination-btn');
-                if (!btn || btn.disabled) return;
+            const paginationContainer = document.getElementById("pagination-container");
+            if (paginationContainer) {
+                paginationContainer.addEventListener("click", (e) => {
+                    const btn = e.target.closest(".pagination-btn");
+                    if (!btn || btn.disabled) return;
 
-                const page = btn.dataset.page;
-                const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-                const activeSort = document.querySelector('.sort-btn.active')?.dataset.sort || 'default';
-                const searchQuery = document.getElementById('search-input').value;
+                    const page = btn.dataset.page;
+                    const activeFilter = document.querySelector(".filter-btn:not(#notification-modal .filter-btn).active")?.dataset.filter || "all";
+                    const activeSort = document.querySelector(".sort-btn.active")?.dataset.sort || "default";
+                    const searchQuery = document.getElementById("search-input")?.value || "";
 
-                let filteredProjects = activeFilter === 'all' ? projects :
-                    activeFilter === 'populer' ? projects.filter(p => p.populer) :
-                        activeFilter === 'baru' ? projects.filter(p => p.baru) :
-                            projects.filter(p => p.category === activeFilter);
+                    let filteredProjects = activeFilter === "all" ? projects :
+                        activeFilter === "populer" ? projects.filter(p => p.populer) :
+                        activeFilter === "baru" ? projects.filter(p => p.baru) :
+                        projects.filter(p => p.category === activeFilter);
 
-                if (searchQuery) {
-                    filteredProjects = filteredProjects.filter(p =>
-                        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        p.description.toLowerCase().includes(searchQuery.toLowerCase())
-                    );
-                }
+                    if (searchQuery) {
+                        filteredProjects = filteredProjects.filter(p =>
+                            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            p.description.toLowerCase().includes(searchQuery.toLowerCase())
+                        );
+                    }
 
-                const totalPages = Math.max(1, Math.ceil(filteredProjects.length / projectsPerPage));
+                    const totalPages = Math.max(1, Math.ceil(filteredProjects.length / projectsPerPage));
 
-                if (page === 'prev' && currentPage > 1) {
-                    currentPage--;
-                } else if (page === 'next' && currentPage < totalPages) {
-                    currentPage++;
-                } else if (!isNaN(parseInt(page))) {
-                    currentPage = parseInt(page);
-                }
+                    if (page === "prev" && currentPage > 1) {
+                        currentPage--;
+                    } else if (page === "next" && currentPage < totalPages) {
+                        currentPage++;
+                    } else if (!isNaN(parseInt(page))) {
+                        currentPage = parseInt(page);
+                    }
 
-                currentPage = Math.max(1, Math.min(currentPage, totalPages));
-                renderProjects(activeFilter, activeSort, searchQuery);
-                anime({
-                    targets: btn,
-                    scale: [1, 1.05, 1],
-                    duration: 200,
-                    easing: 'easeOutQuad'
+                    currentPage = Math.max(1, Math.min(currentPage, totalPages));
+                    renderProjects(activeFilter, activeSort, searchQuery);
+                    anime({
+                        targets: btn,
+                        scale: [1, 1.05, 1],
+                        duration: 200,
+                        easing: "easeOutQuad"
+                    });
                 });
-            });
+            }
 
             // Notification Bell
-            document.querySelector('.fa-bell').addEventListener('click', toggleNotifications);
-            document.querySelector('.fa-bell').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    toggleNotifications();
-                }
-            });
+            const bell = document.querySelector(".fa-bell");
+            if (bell) {
+                bell.addEventListener("click", toggleNotifications);
+                bell.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        toggleNotifications();
+                    }
+                });
+            }
 
             // Mark All as Read
-            const markAllReadBtn = document.getElementById('mark-all-read');
+            const markAllReadBtn = document.getElementById("mark-all-read");
             if (markAllReadBtn) {
-                markAllReadBtn.addEventListener('click', markAllAsRead);
+                markAllReadBtn.addEventListener("click", markAllAsRead);
             }
 
             // Close Notification Modal
-            document.querySelector('.notification-modal .close-btn').addEventListener('click', toggleNotifications);
-            document.querySelector('.notification-modal .close-btn').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    toggleNotifications();
-                }
-            });
+            const closeBtn = document.querySelector(".notification-modal .close-btn");
+            if (closeBtn) {
+                closeBtn.addEventListener("click", toggleNotifications);
+                closeBtn.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        toggleNotifications();
+                    }
+                });
+            }
 
             // Close Modal with Escape Key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    const modal = document.getElementById('notification-modal');
-                    if (modal.classList.contains('open')) {
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    const modal = document.getElementById("notification-modal");
+                    if (modal && modal.classList.contains("open")) {
                         toggleNotifications();
                     }
                 }
             });
-        });
+        }
 
-        window.addEventListener('resize', () => {
-            const canvas = document.getElementById('particle-bg');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // Run Initialization
+        window.addEventListener("load", initialize);
+        window.addEventListener("resize", () => {
+            const canvas = document.getElementById("particle-bg");
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
         });
     </script>
 </body>

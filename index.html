@@ -2158,7 +2158,7 @@
         const cursor = document.querySelector('.cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        const speed = 0.2; // Kamu bisa ubah ini biar lebih smooth
+        const speed = 0.9; // Kamu bisa ubah ini biar lebih smooth
 
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;
@@ -2686,7 +2686,7 @@
 
                     galleryItem.innerHTML = `
   <div class="rope"></div>
-  <a href="/detail_galeri.html/${item.id}" class="block group">
+  <a href="/detail_galeri.html?id=project-${item.id}" class="block group">
     <div class="flip-card group-hover:scale-[1.01] transition">
       <div class="flip-card-front relative overflow-hidden bg-gray-900 aspect-[3/4] border-4 border-gray-200 rounded-2xl">
         <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
@@ -3653,7 +3653,6 @@
                 }
             );
 
-            // Observe project cards
             document.querySelectorAll(".project-card").forEach((card) => {
                 observer.observe(card);
             });
@@ -3664,7 +3663,7 @@
         const nextBtn = document.querySelector('.carousel-btn.next');
         const dots = document.querySelectorAll('.dot');
         let currentIndex = 0;
-        const cardWidth = 450 + 32; // Card width (450px) + margin-right (2rem = 32px)
+        const cardWidth = 450 + 32;
         const totalCards = 3; // Original cards
 
         function updateCarousel(transition = true) {
@@ -3718,12 +3717,10 @@
 
         carousel.addEventListener('transitionend', handleTransitionEnd);
 
-        // Auto-scroll
         let autoScroll = setInterval(() => {
             nextBtn.click();
         }, 5000);
 
-        // Pause auto-scroll on hover
         carousel.addEventListener('mouseenter', () => clearInterval(autoScroll));
         carousel.addEventListener('mouseleave', () => {
             autoScroll = setInterval(() => {

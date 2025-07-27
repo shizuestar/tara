@@ -42,7 +42,7 @@ padding: 0 16px;
   height: 100vh;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(240, 240, 240, 0.7));
   flex: 1;
-  backdrop-filter: blur(40px); /* Adds blur effect to the background */
+  backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
 }
 
@@ -58,13 +58,14 @@ z-index: 0;
 .form-container {
 background: linear-gradient(145deg, #ffffff, #f7fafc);
 border-radius: 2rem;
+position: relative;
+right: 10px;
 box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
 transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-container:hover {
 transform: translateY(-5px);
-box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
 .form-input {
