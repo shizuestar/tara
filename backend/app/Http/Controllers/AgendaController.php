@@ -14,6 +14,14 @@ class AgendaController extends Controller
         return view('Agenda.index');
     }
 
+    public function ShowAgendaNotFound() {
+        return view('Agenda.showNotFound');
+    }
+
+    public function ShowAgendaFound() {
+        return view('Agenda.showFound');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
