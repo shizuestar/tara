@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TARA - Learn More</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    * {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    :root {
+      --primary-black: #000000;
+      --primary-white: #ffffff;
+      --gray-light: #f5f6f5;
+      --gray-dark: #1a1a1a;
+      --accent-silver: #b0b0b0;
+      --accent-platinum: #e5e5e5;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg,
+          #000000 0%,
+          #4a4a4a 50%,
+          #000000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .geometric-shape {
+      position: absolute;
+      border: 2px solid rgba(0, 0, 0, 0.15);
+      z-index: 0;
+    }
+
+    .shape-1 {
+      width: 100px;
+      height: 100px;
+      transform: rotate(45deg);
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .shape-2 {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      animation: float 12s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-30px) rotate(5deg);
+      }
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 215, 0, 0.4);
+      border-radius: 50%;
+      animation: drift 12s linear infinite;
+    }
+
+    .particle-1 {
+      width: 20px;
+      height: 20px;
+      top: 10%;
+      left: 15%;
+    }
+
+    .particle-2 {
+      width: 15px;
+      height: 15px;
+      top: 65%;
+      left: 75%;
+      animation-delay: 4s;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translate(120vw, 100vh);
+        opacity: 0;
+      }
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, #000000 0%, #2a2a2a 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .button-primary::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transition: left 0.6s;
+    }
+
+    .button-primary:hover::before {
+      left: 100%;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .text-appear {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: appear 1s ease forwards;
+    }
+
+    @keyframes appear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* notification */
+    .notification-bar {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .notification-bar:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    .notification-icon:hover {
+      transform: scale(1.2);
+      color: #111827;
+    }
+
+    .notification-modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      max-width: 400px;
+      background: #ffffff;
+      border-left: 1px solid #e5e7eb;
+      z-index: 50;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification-modal.open {
+      transform: translateX(0);
+    }
+
+    .notification-modal .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      color: #374151;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .notification-modal .close-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .notification-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .notification-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification-card.unread {
+      background: #f3f4f6;
+    }
+
+    .notification-card p {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .notification-card .time {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 9999px;
+      padding: 0.1rem 0.5rem;
+    }
+
+    .sidebar-notification-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    /* notif end */
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-white to-gray-100 min-h-screen">
+  <!-- Notification Modal -->
+  <div id="notification-modal" class="notification-modal">
+    <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+    <div class="p-6">
+      <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi
+      </h2>
+      <div class="flex gap-2 mb-4">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+      </div>
+      <button id="mark-all-read"
+        class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai
+        Semua Dibaca</button>
+      <div id="notification-list" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header
+    class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center gap-3">
+            <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+            <div class="relative">
+              <span class="text-yellow-400 text-2xl">●</span>
+              <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
+            </div>
+          </div>
+
+          <button aria-label="Buka Navigasi" id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
+            <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- Menu Navigasi -->
+          <div id="nav-menu"
+            class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
+            <a href="/index.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
+            <a href="/galeri.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
+            <a href="/komunitas.html"
+              class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
+            <a href="/proyek.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
+            <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+            <a href="/agenda.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
+
+            <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
+              <a href="/login"
+                class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center">
+                Log In
+              </a>
+              <a href="/register"
+                class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center">
+                Sign Up
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    const burger = document.getElementById('burger-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    burger.addEventListener('click', () => {
+      navMenu.classList.toggle('hidden');
+    });
+
+    function toggleNotifications() {
+      const modal = document.getElementById('notification-modal');
+      const isOpen = modal.classList.contains('open');
+      modal.classList.toggle('open');
+      gsap.to(modal, {
+        x: isOpen ? '100%' : '0%',
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      if (!isOpen) {
+        renderNotifications();
+      }
+    }
+
+    // Set active navigation link
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const isDetailPage = window.location.search.includes('id=');
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const href = link.getAttribute('href').split('/').pop();
+      const isActive =
+        href === currentPath ||
+        (href === 'blog.html' && isDetailPage && currentPath === 'blog.html') ||
+        (href === 'komunitas.html' && isDetailPage && currentPath === 'komunitas.html') ||
+        (href === 'galeri.html' && isDetailPage && currentPath === 'galeri.html') ||
+        (href === 'agenda.html' && isDetailPage && currentPath === 'agenda.html');
+      if (isActive) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+
+  <!-- Learn More Section -->
+  <section class="py-32 px-6 relative overflow-hidden fade-section">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="geometric-shape shape-1 top-16 left-20 opacity-15"></div>
+      <div class="geometric-shape shape-2 bottom-20 right-24 opacity-15"></div>
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-16 relative z-10 text-center">
+      <h1 class="text-4xl md:text-7xl font-bold text-gray-900 mb-10 text-appear">
+        Pelajari Lebih Lanjut <br />
+        Tentang <span class="text-gradient">TARA</span>
+      </h1>
+      <div class="w-32 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent mx-auto mb-12"></div>
+      <p class="text-md md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-16 text-appear">
+        TARA adalah platform eksklusif untuk seniman dan kreator Indonesia,
+        tempat berkolaborasi, memamerkan karya, dan menginspirasi dunia.
+      </p>
+
+      <hr class="relative bottom-9">
+
+      <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+        <div class="text-appear">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Misi Kami</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Menciptakan ruang bagi seniman untuk berkembang, berbagi visi, dan
+            menghidupkan ide melalui kolaborasi lintas disiplin.
+          </p>
+        </div>
+        <div class="text-appear">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+            Apa yang Kami Tawarkan
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Akses ke komunitas kreatif, acara seni, workshop, dan peluang
+            untuk memamerkan karya Anda di panggung global.
+          </p>
+        </div>
+        <div class="text-appear">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+            Mengapa Bergabung?
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Terhubung dengan kreator berbakat, dapatkan dukungan untuk proyek
+            Anda, dan jadilah bagian dari gerakan seni modern Indonesia.
+          </p>
+        </div>
+        <div class="text-appear">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">
+            Cara Memulai
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            Daftar gratis, jelajahi galeri, ikuti acara, atau mulai proyek
+            Anda sendiri dengan komunitas TARA.
+          </p>
+        </div>
+      </div>
+      <div class="mt-16">
+        <a href="/register"
+          class="button-primary px-12 py-5 text-white rounded-full font-bold text-xl uppercase tracking-wide text-appear">
+          Gabung Sekarang
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 text-sm text-gray-700">
+    <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <div class="text-2xl font-bold text-gray-900">
+          TARA<span class="text-yellow-400">●</span>
+        </div>
+        <p class="text-gray-500 mt-4">
+          Rumah bagi kreativitas dan inovasi seni Indonesia.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Navigasi</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/home" class="hover:text-black transition">Beranda</a>
+          </li>
+          <li>
+            <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+          </li>
+          <li>
+            <a href="/komunitas" class="hover:text-black transition">Komunitas</a>
+          </li>
+          <li>
+            <a href="/proyek" class="hover:text-black transition">Proyek</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Eksplorasi</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/galeri" class="hover:text-black transition">Galeri</a>
+          </li>
+          <li>
+            <a href="/blog" class="hover:text-black transition">Blog</a>
+          </li>
+          <li>
+            <a href="/agenda" class="hover:text-black transition">Agenda</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Kontak</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/kontak" class="hover:text-black transition">Hubungi Kami</a>
+          </li>
+          <li><a href="/faq" class="hover:text-black transition">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-400">
+      © 2025 TARA. Dibuat dengan semangat di Nusantara.
+    </div>
+  </footer>
+
+  <!-- JavaScript for Animations -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-in");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
+      );
+
+      document
+        .querySelectorAll(".fade-section, .text-appear")
+        .forEach((item) => {
+          observer.observe(item);
+        });
+    });
+  </script>
+</body>
+
+</html>
