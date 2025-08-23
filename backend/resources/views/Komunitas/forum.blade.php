@@ -1,0 +1,1720 @@
+<x-layout>
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
+                Notifikasi
+            </h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read"
+                class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-yellow-400 hover:text-black transition mb-4">
+                Tandai Semua Dibaca
+            </button>
+            <div id="notification-list" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Forum Section -->
+    <section class="relative pt-24 pb-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Notification Bar -->
+            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
+                <p class="text-sm text-gray-700">
+                    Selamat datang di forum! Mulai diskusi baru.
+                </p>
+            </div>
+
+            <!-- Main Content and Sidebar -->
+            <div class="forum-section">
+                <!-- Main Content -->
+                <div class="flex-1">
+                    <div class="mb-8 flex items-center gap-3">
+                        <a href="/komunitas.html"
+                            class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
+                            style="font-family: 'Space Grotesk', sans-serif;">
+                            <span
+                                class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+                            <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+                                ← Daftar Komunitas
+                            </span>
+                        </a>
+                        <a href="/detail_komunitas.html?community=1"
+                            class="relative inline-block px-5 py-2 text-sm text-gray-700 border border-gray-400 rounded-full overflow-hidden group"
+                            style="font-family: 'Space Grotesk', sans-serif;">
+                            <span
+                                class="absolute inset-0 bg-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+                            <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+                                Kembali ke Komunitas
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="forum-header">
+                        <div class="flex items-center gap-2 mb-4">
+                            <h1 id="community-name" class="text-3xl font-bold text-black"
+                                style="font-family: 'Space Grotesk', sans-serif"></h1>
+                            <span id="community-badge" class="badge"></span>
+                        </div>
+                        <p id="community-description" class="text-lg text-gray-600 mb-4"></p>
+                        <div class="flex items-center gap-4">
+                            <button id="join-btn"
+                                class="join-btn relative inline-block px-5 py-2 text-sm text-white border border-black rounded-full overflow-hidden group"
+                                style="font-family: 'Space Grotesk', sans-serif;" onclick="toggleJoin()">
+                                <span
+                                    class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+                                <span
+                                    class="relative z-10 group-hover:text-white transition-colors duration-300"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- New Thread Form -->
+                    <div class="new-thread-form">
+                        <h2 class="text-xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
+                            Buat Diskusi Baru
+                        </h2>
+                        <input type="text" id="new-thread-title" placeholder="Judul Diskusi..."
+                            class="mb-4 w-full border border-gray-300 rounded-md p-2" />
+                        <textarea id="new-thread-content" placeholder="Tulis isi diskusi Tuan..."
+                            class="mb-4 w-full border border-gray-300 rounded-md p-2"></textarea>
+                        <div class="flex justify-end mt-3">
+                            <button onclick="createNewThread()"
+                                class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
+                                style="font-family: 'Space Grotesk', sans-serif;">
+                                <span
+                                    class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
+                                <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+                                    Kirim
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Threads -->
+                    <div id="forum-threads" class="space-y-6"></div>
+                    <div id="pagination" class="pagination"></div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar md:w-80">
+                    <h3 class="text-2xl font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
+                        Tentang Komunitas
+                    </h3>
+                    <div id="sidebar-community-details" class="space-y-4 mb-6 border-l-4 border-yellow-400 pl-4">
+                        <p id="sidebar-community-name" class="text-base font-semibold text-gray-700"></p>
+                        <p id="sidebar-community-category" class="text-xs text-gray-500"></p>
+                        <p id="sidebar-community-description" class="text-sm text-gray-600"></p>
+                        <p id="sidebar-community-creator" class="text-sm text-gray-500"></p>
+                        <p id="sidebar-community-created" class="text-sm text-gray-500"></p>
+                        <p id="sidebar-community-discussions" class="text-sm text-gray-500"></p>
+                        <p id="sidebar-community-moderators" class="text-sm text-gray-500"></p>
+                        <span id="show-more-moderators" class="show-more-btn hidden">Show More Moderator</span>
+                    </div>
+                    <div id="sidebar-community-stats" class="flex items-center gap-4 mb-6">
+                        <span id="sidebar-community-members" class="text-sm text-gray-500"></span>
+                        <span id="sidebar-community-online" class="text-sm text-gray-500"></span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
+                        Jadwal Event
+                    </h3>
+                    <div id="sidebar-community-events" class="space-y-4 mb-6"></div>
+                    <h3 class="text-2xl font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
+                        Peraturan Komunitas
+                    </h3>
+                    <div id="sidebar-community-rules" class="space-y-4 mb-6">
+                        <p class="text-sm text-gray-600">1. Hormati anggota lain.</p>
+                        <p class="text-sm text-gray-600">
+                            2. Dilarang memposting konten yang melanggar hukum.
+                        </p>
+                        <p class="text-sm text-gray-600">3. Gunakan bahasa yang sopan.</p>
+                        <p class="text-sm text-gray-600">
+                            4. Dilarang spam atau promosi tanpa izin.
+                        </p>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-black mb-4"
+                        style="font-family: 'Space Grotesk', sans-serif'">
+                        Komunitas Lain
+                    </h3>
+                    <div id="recommended-communities" class="space-y-4"></div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    @push('styles')
+    <style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            background: #ffffff;
+            color: #111827;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        .forum-header {
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .thread-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .thread-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .thread-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .thread-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+            flex: 1;
+            transition: color 0.2s ease;
+        }
+
+        .thread-card-header h3:hover {
+            color: #2563eb;
+        }
+
+        .thread-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .thread-card-content {
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .thread-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .vote-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .attachment-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .attachment-container img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .attachment-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .attachment-container a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .attachment-container a:hover {
+            background: #e6f0ff;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+        }
+
+        .badge-populer {
+            background: linear-gradient(90deg, #facc15, #fde68a);
+            color: #111827;
+        }
+
+        .badge-baru {
+            background: linear-gradient(90deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+        }
+
+        .badge-moderator {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            color: #ffffff;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #facc15;
+            color: #111827;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            padding: 0.1rem 0.5rem;
+        }
+
+        .join-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: linear-gradient(90deg, #111827, #374151);
+            color: #ffffff;
+        }
+
+        .sidebar {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.5rem 0;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .notification-bar {
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-left: 1px solid #e5e7eb;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification-modal.open {
+            transform: translateX(0);
+        }
+
+        .notification-modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .notification-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .notification-card.unread {
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+        }
+
+        .notification-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .notification-card .time {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: #f3f4f6;
+            color: #374151;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(90deg, #111827, #374151);
+            color: #ffffff;
+            border-color: #facc15;
+        }
+
+        .vote-btn {
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .vote-btn:hover {
+            color: #2563eb;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn.active {
+            background: linear-gradient(90deg, #111827, #374151);
+            color: #ffffff;
+            border-color: #facc15;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .post-menu {
+            position: relative;
+        }
+
+        .post-menu-btn {
+            cursor: pointer;
+            font-size: 1rem;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+
+        .post-menu-btn:hover {
+            color: #2563eb;
+        }
+
+        .post-menu-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 10;
+            display: none;
+        }
+
+        .post-menu-content.open {
+            display: block;
+        }
+
+        .post-menu-item {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .post-menu-item:hover {
+            background: #f9fafb;
+        }
+
+        .post-menu-item.danger {
+            color: #dc2626;
+        }
+
+        .new-thread-form {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .new-thread-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #111827;
+        }
+
+        .new-thread-form input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .new-thread-form button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: linear-gradient(90deg, #111827, #374151);
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .new-thread-form button:hover {
+            background: linear-gradient(90deg, #374151, #4b5563);
+        }
+
+        .highlight-thread {
+            border-left: 4px solid #facc15;
+            background: linear-gradient(145deg, #f3f4f6, #f3f4f6);
+        }
+
+        #new-thread-content {
+            min-height: 200px;
+        }
+
+        @media (min-width: 768px) {
+            .forum-section {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .notification-modal {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .sidebar {
+                padding: 1.5rem;
+            }
+
+            .thread-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .new-thread-form {
+                padding: 1rem;
+            }
+        }
+
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script>
+        // Simulated Community Data (aligned with community.html)
+        const communities = [{
+                id: 1,
+                name: "Komunitas Puisi",
+                category: "Puisi",
+                description: "Berbagi kata, menenun makna dalam puisi. Bergabunglah untuk mengeksplorasi keindahan bahasa dan emosi.",
+                members: 1200,
+                image: "https://picsum.photos/600/400?poetry",
+                badge: "populer",
+                joined: true,
+                createdDate: "Januari 2023",
+                creator: "Rudi Santoso",
+                onlineMembers: 50,
+                moderators: [{
+                        name: "Budi",
+                        isModerator: true
+                    },
+                    {
+                        name: "Siti",
+                        isModerator: true
+                    },
+                    {
+                        name: "Tina",
+                        isModerator: true
+                    },
+                    {
+                        name: "Rudi",
+                        isModerator: true
+                    },
+                ],
+            },
+            {
+                id: 2,
+                name: "Komunitas Desain",
+                category: "Desain",
+                description: "Ciptakan visual yang memukau bersama desainer berbakat dari seluruh Indonesia.",
+                members: 850,
+                image: "https://picsum.photos/600/400?design",
+                badge: "populer",
+                joined: true,
+                createdDate: "Maret 2022",
+                creator: "Lina Wijaya",
+                onlineMembers: 45,
+                moderators: [{
+                        name: "Andi",
+                        isModerator: true
+                    },
+                    {
+                        name: "Rina",
+                        isModerator: true
+                    },
+                    {
+                        name: "Dika",
+                        isModerator: true
+                    },
+                ],
+            },
+            {
+                id: 3,
+                name: "Komunitas Musik",
+                category: "Musik",
+                description: "Melodi yang menginspirasi dari musisi muda. Diskusikan karya dan kolaborasi musik.",
+                members: 600,
+                image: "https://picsum.photos/600/400?music",
+                badge: "baru",
+                joined: false,
+                createdDate: "Juni 2024",
+                creator: "Aryo Pratama",
+                onlineMembers: 30,
+                moderators: [{
+                    name: "Dedi",
+                    isModerator: true
+                }],
+            },
+            {
+                id: 4,
+                name: "Komunitas Coding",
+                category: "Coding",
+                description: "Inovasi teknologi dari para developer. Berbagi kode dan proyek open-source.",
+                members: 450,
+                image: "https://picsum.photos/600/400?coding",
+                badge: "baru",
+                joined: false,
+                createdDate: "Agustus 2023",
+                creator: "Sari Indah",
+                onlineMembers: 25,
+                moderators: [{
+                        name: "Eko",
+                        isModerator: true
+                    },
+                    {
+                        name: "Fani",
+                        isModerator: true
+                    },
+                    {
+                        name: "Bima",
+                        isModerator: true
+                    },
+                    {
+                        name: "Cita",
+                        isModerator: true
+                    },
+                ],
+            },
+            {
+                id: 5,
+                name: "Penulis Kreatif",
+                category: "Puisi",
+                description: "Menulis cerita dan puisi yang menyentuh hati. Untuk penulis yang ingin berkembang.",
+                members: 300,
+                image: "https://picsum.photos/600/400?writing",
+                badge: null,
+                joined: false,
+                createdDate: "Februari 2024",
+                creator: "Dewi Lestari",
+                onlineMembers: 20,
+                moderators: [{
+                    name: "Gita",
+                    isModerator: true
+                }],
+            },
+            {
+                id: 6,
+                name: "Desain UI/UX",
+                category: "Desain",
+                description: "Mendesain antarmuka pengguna modern dengan fokus pada pengalaman pengguna.",
+                members: 700,
+                image: "https://picsum.photos/600/400?uiux",
+                badge: "populer",
+                joined: false,
+                createdDate: "November 2022",
+                creator: "Rian Nugraha",
+                onlineMembers: 40,
+                moderators: [{
+                        name: "Hadi",
+                        isModerator: true
+                    },
+                    {
+                        name: "Lia",
+                        isModerator: true
+                    },
+                    {
+                        name: "Vina",
+                        isModerator: true
+                    },
+                ],
+            },
+            {
+                id: 7,
+                name: "Fotografi Kreatif",
+                category: "Fotografi",
+                description: "Abadikan momen dengan lensa kreativitas. Diskusi tentang teknik dan inspirasi fotografi.",
+                members: 500,
+                image: "https://picsum.photos/600/400?photography",
+                badge: "populer",
+                joined: false,
+                createdDate: "Mei 2023",
+                creator: "Tia Melinda",
+                onlineMembers: 35,
+                moderators: [{
+                        name: "Tono",
+                        isModerator: true
+                    },
+                    {
+                        name: "Maya",
+                        isModerator: true
+                    },
+                    {
+                        name: "Rudi",
+                        isModerator: true
+                    },
+                    {
+                        name: "Sari",
+                        isModerator: true
+                    },
+                ],
+            },
+            {
+                id: 999,
+                name: "Komunitas Puisi",
+                category: "puisi",
+                description: "Tempat untuk berbagai karya puisi antar generasi.",
+                members: 100,
+                image: "https://picsum.photos/600/400?general",
+                badge: null,
+                joined: false,
+                createdDate: "Oktober 2024",
+                creator: "Admin Tara",
+                onlineMembers: 10,
+                moderators: [{
+                    name: "Admin",
+                    isModerator: true
+                }],
+            },
+        ];
+
+        // Simulated Notification Data (aligned with community.html)
+        const notifications = [{
+                id: 1,
+                text: "New post in Komunitas Puisi: 'Puisi Senja'",
+                time: "2 jam lalu",
+                communityId: 1,
+                read: false,
+                type: "post",
+            },
+            {
+                id: 2,
+                text: "Event baru di Komunitas Desain: 'Workshop UI'",
+                time: "4 jam lalu",
+                communityId: 2,
+                read: false,
+                type: "event",
+            },
+            {
+                id: 3,
+                text: "Diskusi baru di Komunitas Puisi: 'Sastra Modern'",
+                time: "6 jam lalu",
+                communityId: 1,
+                read: false,
+                type: "post",
+            },
+            {
+                id: 4,
+                text: "New post in Komunitas Desain: 'Tips Desain Minimalis'",
+                time: "1 hari lalu",
+                communityId: 2,
+                read: true,
+                type: "post",
+            },
+            {
+                id: 5,
+                text: "Komunitas Musik mengadakan sesi jamming virtual!",
+                time: "3 jam lalu",
+                communityId: 3,
+                read: false,
+                type: "event",
+            },
+            {
+                id: 6,
+                text: "New post in Komunitas Coding: 'Panduan Python'",
+                time: "5 jam lalu",
+                communityId: 4,
+                read: true,
+                type: "post",
+            },
+            {
+                id: 7,
+                text: "Balasan baru pada thread 'Sastra Modern' di Komunitas Puisi",
+                time: "1 jam lalu",
+                communityId: 1,
+                read: false,
+                type: "reply",
+                threadId: 2,
+            },
+        ];
+
+        // Simulated Community Posts Data (aligned with community.html)
+        const communityPosts = [{
+                id: 1,
+                communityId: 1,
+                title: "Puisi Senja",
+                content: "<p>Sebuah puisi tentang keindahan senja di ufuk barat, menggambarkan perasaan damai dan nostalgia.</p>",
+                time: "2 jam lalu",
+                votes: 42,
+                pinned: true,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?poetry"
+                }, ],
+                replies: 15,
+                lastActivity: new Date().toISOString(),
+                author: "Rudi Santoso",
+            },
+            {
+                id: 2,
+                communityId: 1,
+                title: "Sastra Modern",
+                content: "<p>Diskusi tentang tren sastra modern di Indonesia, termasuk pengaruh budaya digital.</p>",
+                time: "6 jam lalu",
+                votes: 15,
+                pinned: false,
+                attachments: [{
+                    type: "link",
+                    url: "https://example.com/sastra",
+                    text: "Referensi Sastra",
+                }, ],
+                replies: 8,
+                lastActivity: new Date(Date.now() - 3600000).toISOString(),
+                author: "Siti Rahmah",
+            },
+            {
+                id: 3,
+                communityId: 2,
+                title: "Workshop UI",
+                content: "<p>Acara workshop desain antarmuka pengguna untuk pemula dan profesional.</p>",
+                time: "4 jam lalu",
+                votes: 28,
+                pinned: true,
+                attachments: [],
+                replies: 5,
+                lastActivity: new Date(Date.now() - 4 * 3600000).toISOString(),
+                author: "Lina Wijaya",
+            },
+            {
+                id: 4,
+                communityId: 2,
+                title: "Tips Desain Minimalis",
+                content: "<p>Panduan untuk menciptakan desain yang bersih, fungsional, dan estetis.</p>",
+                time: "1 hari lalu",
+                votes: 10,
+                pinned: false,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?design"
+                }, ],
+                replies: 3,
+                lastActivity: new Date(Date.now() - 24 * 3600000).toISOString(),
+                author: "Andi Pratama",
+            },
+            {
+                id: 5,
+                communityId: 3,
+                title: "Kolaborasi Musik",
+                content: "<p>Ajak musisi lain untuk proyek musik baru, fokus pada genre akustik.</p>",
+                time: "3 jam lalu",
+                votes: 20,
+                pinned: true,
+                attachments: [{
+                    type: "link",
+                    url: "https://soundcloud.com/example",
+                    text: "Contoh Musik",
+                }, ],
+                replies: 10,
+                lastActivity: new Date(Date.now() - 3 * 3600000).toISOString(),
+                author: "Aryo Pratama",
+            },
+            {
+                id: 6,
+                communityId: 4,
+                title: "Hackathon Open-Source",
+                content: "<p>Bergabung dalam hackathon untuk proyek open-source, fokus pada aplikasi web.</p>",
+                time: "5 jam lalu",
+                votes: 18,
+                pinned: true,
+                attachments: [{
+                    type: "link",
+                    url: "https://github.com/example",
+                    text: "Repo GitHub",
+                }, ],
+                replies: 7,
+                lastActivity: new Date(Date.now() - 5 * 3600000).toISOString(),
+                author: "Sari Indah",
+            },
+            {
+                id: 7,
+                communityId: 5,
+                title: "Cerita Pendek",
+                content: "<p>Berbagi cerita pendek tentang petualangan di kota kecil.</p>",
+                time: "8 jam lalu",
+                votes: 12,
+                pinned: false,
+                attachments: [],
+                replies: 4,
+                lastActivity: new Date(Date.now() - 8 * 3600000).toISOString(),
+                author: "Dewi Lestari",
+            },
+            {
+                id: 8,
+                communityId: 6,
+                title: "Desain UX Mobile",
+                content: "<p>Diskusi tentang tren desain UX untuk aplikasi mobile.</p>",
+                time: "10 jam lalu",
+                votes: 25,
+                pinned: false,
+                attachments: [],
+                replies: 6,
+                lastActivity: new Date(Date.now() - 10 * 3600000).toISOString(),
+                author: "Rian Nugraha",
+            },
+            {
+                id: 9,
+                communityId: 7,
+                title: "Tips Fotografi Malam",
+                content: "<p>Panduan untuk mengambil foto malam dengan pencahayaan minim.</p>",
+                time: "12 jam lalu",
+                votes: 30,
+                pinned: true,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?photography"
+                }, ],
+                replies: 9,
+                lastActivity: new Date(Date.now() - 12 * 3600000).toISOString(),
+                author: "Tia Melinda",
+            },
+            {
+                id: 10,
+                communityId: 1,
+                title: "Puisi Pagi",
+                content: "<p>Puisi tentang fajar yang membawa harapan baru.</p>",
+                time: "1 jam lalu",
+                votes: 35,
+                pinned: false,
+                attachments: [],
+                replies: 12,
+                lastActivity: new Date(Date.now() - 3600000).toISOString(),
+                author: "Budi Santoso",
+            },
+            {
+                id: 11,
+                communityId: 2,
+                title: "Desain Poster Keren",
+                content: "<p>Berbagi tips membuat poster yang menarik dan modern.</p>",
+                time: "7 jam lalu",
+                votes: 22,
+                pinned: false,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?poster"
+                }, ],
+                replies: 6,
+                lastActivity: new Date(Date.now() - 7 * 3600000).toISOString(),
+                author: "Rina Desain",
+            },
+            {
+                id: 12,
+                communityId: 3,
+                title: "Jamming Akustik",
+                content: "<p>Undangan untuk sesi jamming akustik virtual.</p>",
+                time: "2 jam lalu",
+                votes: 15,
+                pinned: true,
+                attachments: [],
+                replies: 8,
+                lastActivity: new Date(Date.now() - 2 * 3600000).toISOString(),
+                author: "Dedi Musik",
+            },
+            {
+                id: 13,
+                communityId: 4,
+                title: "Belajar JavaScript",
+                content: "<p>Panduan dasar untuk pemula dalam mempelajari JavaScript.</p>",
+                time: "9 jam lalu",
+                votes: 10,
+                pinned: false,
+                attachments: [{
+                    type: "link",
+                    url: "https://example.com/js",
+                    text: "Panduan JS"
+                }, ],
+                replies: 5,
+                lastActivity: new Date(Date.now() - 9 * 3600000).toISOString(),
+                author: "Eko Dev",
+            },
+            {
+                id: 14,
+                communityId: 5,
+                title: "Novel Romansa",
+                content: "<p>Diskusi tentang menulis novel romansa yang menyentuh.</p>",
+                time: "11 jam lalu",
+                votes: 18,
+                pinned: false,
+                attachments: [],
+                replies: 7,
+                lastActivity: new Date(Date.now() - 11 * 3600000).toISOString(),
+                author: "Gita Penulis",
+            },
+            {
+                id: 15,
+                communityId: 6,
+                title: "Prototipe Aplikasi",
+                content: "<p>Berbagi prototipe aplikasi mobile terbaru.</p>",
+                time: "5 jam lalu",
+                votes: 20,
+                pinned: true,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?prototype"
+                }, ],
+                replies: 10,
+                lastActivity: new Date(Date.now() - 5 * 3600000).toISOString(),
+                author: "Hadi UX",
+            },
+            {
+                id: 16,
+                communityId: 1,
+                title: "Puisi Malam",
+                content: "<p>Puisi tentang malam yang penuh misteri dan keindahan.</p>",
+                time: "3 jam lalu",
+                votes: 25,
+                pinned: false,
+                attachments: [],
+                replies: 9,
+                lastActivity: new Date(Date.now() - 3 * 3600000).toISOString(),
+                author: "Tina Puisi",
+            },
+            {
+                id: 17,
+                communityId: 2,
+                title: "Desain Logo Modern",
+                content: "<p>Tips membuat logo yang simpel namun berkesan.</p>",
+                time: "8 jam lalu",
+                votes: 18,
+                pinned: false,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?logo"
+                }, ],
+                replies: 4,
+                lastActivity: new Date(Date.now() - 8 * 3600000).toISOString(),
+                author: "Dika Desain",
+            },
+            {
+                id: 18,
+                communityId: 3,
+                title: "Lagu Baru Akustik",
+                content: "<p>Berbagi lagu akustik terbaru untuk kolaborasi.</p>",
+                time: "6 jam lalu",
+                votes: 22,
+                pinned: false,
+                attachments: [{
+                    type: "link",
+                    url: "https://soundcloud.com/new-song",
+                    text: "Dengarkan Lagu",
+                }, ],
+                replies: 7,
+                lastActivity: new Date(Date.now() - 6 * 3600000).toISOString(),
+                author: "Aryo Musik",
+            },
+            {
+                id: 19,
+                communityId: 4,
+                title: "Proyek AI Sederhana",
+                content: "<p>Diskusi tentang proyek AI untuk pemula.</p>",
+                time: "10 jam lalu",
+                votes: 15,
+                pinned: false,
+                attachments: [{
+                    type: "link",
+                    url: "https://example.com/ai",
+                    text: "Panduan AI"
+                }, ],
+                replies: 6,
+                lastActivity: new Date(Date.now() - 10 * 3600000).toISOString(),
+                author: "Bima Coder",
+            },
+            {
+                id: 20,
+                communityId: 7,
+                title: "Fotografi Alam",
+                content: "<p>Berbagi tips fotografi alam di pegunungan.</p>",
+                time: "4 jam lalu",
+                votes: 27,
+                pinned: false,
+                attachments: [{
+                    type: "image",
+                    url: "https://picsum.photos/100/100?nature"
+                }, ],
+                replies: 8,
+                lastActivity: new Date(Date.now() - 4 * 3600000).toISOString(),
+                author: "Maya Foto",
+            },
+            {
+                id: 999,
+                communityId: 999,
+                title: "Selamat Datang!",
+                content: "<p>Selamat datang di komunitas ini! Mulai diskusi Anda di sini.</p>",
+                time: "Baru saja",
+                votes: 0,
+                pinned: false,
+                attachments: [],
+                replies: 0,
+                lastActivity: new Date().toISOString(),
+                author: "Admin Tara",
+            },
+        ];
+
+        // Pagination Settings
+        const THREADS_PER_PAGE = 5;
+        let currentPage = 1;
+
+        // Get Community ID from URL
+        function getCommunityId() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get("community")) || 999;
+            return communities.find((c) => c.id === id) ? id : 999;
+        }
+
+        // Render Community Details
+        function renderCommunityDetails() {
+            const communityId = getCommunityId();
+            const community =
+                communities.find((c) => c.id === communityId) ||
+                communities.find((c) => c.id === 999);
+            document.getElementById("community-name").textContent = community.name;
+            document.getElementById("community-badge").className = community.badge ?
+                `badge badge-${community.badge}` :
+                "";
+            document.getElementById("community-badge").textContent = community.badge ?
+                community.badge.charAt(0).toUpperCase() + community.badge.slice(1) :
+                "";
+            document.getElementById("community-description").textContent =
+                community.description;
+            document.getElementById("join-btn").textContent = community.joined ?
+                "Keluar" :
+                "Gabung";
+        }
+
+        // Render Sidebar Community Details
+        function renderSidebarDetails() {
+            const communityId = getCommunityId();
+            const community =
+                communities.find((c) => c.id === communityId) ||
+                communities.find((c) => c.id === 999);
+            const posts = communityPosts.filter(
+                (p) => p.communityId === communityId
+            ) || [communityPosts.find((p) => p.id === 999)];
+
+            document.getElementById("sidebar-community-name").textContent =
+                community.name;
+            document.getElementById(
+                "sidebar-community-category"
+            ).innerHTML = `<i class="fas fa-tag mr-1"></i>Kategori: ${community.category}`;
+            document.getElementById("sidebar-community-description").textContent =
+                community.description;
+            document.getElementById(
+                "sidebar-community-creator"
+            ).innerHTML = `<i class="fas fa-user mr-1"></i>Pembuat: ${community.creator}`;
+            document.getElementById(
+                "sidebar-community-created"
+            ).innerHTML = `<i class="fas fa-calendar-alt mr-1"></i>Dibuat: ${community.createdDate}`;
+            document.getElementById(
+                "sidebar-community-discussions"
+            ).innerHTML = `<i class="fas fa-comment-alt mr-1"></i>Total Diskusi: ${posts.length}`;
+            document.getElementById(
+                "sidebar-community-moderators"
+            ).innerHTML = `<i class="fas fa-user-shield mr-1"></i>Moderator: ${community.moderators
+        .slice(0, 1)
+        .map(
+          (m) =>
+            `${m.name}${m.isModerator
+              ? ' <span class="badge badge-moderator">Moderator</span>'
+              : ""
+            }`
+        )
+        .join(", ")}`;
+            document.getElementById(
+                "sidebar-community-members"
+            ).innerHTML = `<i class="fas fa-user-friends mr-1"></i>${community.members} Anggota`;
+            document.getElementById(
+                    "sidebar-community-online"
+                ).innerHTML =
+                `<i class="fas fa-circle text-green-500 mr-1 text-xs"></i>${community.onlineMembers} Online`;
+
+            // Render Recommended Communities
+            const recommendedCommunities = communities
+                .filter((c) => c.id !== communityId && c.id !== 999)
+                .slice(0, 3);
+            document.getElementById("recommended-communities").innerHTML =
+                recommendedCommunities
+                .map(
+                    (c) => `
+                <div class="recommended-community">
+                    <img src="${c.image}" alt="${c.name}" />
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">${c.name
+              }</p>
+                        <p class="text-xs text-gray-500">${c.members
+              } Anggota</p>
+                    </div>
+                </div>
+            `
+                )
+                .join("");
+        }
+
+        // Render Forum Threads with Pagination
+        function renderForumThreads(page = 1) {
+            const communityId = getCommunityId();
+            let threads = communityPosts.filter((p) => p.communityId === communityId);
+            const threadsContainer = document.getElementById("forum-threads");
+            threadsContainer.innerHTML = "";
+
+            if (threads.length === 0) {
+                threads = [communityPosts.find((p) => p.id === 999)];
+            }
+
+            // Sort threads to highlight active ones
+            threads.sort((a, b) => {
+                const aActivity = new Date(a.lastActivity).getTime();
+                const bActivity = new Date(b.lastActivity).getTime();
+                return bActivity - aActivity || b.votes - a.votes;
+            });
+
+            // Pagination logic
+            const totalPages = Math.ceil(threads.length / THREADS_PER_PAGE);
+            currentPage = Math.min(Math.max(page, 1), totalPages);
+            const startIndex = (currentPage - 1) * THREADS_PER_PAGE;
+            const endIndex = startIndex + THREADS_PER_PAGE;
+            const paginatedThreads = threads.slice(startIndex, endIndex);
+
+            paginatedThreads.forEach((thread) => {
+                const isHighlighted =
+                    thread.replies > 5 ||
+                    thread.votes > 20 ||
+                    new Date().getTime() - new Date(thread.lastActivity).getTime() <
+                    2 * 3600000;
+                threadsContainer.innerHTML += `
+            <a href="/thread.html?community=${thread.communityId}&thread=${thread.id
+          }" class="thread-card ${isHighlighted ? "highlight-thread" : ""}">
+              <div class="thread-card-header">
+                <h3>${thread.title}</h3>
+                ${thread.pinned
+            ? '<i class="fas fa-thumbtack text-yellow-400" title="Pinned Thread"></i>'
+            : ""
+          }
+                <div class="post-menu">
+                  <i class="fas fa-ellipsis-h post-menu-btn" onclick="togglePostMenu(event, ${thread.id
+          })"></i>
+                  <div class="post-menu-content" id="post-menu-${thread.id}">
+                    <div class="post-menu-item" onclick="sharePost(${thread.id
+          })">Bagikan</div>
+                    <div class="post-menu-item" onclick="savePost(${thread.id
+          })">Simpan</div>
+                    <div class="post-menu-item danger" onclick="reportPost(${thread.id
+          })">Laporkan</div>
+                  </div>
+                </div>
+              </div>
+              <div class="thread-card-meta">
+                <span>Diposting oleh ${thread.author}</span>
+                <span>${thread.time}</span>
+              </div>
+              <div class="thread-card-content">${thread.content}</div>
+              ${thread.attachments.length > 0
+            ? `
+                <div class="attachment-container">
+                  ${thread.attachments
+              .map((att) =>
+                att.type === "image"
+                  ? `<img src="${att.url}" alt="Attachment" />`
+                  : `<a href="${att.url}" target="_blank">${att.text}</a>`
+              )
+              .join("")}
+                </div>
+              `
+            : ""
+          }
+              <div class="thread-footer">
+                <div class="vote-container">
+                  <i class="fas fa-arrow-up vote-btn" onclick="votePost(event, ${thread.id
+          }, 1)"></i>
+                  <span class="text-sm text-gray-500">${thread.votes}</span>
+                  <i class="fas fa-arrow-down vote-btn" onclick="votePost(event, ${thread.id
+          }, -1)"></i>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-xs text-gray-500"><i class="fas fa-comment mr-1"></i>${thread.replies
+          } Balasan</span>
+                  <span class="text-xs text-gray-500">${thread.time}</span>
+                </div>
+              </div>
+            </a>
+          `;
+            });
+
+            // Render Pagination
+            renderPagination(totalPages);
+
+            // Animate Threads
+            gsap.from(".thread-card", {
+                opacity: 0,
+                y: 20,
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "power3.out",
+            });
+        }
+
+        // Render Pagination
+        function renderPagination(totalPages) {
+            const paginationContainer = document.getElementById("pagination");
+            paginationContainer.innerHTML = "";
+
+            // Previous Button
+            paginationContainer.innerHTML += `
+          <button class="pagination-btn" onclick="renderForumThreads(${currentPage - 1
+        })" ${currentPage === 1 ? "disabled" : ""}>
+            Sebelumnya
+          </button>
+        `;
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                paginationContainer.innerHTML += `
+            <button class="pagination-btn ${i === currentPage ? "active" : ""
+          }" onclick="renderForumThreads(${i})">${i}</button>
+          `;
+            }
+
+            // Next Button
+            paginationContainer.innerHTML += `
+          <button class="pagination-btn" onclick="renderForumThreads(${currentPage + 1
+        })" ${currentPage === totalPages ? "disabled" : ""}>
+            Selanjutnya
+          </button>
+        `;
+
+            // Animate Pagination Buttons
+            gsap.from(".pagination-btn", {
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.3,
+                stagger: 0.05,
+                ease: "power2.out",
+            });
+        }
+
+        // Toggle Post Menu
+        function togglePostMenu(event, postId) {
+            event.preventDefault();
+            const menu = document.getElementById(`post-menu-${postId}`);
+            const isOpen = menu.classList.contains("open");
+            document
+                .querySelectorAll(".post-menu-content.open")
+                .forEach((m) => m.classList.remove("open"));
+            if (!isOpen) {
+                menu.classList.add("open");
+                gsap.from(menu, {
+                    opacity: 0,
+                    y: -10,
+                    duration: 0.2,
+                    ease: "power2.out",
+                });
+            }
+        }
+
+        // Share Post
+        function sharePost(postId) {
+            const post = communityPosts.find((p) => p.id === postId);
+            const url = `/thread.html?community=${post.communityId}&thread=${post.id}`;
+            navigator.clipboard.writeText(window.location.origin + url);
+            alert("Link thread telah disalin ke clipboard!");
+        }
+
+        // Save Post
+        function savePost(postId) {
+            alert(`Thread ${postId} telah disimpan!`);
+        }
+
+        // Report Post
+        function reportPost(postId) {
+            alert(`Thread ${postId} telah dilaporkan ke moderator.`);
+        }
+
+        // Render Notifications in Modal
+        function renderNotifications(filter = "all") {
+            const notificationList = document.getElementById("notification-list");
+            notificationList.innerHTML = "";
+
+            let filteredNotifications =
+                filter === "all" ?
+                notifications :
+                notifications.filter((n) => !n.read);
+
+            if (filteredNotifications.length === 0) {
+                notificationList.innerHTML = `
+            <div class="text-center text-gray-600">
+              <p class="text-sm">Tidak ada notifikasi ${filter === "all" ? "" : "belum dibaca"
+          }.</p>
+            </div>
+          `;
+                return;
+            }
+
+            filteredNotifications.forEach((notification) => {
+                notificationList.innerHTML += `
+            <div class="notification-card ${notification.read ? "" : "unread"
+          }" onclick="viewNotification(${notification.id})">
+              <p class="font-medium">${notification.text}</p>
+              <p class="time">${notification.time}</p>
+            </div>
+          `;
+            });
+
+            const unreadCount = notifications.filter((n) => !n.read).length;
+            document.getElementById("unread-count").textContent = unreadCount;
+
+            gsap.from(".notification-card", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+            });
+        }
+
+        // Toggle Notifications Modal
+        function toggleNotifications() {
+            const modal = document.getElementById("notification-modal");
+            const isOpen = modal.classList.contains("open");
+            modal.classList.toggle("open");
+            gsap.to(modal, {
+                x: isOpen ? "100%" : "0%",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+            if (!isOpen) {
+                renderNotifications();
+            }
+        }
+
+        // Mark All Notifications as Read
+        function markAllAsRead() {
+            notifications.forEach((n) => (n.read = true));
+            renderNotifications(
+                document.querySelector("#notification-modal .filter-btn.active") ?
+                .dataset.filter || "all"
+            );
+            anime({
+                targets: "#mark-all-read",
+                scale: [1, 1.1, 1],
+                backgroundColor: ["#111827", "#374151", "#111827"],
+                color: ["#ffffff", "#facc15", "#ffffff"],
+                duration: 300,
+                easing: "easeOutQuad",
+            });
+        }
+
+        // View Notification
+        function viewNotification(notificationId) {
+            const notification = notifications.find((n) => n.id === notificationId);
+            notification.read = true;
+            renderNotifications(
+                document.querySelector("#notification-modal .filter-btn.active") ?
+                .dataset.filter || "all"
+            );
+            if (notification.type === "post" || notification.type === "reply") {
+                window.location.href = `/thread.html?community=${notification.communityId
+          }&thread=${notification.threadId || notification.id}`;
+            } else if (notification.type === "event") {
+                window.location.href = `/agenda.html?event=${notification.id}`;
+            }
+        }
+
+        // Vote Post
+        function votePost(event, postId, value) {
+            event.preventDefault();
+            const post = communityPosts.find((p) => p.id === postId);
+            post.votes += value;
+            post.lastActivity = new Date().toISOString();
+            renderForumThreads(currentPage);
+            if (post.votes >= 20) {
+                notifications.unshift({
+                    id: notifications.length + 1,
+                    text: `Thread "${post.title}" mendapatkan banyak apresiasi!`,
+                    time: "Baru saja",
+                    communityId: post.communityId,
+                    read: false,
+                    type: "post",
+                    threadId: post.id,
+                });
+                renderNotifications(
+                    document.querySelector("#notification-modal .filter-btn.active") ?
+                    .dataset.filter || "all"
+                );
+            }
+        }
+
+        // Toggle Join Community
+        function toggleJoin() {
+            const communityId = getCommunityId();
+            const community =
+                communities.find((c) => c.id === communityId) ||
+                communities.find((c) => c.id === 999);
+            community.joined = !community.joined;
+            const notificationBar = document.getElementById("notification-bar");
+            notificationBar.querySelector("p").textContent = community.joined ?
+                `Anda telah bergabung dengan ${community.name}!` :
+                `Anda telah keluar dari ${community.name}.`;
+            notificationBar.classList.remove("hidden");
+            gsap.from(notificationBar, {
+                opacity: 0,
+                y: -20,
+                duration: 0.5,
+                ease: "power2.out",
+            });
+
+            if (community.joined) {
+                notifications.unshift({
+                    id: notifications.length + 1,
+                    text: `Anda telah bergabung dengan ${community.name}!`,
+                    time: "Baru saja",
+                    communityId: community.id,
+                    read: false,
+                    type: "join",
+                });
+                renderNotifications(
+                    document.querySelector("#notification-modal .filter-btn.active") ?
+                    .dataset.filter || "all"
+                );
+            }
+
+            renderCommunityDetails();
+        }
+
+        // Dismiss Notification Bar
+        function dismissNotification() {
+            const notificationBar = document.getElementById("notification-bar");
+            gsap.to(notificationBar, {
+                opacity: 0,
+                y: -20,
+                duration: 0.5,
+                ease: "power2.in",
+                onComplete: () => {
+                    notificationBar.classList.add("hidden");
+                    notificationBar.querySelector("p").textContent =
+                        "Selamat datang di forum! Mulai diskusi baru.";
+                },
+            });
+        }
+
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: "#new-thread-content",
+            height: 300,
+            menubar: false,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste code help wordcount",
+            ],
+            toolbar: "undo redo | formatselect | bold italic underline | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | link image | removeformat | help",
+            placeholder: "Tulis isi diskusi Tuan...",
+            content_style: "body { font-family: Outfit, sans-serif; font-size: 14px; color: #111827; }",
+            setup: (editor) => {
+                editor.on("init", () => {
+                    gsap.from(".tox-tinymce", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.5,
+                        ease: "power3.out",
+                    });
+                });
+            },
+        });
+
+        // Create New Thread
+        function createNewThread() {
+            const title = document.getElementById("new-thread-title").value.trim();
+            const content = tinymce.get("new-thread-content").getContent().trim();
+            if (!title || !content) {
+                alert("Judul dan isi diskusi tidak boleh kosong!");
+                return;
+            }
+            const communityId = getCommunityId();
+            const newThread = {
+                id: communityPosts.length + 1,
+                communityId: communityId,
+                title: title,
+                content: content,
+                time: "Baru saja",
+                votes: 0,
+                pinned: false,
+                attachments: [],
+                replies: 0,
+                lastActivity: new Date().toISOString(),
+                author: "Pengguna TARA",
+            };
+            communityPosts.push(newThread);
+            notifications.unshift({
+                id: notifications.length + 1,
+                text: `Diskusi baru di ${communities.find((c) => c.id === communityId).name}: '${title}'`,
+                time: "Baru saja",
+                communityId: communityId,
+                read: false,
+                type: "post",
+                threadId: newThread.id,
+            });
+            document.getElementById("new-thread-title").value = "";
+            tinymce.get("new-thread-content").setContent("");
+            renderForumThreads(1);
+            renderNotifications();
+            anime({
+                targets: ".new-thread-form",
+                scale: [1, 1.05, 1],
+                duration: 300,
+                easing: "easeOutQuad",
+            });
+        }
+
+        // Filter Functionality for Notifications
+        const notificationFilterButtons = document.querySelectorAll(
+            "#notification-modal .filter-btn"
+        );
+        notificationFilterButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                notificationFilterButtons.forEach((f) =>
+                    f.classList.remove("active")
+                );
+                btn.classList.add("active");
+                renderNotifications(btn.dataset.filter);
+                anime({
+                    targets: btn,
+                    scale: [1, 1.1, 1],
+                    backgroundColor: ["#f3f4f6", "#111827"],
+                    color: ["#374151", "#ffffff"],
+                    duration: 300,
+                    easing: "easeOutQuad",
+                });
+            });
+        });
+
+        // Close Post Menus on Click Outside
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest(".post-menu")) {
+                document
+                    .querySelectorAll(".post-menu-content.open")
+                    .forEach((m) => m.classList.remove("open"));
+            }
+        });
+
+        // Mark All as Read Button
+        document
+            .getElementById("mark-all-read")
+            .addEventListener("click", markAllAsRead);
+
+        // Initialize
+        document.getElementById("notification-bar").classList.remove("hidden");
+        renderCommunityDetails();
+        renderSidebarDetails();
+        renderForumThreads();
+        renderNotifications();
+
+    </script>
+    @endpush
+</x-layout>
