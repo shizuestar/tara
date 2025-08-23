@@ -705,7 +705,8 @@
                 <!-- Blog 1 -->
                 <div class="blog-card">
                     <div class="blog-img-container">
-                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi" class="blog-img" />
+                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi"
+                            class="blog-img" />
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-content-title">Arsitektur Imajinasi</h3>
@@ -720,7 +721,8 @@
                 </div>
                 <div class="blog-card">
                     <div class="blog-img-container">
-                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi" class="blog-img" />
+                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi"
+                            class="blog-img" />
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-content-title">Arsitektur Imajinasi</h3>
@@ -735,7 +737,8 @@
                 </div>
                 <div class="blog-card">
                     <div class="blog-img-container">
-                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi" class="blog-img" />
+                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi"
+                            class="blog-img" />
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-content-title">Arsitektur Imajinasi</h3>
@@ -750,7 +753,8 @@
                 </div>
                 <div class="blog-card">
                     <div class="blog-img-container">
-                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi" class="blog-img" />
+                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi"
+                            class="blog-img" />
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-content-title">Arsitektur Imajinasi</h3>
@@ -801,7 +805,8 @@
                 <!-- Cloned Blog 1 -->
                 <div class="blog-card">
                     <div class="blog-img-container">
-                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi" class="blog-img" />
+                        <img src="https://picsum.photos/id/1018/450/350" alt="Arsitektur Imajinasi"
+                            class="blog-img" />
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-content-title">Arsitektur Imajinasi</h3>

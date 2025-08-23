@@ -15,6 +15,9 @@ Route::get('/', function () {
 Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas.index');
 Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
 
+
+Route::get('/learn-more', [LearnMoreController::class, 'index'])->name('learn_more.index');
+
 Route::get('/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
 // Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
 
