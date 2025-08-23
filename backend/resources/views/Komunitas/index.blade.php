@@ -1,20 +1,150 @@
-<!DOCTYPE html>
-<html lang="id">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>TARA – Komunitas Kreatif</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
-            rel="stylesheet" />
+<x-layout>
+   
+        <div id="particles-js"></div>
+        <!-- Notification Modal -->
+        <div id="notification-modal" class="notification-modal">
+            <i
+                class="fas fa-times close-btn"
+                onclick="toggleNotifications()"></i>
+            <div class="p-6">
+                <h2
+                    class="text-2xl font-bold text-black mb-4"
+                    style="font-family: 'Space Grotesk', sans-serif">
+                    Notifikasi
+                </h2>
+                <div class="flex gap-2 mb-4">
+                    <button class="filter-btn active" data-filter="all">
+                        Semua
+                    </button>
+                    <button class="filter-btn" data-filter="unread">
+                        Belum Dibaca
+                    </button>
+                </div>
+                <button
+                    id="mark-all-read"
+                    class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-yellow-400 hover:text-black transition mb-4">
+                    Tandai Semua Dibaca
+                </button>
+                <div id="notification-list" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- Komunitas Section -->
+        <section class="relative pt-24 pb-12 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Main Content -->
+                    <div class="flex-1">
+                        <!-- Notification Bar -->
+                        <div
+                            id="notification-bar"
+                            class="notification-bar"
+                            onclick="dismissNotification()">
+                            <p class="text-sm text-gray-700">
+                                Anda telah bergabung dengan Komunitas Puisi!
+                                <a
+                                    href="/forum?community=1"
+                                    class="text-black hover:text-yellow-400"
+                                    >Kunjungi Forum</a
+                                >
+                            </p>
+                        </div>
+
+                        <!-- Filters and Search -->
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
+                            <div class="flex gap-2 overflow-x-auto">
+                                <button
+                                    class="filter-btn active"
+                                    data-filter="all">
+                                    Semua
+                                </button>
+                                <button class="filter-btn" data-filter="puisi">
+                                    Puisi
+                                </button>
+                                <button class="filter-btn" data-filter="desain">
+                                    Desain
+                                </button>
+                                <button class="filter-btn" data-filter="musik">
+                                    Musik
+                                </button>
+                                <button class="filter-btn" data-filter="coding">
+                                    Coding
+                                </button>
+                                <button
+                                    class="filter-btn"
+                                    data-filter="populer">
+                                    Populer
+                                </button>
+                                <button class="filter-btn" data-filter="baru">
+                                    Baru
+                                </button>
+                            </div>
+                            <div class="sm:ml-auto mt-3 sm:mt-0">
+                                <input
+                                    type="text"
+                                    id="community-search"
+                                    placeholder="Cari komunitas..."
+                                    class="px-4 py-2 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition w-full sm:w-64" />
+                            </div>
+                        </div>
+
+                        <!-- Community List -->
+                        <div id="community-list" class="space-y-6"></div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <aside class="sidebar md:w-80">
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Navigasi Komunitas
+                        </h3>
+                        <a
+                            href="/komunitas/buat"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-plus"></i> Buat Komunitas</a
+                        >
+                        <a
+                            href="/komunitas/saya"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-user-friends"></i> Komunitas
+                            Saya</a
+                        >
+                        <a
+                            href="/komunitas/populer"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-fire"></i> Komunitas Populer</a
+                        >
+                        <hr class="my-4 border-gray-200" />
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Komunitas Saya
+                        </h3>
+                        <div
+                            id="joined-communities"
+                            class="space-y-2 mb-6"></div>
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Rekomendasi Komunitas
+                        </h3>
+                        <div
+                            id="recommended-communities"
+                            class="space-y-2 mb-6"></div>
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Aktivitas Terbaru
+                        </h3>
+                        <div id="recent-activities" class="space-y-2"></div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+    @push('styles')
         <style>
             body {
                 font-family: "Space Grotesk", sans-serif;
@@ -396,409 +526,9 @@
                 }
             }
         </style>
-    </head>
+    @endpush
 
-    <body class="relative overflow-x-hidden">
-        <div id="particles-js"></div>
-        <!-- Notification Modal -->
-        <div id="notification-modal" class="notification-modal">
-            <i
-                class="fas fa-times close-btn"
-                onclick="toggleNotifications()"></i>
-            <div class="p-6">
-                <h2
-                    class="text-2xl font-bold text-black mb-4"
-                    style="font-family: 'Space Grotesk', sans-serif">
-                    Notifikasi
-                </h2>
-                <div class="flex gap-2 mb-4">
-                    <button class="filter-btn active" data-filter="all">
-                        Semua
-                    </button>
-                    <button class="filter-btn" data-filter="unread">
-                        Belum Dibaca
-                    </button>
-                </div>
-                <button
-                    id="mark-all-read"
-                    class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-yellow-400 hover:text-black transition mb-4">
-                    Tandai Semua Dibaca
-                </button>
-                <div id="notification-list" class="space-y-4"></div>
-            </div>
-        </div>
-        <header
-            class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
-            <nav
-                class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
-                <div class="max-w-7xl mx-auto px-6 py-4">
-                    <div class="flex items-center justify-between">
-                        <!-- Logo -->
-                        <div class="flex items-center gap-3">
-                            <a href="#" class="text-3xl font-bold text-gray-900"
-                                >TARA</a
-                            >
-                            <div class="relative">
-                                <span class="text-yellow-400 text-2xl">●</span>
-                                <span
-                                    class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow"
-                                    >●</span
-                                >
-                            </div>
-                        </div>
-                        <!-- Search Bar -->
-                        <div
-                            class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
-                            <input
-                                type="text"
-                                placeholder="Cari..."
-                                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm" />
-                            <i
-                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                        </div>
-                        <!-- Burger Icon Mobile -->
-                        <button
-                            aria-label="Toggle Navigation"
-                            id="burger-toggle"
-                            class="md:hidden focus:outline-none z-[60] relative">
-                            <svg
-                                class="w-7 h-7 text-gray-900"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                        <!-- Menu Navigasi -->
-                        <div
-                            id="nav-menu"
-                            class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
-                            <a
-                                href="/index.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Beranda</a
-                            >
-                            <a
-                                href="/galeri.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Galeri</a
-                            >
-                            <a
-                                href="/komunitas.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Komunitas</a
-                            >
-                            <a
-                                href="/proyek.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Proyek</a
-                            >
-                            <a
-                                href="/blog.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Blog</a
-                            >
-                            <a
-                                href="/agenda.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2"
-                                >Agenda</a
-                            >
-
-                            <div
-                                class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
-                                <a
-                                    href="/login"
-                                    class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center">
-                                    Log In
-                                </a>
-                                <a
-                                    href="/register"
-                                    class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center">
-                                    Sign Up
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <script>
-            const burger = document.getElementById("burger-toggle");
-            const navMenu = document.getElementById("nav-menu");
-
-            burger.addEventListener("click", () => {
-                navMenu.classList.toggle("hidden");
-            });
-
-            function toggleNotifications() {
-                const modal = document.getElementById("notification-modal");
-                const isOpen = modal.classList.contains("open");
-                modal.classList.toggle("open");
-                gsap.to(modal, {
-                    x: isOpen ? "100%" : "0%",
-                    duration: 0.3,
-                    ease: "power2.out",
-                });
-                if (!isOpen) {
-                    renderNotifications();
-                }
-            }
-            // Set active navigation link
-            const currentPath =
-                window.location.pathname.split("/").pop() || "index.html";
-            const isDetailPage = window.location.search.includes("id=");
-            document.querySelectorAll(".nav-link").forEach((link) => {
-                const href = link.getAttribute("href").split("/").pop();
-                const isActive =
-                    href === currentPath ||
-                    (href === "blog.html" &&
-                        isDetailPage &&
-                        currentPath === "blog.html") ||
-                    (href === "komunitas.html" &&
-                        isDetailPage &&
-                        currentPath === "komunitas.html") ||
-                    (href === "galeri.html" &&
-                        isDetailPage &&
-                        currentPath === "galeri.html") ||
-                    (href === "agenda.html" &&
-                        isDetailPage &&
-                        currentPath === "agenda.html");
-                if (isActive) {
-                    link.classList.add("active");
-                }
-            });
-        </script>
-
-        <!-- Komunitas Section -->
-        <section class="relative pt-24 pb-12 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col md:flex-row gap-6">
-                    <!-- Main Content -->
-                    <div class="flex-1">
-                        <!-- Notification Bar -->
-                        <div
-                            id="notification-bar"
-                            class="notification-bar"
-                            onclick="dismissNotification()">
-                            <p class="text-sm text-gray-700">
-                                Anda telah bergabung dengan Komunitas Puisi!
-                                <a
-                                    href="/forum?community=1"
-                                    class="text-black hover:text-yellow-400"
-                                    >Kunjungi Forum</a
-                                >
-                            </p>
-                        </div>
-
-                        <!-- Filters and Search -->
-                        <div
-                            class="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
-                            <div class="flex gap-2 overflow-x-auto">
-                                <button
-                                    class="filter-btn active"
-                                    data-filter="all">
-                                    Semua
-                                </button>
-                                <button class="filter-btn" data-filter="puisi">
-                                    Puisi
-                                </button>
-                                <button class="filter-btn" data-filter="desain">
-                                    Desain
-                                </button>
-                                <button class="filter-btn" data-filter="musik">
-                                    Musik
-                                </button>
-                                <button class="filter-btn" data-filter="coding">
-                                    Coding
-                                </button>
-                                <button
-                                    class="filter-btn"
-                                    data-filter="populer">
-                                    Populer
-                                </button>
-                                <button class="filter-btn" data-filter="baru">
-                                    Baru
-                                </button>
-                            </div>
-                            <div class="sm:ml-auto mt-3 sm:mt-0">
-                                <input
-                                    type="text"
-                                    id="community-search"
-                                    placeholder="Cari komunitas..."
-                                    class="px-4 py-2 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition w-full sm:w-64" />
-                            </div>
-                        </div>
-
-                        <!-- Community List -->
-                        <div id="community-list" class="space-y-6"></div>
-                    </div>
-
-                    <!-- Sidebar -->
-                    <aside class="sidebar md:w-80">
-                        <h3
-                            class="text-lg font-semibold text-black mb-4"
-                            style="font-family: 'Space Grotesk', sans-serif">
-                            Navigasi Komunitas
-                        </h3>
-                        <a
-                            href="/komunitas/buat"
-                            class="flex items-center gap-2"
-                            ><i class="fas fa-plus"></i> Buat Komunitas</a
-                        >
-                        <a
-                            href="/komunitas/saya"
-                            class="flex items-center gap-2"
-                            ><i class="fas fa-user-friends"></i> Komunitas
-                            Saya</a
-                        >
-                        <a
-                            href="/komunitas/populer"
-                            class="flex items-center gap-2"
-                            ><i class="fas fa-fire"></i> Komunitas Populer</a
-                        >
-                        <hr class="my-4 border-gray-200" />
-                        <h3
-                            class="text-lg font-semibold text-black mb-4"
-                            style="font-family: 'Space Grotesk', sans-serif">
-                            Komunitas Saya
-                        </h3>
-                        <div
-                            id="joined-communities"
-                            class="space-y-2 mb-6"></div>
-                        <h3
-                            class="text-lg font-semibold text-black mb-4"
-                            style="font-family: 'Space Grotesk', sans-serif">
-                            Rekomendasi Komunitas
-                        </h3>
-                        <div
-                            id="recommended-communities"
-                            class="space-y-2 mb-6"></div>
-                        <h3
-                            class="text-lg font-semibold text-black mb-4"
-                            style="font-family: 'Space Grotesk', sans-serif">
-                            Aktivitas Terbaru
-                        </h3>
-                        <div id="recent-activities" class="space-y-2"></div>
-                    </aside>
-                </div>
-            </div>
-        </section>
-
-        <footer class="relative mt-12 bg-white border-t border-neutral-200 text-sm text-neutral-700 overflow-hidden">
-            <div class="absolute bottom-0 left-0 w-full h-56 pointer-events-none z-0">
-              <div class="w-full h-full bg-gradient-to-t from-white via-white/80 to-transparent animate-[fadeUp_4s_infinite]">
-              </div>
-            </div>
-            <div class="relative z-10 max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
-              <div class="col-span-2">
-                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif">
-                  TARA<span class="text-yellow-400">●</span>
-                </div>
-                <p class="text-neutral-500 mb-4">
-                  Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
-                  depan. Temukan inspirasi. Bangun impresi.
-                </p>
-                <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
-                  <a href=".#" class="hover:text-yellow-400 transition" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                  </a>
-                  <a href=".#" class="hover:text-yellow-400 transition" aria-label="Twitter">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                  <a href=".#" class="hover:text-yellow-400 transition" aria-label="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                  </a>
-                  <a href=".#" class="hover:text-yellow-400 transition" aria-label="Dribbble">
-                    <i class="fab fa-dribbble"></i>
-                  </a>
-                  <a href=".#" class="hover:text-yellow-400 transition" aria-label="Behance">
-                    <i class="fab fa-behance"></i>
-                  </a>
-                </div>
-              </div>
-              <div>
-                <h3 class="font-semibold text-black mb-4">Navigasi</h3>
-                <ul class="space-y-2">
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Beranda</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Galeri</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Tentang</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Kontak</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">FAQ</a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
-                <ul class="space-y-2">
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">UI/UX</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Efek GSAP</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Halaman Utama</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Mikrointeraksi</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Tipografi</a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
-                <ul class="space-y-2">
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Kirim Karya</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Gabung Kurator</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Sponsor & Iklan</a>
-                  </li>
-                  <li>
-                    <a href=".#" class="hover:text-yellow-400 transition">Mitra Media</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-span-2 sm:col-span-1">
-                <h3 class="font-semibold text-black mb-4">Newsletter</h3>
-                <p class="text-neutral-500 mb-3">
-                  Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Tuan.
-                </p>
-                <div class="flex items-center gap-2">
-                  <input type="email" placeholder="Email Tuan..."
-                    class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
-                  <button
-                    class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-yellow-400 hover:text-black transition">
-                    Kirim
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="relative z-10 border-t border-neutral-200 text-center py-4 text-xs text-neutral-400">
-              © 2025 TARA. Dirakit dengan semangat di bumi Nusantara. Estetika,
-              teknologi, dan visi Tuan menyatu.
-            </div>
-          </footer>
-
+    @push('scripts')
         <script>
             // Simulated Community Data
             const communities = [
@@ -1469,5 +1199,5 @@
                 });
             });
         </script>
-    </body>
-</html>
+    @endpush
+</x-layout>

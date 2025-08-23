@@ -1,5 +1,4 @@
 <x-layout>
-
     <canvas id="particle-bg"></canvas>
     <!-- Notification Modal -->
     <div id="notification-modal" class="notification-modal">
@@ -31,7 +30,7 @@
             </div>
             <div class="flex justify-center mb-8">
                 <input type="text" id="search-input" placeholder="Cari proyek..."
-                    class="w чому full max-w-md px-4 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-50" />
+                    class="w full max-w-md px-4 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-50" />
             </div>
             <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
                 <a href="./buat-kolaborasi" class="create-btn"><i class="fas fa-plus mr-2"></i> Buat Kolaborasi</a>
@@ -57,7 +56,6 @@
             <div class="text-center mt-10 flex justify-center gap-3" id="pagination-container"></div>
         </div>
     </section>
-
 
     @push('styles')
     <style>
@@ -169,13 +167,11 @@
         .badge-populer {
             background: #1a202c;
             color: #ffffff;
-            /* Fixed text color */
         }
 
         .badge-baru {
             background: #1a202c;
             color: #ffffff;
-            /* Fixed text color */
         }
 
         .notification-bar {
@@ -429,8 +425,6 @@
         }
 
         @media (max-width: 768px) {
-
-
             .project-card img {
                 height: 140px;
             }
@@ -824,7 +818,6 @@
                     link.classList.add('active');
                 }
             });
-
 
             // Filter Buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
