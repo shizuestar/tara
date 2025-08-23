@@ -1,17 +1,141 @@
-<!DOCTYPE html>
-<html lang="id">
+<x-layout>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TARA - Detail Proyek</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi
+            </h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read"
+                class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai
+                Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
+        </div>
+    </div>
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-3">Notifikasi</h2>
+            <div class="flex gap-2 mb-3">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="action-btn mb-3">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <!-- Join Project Modal -->
+    <div id="join-modal" class="join-modal">
+        <div class="join-modal-content">
+            <i class="fas fa-times close-btn" onclick="toggleJoinModal()"></i>
+            <h2 class="text-xl font-bold mb-3">Gabung Proyek</h2>
+            <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek
+                ini.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium">Nama Lengkap</label>
+                    <input type="text" id="join-name"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Masukkan nama Anda" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Email</label>
+                    <input type="email" id="join-email"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Masukkan email Anda" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Peran yang Diinginkan</label>
+                    <input type="text" id="join-role"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Contoh: UI/UX Designer" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Pesan</label>
+                    <textarea id="join-message"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        rows="5" placeholder="Mengapa Anda ingin bergabung?"></textarea>
+                </div>
+                <button id="submit-join" class="join-btn w-full">Kirim Pengajuan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Detail Section -->
+    <section class="pt-20 pb-12 mt-10">
+        <div class="container">
+            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
+                <p class="text-sm">Notifikasi placeholder.</p>
+            </div>
+            <div class="project-header mb-8">
+                <div class="inner"></div>
+            </div>
+            <!-- Creator and Goals -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-1 creator-card">
+                    <h2 class="text-lg font-bold mb-3">Pembuat Proyek</h2>
+                    <div class="flex items-center gap-4">
+                        <img src="" id="creator-avatar" alt="Pembuat"
+                            class="w-16 h-16 rounded-full border border-gray-200" />
+                        <div>
+                            <h3 class="text-base font-semibold" id="creator-name"></h3>
+                            <p class="text-sm text-gray-600" id="creator-role"></p>
+                            <a href="" id="creator-profile" class="text-sm text-yellow-400 hover:underline">Lihat
+                                Profil</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 goals-card">
+                    <h2 class="text-lg font-bold mb-3">Tujuan Kolaborasi</h2>
+                    <p class="text-sm text-gray-600" id="collaboration-goals"></p>
+                </div>
+            </div>
+            <!-- Team Members -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Anggota Tim</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container"></div>
+            </div>
+            <!-- Project Timeline -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Linimasa Proyek</h2>
+                <div class="timeline"></div>
+            </div>
+            <!-- Task Progress Tracker -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Progres Tugas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 tasks-container"></div>
+            </div>
+            <!-- Comments Section -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Komentar</h2>
+                    <button id="show-hidden-comments" class="join-btn hidden"><i class="fas fa-eye"></i> Tampilkan
+                        Komentar Tersembunyi</button>
+                </div>
+                <div class="mb-4 flex items-center gap-2">
+                    <input type="text" id="comment-input"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Tulis komentar Anda..." />
+                    <button aria-label="a" id="submit-comment" class="join-btn"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+                <div class="comments-container"></div>
+                <div class="flex justify-center gap-2 mt-4" id="pagination-container"></div>
+            </div>
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-black">Rekomendasi Kolaborasi Lainnya</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects">
+                </div>
+            </div>
+    </section>
+
+    @push('styles')
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
@@ -635,296 +759,9 @@
             -webkit-overflow-scrolling: touch;
         }
     </style>
-</head>
+    @endpush
 
-<body class="relative">
-    <!-- Notification Modal -->
-    <div id="notification-modal" class="notification-modal">
-        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-        <div class="p-6">
-            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi
-            </h2>
-            <div class="flex gap-2 mb-4">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
-            </div>
-            <button id="mark-all-read"
-                class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai
-                Semua Dibaca</button>
-            <div id="notification-list" class="space-y-4"></div>
-        </div>
-    </div>
-    <!-- Header -->
-    <header
-        class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
-        <nav class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
-            <div class="max-w-7xl mx-auto px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <!-- Logo -->
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
-                        <div class="relative">
-                            <span class="text-yellow-400 text-2xl">●</span>
-                            <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
-                        </div>
-                    </div>
-                    <!-- Search Bar -->
-                    <div class="relative flex-1 max-w-sm md:max-w-md lg:max-w-lg mx-4">
-                        <input type="text" placeholder="Cari..."
-                            class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-gray-900 text-sm" />
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                    </div>
-                    <!-- Burger Icon Mobile -->
-                    <button aria-label="mobile" id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
-                        <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                    <!-- Menu Navigasi -->
-                    <div id="nav-menu"
-                        class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
-                        <a href="/index.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
-                        <a href="/galeri.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
-                        <a href="/komunitas.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
-                        <a href="/proyek.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
-                        <a href="/blog.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
-                        <a href="/agenda.html"
-                            class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
-
-                        <div class="hidden md:flex items-center gap-2">
-                            <a href="/login"
-                                class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
-                                Log In
-                            </a>
-                            <a href="/register"
-                                class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition">
-                                Sign Up
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <script>
-        const burger = document.getElementById('burger-toggle');
-        const navMenu = document.getElementById('nav-menu');
-
-        burger.addEventListener('click', () => {
-            navMenu.classList.toggle('hidden');
-        });
-
-        function toggleNotifications() {
-            const modal = document.getElementById('notification-modal');
-            const isOpen = modal.classList.contains('open');
-            modal.classList.toggle('open');
-            gsap.to(modal, {
-                x: isOpen ? '100%' : '0%',
-                duration: 0.3,
-                ease: "power2.out"
-            });
-            if (!isOpen) {
-                renderNotifications();
-            }
-        }
-        // Set active navigation link
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        const isBlogDetail = currentPath === 'proyek.html' || window.location.search.includes('id='); // Check if on blog detail page
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const href = link.getAttribute('href').split('/').pop();
-            if (href === currentPath || (href === 'proyek.html' && isBlogDetail)) {
-                link.classList.add('active');
-            }
-        });
-    </script>
-
-    <!-- Notification Modal -->
-    <div id="notification-modal" class="notification-modal">
-        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-        <div class="p-4">
-            <h2 class="text-xl font-bold mb-3">Notifikasi</h2>
-            <div class="flex gap-2 mb-3">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
-            </div>
-            <button id="mark-all-read" class="action-btn mb-3">Tandai Semua Dibaca</button>
-            <div id="notification-list" class="space-y-2"></div>
-        </div>
-    </div>
-
-    <!-- Join Project Modal -->
-    <div id="join-modal" class="join-modal">
-        <div class="join-modal-content">
-            <i class="fas fa-times close-btn" onclick="toggleJoinModal()"></i>
-            <h2 class="text-xl font-bold mb-3">Gabung Proyek</h2>
-            <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek
-                ini.</p>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium">Nama Lengkap</label>
-                    <input type="text" id="join-name"
-                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Masukkan nama Anda" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium">Email</label>
-                    <input type="email" id="join-email"
-                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Masukkan email Anda" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium">Peran yang Diinginkan</label>
-                    <input type="text" id="join-role"
-                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Contoh: UI/UX Designer" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium">Pesan</label>
-                    <textarea id="join-message"
-                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        rows="5" placeholder="Mengapa Anda ingin bergabung?"></textarea>
-                </div>
-                <button id="submit-join" class="join-btn w-full">Kirim Pengajuan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Project Detail Section -->
-    <section class="pt-20 pb-12 mt-10">
-        <div class="container">
-            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
-                <p class="text-sm">Notifikasi placeholder.</p>
-            </div>
-            <div class="project-header mb-8">
-                <div class="inner"></div>
-            </div>
-            <!-- Creator and Goals -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <div class="lg:col-span-1 creator-card">
-                    <h2 class="text-lg font-bold mb-3">Pembuat Proyek</h2>
-                    <div class="flex items-center gap-4">
-                        <img src="" id="creator-avatar" alt="Pembuat"
-                            class="w-16 h-16 rounded-full border border-gray-200" />
-                        <div>
-                            <h3 class="text-base font-semibold" id="creator-name"></h3>
-                            <p class="text-sm text-gray-600" id="creator-role"></p>
-                            <a href="" id="creator-profile" class="text-sm text-yellow-400 hover:underline">Lihat
-                                Profil</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-2 goals-card">
-                    <h2 class="text-lg font-bold mb-3">Tujuan Kolaborasi</h2>
-                    <p class="text-sm text-gray-600" id="collaboration-goals"></p>
-                </div>
-            </div>
-            <!-- Team Members -->
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold mb-4">Anggota Tim</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container"></div>
-            </div>
-            <!-- Project Timeline -->
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold mb-4">Linimasa Proyek</h2>
-                <div class="timeline"></div>
-            </div>
-            <!-- Task Progress Tracker -->
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold mb-4">Progres Tugas</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 tasks-container"></div>
-            </div>
-            <!-- Comments Section -->
-            <div class="mb-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold">Komentar</h2>
-                    <button id="show-hidden-comments" class="join-btn hidden"><i class="fas fa-eye"></i> Tampilkan
-                        Komentar Tersembunyi</button>
-                </div>
-                <div class="mb-4 flex items-center gap-2">
-                    <input type="text" id="comment-input"
-                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Tulis komentar Anda..." />
-                    <button aria-label="a" id="submit-comment" class="join-btn"><i
-                            class="fas fa-paper-plane"></i></button>
-                </div>
-                <div class="comments-container"></div>
-                <div class="flex justify-center gap-2 mt-4" id="pagination-container"></div>
-            </div>
-            <div class="mb-12">
-                <h2 class="text-2xl font-bold mb-6 text-black">Rekomendasi Kolaborasi Lainnya</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects">
-                </div>
-            </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 text-sm text-gray-700">
-        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
-            <div class="col-span-2">
-                <div class="text-2xl font-bold tracking-normal uppercase"
-                    style="font-family: 'Space Grotesk', sans-serif;">
-                    TARA<span class="text-yellow-400">●</span>
-                </div>
-                <p class="text-gray-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
-                    depan. Temukan inspirasi. Bangun impresi.</p>
-                <div class="flex gap-4 mt-3 text-gray-600 text-xl">
-                    <a href="#" class="hover:text-black" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="hover:text-black" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="hover:text-black" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-black" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
-                    <a href="#" class="hover:text-black" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                </div>
-            </div>
-            <div>
-                <h3 class="font-semibold text-black mb-4">Navigasi</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-black">Beranda</a></li>
-                    <li><a href="#" class="hover:text-black">Galeri</a></li>
-                    <li><a href="#" class="hover:text-black">Tentang</a></li>
-                    <li><a href="#" class="hover:text-black">Kontak</a></li>
-                    <li><a href="#" class="hover:text-black">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-semibold text-black mb-4">Eksplorasi</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-black">UI/UX</a></li>
-                    <li><a href="#" class="hover:text-black">GSAP Effects</a></li>
-                    <li><a href="#" class="hover:text-black">Landing Page</a></li>
-                    <li><a href="#" class="hover:text-black">Microinteraction</a></li>
-                    <li><a href="#" class="hover:text-black">Typography</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-semibold text-black mb-4">Kolaborasi</h3>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-black">Submit Karya</a></li>
-                    <li><a href="#" class="hover:text-black">Gabung Kurator</a></li>
-                    <li><a href="#" class="hover:text-black">Sponsor & Iklan</a></li>
-                    <li><a href="#" class="hover:text-black">Media Partner</a></li>
-                </ul>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-                <h3 class="font-semibold text-black mb-4">Newsletter</h3>
-                <p class="text-gray-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.</p>
-                <div class="flex items-center gap-2">
-                    <input type="email" placeholder="Email Tuan..."
-                        class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" />
-                    <button class="px-4 py-2 bg-black text-white text-sm rounded-md">Kirim</button>
-                </div>
-            </div>
-        </div>
-        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-400">
-            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara. Estetika, teknologi, dan visi Tuan menyatu.
-        </div>
-    </footer>
-
+    @push('scripts')
     <script>
         // Simulated Project Data
         const projects = [
@@ -1767,6 +1604,5 @@
             });
         });
     </script>
-</body>
-
-</html>
+    @endpush
+</x-layout>
