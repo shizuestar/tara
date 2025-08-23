@@ -6,6 +6,7 @@ use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\KomunitasController;
+use App\Http\Controllers\LearnMoreController;
 
 Route::get('/', function () {
     return view('main.index');
