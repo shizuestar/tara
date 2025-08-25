@@ -13,19 +13,20 @@ Route::get('/', function () {
     return view('main.index');
 })->name('home');
 
-Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas.index');
+Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas');
 Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
 
 
 Route::get('/learn-more', [LearnMoreController::class, 'index'])->name('learn_more.index');
 
+Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda');
 Route::get('/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
 
-Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek.index');
+Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
 
-Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
-Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark.index');
+Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
 // Unique routes from "panjoel" not present in "main"
