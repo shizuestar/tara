@@ -7,6 +7,7 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
+use App\Http\Controllers\GaleriController;
 
 // Routes from "main"
 Route::get('/', function () {
@@ -30,7 +31,11 @@ Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
 // Unique routes from "panjoel" not present in "main"
-Route::get('/galeri', fn() => view('galeri.index'))->name('galeri');
+Route::prefix('galeri')->group(function () {
+    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+    Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
+
+});
 Route::get('/blog', fn() => view('blog.index'))->name('blog');
 
 // Commented routes from "panjoel"
