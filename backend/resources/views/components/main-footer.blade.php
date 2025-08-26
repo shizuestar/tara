@@ -30,7 +30,7 @@
             <h3 class="font-semibold text-black mb-4">Navigasi</h3>
             <ul class="space-y-2">
                 <li><a href="#" class="hover:text-black transition">Beranda</a></li>
-                <li><a href="#" class="hover:text-black transition">Galeri</a></li>
+                <li><a href="{{ route('galeri') }}" class="hover:text-black transition">Galeri</a></li>
                 <li><a href="#" class="hover:text-black transition">Tentang</a></li>
                 <li><a href="#" class="hover:text-black transition">Kontak</a></li>
                 <li><a href="#" class="hover:text-black transition">FAQ</a></li>

@@ -9,11 +9,38 @@ class GaleriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    private $projects = [];
+
+    public function __construct()
     {
-        return view('Galeri.index');
+        for ($i = 1; $i <= 45; $i++) {
+            $this->projects[$i] = [
+                "id" => $i,
+                "title" => "Proyek " . $i,
+                "category" => ["UI/UX", "Desain Grafis", "Pengembangan Web", "Ilustrasi"][$i % 4],
+                "description" => "Deskripsi detail untuk proyek " . $i . ". Ini representasi unik dari kreativitas.",
+                "image" => "https://picsum.photos/seed/" . $i . "/800/600",
+                "uploader" => "Pengunggah " . (($i % 5) + 1),
+                "uploadTime" => now()->toDateTimeString(),
+            ];
+        }
     }
 
+    public function index()
+    {
+        return view('galeri.index', ['projects' => $this->projects]);
+    }
+
+    public function show($id)
+    {
+        if (!isset($this->projects[$id])) {
+            abort(404, "Project tidak ditemukan");
+        }
+
+        $project = $this->projects[$id];
+        return view('galeri.show', compact('project'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -26,14 +53,6 @@ class GaleriController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }

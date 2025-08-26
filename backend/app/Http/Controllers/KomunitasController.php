@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Komunitas;
 use Illuminate\Http\Request;
 
 class KomunitasController extends Controller
@@ -11,7 +12,7 @@ class KomunitasController extends Controller
      */
     public function index()
     {
-        return view('Komunitas.index');
+        return view('komunitas.index');
     }
 
     /**
@@ -35,7 +36,9 @@ class KomunitasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $getKomunitasById = Komunitas::findOrFail($id);
+
+        return view('komunitas.show', compact('getKomunitasById'));
     }
 
     /**

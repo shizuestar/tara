@@ -11,7 +11,7 @@ class ProyekController extends Controller
      */
     public function index()
     {
-        return view('Proyek.index');
+        return view('proyek.index');
     }
 
     /**
