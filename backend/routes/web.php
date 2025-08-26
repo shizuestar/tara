@@ -31,7 +31,7 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
-Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
 Route::get('/blog', fn() => view('blog.index'))->name('blog');
 
