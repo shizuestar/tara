@@ -25,7 +25,7 @@
                     class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
                     <a href="{{ route('home') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
-                    <a href="{{ route('galeri') }}"
+                    <a href="{{ route('galeri.index') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
                     <a href="{{ route('komunitas') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>

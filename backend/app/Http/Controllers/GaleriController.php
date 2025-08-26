@@ -29,7 +29,7 @@ class GaleriController extends Controller
 
     public function index()
     {
-        return view('galeri.index', ['projects' => $this->projects]);
+        return view('galeri', ['projects' => $this->projects]);
     }
 
     public function show($id)

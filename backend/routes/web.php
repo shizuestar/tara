@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
@@ -30,15 +31,10 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
-// Unique routes from "panjoel" not present in "main"
-Route::prefix('galeri')->group(function () {
-    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-    Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
-
-});
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
 Route::get('/blog', fn() => view('blog.index'))->name('blog');
 
 // Commented routes from "panjoel"
 // Route::get('/login', fn() => view('auth.login'))->name('login');
 // Route::get('/register', fn() => view('auth.register'))->name('register');
-?>

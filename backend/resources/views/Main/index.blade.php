@@ -190,7 +190,7 @@
                 <div class="gallery-item col-span-1 row-span-2" style="--rotate-angle: -2deg; --sway-duration: 6s">
                     <div class="relative h-full overflow-hidden bg-gray-900 border-4 border-gray-200">
 
-                        <img src="assets/img/digitalart.png" alt="Digital Art"
+                        <img src="{{asset('assets/img/digitalart.png')}}" alt="Digital Art"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                         <div class="image-overlay"></div>
                         <div class="absolute bottom-6 left-6 text-white z-20">
@@ -203,7 +203,7 @@
                 </div>
                 <div class="gallery-item col-span-1" style="--rotate-angle: 3deg; --sway-duration: 7s">
                     <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
-                        <img src="assets/img/photography.png" alt="Photography"
+                        <img src="{{asset('assets/img/photography.png')}}" alt="Photography"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                         <div class="image-overlay"></div>
                         <div class="absolute bottom-4 left-4 text-white z-20">
@@ -215,7 +215,7 @@
                 </div>
                 <div class="gallery-item col-span-1" style="--rotate-angle: -1deg; --sway-duration: 5.5s">
                     <div class="relative overflow-hidden bg-gray-900 aspect-square border-4 border-gray-200">
-                        <img src="assets/img/ilustration.png" alt="Illustration"
+                        <img src="{{asset('assets/img/ilustration.png')}}" alt="Illustration"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                         <div class="image-overlay"></div>
                         <div class="absolute bottom-4 left-4 text-white z-20">
@@ -227,7 +227,7 @@
                 </div>
                 <div class="gallery-item col-span-2" style="--rotate-angle: 2deg; --sway-duration: 6.5s">
                     <div class="relative overflow-hidden bg-gray-900 aspect-[2/1] border-4 border-gray-200">
-                        <img src="assets/img/creativedesign.png" alt="Creative Design"
+                        <img src="{{asset('assets/img/creativedesign.png')}}" alt="Creative Design"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                         <div class="image-overlay"></div>
                         <div class="absolute bottom-4 left-4 text-white z-20">
@@ -366,7 +366,7 @@
                     title: "Photography: focus",
                     author: "Aolon",
                     views: "1200",
-                    image: "assets/img/photography2.png",
+                    image: "{{asset('assets/img/photography2.png')}}",
                     description: "Puisi tentang keindahan senja di tepi pantai, menggambarkan perasaan damai dan refleksi.",
                     rotateAngle: "-2deg",
                     ropeAngle: "-2deg",
@@ -379,7 +379,7 @@
                     title: "Desain: Web",
                     author: "Budi",
                     views: "800",
-                    image: "assets/img/design.png",
+                    image: "{{asset('assets/img/design.png')}}",
                     description: "Poster promosi dengan desain minimalis dan warna bold untuk acara seni lokal.",
                     rotateAngle: "3deg",
                     ropeAngle: "3deg",
@@ -392,7 +392,7 @@
                     title: "Design: UI/UX Mobile",
                     author: "Pandu",
                     views: "1500",
-                    image: "assets/img/uiux.png",
+                    image: "{{asset('assets/img/uiux.png')}}",
                     description: "Lagu indie dengan nuansa akustik yang menggambarkan perjalanan hidup.",
                     rotateAngle: "-1deg",
                     ropeAngle: "-1deg",
@@ -405,7 +405,7 @@
                     title: "Coding: Aplikasi",
                     author: "Dewi",
                     views: "900",
-                    image: "assets/img/coding.png",
+                    image: "{{asset('assets/img/coding.png')}}",
                     description: "Aplikasi Mobile dengan fitur modern.",
                     rotateAngle: "2deg",
                     ropeAngle: "2deg",
@@ -418,7 +418,7 @@
                     title: "Ilustrasi: Manusia",
                     author: "Sari",
                     views: "1100",
-                    image: "assets/img/ilustration.png",
+                    image: "{{asset('assets/img/ilustration.png')}}",
                     description: "Ilustrasi Manusia menggunakan teknik countur.",
                     rotateAngle: "-3deg",
                     ropeAngle: "-3deg",
@@ -431,7 +431,7 @@
                     title: "Photography: Potret",
                     author: "Joko",
                     views: "1300",
-                    image: "assets/img/photography3.png",
+                    image: "{{asset('assets/img/photography3.png')}}",
                     description: "Potret manusia dengan ekspresi emosional dalam cahaya alami.",
                     rotateAngle: "1deg",
                     ropeAngle: "1deg",
@@ -444,7 +444,7 @@
                     title: "UI/UX: Pengembangan Mobile App",
                     author: "Pandu",
                     views: "130JT",
-                    image: "assets/img/uiux2.png",
+                    image: "{{asset('assets/img/uiux2.png')}}",
                     description: "Pengembangan aplikasi berbasis mobile.",
                     rotateAngle: "1deg",
                     ropeAngle: "1deg",
@@ -457,7 +457,7 @@
                     title: "Coding: Laravel 12",
                     author: "Joko",
                     views: "1300",
-                    image: "assets/img/coding2.png",
+                    image: "{{asset('assets/img/coding2.png')}}",
                     description: "Belajar laravel 12.",
                     rotateAngle: "1deg",
                     ropeAngle: "1deg",
