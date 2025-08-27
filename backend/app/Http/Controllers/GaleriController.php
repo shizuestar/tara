@@ -29,7 +29,7 @@ class GaleriController extends Controller
 
     public function index()
     {
-        return view('galeri.index', ['projects' => $this->projects]);
+        return view('public.galeri.index', ['projects' => $this->projects]);
     }
 
     public function show($id)
@@ -39,7 +39,7 @@ class GaleriController extends Controller
         }
 
         $project = $this->projects[$id];
-        return view('galeri.show', compact('project'));
+        return view('public.galeri.show', compact('project'));
     }
     /**
      * Show the form for creating a new resource.

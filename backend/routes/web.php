@@ -12,7 +12,7 @@ use App\Http\Controllers\GaleriController;
 
 // Routes from "main"
 Route::get('/', function () {
-    return view('main.index');
+    return view('public.main.index');
 })->name('home');
 
 Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas');
@@ -33,7 +33,9 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
-Route::get('/blog', fn() => view('blog.index'))->name('blog');
+Route::get('/blog', fn() => view('public.blog.index'))->name('blog');
+
+Route::get('/test', fn() => view('example_admin'))->name('test');
 
 // After
 
