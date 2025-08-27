@@ -35,6 +35,14 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
 Route::get('/blog', fn() => view('blog.index'))->name('blog');
 
+// After
+
+
+
+
+
+
+
 // Commented routes from "panjoel"
 // Route::get('/login', fn() => view('auth.login'))->name('login');
 // Route::get('/register', fn() => view('auth.register'))->name('register');
