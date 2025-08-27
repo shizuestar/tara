@@ -14,9 +14,7 @@
 
     <main class="main-content">
         <x-admin-navbar />
-        <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut accusantium incidunt sunt nihil velit. Dolore debitis voluptatibus, vel iste vitae consequuntur nesciunt ipsa maxime adipisci sit sint, recusandae, similique facere?</h1>
         {{ $slot }}
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa dolore omnis dignissimos, minus atque ducimus aut doloribus optio sed maiores earum officia totam dicta reiciendis velit cupiditate sint mollitia veritatis?</p>
     </main>
 
     @stack('scripts')
