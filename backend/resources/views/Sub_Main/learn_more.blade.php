@@ -1,7 +1,7 @@
 <x-layout>
     <div id="particles-js"></div>
 
-    <!-- Hero Section -->
+
     <section class="relative pt-24 pb-12 bg-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-7xl font-bold text-black mb-6" style="font-family: 'Space Grotesk', sans-serif;">

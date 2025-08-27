@@ -23,16 +23,17 @@
                 <!-- Menu Navigasi -->
                 <div id="nav-menu"
                     class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
-                    <a href="/index.html"
+                    <a href="<?php echo e(route('home')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
-                    <a href="/galeri.html"
+                    <a href="<?php echo e(route('galeri.index')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
-                    <a href="/komunitas.html"
+                    <a href="<?php echo e(route('komunitas')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
-                    <a href="/proyek.html"
+                    <a href="<?php echo e(route('proyek')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
-                    <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
-                    <a href="/agenda.html"
+                    <a href="<?php echo e(route('blog')); ?>" 
+                        class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+                    <a href="<?php echo e(route('agenda')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
 
                     <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
