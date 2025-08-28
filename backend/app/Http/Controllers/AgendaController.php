@@ -8,14 +8,14 @@ class AgendaController extends Controller
 {
     public function index()
     {
-        return view('Agenda.index');
+        return view('public.agenda.index');
     }
 
     public function ShowAgendaNotFound() {
-        return view('Agenda.showNotFound');
+        return view('public.agenda.showNotFound');
     }
 
     public function ShowAgendaFound() {
-        return view('Agenda.showFound');
+        return view('public.agenda.showFound');
     }
 }

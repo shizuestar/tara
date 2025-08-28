@@ -12,7 +12,7 @@ class KomunitasController extends Controller
      */
     public function index()
     {
-        return view('komunitas.index');
+        return view('public.komunitas.index');
     }
 
     /**
@@ -38,7 +38,7 @@ class KomunitasController extends Controller
     {
         $getKomunitasById = Komunitas::findOrFail($id);
 
-        return view('komunitas.show', compact('getKomunitasById'));
+        return view('public.komunitas.show', compact('getKomunitasById'));
     }
 
     /**

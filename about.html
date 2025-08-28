@@ -1,41 +1,134 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tentang TARA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
+    rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
-    body { font-family: 'Outfit', sans-serif; background: #f9fafb; color: #111; }
-    .perspective { perspective: 1200px; }
-    .hover-3d { transform-style: preserve-3d; transition: transform 0.4s ease; cursor: pointer; }
-    .hover-3d .inner { transform: rotateY(0deg) rotateX(0deg); transition: transform 0.4s ease; }
-    .hover-3d:hover .inner { transform: rotateY(10deg) rotateX(5deg); }
-    .hero { will-change: transform; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #f9fafb;
+      color: #111;
+    }
+
+    .hero {
+      will-change: transform;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-hover:hover,
+    .card-hover:active {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
   </style>
 </head>
+
 <body class="relative overflow-x-hidden">
-  <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200">
-    <div class="text-2xl font-bold uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">
-      TARA<span class="text-yellow-400">●</span>
-    </div>
-    <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
-      <a href="/" class="hover:text-black transition">Beranda</a>
-      <a href="/about.html" class="font-semibold text-black">Tentang</a>
-      <a href="/galeri" class="hover:text-black transition">Galeri</a>
+  <header
+    class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40 fixed top-0 left-0 w-full">
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 backdrop-blur-md shadow-sm">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center gap-3">
+            <a href="#" class="text-3xl font-bold text-gray-900">TARA</a>
+            <div class="relative">
+              <span class="text-yellow-400 text-2xl">●</span>
+              <span class="absolute top-0 left-0 text-yellow-400 text-2xl animate-ping-slow">●</span>
+            </div>
+          </div>
+
+          <button aria-label="Buka Navigasi" id="burger-toggle" class="md:hidden focus:outline-none z-[60] relative">
+            <svg class="w-7 h-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- Menu Navigasi -->
+          <div id="nav-menu"
+            class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
+            <a href="/index.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
+            <a href="/galeri.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
+            <a href="/komunitas.html"
+              class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
+            <a href="/proyek.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
+            <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+            <a href="/agenda.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
+
+            <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
+              <a href="/login"
+                class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center">
+                Log In
+              </a>
+              <a href="/register"
+                class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center">
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   </header>
 
+  <script>
+    const burger = document.getElementById('burger-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    burger.addEventListener('click', () => {
+      navMenu.classList.toggle('hidden');
+    });
+
+    function toggleNotifications() {
+      const modal = document.getElementById('notification-modal');
+      const isOpen = modal.classList.contains('open');
+      modal.classList.toggle('open');
+      gsap.to(modal, {
+        x: isOpen ? '100%' : '0%',
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      if (!isOpen) {
+        renderNotifications();
+      }
+    }
+
+    // Set active navigation link
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const isDetailPage = window.location.search.includes('id=');
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const href = link.getAttribute('href').split('/').pop();
+      const isActive =
+        href === currentPath ||
+        (href === 'blog.html' && isDetailPage && currentPath === 'blog.html') ||
+        (href === 'komunitas.html' && isDetailPage && currentPath === 'komunitas.html') ||
+        (href === 'galeri.html' && isDetailPage && currentPath === 'galeri.html') ||
+        (href === 'agenda.html' && isDetailPage && currentPath === 'agenda.html');
+      if (isActive) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+
   <section class="relative text-center py-32 bg-white perspective overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-yellow-50 via-white to-pink-50 opacity-30 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-yellow-50 via-white to-pink-50 opacity-30 pointer-events-none">
+    </div>
     <div id="hero-text" class="hero max-w-4xl mx-auto px-4">
-      <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 inline-block" style="font-family: 'Space Grotesk', sans-serif;">
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 inline-block"
+        style="font-family: 'Space Grotesk', sans-serif;">
         Tentang TARA<span class="text-yellow-400 align-middle ml-1">●</span>
       </h1>
       <p class="mt-3 text-gray-600 text-md leading-relaxed">
@@ -48,34 +141,43 @@
   <hr class="border-t border-gray-200 mx-auto max-w-6xl" />
 
   <section id="stats" class="relative py-20 bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-yellow-100 via-transparent to-white opacity-40 pointer-events-none"></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-yellow-100 via-transparent to-white opacity-40 pointer-events-none">
+    </div>
     <div class="max-w-6xl mx-auto px-6 relative z-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
+        <div
+          class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
           <div class="flex justify-center mb-4">
-            <svg class="w-10 h-10 text-yellow-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M3 5h18M5 8h14M7 11h10M9 14h6M11 17h2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg class="w-10 h-10 text-yellow-400" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path d="M3 5h18M5 8h14M7 11h10M9 14h6M11 17h2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
           <div class="text-5xl font-bold text-yellow-400 mb-2" id="count1">0</div>
           <p class="text-gray-800 font-medium tracking-wide">Karya Dipamerkan</p>
           <div class="mt-2 w-12 h-1 mx-auto bg-yellow-300 rounded-full"></div>
         </div>
-        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
+        <div
+          class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
           <div class="flex justify-center mb-4">
-            <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M16 14a4 4 0 1 0-8 0m12 6v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path d="M16 14a4 4 0 1 0-8 0m12 6v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
           <div class="text-5xl font-bold text-yellow-500 mb-2" id="count2">0</div>
           <p class="text-gray-800 font-medium tracking-wide">Kontributor</p>
           <div class="mt-2 w-12 h-1 mx-auto bg-yellow-300 rounded-full"></div>
         </div>
-        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
+        <div
+          class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:scale-105 transition-transform duration-300 ease-out hover:shadow-xl">
           <div class="flex justify-center mb-4">
-            <svg class="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M8 7V3M16 7V3M4 11h16M4 19h16M4 15h16" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg class="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path d="M8 7V3M16 7V3M4 11h16M4 19h16M4 15h16" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
           <div class="text-5xl font-bold text-pink-500 mb-2" id="count3">0</div>
@@ -87,57 +189,67 @@
   </section>
 
   <section class="py-28 bg-gradient-to-br from-white via-yellow-50 to-white">
-      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div class="space-y-6 pl-4 md:pl-8">
-          <div class="inline-flex items-center gap-3 text-yellow-600 font-medium">
-            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span>Tujuan Kami</span>
-          </div>
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Visi Kami</h2>
-          <p class="text-lg text-gray-600 leading-relaxed">
-            Membangun ruang digital tempat setiap insan muda mengekspresikan jiwanya. Kami percaya pada karya yang jujur, berkelanjutan, dan terbuka untuk semua.
-          </p>
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6 pl-4 md:pl-8">
+        <div class="inline-flex items-center gap-3 text-yellow-600 font-medium">
+          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span>Tujuan Kami</span>
         </div>
-        <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200">
-          <img src="https://images.unsplash.com/photo-1701232664481-12a9b8ee5c32?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ilustrasi Visi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Visi Kami</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Membangun ruang digital tempat setiap insan muda mengekspresikan jiwanya. Kami percaya pada karya yang jujur,
+          berkelanjutan, dan terbuka untuk semua.
+        </p>
       </div>
+      <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200">
+        <img
+          src="https://images.unsplash.com/photo-1701232664481-12a9b8ee5c32?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Ilustrasi Visi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+      </div>
+    </div>
   </section>
 
   <section class="py-28 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
       <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200">
-        <img src="https://images.unsplash.com/photo-1752649937722-7d5118bccff3?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ilustrasi Misi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+        <img
+          src="https://images.unsplash.com/photo-1752649937722-7d5118bccff3?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Ilustrasi Misi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
       </div>
       <div class="space-y-6">
         <div class="inline-flex items-center gap-3 text-yellow-600 font-medium">
           <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.105 0-2 .895-2 2 0 1.105.895 2 2 2s2-.895 2-2-.895-2-2-2z" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 8c-1.105 0-2 .895-2 2 0 1.105.895 2 2 2s2-.895 2-2-.895-2-2-2z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 20v-6m0 0a4 4 0 100-8 4 4 0 000 8z" />
           </svg>
           <span>Misi Kami</span>
         </div>
         <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Mendorong Eksplorasi Visual</h3>
         <p class="text-lg text-gray-600 leading-relaxed">
-          TARA hadir sebagai panggung inklusif, tempat tiap suara muda mendapat ruang untuk tumbuh dan berbicara melalui seni.
+          TARA hadir sebagai panggung inklusif, tempat tiap suara muda mendapat ruang untuk tumbuh dan berbicara melalui
+          seni.
         </p>
         <ul class="space-y-3 text-gray-700 text-base">
           <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             Portofolio interaktif dan dapat diakses dari mana saja.
           </li>
           <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             Kurasi manusiawi, bukan algoritma tanpa rasa.
           </li>
           <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-green-500 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             Mendukung gaya unik dari tiap insan kreatif.
@@ -147,62 +259,193 @@
     </div>
   </section>
 
-<section class="py-28 bg-white border-t border-b">
+  <section class="py-28 bg-white border-t border-b">
     <div class="max-w-6xl mx-auto px-6 text-center space-y-6">
-        <h2 class="text-4xl font-bold">Tim di Balik TARA</h2>
-        <p class="max-w-2xl mx-auto text-gray-600">
-            Kami terdiri dari perancang, pengembang, kurator, dan seniman yang saling melengkapi untuk menciptakan galeri digital yang abadi dan manusiawi.
-        </p>
-        <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10 text-left">
-            <a href="profil_user.html?id=raka" class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
-                <img src="https://i.pravatar.cc/120?u=raka" alt="Raka Santosa" class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
-                <div class="text-sm font-semibold text-gray-800">Raka Santosa</div>
-                <div class="text-xs text-gray-500">Kurator Senior</div>
-            </a>
-            <a href="profil_user.html?id=nayla" class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
-                <img src="https://i.pravatar.cc/120?u=nayla" alt="Nayla Kamila" class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
-                <div class="text-sm font-semibold text-gray-800">Nayla Kamila</div>
-                <div class="text-xs text-gray-500">Desainer Visual</div>
-            </a>
-            <a href="profil_user.html?id=ardi" class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
-                <img src="https://i.pravatar.cc/120?u=ardi" alt="Ardi Mahendra" class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
-                <div class="text-sm font-semibold text-gray-800">Ardi Mahendra</div>
-                <div class="text-xs text-gray-500">Developer Web</div>
-            </a>
-            <a href="profil_user.html?id=zahra" class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
-                <img src="https://i.pravatar.cc/120?u=zahra" alt="Zahra Qadira" class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
-                <div class="text-sm font-semibold text-gray-800">Zahra Qadira</div>
-                <div class="text-xs text-gray-500">Konsultan Aksesibilitas</div>
-            </a>
-        </div>
-    </div>
-</section>
-
-
-  <section class="py-28 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-4">📍 Lokasi Kami</h2>
-      <p class="text-gray-600 mb-10">Beroperasi dari Jakarta—pusat budaya, desain, dan ide progresif Indonesia.</p>
-      <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-300 max-w-4xl mx-auto">
-        <iframe class="w-full h-96" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.8570749507057!2d110.94792197331255!3d-7.590530992424122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e654b99ab219bfd%3A0x4e63f4d5cebe448a!2sSMK%20Negeri%202%20Karanganyar!5e0!3m2!1sid!2sid!4v1752689175475!5m2!1sid!2sid" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <h2 class="text-4xl font-bold">Tim di Balik TARA</h2>
+      <p class="max-w-2xl mx-auto text-gray-600">
+        Kami terdiri dari perancang, pengembang, kurator, dan seniman yang saling melengkapi untuk menciptakan galeri
+        digital yang abadi dan manusiawi.
+      </p>
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10 text-left">
+        <a href="profil_user.html?id=raka"
+          class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
+          <img src="https://i.pravatar.cc/120?u=raka" alt="Raka Santosa"
+            class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
+          <div class="text-sm font-semibold text-gray-800">Raka Santosa</div>
+          <div class="text-xs text-gray-500">Kurator Senior</div>
+        </a>
+        <a href="profil_user.html?id=nayla"
+          class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
+          <img src="https://i.pravatar.cc/120?u=nayla" alt="Nayla Kamila"
+            class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
+          <div class="text-sm font-semibold text-gray-800">Nayla Kamila</div>
+          <div class="text-xs text-gray-500">Desainer Visual</div>
+        </a>
+        <a href="profil_user.html?id=ardi"
+          class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
+          <img src="https://i.pravatar.cc/120?u=ardi" alt="Ardi Mahendra"
+            class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
+          <div class="text-sm font-semibold text-gray-800">Ardi Mahendra</div>
+          <div class="text-xs text-gray-500">Developer Web</div>
+        </a>
+        <a href="profil_user.html?id=zahra"
+          class="bg-gray-50 p-6 rounded-xl border shadow hover:shadow-md transition-all text-center">
+          <img src="https://i.pravatar.cc/120?u=zahra" alt="Zahra Qadira"
+            class="w-20 h-20 rounded-full mx-auto mb-4 shadow" />
+          <div class="text-sm font-semibold text-gray-800">Zahra Qadira</div>
+          <div class="text-xs text-gray-500">Konsultan Aksesibilitas</div>
+        </a>
       </div>
     </div>
   </section>
 
-<section class="py-28 bg-white">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-semibold mb-2">Ingin Karyamu Dilihat Dunia?</h2>
-      <p class="text-gray-600">Kirimkan portofoliomu atau hubungi kami untuk kolaborasi lintas generasi.</p>
-      <button id="openModalBtn" class="mt-6 px-6 py-3 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-all shadow-sm">Hubungi Kami</button>
-    </div>
-  </div>
+  <section class="py-28 bg-gradient-to-br from-white via-gray-50 to-yellow-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-black">Inspirasi Kreatif untuk Anda</h2>
+        <p class="max-w-2xl mx-auto text-gray-700 mt-3">
+          Temukan ide-ide kreatif untuk memulai perjalanan seni digital Anda bersama TARA.
+          Dari workshop hingga proyek kolaboratif, kami siap menginspirasi!
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-  <!-- Modal -->
-  <div id="contactModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-50 transition-all duration-300">
-    <div class="bg-white rounded-2xl p-4 pt-0 max-w-md w-full mx-4 relative shadow-xl animate-[fadeInUp_0.3s_ease-out]">
-      <div class="flex justify-center mb-4">
-<!-- <lottie-player
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-2xl transition text-center">
+          <div class="flex justify-center mb-4">
+            <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-black mb-2">Workshop Kreatif</h3>
+          <p class="text-gray-700 text-sm">
+            Belajar desain, animasi, dan web dari para ahli. Tingkatkan skill dalam suasana seru.
+          </p>
+
+          <!-- Button animasi hitam -> putih -->
+          <a href="/workshop"
+            class="mt-4 inline-block relative px-6 py-3 font-semibold border border-black rounded-md overflow-hidden group">
+            <span class="relative z-10 text-white group-hover:text-black transition duration-500">
+              Daftar Sekarang
+            </span>
+            <span
+              class="absolute left-0 top-0 h-full w-full bg-black transition-all duration-700 ease-in-out group-hover:w-0"></span>
+          </a>
+        </div>
+
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-2xl transition text-center">
+          <div class="flex justify-center mb-4">
+            <svg class="w-10 h-10 text-yellow-400" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-black mb-2">Kolaborasi Komunitas</h3>
+          <p class="text-gray-700 text-sm">
+            Gabung dengan kreator lain, berbagi ide, dan bikin karya bersama yang keren.
+          </p>
+
+          <a href="/workshop"
+            class="mt-4 inline-block relative px-6 py-3 font-semibold border border-black rounded-md overflow-hidden group">
+            <span class="relative z-10 text-white group-hover:text-black transition duration-500">
+              Gabung Komunitas
+            </span>
+            <span
+              class="absolute left-0 top-0 h-full w-full bg-black transition-all duration-700 ease-in-out group-hover:w-0"></span>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover:shadow-2xl transition text-center">
+          <div class="flex justify-center mb-4">
+            <svg class="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-black mb-2">Submit Karya</h3>
+          <p class="text-gray-700 text-sm">
+            Pamerkan karya kamu di galeri digital TARA dan dapatkan eksposur lebih luas.
+          </p>
+
+          <a href="/workshop"
+            class="mt-4 inline-block relative px-6 py-3 font-semibold border border-black rounded-md overflow-hidden group">
+            <span class="relative z-10 text-white group-hover:text-black transition duration-500">
+              Submit Karya
+            </span>
+            <span
+              class="absolute left-0 top-0 h-full w-full bg-black transition-all duration-700 ease-in-out group-hover:w-0"></span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="py-28 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-300">
+        <iframe class="w-full h-96"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.8570749507057!2d110.94792197331255!3d-7.590530992424122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e654b99ab219bfd%3A0x4e63f4d5cebe448a!2sSMK%20Negeri%202%20Karanganyar!5e0!3m2!1sid!2sid!4v1752689175475!5m2!1sid!2sid"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="space-y-10 pb-5">
+        <h2 class="text-3xl font-bold">📍 Lokasi Kreativitas Kami</h2>
+        <p class="text-gray-600 leading-relaxed">
+          Berpijar dari Karanganyar jiwa seni dan inovasi Indonesia. Studio TARA berdiri di tengah denyut budaya,
+          tempat ide-ide muda bersemi dan teknologi menyatu dengan estetika untuk menciptakan masa depan seni digital
+          yang inklusif.
+        </p>
+        <ul class="space-y-10 pt-8 text-gray-700 text-base">
+          <li class="flex items-start gap-4">
+            <svg class="w-5 h-5 text-yellow-500 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Berada di pusat sekolah SMK di Karanganyar.
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-yellow-500 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Ruang yang dirancang untuk kolaborasi dan eksplorasi kreatif.
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-yellow-500 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Terhubung erat dengan komunitas kreatif lokal dan global.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-28 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-semibold mb-2">Masih belum yakinn?</h2>
+        <p class="text-gray-600">Tanya tanya duluu ajaaaa....</p>
+        <button id="openModalBtn"
+          class="mt-6 px-6 py-3 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-all shadow-sm">Hubungi
+          Kami</button>
+      </div>
+
+      <!-- Modal -->
+      <div id="contactModal"
+        class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-50 transition-all duration-300">
+        <div
+          class="bg-white rounded-2xl p-4 pt-0 max-w-md w-full mx-4 relative shadow-xl animate-[fadeInUp_0.3s_ease-out]">
+          <div class="flex justify-center mb-4">
+            <!-- <lottie-player
   src="https://assets5.lottiefiles.com/packages/lf20_cg3rwhxu.json"
   background="transparent"
   speed="1"
@@ -210,33 +453,39 @@
   loop
   autoplay>
 </lottie-player> -->
+          </div>
 
+          <h3 class="text-xl font-semibold text-center mb-4 font">Hubungi TARA</h3>
 
+          <form class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm text-gray-600 mb-1">Nama</label>
+              <input type="text" id="name"
+                class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50"
+                placeholder="Nama Anda..." required />
+            </div>
+            <div>
+              <label for="email" class="block text-sm text-gray-600 mb-1">Email</label>
+              <input type="email" id="email"
+                class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50"
+                placeholder="Email Anda..." required />
+            </div>
+            <div>
+              <label for="message" class="block text-sm text-gray-600 mb-1">Pesan</label>
+              <textarea id="message" rows="4"
+                class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50"
+                placeholder="Ceritakan ide Anda..." required></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="closeModalBtn"
+                class="px-4 py-2 bg-gray-100 text-gray-600 rounded-md text-sm hover:bg-gray-200 transition">Tutup</button>
+              <button type="submit"
+                class="px-4 py-2 bg-black text-white rounded-md text-sm hover:bg-gray-800 transition">Kirim</button>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <h3 class="text-xl font-semibold text-center mb-4 font">Hubungi TARA</h3>
-
-      <form class="space-y-4">
-        <div>
-          <label for="name" class="block text-sm text-gray-600 mb-1">Nama</label>
-          <input type="text" id="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50" placeholder="Nama Tuan..." required />
-        </div>
-        <div>
-          <label for="email" class="block text-sm text-gray-600 mb-1">Email</label>
-          <input type="email" id="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50" placeholder="Email Tuan..." required />
-        </div>
-        <div>
-          <label for="message" class="block text-sm text-gray-600 mb-1">Pesan</label>
-          <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-50" placeholder="Ceritakan ide Tuan..." required></textarea>
-        </div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" id="closeModalBtn" class="px-4 py-2 bg-gray-100 text-gray-600 rounded-md text-sm hover:bg-gray-200 transition">Tutup</button>
-          <button type="submit" class="px-4 py-2 bg-black text-white rounded-md text-sm hover:bg-gray-800 transition">Kirim</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+  </section>
 
   <footer class="bg-white border-t border-neutral-200 text-sm text-neutral-700">
     <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10">
@@ -244,24 +493,25 @@
         <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
           TARA<span class="text-yellow-400">●</span>
         </div>
-        <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan. Temukan inspirasi. Bangun impresi.</p>
+        <p class="text-neutral-500 mb-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.
+          Temukan inspirasi. Bangun impresi.</p>
         <div class="flex gap-4 mt-3 text-neutral-600 text-xl">
-  <a href="#" class="hover:text-black transition" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a href="#" class="hover:text-black transition" aria-label="Twitter">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a href="#" class="hover:text-black transition" aria-label="LinkedIn">
-    <i class="fab fa-linkedin"></i>
-  </a>
-  <a href="#" class="hover:text-black transition" aria-label="Dribbble">
-    <i class="fab fa-dribbble"></i>
-  </a>
-  <a href="#" class="hover:text-black transition" aria-label="Behance">
-    <i class="fab fa-behance"></i>
-  </a>
-</div>
+          <a href="#" class="hover:text-black transition" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Dribbble">
+            <i class="fab fa-dribbble"></i>
+          </a>
+          <a href="#" class="hover:text-black transition" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+          </a>
+        </div>
       </div>
       <div>
         <h3 class="font-semibold text-black mb-4">Navigasi</h3>
@@ -296,8 +546,10 @@
         <h3 class="font-semibold text-black mb-4">Newsletter</h3>
         <p class="text-neutral-500 mb-3">Dapatkan kurasi terbaik tiap pekan langsung ke kotak masuk Anda.</p>
         <div class="flex items-center gap-2">
-          <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
-          <button type="submit" class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-neutral-800 transition">Kirim</button>
+          <input type="email" placeholder="Email Tuan..."
+            class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" />
+          <button type="submit"
+            class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-neutral-800 transition">Kirim</button>
         </div>
       </div>
     </div>
@@ -326,10 +578,10 @@
             round: 1,
             easing: 'easeOutExpo',
             duration: 1800,
-            update: function(anim) {
+            update: function (anim) {
               document.getElementById('count1').innerText = formatNumber(Math.floor(anim.animations[0].currentValue), false);
             },
-            complete: function() {
+            complete: function () {
               document.getElementById('count1').innerText = formatNumber(200);
             }
           });
@@ -339,10 +591,10 @@
             round: 1,
             easing: 'easeOutExpo',
             duration: 1600,
-            update: function(anim) {
+            update: function (anim) {
               document.getElementById('count2').innerText = formatNumber(Math.floor(anim.animations[0].currentValue), false);
             },
-            complete: function() {
+            complete: function () {
               document.getElementById('count2').innerText = formatNumber(128);
             }
           });
@@ -352,10 +604,10 @@
             round: 1,
             easing: 'easeOutExpo',
             duration: 1400,
-            update: function(anim) {
+            update: function (anim) {
               document.getElementById('count3').innerText = formatNumber(Math.floor(anim.animations[0].currentValue), false);
             },
-            complete: function() {
+            complete: function () {
               document.getElementById('count3').innerText = formatNumber(5);
             }
           });
@@ -366,26 +618,27 @@
       else console.error("Section #stats not found");
     });
 
-   const openModalBtn = document.getElementById("openModalBtn");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const modal = document.getElementById("contactModal");
+    const openModalBtn = document.getElementById("openModalBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modal = document.getElementById("contactModal");
 
-  openModalBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-  });
+    openModalBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    });
 
-  closeModalBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  });
-
-  window.addEventListener("keydown", e => {
-    if (e.key === "Escape") {
+    closeModalBtn.addEventListener("click", () => {
       modal.classList.add("hidden");
       modal.classList.remove("flex");
-    }
-  });
+    });
+
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    });
   </script>
 </body>
+
 </html>
