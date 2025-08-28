@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'avatar' => null,
                 'bio' => 'Akun khusus kurator Brian',
-                'role' => 'kurator',
+                'role' => 'curator',
                 'status' => 'active',
                 'created_at' => now(),
                 'updated_at' => now(),
