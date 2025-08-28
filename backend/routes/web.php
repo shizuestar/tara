@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
@@ -13,7 +12,7 @@ use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\proyek\ProyekController;
 
 // For Authentication
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -49,6 +48,5 @@ Route::get('/test', fn() => view('example_admin'))->name('test');
 // For Admin
 
  Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
- 
  Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
 
