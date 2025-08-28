@@ -314,7 +314,7 @@
           <p class="text-center text-xs text-gray-500 mt-8">
             Belum punya akun?
             <a
-              href="/register.html"
+              href="{{ route('register') }}"
               id="register-link"
               class="text-gray-500 hover:text-gray-700 hover:underline transition"
               >Daftar</a
@@ -449,7 +449,7 @@
                 translateY: -5, // Reduced translation
                 rotateZ: Math.random() * 1 - 0.5, // Subtler rotation
                 duration: 500, // Slower duration
-                easing: "easeOutQuad", // Gentler easing
+                easing: "easeOutQuad",
               });
             });
 
@@ -459,8 +459,8 @@
                 scale: 1,
                 translateY: 0,
                 rotateZ: 0,
-                duration: 500, // Slower duration
-                easing: "easeOutQuad", // Gentler easing
+                duration: 500,
+                easing: "easeOutQuad",
               });
             });
 
@@ -522,8 +522,8 @@
                 taraContainer.style.display = "none";
                 leftSection.style.backdropFilter = "blur(20px)";
                 leftSection.style.background = "rgba(255, 255, 255, 0.25)";
-                rightSection.style.backdropFilter = "blur(20px)"; // Apply blur to right section
-                rightSection.style.background = "rgba(255, 255, 255, 0.25)"; // Match left section background
+                rightSection.style.backdropFilter = "blur(20px)";
+                rightSection.style.background = "rgba(255, 255, 255, 0.25)";
                 cardSection.style.opacity = 1;
                 startInfiniteScroll();
               },

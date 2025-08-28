@@ -26,7 +26,7 @@
             mouseY = e.clientY;
         });
 
-        const hoverElements = document.querySelectorAll('a, button, .hover-target'); // tambahkan kelas tambahan kalau perlu
+        const hoverElements = document.querySelectorAll('a, button, .hover-target'); 
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
                 // cursor.classList.add('hover');
@@ -62,61 +62,6 @@
             } else {
                 loadingScreen.classList.add("hidden");
                 console.log("Udah mampir, ga usah loading lagi, santai bro!");
-            }
-        });
-    </script>
-    <!-- Notification Modal -->
-    <div id="notification-modal" class="notification-modal">
-        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-        <div class="p-6">
-            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi
-            </h2>
-            <div class="flex gap-2 mb-4">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
-            </div>
-            <button id="mark-all-read"
-                class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai
-                Semua Dibaca</button>
-            <div id="notification-list" class="space-y-4"></div>
-        </div>
-    </div>
-
-    <script>
-        const burger = document.getElementById('burger-toggle');
-        const navMenu = document.getElementById('nav-menu');
-
-        burger.addEventListener('click', () => {
-            navMenu.classList.toggle('hidden');
-        });
-
-        function toggleNotifications() {
-            const modal = document.getElementById('notification-modal');
-            const isOpen = modal.classList.contains('open');
-            modal.classList.toggle('open');
-            gsap.to(modal, {
-                x: isOpen ? '100%' : '0%',
-                duration: 0.3,
-                ease: "power2.out"
-            });
-            if (!isOpen) {
-                renderNotifications();
-            }
-        }
-
-        // Set active navigation link
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        const isDetailPage = window.location.search.includes('id=');
-        document.querySelectorAll('.nav-link').forEach(link => {
-            const href = link.getAttribute('href').split('/').pop();
-            const isActive =
-                href === currentPath ||
-                (href === 'blog.html' && isDetailPage && currentPath === 'blog.html') ||
-                (href === 'komunitas.html' && isDetailPage && currentPath === 'komunitas.html') ||
-                (href === 'galeri.html' && isDetailPage && currentPath === 'galeri.html') ||
-                (href === 'agenda.html' && isDetailPage && currentPath === 'agenda.html');
-            if (isActive) {
-                link.classList.add('active');
             }
         });
     </script>

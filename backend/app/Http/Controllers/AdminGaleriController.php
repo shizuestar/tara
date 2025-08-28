@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\proyek;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Proyek;
 use Illuminate\Http\Request;
 
-class ProyekController extends Controller
+class AdminGaleriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('administrator.admin.galeri.index');
     }
 
     /**
@@ -35,7 +33,7 @@ class ProyekController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Proyek $proyek)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +41,7 @@ class ProyekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Proyek $proyek)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +49,7 @@ class ProyekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proyek $proyek)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +57,7 @@ class ProyekController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proyek $proyek)
+    public function destroy(string $id)
     {
         //
     }
