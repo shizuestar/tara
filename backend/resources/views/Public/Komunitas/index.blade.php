@@ -18,77 +18,119 @@
         </div>
     </div>
 
-    <!-- Komunitas Section -->
     <section class="relative pt-24 pb-12 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Left Sidebar -->
-                <aside class="left-sidebar lg:w-64">
-                    <h3 class="text-lg font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                        Navigasi
-                    </h3>
-                    <a href="/" class="flex items-center gap-2"><i class="fas fa-home"></i> Beranda</a>
-                    <a href="/galeri" class="flex items-center gap-2"><i class="fas fa-image"></i> Galeri</a>
-                    <a href="/event" class="flex items-center gap-2"><i class="fas fa-calendar"></i> Event</a>
-                    <a href="/tentang" class="flex items-center gap-2"><i class="fas fa-info-circle"></i> Tentang</a>
-                    <hr class="my-4 border-gray-200" />
-                    <h3 class="text-lg font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                        Kategori Komunitas
-                    </h3>
-                    <a href="#" class="flex items-center gap-2" onclick="filterByCategory('puisi')"><i class="fas fa-pen"></i> Puisi</a>
-                    <a href="#" class="flex items-center gap-2" onclick="filterByCategory('desain')"><i class="fas fa-paint-brush"></i> Desain</a>
-                    <a href="#" class="flex items-center gap-2" onclick="filterByCategory('musik')"><i class="fas fa-music"></i> Musik</a>
-                    <a href="#" class="flex items-center gap-2" onclick="filterByCategory('coding')"><i class="fas fa-code"></i> Coding</a>
-                </aside>
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Main Content -->
+                    <div class="flex-1">
+                        <!-- Notification Bar -->
+                        <div
+                            id="notification-bar"
+                            class="notification-bar"
+                            onclick="dismissNotification()">
+                            <p class="text-sm text-gray-700">
+                                Anda telah bergabung dengan Komunitas Puisi!
+                                <a
+                                    href="/forum?community=1"
+                                    class="text-black hover:text-yellow-400"
+                                    >Kunjungi Forum</a
+                                >
+                            </p>
+                        </div>
 
-                <!-- Main Content -->
-                <div class="flex-1">
-                    <!-- Notification Bar -->
-                    <div id="notification-bar" class="notification-bar" onclick="dismissNotification()">
-                        <p class="text-sm text-gray-700">
-                            Anda telah bergabung dengan Komunitas Puisi!
-                            <a href="/forum?community=1" class="text-black hover:text-yellow-400">Kunjungi Forum</a>
-                        </p>
+                        <!-- Filters and Search -->
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
+                            <div class="flex gap-2 overflow-x-auto">
+                                <button
+                                    class="filter-btn active"
+                                    data-filter="all">
+                                    Semua
+                                </button>
+                                <button class="filter-btn" data-filter="puisi">
+                                    Puisi
+                                </button>
+                                <button class="filter-btn" data-filter="desain">
+                                    Desain
+                                </button>
+                                <button class="filter-btn" data-filter="musik">
+                                    Musik
+                                </button>
+                                <button class="filter-btn" data-filter="coding">
+                                    Coding
+                                </button>
+                                <button
+                                    class="filter-btn"
+                                    data-filter="populer">
+                                    Populer
+                                </button>
+                                <button class="filter-btn" data-filter="baru">
+                                    Baru
+                                </button>
+                            </div>
+                            <div class="sm:ml-auto mt-3 sm:mt-0">
+                                <input
+                                    type="text"
+                                    id="community-search"
+                                    placeholder="Cari komunitas..."
+                                    class="px-4 py-2 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition w-full sm:w-64" />
+                            </div>
+                        </div>
+
+                        <!-- Community List -->
+                        <div id="community-list" class="space-y-6"></div>
                     </div>
 
-                    <!-- Filters and Search -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
-                        <div class="flex gap-2 overflow-x-auto">
-                            <button class="filter-btn active" data-filter="all">Semua</button>
-                            <button class="filter-btn" data-filter="puisi">Puisi</button>
-                            <button class="filter-btn" data-filter="desain">Desain</button>
-                            <button class="filter-btn" data-filter="musik">Musik</button>
-                            <button class="filter-btn" data-filter="coding">Coding</button>
-                            <button class="filter-btn" data-filter="populer">Populer</button>
-                            <button class="filter-btn" data-filter="baru">Baru</button>
-                        </div>
-                        <div class="sm:ml-auto mt-3 sm:mt-0">
-                            <input type="text" id="community-search" placeholder="Cari komunitas..." class="px-4 py-2 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition w-full sm:w-64" />
-                        </div>
-                    </div>
-
-                    <!-- Community List -->
-                    <div id="community-list" class="space-y-6"></div>
+                    <!-- Sidebar -->
+                    <aside class="sidebar md:w-80">
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Navigasi Komunitas
+                        </h3>
+                        <a
+                            href="/komunitas/buat"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-plus"></i> Buat Komunitas</a
+                        >
+                        <a
+                            href="/komunitas/saya"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-user-friends"></i> Komunitas
+                            Saya</a
+                        >
+                        <a
+                            href="/komunitas/populer"
+                            class="flex items-center gap-2"
+                            ><i class="fas fa-fire"></i> Komunitas Populer</a
+                        >
+                        <hr class="my-4 border-gray-200" />
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Komunitas Saya
+                        </h3>
+                        <div
+                            id="joined-communities"
+                            class="space-y-2 mb-6"></div>
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Rekomendasi Komunitas
+                        </h3>
+                        <div
+                            id="recommended-communities"
+                            class="space-y-2 mb-6"></div>
+                        <h3
+                            class="text-lg font-semibold text-black mb-4"
+                            style="font-family: 'Space Grotesk', sans-serif">
+                            Aktivitas Terbaru
+                        </h3>
+                        <div id="recent-activities" class="space-y-2"></div>
+                    </aside>
                 </div>
-
-                <!-- Right Sidebar -->
-                <aside class="right-sidebar lg:w-64">
-                    <h3 class="text-lg font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                        Komunitas Saya
-                    </h3>
-                    <div id="joined-communities" class="space-y-2 mb-6"></div>
-                    <h3 class="text-lg font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                        Rekomendasi Komunitas
-                    </h3>
-                    <div id="recommended-communities" class="space-y-2 mb-6"></div>
-                    <h3 class="text-lg font-semibold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                        Aktivitas Terbaru
-                    </h3>
-                    <div id="recent-activities" class="space-y-2"></div>
-                </aside>
             </div>
-        </div>
-    </section>
+        </section>
 
     @push('styles')
         <style>
@@ -308,7 +350,7 @@
                 color: #1f2937;
             }
 
-            .left-sidebar, .right-sidebar {
+            .sidebar {
                 background: #f9fafb;
                 border: 1px solid #e5e7eb;
                 border-radius: 12px;
@@ -413,22 +455,58 @@
                 color: #6b7280;
             }
 
-            @media (max-width: 1024px) {
-                .left-sidebar, .right-sidebar {
-                    max-width: none;
-                    margin-bottom: 1.5rem;
-                }
+            .sidebar-notification-container {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 0;
+            }
 
-                .notification-modal {
-                    width: 100%;
-                    max-width: 100%;
-                }
+            .dropdown-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                z-index: 50;
+                min-width: 150px;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu a {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: #374151;
+                font-size: 0.875rem;
+                font-weight: 500;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+
+            .dropdown-menu a:hover {
+                background: #f9fafb;
+                color: #facc15;
             }
 
             @media (max-width: 768px) {
                 .notification-modal {
                     width: 100%;
                     max-width: 100%;
+                }
+
+                .sidebar-notification-container {
+                    justify-content: flex-start;
+                }
+
+                .dropdown-menu {
+                    position: static;
+                    min-width: 100%;
+                    box-shadow: none;
                 }
 
                 .sidebar {
@@ -439,14 +517,15 @@
     @endpush
 
     @push('scripts')
-        <script>
+       <script>
             // Simulated Community Data
             const communities = [
                 {
                     id: 1,
                     name: "Komunitas Puisi",
                     category: "puisi",
-                    description: "Berbagi kata, menenun makna dalam puisi. Bergabunglah untuk mengeksplorasi keindahan bahasa dan emosi.",
+                    description:
+                        "Berbagi kata, menenun makna dalam puisi. Bergabunglah untuk mengeksplorasi keindahan bahasa dan emosi.",
                     members: 1200,
                     image: "https://picsum.photos/600/400?poetry",
                     badge: "populer",
@@ -456,7 +535,8 @@
                     id: 2,
                     name: "Komunitas Desain",
                     category: "desain",
-                    description: "Ciptakan visual yang memukau bersama desainer berbakat dari seluruh Indonesia.",
+                    description:
+                        "Ciptakan visual yang memukau bersama desainer berbakat dari seluruh Indonesia.",
                     members: 850,
                     image: "https://picsum.photos/600/400?design",
                     badge: "populer",
@@ -466,7 +546,8 @@
                     id: 3,
                     name: "Komunitas Musik",
                     category: "musik",
-                    description: "Melodi yang menginspirasi dari musisi muda. Diskusikan karya dan kolaborasi musik.",
+                    description:
+                        "Melodi yang menginspirasi dari musisi muda. Diskusikan karya dan kolaborasi musik.",
                     members: 600,
                     image: "https://picsum.photos/600/400?music",
                     badge: "baru",
@@ -476,7 +557,8 @@
                     id: 4,
                     name: "Komunitas Coding",
                     category: "coding",
-                    description: "Inovasi teknologi dari para developer. Berbagi kode dan proyek open-source.",
+                    description:
+                        "Inovasi teknologi dari para developer. Berbagi kode dan proyek open-source.",
                     members: 450,
                     image: "https://picsum.photos/600/400?coding",
                     badge: "baru",
@@ -486,7 +568,8 @@
                     id: 5,
                     name: "Penulis Kreatif",
                     category: "puisi",
-                    description: "Menulis cerita dan puisi yang menyentuh hati. Untuk penulis yang ingin berkembang.",
+                    description:
+                        "Menulis cerita dan puisi yang menyentuh hati. Untuk penulis yang ingin berkembang.",
                     members: 300,
                     image: "https://picsum.photos/600/400?writing",
                     badge: null,
@@ -496,7 +579,8 @@
                     id: 6,
                     name: "Desain UI/UX",
                     category: "desain",
-                    description: "Mendesain antarmuka pengguna modern dengan fokus pada pengalaman pengguna.",
+                    description:
+                        "Mendesain antarmuka pengguna modern dengan fokus pada pengalaman pengguna.",
                     members: 700,
                     image: "https://picsum.photos/600/400?uiux",
                     badge: "populer",
@@ -575,47 +659,75 @@
                 if (searchQuery) {
                     filteredCommunities = filteredCommunities.filter(
                         (c) =>
-                            c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            c.description.toLowerCase().includes(searchQuery.toLowerCase())
+                            c.name
+                                .toLowerCase()
+                                .includes(searchQuery.toLowerCase()) ||
+                            c.description
+                                .toLowerCase()
+                                .includes(searchQuery.toLowerCase())
                     );
                 }
 
                 if (filteredCommunities.length === 0) {
                     communityList.innerHTML = `
-                        <div class="text-center text-gray-600">
-                            <p class="text-lg">Tidak ada komunitas ditemukan.</p>
-                            <a href="/komunitas" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-yellow-400 hover:text-black transition">Lihat Semua Komunitas</a>
-                        </div>
-                    `;
+                    <div class="text-center text-gray-600">
+                        <p class="text-lg">Tidak ada komunitas ditemukan.</p>
+                        <a href="/komunitas" class="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-yellow-400 hover:text-black transition">Lihat Semua Komunitas</a>
+                    </div>
+                `;
                     return;
                 }
 
                 filteredCommunities.forEach((community) => {
                     communityList.innerHTML += `
-                        <a href="/detail_komunitas.html?community=${community.id}" class="block">
-                            <div class="community-card hover-3d">
-                                <div class="inner">
-                                    <img src="${community.image}" alt="${community.name}" />
-                                    <div class="community-card-content">
-                                        <div class="flex items-center gap-2">
-                                            <h3>${community.name}</h3>
-                                            ${community.badge
-                                                ? `<span class="badge badge-${community.badge}">${community.badge.charAt(0).toUpperCase() + community.badge.slice(1)}</span>`
+                    <a href="/detail_komunitas.html?community=${
+                        community.id
+                    }" class="block">
+                        <div class="community-card hover-3d">
+                            <div class="inner">
+                                <img src="${community.image}" alt="${
+                        community.name
+                    }" />
+                                <div class="community-card-content">
+                                    <div class="flex items-center gap-2">
+                                        <h3>${community.name}</h3>
+                                        ${
+                                            community.badge
+                                                ? `<span class="badge badge-${
+                                                      community.badge
+                                                  }">${
+                                                      community.badge
+                                                          .charAt(0)
+                                                          .toUpperCase() +
+                                                      community.badge.slice(1)
+                                                  }</span>`
                                                 : ""
+                                        }
+                                    </div>
+                                    <p>${community.description}</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-500"><i class="fas fa-user-friends mr-1"></i>${
+                                            community.members
+                                        } Anggota</span>
+                                        <button class="join-btn ${
+                                            community.joined
+                                                ? "bg-gray-300 text-white-700"
+                                                : ""
+                                        }" onclick="event.preventDefault(); toggleJoin(${
+                        community.id
+                    }, this)">
+                                            ${
+                                                community.joined
+                                                    ? "Bergabung"
+                                                    : "Gabung"
                                             }
-                                        </div>
-                                        <p>${community.description}</p>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-sm text-gray-500"><i class="fas fa-user-friends mr-1"></i>${community.members} Anggota</span>
-                                            <button class="join-btn ${community.joined ? "bg-gray-300 text-gray-700" : ""}" onclick="event.preventDefault(); toggleJoin(${community.id}, this)">
-                                                ${community.joined ? "Bergabung" : "Gabung"}
-                                            </button>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                    `;
+                        </div>
+                    </a>
+                `;
                 });
 
                 gsap.from(".community-card", {
@@ -627,9 +739,10 @@
                 });
             }
 
-            // Render Joined Communities in Right Sidebar
+            // Render Joined Communities in Sidebar
             function renderJoinedCommunities() {
-                const joinedCommunities = document.getElementById("joined-communities");
+                const joinedCommunities =
+                    document.getElementById("joined-communities");
                 const joined = communities.filter((c) => c.joined);
                 joinedCommunities.innerHTML =
                     joined.length === 0
@@ -637,10 +750,10 @@
                         : joined
                               .map(
                                   (c) => `
-                        <a href="/forum?community=${c.id}" class="flex items-center gap-2 text-sm">
-                            <i class="fas fa-circle text-xs text-black"></i> ${c.name}
-                        </a>
-                    `
+                    <a href="/forum?community=${c.id}" class="flex items-center gap-2 text-sm">
+                        <i class="fas fa-circle text-xs text-black"></i> ${c.name}
+                    </a>
+                `
                               )
                               .join("");
 
@@ -654,24 +767,28 @@
                 });
             }
 
-            // Render Recommended Communities in Right Sidebar
+            // Render Recommended Communities in Sidebar
             function renderRecommendedCommunities() {
-                const recommendedCommunities = document.getElementById("recommended-communities");
-                const popular = communities.filter((c) => c.badge === "populer").slice(0, 3);
+                const recommendedCommunities = document.getElementById(
+                    "recommended-communities"
+                );
+                const popular = communities
+                    .filter((c) => c.badge === "populer")
+                    .slice(0, 3);
                 recommendedCommunities.innerHTML =
                     popular.length === 0
                         ? '<p class="text-sm text-gray-500">Tidak ada rekomendasi saat ini.</p>'
                         : popular
                               .map(
                                   (c) => `
-                        <div class="recommended-community cursor-pointer" onclick="filterByCategory('${c.category}')">
-                            <img src="${c.image}" alt="${c.name}" />
-                            <div>
-                                <p class="text-sm font-medium text-gray-700">${c.name}</p>
-                                <p class="text-xs text-gray-500">${c.members} Anggota</p>
-                            </div>
+                    <div class="recommended-community cursor-pointer" onclick="filterByCategory('${c.category}')">
+                        <img src="${c.image}" alt="${c.name}" />
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">${c.name}</p>
+                            <p class="text-xs text-gray-500">${c.members} Anggota</p>
                         </div>
-                    `
+                    </div>
+                `
                               )
                               .join("");
 
@@ -685,20 +802,21 @@
                 });
             }
 
-            // Render Recent Activities in Right Sidebar
+            // Render Recent Activities in Sidebar
             function renderRecentActivities() {
-                const recentActivitiesDiv = document.getElementById("recent-activities");
+                const recentActivitiesDiv =
+                    document.getElementById("recent-activities");
                 recentActivitiesDiv.innerHTML =
                     recentActivities.length === 0
                         ? '<p class="text-sm text-gray-500">Tidak ada aktivitas terbaru.</p>'
                         : recentActivities
                               .map(
                                   (a) => `
-                        <div class="recent-activity cursor-pointer" onclick="viewActivity(${a.id})">
-                            <p class="text-sm text-gray-700">${a.text}</p>
-                            <p class="text-xs text-gray-500">${a.time}</p>
-                        </div>
-                    `
+                    <div class="recent-activity cursor-pointer" onclick="viewActivity(${a.id})">
+                        <p class="text-sm text-gray-700">${a.text}</p>
+                        <p class="text-xs text-gray-500">${a.time}</p>
+                    </div>
+                `
                               )
                               .join("");
 
@@ -714,32 +832,40 @@
 
             // Render Notifications in Modal
             function renderNotifications(filter = "all") {
-                const notificationList = document.getElementById("notification-list");
+                const notificationList =
+                    document.getElementById("notification-list");
                 notificationList.innerHTML = "";
 
                 let filteredNotifications =
-                    filter === "all" ? notifications : notifications.filter((n) => !n.read);
+                    filter === "all"
+                        ? notifications
+                        : notifications.filter((n) => !n.read);
 
                 if (filteredNotifications.length === 0) {
                     notificationList.innerHTML = `
-                        <div class="text-center text-gray-600">
-                            <p class="text-sm">Tidak ada notifikasi ${filter === "all" ? "" : "belum dibaca"}.</p>
-                        </div>
-                    `;
+                    <div class="text-center text-gray-600">
+                        <p class="text-sm">Tidak ada notifikasi ${
+                            filter === "all" ? "" : "belum dibaca"
+                        }.</p>
+                    </div>
+                `;
                     return;
                 }
 
                 filteredNotifications.forEach((notification) => {
                     notificationList.innerHTML += `
-                        <div class="notification-card ${notification.read ? "" : "unread"}" onclick="viewNotification(${notification.id})">
-                            <p>${notification.text}</p>
-                            <p class="time">${notification.time}</p>
-                        </div>
-                    `;
+                    <div class="notification-card ${
+                        notification.read ? "" : "unread"
+                    }" onclick="viewNotification(${notification.id})">
+                        <p>${notification.text}</p>
+                        <p class="time">${notification.time}</p>
+                    </div>
+                `;
                 });
 
                 const unreadCount = notifications.filter((n) => !n.read).length;
-                document.getElementById("unread-count").textContent = unreadCount;
+                document.getElementById("unread-count").textContent =
+                    unreadCount;
 
                 gsap.from(".notification-card", {
                     opacity: 0,
@@ -769,7 +895,9 @@
             function markAllAsRead() {
                 notifications.forEach((n) => (n.read = true));
                 renderNotifications(
-                    document.querySelector("#notification-modal .filter-btn.active")?.dataset.filter || "all"
+                    document.querySelector(
+                        "#notification-modal .filter-btn.active"
+                    )?.dataset.filter || "all"
                 );
                 anime({
                     targets: "#mark-all-read",
@@ -783,10 +911,14 @@
 
             // View Notification
             function viewNotification(notificationId) {
-                const notification = notifications.find((n) => n.id === notificationId);
+                const notification = notifications.find(
+                    (n) => n.id === notificationId
+                );
                 notification.read = true;
                 renderNotifications(
-                    document.querySelector("#notification-modal .filter-btn.active")?.dataset.filter || "all"
+                    document.querySelector(
+                        "#notification-modal .filter-btn.active"
+                    )?.dataset.filter || "all"
                 );
                 alert(`Viewing notification ${notificationId} (placeholder).`);
             }
@@ -810,10 +942,12 @@
                     easing: "easeOutQuad",
                 });
 
-                const notificationBar = document.getElementById("notification-bar");
-                notificationBar.querySelector("p").textContent = community.joined
-                    ? `Anda telah bergabung dengan ${community.name}!`
-                    : `Anda telah keluar dari ${community.name}.`;
+                const notificationBar =
+                    document.getElementById("notification-bar");
+                notificationBar.querySelector("p").textContent =
+                    community.joined
+                        ? `Anda telah bergabung dengan ${community.name}!`
+                        : `Anda telah keluar dari ${community.name}.`;
                 notificationBar.classList.remove("hidden");
                 gsap.from(notificationBar, {
                     opacity: 0,
@@ -831,7 +965,9 @@
                         read: false,
                     });
                     renderNotifications(
-                        document.querySelector("#notification-modal .filter-btn.active")?.dataset.filter || "all"
+                        document.querySelector(
+                            "#notification-modal .filter-btn.active"
+                        )?.dataset.filter || "all"
                     );
                 }
 
@@ -841,7 +977,8 @@
 
             // Dismiss Notification Bar
             function dismissNotification() {
-                const notificationBar = document.getElementById("notification-bar");
+                const notificationBar =
+                    document.getElementById("notification-bar");
                 gsap.to(notificationBar, {
                     opacity: 0,
                     y: -20,
@@ -851,11 +988,15 @@
                 });
             }
 
-            // Filter by Category from Sidebars or Filters
+            // Filter by Category from Recommended Communities or Navbar
             function filterByCategory(category) {
-                const filterButtons = document.querySelectorAll(".filter-btn:not(#notification-modal .filter-btn)");
+                const filterButtons = document.querySelectorAll(
+                    ".filter-btn:not(#notification-modal .filter-btn)"
+                );
                 filterButtons.forEach((f) => f.classList.remove("active"));
-                const targetButton = Array.from(filterButtons).find((btn) => btn.dataset.filter === category);
+                const targetButton = Array.from(filterButtons).find(
+                    (btn) => btn.dataset.filter === category
+                );
                 if (targetButton) {
                     targetButton.classList.add("active");
                     anime({
@@ -867,7 +1008,10 @@
                         easing: "easeOutQuad",
                     });
                 }
-                renderCommunities(category, document.getElementById("community-search").value);
+                renderCommunities(
+                    category,
+                    document.getElementById("community-search").value
+                );
             }
 
             // View Activity
@@ -881,43 +1025,60 @@
             renderRecommendedCommunities();
             renderRecentActivities();
 
-            // Filter Functionality for Community Filters
-            const filterButtons = document.querySelectorAll(".filter-btn:not(#notification-modal .filter-btn)");
-            filterButtons.forEach((btn) => {
-                btn.addEventListener("click", () => {
-                    const isActive = btn.classList.contains("active");
-                    if (isActive) {
-                        btn.classList.remove("active");
-                        anime({
-                            targets: btn,
-                            scale: [1.1, 1],
-                            backgroundColor: ["#111827", "#f3f4f6"],
-                            color: ["#ffffff", "#374151"],
-                            duration: 300,
-                            easing: "easeOutQuad",
-                        });
-                        renderCommunities(null, document.getElementById("community-search").value);
-                    } else {
-                        filterButtons.forEach((f) => f.classList.remove("active"));
-                        btn.classList.add("active");
-                        anime({
-                            targets: btn,
-                            scale: [1, 1.1, 1],
-                            backgroundColor: ["#f3f4f6", "#111827"],
-                            color: ["#374151", "#ffffff"],
-                            duration: 300,
-                            easing: "easeOutQuad",
-                        });
-                        renderCommunities(btn.dataset.filter, document.getElementById("community-search").value);
-                    }
-                });
-            });
+             const filterButtons = document.querySelectorAll(
+      ".filter-btn:not(#notification-modal .filter-btn)"
+    );
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const isActive = btn.classList.contains("active");
+
+        if (isActive) {
+          btn.classList.remove("active");
+
+          anime({
+            targets: btn,
+            scale: [1.1, 1],
+            backgroundColor: ["#111827", "#f3f4f6"],
+            color: ["#ffffff", "#374151"],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
+
+          renderCommunities(
+            null,
+            document.getElementById("community-search").value
+          );
+        } else {
+          filterButtons.forEach((f) => f.classList.remove("active"));
+          btn.classList.add("active");
+
+          anime({
+            targets: btn,
+            scale: [1, 1.1, 1],
+            backgroundColor: ["#f3f4f6", "#111827"],
+            color: ["#374151", "#ffffff"],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
+
+          renderCommunities(
+            btn.dataset.filter,
+            document.getElementById("community-search").value
+          );
+        }
+      });
+    });
 
             // Filter Functionality for Notifications
-            const notificationFilterButtons = document.querySelectorAll("#notification-modal .filter-btn");
+            const notificationFilterButtons = document.querySelectorAll(
+                "#notification-modal .filter-btn"
+            );
             notificationFilterButtons.forEach((btn) => {
                 btn.addEventListener("click", () => {
-                    notificationFilterButtons.forEach((f) => f.classList.remove("active"));
+                    notificationFilterButtons.forEach((f) =>
+                        f.classList.remove("active")
+                    );
                     btn.classList.add("active");
                     renderNotifications(btn.dataset.filter);
                     anime({
@@ -932,14 +1093,20 @@
             });
 
             // Mark All as Read Button
-            document.getElementById("mark-all-read").addEventListener("click", markAllAsRead);
+            document
+                .getElementById("mark-all-read")
+                .addEventListener("click", markAllAsRead);
 
             // Search Functionality
-            document.getElementById("community-search").addEventListener("input", (e) => {
-                const activeFilter =
-                    document.querySelector(".filter-btn:not(#notification-modal .filter-btn).active")?.dataset.filter || "all";
-                renderCommunities(activeFilter, e.target.value);
-            });
+            document
+                .getElementById("community-search")
+                .addEventListener("input", (e) => {
+                    const activeFilter =
+                        document.querySelector(
+                            ".filter-btn:not(#notification-modal .filter-btn).active"
+                        )?.dataset.filter || "all";
+                    renderCommunities(activeFilter, e.target.value);
+                });
 
             // GSAP Animations
             gsap.registerPlugin(ScrollTrigger);
@@ -952,26 +1119,37 @@
                 delay: 0.2,
             });
 
-            gsap.from(".left-sidebar", {
-                opacity: 0,
-                x: -50,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: ".left-sidebar",
-                    start: "top 80%",
-                },
-            });
-
-            gsap.from(".right-sidebar", {
+            gsap.from(".sidebar", {
                 opacity: 0,
                 x: 50,
                 duration: 1,
                 ease: "power3.out",
                 scrollTrigger: {
-                    trigger: ".right-sidebar",
+                    trigger: ".sidebar",
                     start: "top 80%",
                 },
+            });
+
+            // Animate Dropdown Menu
+            const dropdown = document.querySelector(".dropdown");
+            const dropdownMenu = document.querySelector(".dropdown-menu");
+            dropdown.addEventListener("mouseenter", () => {
+                gsap.to(dropdownMenu, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                    onStart: () => (dropdownMenu.style.display = "block"),
+                });
+            });
+            dropdown.addEventListener("mouseleave", () => {
+                gsap.to(dropdownMenu, {
+                    opacity: 0,
+                    y: 10,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => (dropdownMenu.style.display = "none"),
+                });
             });
 
             // Particles.js Initialization

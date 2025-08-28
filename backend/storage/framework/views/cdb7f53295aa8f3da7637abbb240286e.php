@@ -20,11 +20,12 @@
                     </svg>
                 </button>
 
-                <!-- Menu Navigasi -->
                 <div id="nav-menu"
                     class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
-                    <a href="<?php echo e(route('home')); ?>"
-                        class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
+                   <a href="<?php echo e(route('dashboard')); ?>"
+                        class="nav-link block text-gray-700 font-medium py-2 <?php echo e(request()->is('/') ? 'text-black' : 'hover:text-black'); ?>">
+                        Beranda
+                    </a>
                     <a href="<?php echo e(route('galeri')); ?>"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
                     <a href="<?php echo e(route('komunitas')); ?>"

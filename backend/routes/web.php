@@ -1,19 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ForumController;
+
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
-use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\AdminGaleriController;
+use App\Http\Controllers\AdminProyekController;
+use App\Http\Controllers\AuthController;
 
-// Routes from "main"
-Route::get('/', function () {
-    return view('public.main.index');
-})->name('home');
+// For Authentication
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+
+// For Public
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas');
 Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
@@ -37,14 +45,8 @@ Route::get('/blog', fn() => view('public.blog.index'))->name('blog');
 
 Route::get('/test', fn() => view('example_admin'))->name('test');
 
-// After
+// For Admin
 
-
-
-
-
-
-
-// Commented routes from "panjoel"
-// Route::get('/login', fn() => view('auth.login'))->name('login');
-// Route::get('/register', fn() => view('auth.register'))->name('register');
+ Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
+ 
+ Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
