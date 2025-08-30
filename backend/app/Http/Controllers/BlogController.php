@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\blog;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
@@ -13,7 +13,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        return view('public.blog.index');
     }
 
     /**

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->text('bio')->nullable();
-            $table->enum('role', ['admin', 'kurator', 'member'])->default('member');
+            $table->enum('role', ['admin', 'curator', 'member'])->default('member');
             $table->enum('status', ['active', 'inactive', 'banned'])->default('active');
             $table->timestamps();
         });
