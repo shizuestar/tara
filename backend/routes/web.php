@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminKomunitasController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AgendaController;
@@ -49,6 +50,9 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
 Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('admin.galeri.show');
 
-
 Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
+
+ Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
+ Route::get('/admin/komunitas/{id}', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
+ Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
 

@@ -21,6 +21,7 @@
     <main class="flex-1 ml-0 md:ml-64 transition-all duration-300">
         <x-admin-navbar />
 
+
         <div class="p-6 ml-3 pt-0 mt-3 bg-gray-100 min-h-[calc(100vh)] w-[100%]">
             {{ $slot }}
         </div>
