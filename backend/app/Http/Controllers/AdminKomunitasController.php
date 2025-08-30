@@ -33,9 +33,9 @@ class AdminKomunitasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        return view('administrator.admin.komunitas.detail');
+        return view('administrator.admin.komunitas.show');
     }
 
     /**

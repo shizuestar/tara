@@ -53,6 +53,7 @@ Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('ad
 Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
 
 Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
-Route::get('/admin/komunitas/{id}', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
+Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.show');
 Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
+Route::get('/admin/blog/1', [AdminBlogController::class , 'show'])->name('admin.blog.show');
 
