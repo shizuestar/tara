@@ -63,92 +63,91 @@
             </div>
         </div>
 
-        <!-- Community List Section -->
         <div class="bg-white rounded-lg p-5 border border-gray-200">
             <div class="flex justify-between items-center gap-4 mb-5">
                 <h2 class="text-lg font-semibold text-gray-900">Daftar Komunitas</h2>
-                <div class="text-sm text-gray-600">Menampilkan 5 dari 20 komunitas</div>
+                <div class="text-[12px] text-gray-600">Menampilkan 5 dari 20 komunitas</div>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr class="bg-gray-50">
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Nama Komunitas</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Deskripsi Singkat</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Status</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Jumlah Anggota</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Kategori</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600 w-24">Aksi</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600">Nama Komunitas</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600">Deskripsi Singkat</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600">Status</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600">Jumlah Anggota</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600">Kategori</th>
+                            <th class="p-3 text-left text-[12px] font-semibold text-gray-600 w-24">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 text-sm font-medium text-gray-900">Fotografi Enthusiast</td>
-                            <td class="p-3 text-sm text-gray-600">Komunitas pecinta fotografi di Bali</td>
+                            <td class="p-3 text-[12px] font-medium text-gray-900">Fotografi Enthusiast</td>
+                            <td class="p-3 text-[12px] text-gray-600">Komunitas pecinta fotografi di Bali</td>
                             <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Aktif</span></td>
-                            <td class="p-3 text-sm text-gray-900">150</td>
-                            <td class="p-3 text-sm text-gray-900">Fotografi</td>
+                            <td class="p-3 text-[12px] text-gray-900">150</td>
+                            <td class="p-3 text-[12px] text-gray-900">Fotografi</td>
                             <td class="p-3">
                                 <div class="flex gap-2">
-                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Fotografi Enthusiast"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Fotografi Enthusiast"><i class="fas fa-edit"></i></a>
-                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Fotografi Enthusiast')" aria-label="Hapus Fotografi Enthusiast"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px]" aria-label="Lihat Fotografi Enthusiast"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-[12px]" aria-label="Edit Fotografi Enthusiast"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]" onclick="showDeleteModal('Fotografi Enthusiast')" aria-label="Hapus Fotografi Enthusiast"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 text-sm font-medium text-gray-900">Desain Grafis Indonesia</td>
-                            <td class="p-3 text-sm text-gray-600">Tempat berbagi tips desain grafis</td>
+                            <td class="p-3 text-[12px] font-medium text-gray-900">Desain Grafis Indonesia</td>
+                            <td class="p-3 text-[12px] text-gray-600">Tempat berbagi tips desain grafis</td>
                             <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Aktif</span></td>
-                            <td class="p-3 text-sm text-gray-900">200</td>
-                            <td class="p-3 text-sm text-gray-900">Desain</td>
+                            <td class="p-3 text-[12px] text-gray-900">200</td>
+                            <td class="p-3 text-[12px] text-gray-900">Desain</td>
                             <td class="p-3">
                                 <div class="flex gap-2">
-                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Desain Grafis Indonesia"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Desain Grafis Indonesia"><i class="fas fa-edit"></i></a>
-                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Desain Grafis Indonesia')" aria-label="Hapus Desain Grafis Indonesia"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px]" aria-label="Lihat Desain Grafis Indonesia"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-[12px]" aria-label="Edit Desain Grafis Indonesia"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]" onclick="showDeleteModal('Desain Grafis Indonesia')" aria-label="Hapus Desain Grafis Indonesia"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 text-sm font-medium text-gray-900">Ilustrator Muda</td>
-                            <td class="p-3 text-sm text-gray-600">Komunitas ilustrator pemula</td>
+                            <td class="p-3 text-[12px] font-medium text-gray-900">Ilustrator Muda</td>
+                            <td class="p-3 text-[12px] text-gray-600">Komunitas ilustrator pemula</td>
                             <td class="p-3"><span class="px-2 py-1 rounded-full bg-red-100 text-red-600 text-xs">Tidak Aktif</span></td>
-                            <td class="p-3 text-sm text-gray-900">80</td>
-                            <td class="p-3 text-sm text-gray-900">Ilustrasi</td>
+                            <td class="p-3 text-[12px] text-gray-900">80</td>
+                            <td class="p-3 text-[12px] text-gray-900">Ilustrasi</td>
                             <td class="p-3">
                                 <div class="flex gap-2">
-                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Ilustrator Muda"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Ilustrator Muda"><i class="fas fa-edit"></i></a>
-                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Ilustrator Muda')" aria-label="Hapus Ilustrator Muda"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px]" aria-label="Lihat Ilustrator Muda"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-[12px]" aria-label="Edit Ilustrator Muda"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]" onclick="showDeleteModal('Ilustrator Muda')" aria-label="Hapus Ilustrator Muda"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 text-sm font-medium text-gray-900">Koder Komunitas</td>
-                            <td class="p-3 text-sm text-gray-600">Belajar coding bersama</td>
+                            <td class="p-3 text-[12px] font-medium text-gray-900">Koder Komunitas</td>
+                            <td class="p-3 text-[12px] text-gray-600">Belajar coding bersama</td>
                             <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Aktif</span></td>
-                            <td class="p-3 text-sm text-gray-900">120</td>
-                            <td class="p-3 text-sm text-gray-900">Koding</td>
+                            <td class="p-3 text-[12px] text-gray-900">120</td>
+                            <td class="p-3 text-[12px] text-gray-900">Koding</td>
                             <td class="p-3">
                                 <div class="flex gap-2">
-                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Koder Komunitas"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Koder Komunitas"><i class="fas fa-edit"></i></a>
-                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Koder Komunitas')" aria-label="Hapus Koder Komunitas"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px]" aria-label="Lihat Koder Komunitas"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-[12px]" aria-label="Edit Koder Komunitas"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]" onclick="showDeleteModal('Koder Komunitas')" aria-label="Hapus Koder Komunitas"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 text-sm font-medium text-gray-900">Artist United</td>
-                            <td class="p-3 text-sm text-gray-600">Seniman bersatu</td>
+                            <td class="p-3 text-[12px] font-medium text-gray-900">Artist United</td>
+                            <td class="p-3 text-[12px] text-gray-600">Seniman bersatu</td>
                             <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Aktif</span></td>
-                            <td class="p-3 text-sm text-gray-900">300</td>
-                            <td class="p-3 text-sm text-gray-900">Desain, Ilustrasi</td>
+                            <td class="p-3 text-[12px] text-gray-900">300</td>
+                            <td class="p-3 text-[12px] text-gray-900">Desain, Ilustrasi</td>
                             <td class="p-3">
                                 <div class="flex gap-2">
-                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Artist United"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Artist United"><i class="fas fa-edit"></i></a>
-                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Artist United')" aria-label="Hapus Artist United"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px]" aria-label="Lihat Artist United"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-[12px]" aria-label="Edit Artist United"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]" onclick="showDeleteModal('Artist United')" aria-label="Hapus Artist United"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -156,13 +155,13 @@
                 </table>
             </div>
             <div class="flex justify-center mt-5 gap-2">
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Previous page"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-yellow-400 text-gray-900 font-medium border border-yellow-400 text-sm" aria-label="Page 1">1</a>
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 2">2</a>
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 3">3</a>
-                <span class="flex items-center px-3 text-gray-600 text-sm">...</span>
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 5">5</a>
-                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Next page"><i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-[12px]" aria-label="Previous page"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-yellow-400 text-gray-900 font-medium border border-yellow-400 text-[12px]" aria-label="Page 1">1</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-[12px]" aria-label="Page 2">2</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-[12px]" aria-label="Page 3">3</a>
+                <span class="flex items-center px-3 text-gray-600 text-[12px]">...</span>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-[12px]" aria-label="Page 5">5</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-[12px]" aria-label="Next page"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
 
