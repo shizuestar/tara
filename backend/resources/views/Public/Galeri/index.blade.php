@@ -1,8 +1,5 @@
 <x-layout>
 
-
-
-
     <div id="lottie-bg" class="fixed inset-0 -z-10 opacity-10 pointer-events-none"></div>
     <!-- Notification Modal -->
     <div id="notification-modal" class="notification-modal">

@@ -46,6 +46,9 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 
 // For Admin
 
- Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
- Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
+Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
+Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('admin.galeri.show');
+
+
+Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
 
