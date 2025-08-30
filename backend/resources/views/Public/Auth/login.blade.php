@@ -35,16 +35,22 @@
       }
 
       .right-section {
-        width: 430px;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(20px);
-        border-left: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 0 1px;
+      width: 430px; /* default untuk 14 inch */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0 1px;
+    }
+
+    @media screen and (min-width: 1600px) {
+      .right-section {
+        width: 600px;
       }
+    }
 
       #three-canvas {
         position: absolute;
@@ -246,7 +252,7 @@
               ><span class="text-yellow-400">●</span>
             </div>
           </div>
-          <form action="/sudah_login/index.html" method="GET" class="space-y-5">
+          <form action="{{ route('login') }}" method="GET" class="space-y-5">
             <input
               type="email"
               placeholder="Email"
@@ -568,7 +574,7 @@
           duration: 600,
           easing: "easeInOutQuad",
           complete: () => {
-            window.location.href = "/register.html";
+            window.location.href = "/register";
           },
         });
       });

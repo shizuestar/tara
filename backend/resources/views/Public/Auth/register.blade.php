@@ -264,7 +264,7 @@
                         Daftar ke <span class="text-black">TARA</span><span class="text-yellow-400">●</span>
                     </div>
                 </div>
-                <form action="/login.html" method="POST" class="space-y-5">
+                <form action="{{ route('register') }}" method="POST" class="space-y-5">
                     <input type="text" placeholder="Nama Lengkap"
                         class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" />
                     <input type="email" placeholder="Email"
@@ -522,7 +522,7 @@
                 duration: 600,
                 easing: "easeInOutQuad",
                 complete: () => {
-                    window.location.href = "/login.html";
+                    window.location.href = "/login";
                 },
             });
         });
