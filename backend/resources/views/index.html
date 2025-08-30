@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARA Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8f8f8;
+            --text-color: #1a1a1a;
+            --accent-color: #FFD700;
+            --border-color: #e0e0e0;
+            --hover-color: #f5f5f5;
+            --sidebar-width: 280px;
+            --navbar-height: 70px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary-bg);
+            border-right: 1px solid var(--border-color);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-bg);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #FFC000 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .nav-section {
+            margin-bottom: 25px;
+        }
+        
+        .nav-title {
+            padding: 0 25px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            border-left: 4px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: var(--hover-color);
+            border-left-color: var(--accent-color);
+        }
+        
+        .nav-item.active {
+            background: rgba(255, 215, 0, 0.1);
+            border-left-color: var(--accent-color);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: var(--accent-color);
+        }
+        
+        .nav-text {
+            flex-grow: 1;
+        }
+        
+        .nav-badge {
+            background: var(--accent-color);
+            color: var(--text-color);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background: var(--secondary-bg);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #FFC000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .user-info {
+            flex-grow: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navbar Styling */
+        .navbar {
+            height: var(--navbar-height);
+            background: var(--primary-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 5px 10px;
+            width: 100%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-action {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-action:hover {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 30px;
+            flex-grow: 1;
+            overflow-y: auto;
+            background: var(--secondary-bg);
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .page-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+        
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--primary-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .stat-info {
+            flex-grow: 1;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .content-section {
+            background: var(--primary-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: var(--text-color);
+            color: var(--primary-bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #333;
+        }
+        
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        .btn-primary:hover {
+            background: #e6c300;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        tr:hover {
+            background: var(--secondary-bg);
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-active {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+        }
+        
+        .status-pending {
+            background: rgba(255, 165, 2, 0.2);
+            color: #ffa502;
+        }
+        
+        .status-draft {
+            background: rgba(116, 125, 140, 0.2);
+            color: #747d8c;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: var(--primary-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-footer {
+            padding: 15px 20px;
+            background: var(--secondary-bg);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">T</div>
+                <div class="logo-text">TARA</div>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-title">Menu Utama</div>
+                <a href="#" class="nav-item active">
+                    <div class="nav-icon"><i class="fas fa-th-large"></i></div>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-users"></i></div>
+                    <span class="nav-text">Komunitas</span>
+                    <span class="nav-badge">50</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-folder"></i></div>
+                    <span class="nav-text">Proyek</span>
+                    <span class="nav-badge">100</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-blog"></i></div>
+                    <span class="nav-text">Blog</span>
+                    <span class="nav-badge">200</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Konten</div>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <span class="nav-text">Agenda</span>
+                    <span class="nav-badge">30</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-user-friends"></i></div>
+                    <span class="nav-text">User</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-photo-video"></i></div>
+                    <span class="nav-text">Media</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Pengaturan</div>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                    <span class="nav-text">Pengaturan Sistem</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-shield-alt"></i></div>
+                    <span class="nav-text">Hak Akses</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"><i class="fas fa-bell"></i></div>
+                    <span class="nav-text">Notifikasi</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">A</div>
+                <div class="user-info">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">Super Admin</div>
+                </div>
+                <a href="#" class="nav-action">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="navbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cari sesuatu...">
+            </div>
+            
+            <div class="navbar-actions">
+                <a href="#" class="nav-action">
+                    <i class="far fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <a href="#" class="nav-action">
+                    <i class="far fa-envelope"></i>
+                    <span class="notification-badge">7</span>
+                </a>
+                <a href="#" class="nav-action">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </div>
+        </header>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Simulate loading time for stats cards
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(value => {
+                const originalText = value.textContent;
+                value.textContent = '0';
+                
+                let counter = 0;
+                const target = parseInt(originalText.replace(/,/g, ''));
+                const increment = target / 30;
+                
+                const updateCounter = () => {
+                    if (counter < target) {
+                        counter += increment;
+                        value.textContent = Math.round(counter).toLocaleString();
+                        setTimeout(updateCounter, 50);
+                    } else {
+                        value.textContent = originalText;
+                    }
+                };
+                
+                setTimeout(updateCounter, 500);
+            });
+        });
+    </script>
+</body>
+</html>

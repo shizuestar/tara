@@ -245,7 +245,9 @@ class BelongsToMany extends Relation
     protected function addWhereConstraints()
     {
         $this->query->where(
-            $this->getQualifiedForeignPivotKeyName(), '=', $this->parent->{$this->parentKey}
+            $this->getQualifiedForeignPivotKeyName(),
+            '=',
+            $this->parent->{$this->parentKey}
         );
 
         return $this;
@@ -286,7 +288,8 @@ class BelongsToMany extends Relation
 
             if (isset($dictionary[$key])) {
                 $model->setRelation(
-                    $relation, $this->related->newCollection($dictionary[$key])
+                    $relation,
+                    $this->related->newCollection($dictionary[$key])
                 );
             }
         }
@@ -637,7 +640,7 @@ class BelongsToMany extends Relation
                 $instance = $this->createOrFirst($attributes, $values, $joining, $touch);
             } else {
                 try {
-                    $this->getQuery()->withSavepointIfNeeded(fn () => $this->attach($instance, $joining, $touch));
+                    $this->getQuery()->withSavepointIfNeeded(fn() => $this->attach($instance, $joining, $touch));
                 } catch (UniqueConstraintViolationException) {
                     // Nothing to do, the model was already attached...
                 }
@@ -659,14 +662,14 @@ class BelongsToMany extends Relation
     public function createOrFirst(array $attributes = [], array $values = [], array $joining = [], $touch = true)
     {
         try {
-            return $this->getQuery()->withSavePointIfNeeded(fn () => $this->create(array_merge($attributes, $values), $joining, $touch));
+            return $this->getQuery()->withSavePointIfNeeded(fn() => $this->create(array_merge($attributes, $values), $joining, $touch));
         } catch (UniqueConstraintViolationException $e) {
             // ...
         }
 
         try {
             return tap($this->related->where($attributes)->first() ?? throw $e, function ($instance) use ($joining, $touch) {
-                $this->getQuery()->withSavepointIfNeeded(fn () => $this->attach($instance, $joining, $touch));
+                $this->getQuery()->withSavepointIfNeeded(fn() => $this->attach($instance, $joining, $touch));
             });
         } catch (UniqueConstraintViolationException $e) {
             return (clone $this)->useWritePdo()->where($attributes)->first() ?? throw $e;
@@ -711,7 +714,9 @@ class BelongsToMany extends Relation
         }
 
         return $this->where(
-            $this->getRelated()->getQualifiedKeyName(), '=', $this->parseId($id)
+            $this->getRelated()->getQualifiedKeyName(),
+            '=',
+            $this->parseId($id)
         )->first($columns);
     }
 
@@ -728,7 +733,9 @@ class BelongsToMany extends Relation
     public function findSole($id, $columns = ['*'])
     {
         return $this->where(
-            $this->getRelated()->getQualifiedKeyName(), '=', $this->parseId($id)
+            $this->getRelated()->getQualifiedKeyName(),
+            '=',
+            $this->parseId($id)
         )->sole($columns);
     }
 
@@ -952,7 +959,7 @@ class BelongsToMany extends Relation
             $this->relatedPivotKey,
             ...$this->pivotColumns,
         ]))
-            ->map(fn ($column) => $this->qualifyPivotColumn($column).' as pivot_'.$column)
+            ->map(fn($column) => $this->qualifyPivotColumn($column) . ' as pivot_' . $column)
             ->unique()
             ->all();
     }
@@ -1452,7 +1459,7 @@ class BelongsToMany extends Relation
     {
         $query->select($columns);
 
-        $query->from($this->related->getTable().' as '.$hash = $this->getRelationCountHash());
+        $query->from($this->related->getTable() . ' as ' . $hash = $this->getRelationCountHash());
 
         $this->related->setTable($hash);
 
@@ -1488,7 +1495,7 @@ class BelongsToMany extends Relation
             $grammar = $this->query->getQuery()->getGrammar();
 
             if ($grammar instanceof MySqlGrammar && $grammar->useLegacyGroupLimit($this->query->getQuery())) {
-                $column = 'pivot_'.last(explode('.', $column));
+                $column = 'pivot_' . last(explode('.', $column));
             }
 
             $this->query->groupLimit($value, $column);
@@ -1678,6 +1685,6 @@ class BelongsToMany extends Relation
 
         return str_contains($column, '.')
             ? $column
-            : $this->table.'.'.$column;
+            : $this->table . '.' . $column;
     }
 }

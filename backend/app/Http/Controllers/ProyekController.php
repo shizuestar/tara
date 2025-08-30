@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Proyek;
 use Illuminate\Http\Request;
 
 class ProyekController extends Controller
@@ -11,7 +13,7 @@ class ProyekController extends Controller
      */
     public function index()
     {
-        return view('proyek.index');
+        return view('public.proyek.index');
     }
 
     /**
@@ -33,7 +35,7 @@ class ProyekController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Proyek $proyek)
     {
         //
     }
@@ -41,7 +43,7 @@ class ProyekController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Proyek $proyek)
     {
         //
     }
@@ -49,7 +51,7 @@ class ProyekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Proyek $proyek)
     {
         //
     }
@@ -57,7 +59,7 @@ class ProyekController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Proyek $proyek)
     {
         //
     }

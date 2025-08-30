@@ -45,21 +45,25 @@
             }
         }
 
-        // Set active navigation link
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const currentPath = window.location.pathname.split('/').pop() || 'index.blade.php';
         const isDetailPage = window.location.search.includes('id=');
+
         document.querySelectorAll('.nav-link').forEach(link => {
             const href = link.getAttribute('href').split('/').pop();
-            const isActive =
-                href === currentPath ||
-                (href === 'blog.html' && isDetailPage && currentPath === 'blog.html') ||
-                (href === 'komunitas.html' && isDetailPage && currentPath === 'komunitas.html') ||
-                (href === 'galeri.html' && isDetailPage && currentPath === 'galeri.html') ||
-                (href === 'agenda.html' && isDetailPage && currentPath === 'agenda.html');
+
+            const detailPages = ['blog.html', 'komunitas.html', 'galeri.html', 'agenda.html'];
+
+            const isActive = 
+                href === currentPath || 
+                (detailPages.includes(href) && isDetailPage && currentPath === href);
+
             if (isActive) {
                 link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
+
     </script>
 </body>
 
