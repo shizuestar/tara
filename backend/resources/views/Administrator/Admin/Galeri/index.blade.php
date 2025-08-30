@@ -1,25 +1,27 @@
 <x-admin-layout>
-    <div class="content-background">
-        <div class="page-header">
-            <h1 class="page-title">
-                <i class="fas fa-photo-video"></i>
+    <div class="bg-white rounded-lg p-6 shadow-sm">
+        <!-- Page Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h1 class="text-xl font-semibold flex items-center gap-2 text-gray-900">
+                <i class="fas fa-photo-video text-yellow-400 text-lg"></i>
                 Galeri Karya
             </h1>
-            <a href="#" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                Tambah Karya Baru
+            <a href="#" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
+                <i class="fas fa-plus text-sm"></i>
+                Tambah Karya
             </a>
         </div>
 
-        <div class="filter-section">
-            <h3 class="filter-title">
-                <i class="fas fa-filter"></i>
-                Filter Karya
+        <!-- Filter Section -->
+        <div class="bg-white rounded-lg p-5 mb-8 border border-gray-200">
+            <h3 class="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900">
+                <i class="fas fa-filter text-yellow-400 text-base"></i>
+                Filter
             </h3>
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Kategori</label>
-                    <select class="filter-select">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                    <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-1.5">Kategori</label>
+                    <select id="category-filter" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                         <option value="">Semua Kategori</option>
                         <option value="photography">Fotografi</option>
                         <option value="design">Desain</option>
@@ -27,1037 +29,390 @@
                         <option value="coding">Koding</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Status Kurasi</label>
-                    <select class="filter-select">
+                <div>
+                    <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+                    <select id="status-filter" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                         <option value="">Semua Status</option>
                         <option value="published">Tayang</option>
-                        <option value="pending">Menunggu Review</option>
+                        <option value="pending">Menunggu</option>
                         <option value="rejected">Ditolak</option>
                         <option value="draft">Draft</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Kreator</label>
-                    <select class="filter-select">
+                <div>
+                    <label for="creator-filter" class="block text-sm font-medium text-gray-700 mb-1.5">Kreator</label>
+                    <select id="creator-filter" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                         <option value="">Semua Kreator</option>
                         <option value="1">Dewi Santika</option>
                         <option value="2">Aldi Pratama</option>
                         <option value="3">Rina Andriani</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Kata Kunci</label>
-                    <input type="text" class="filter-input" placeholder="Cari judul atau deskripsi...">
+                <div>
+                    <label for="keyword-filter" class="block text-sm font-medium text-gray-700 mb-1.5">Kata Kunci</label>
+                    <input id="keyword-filter" type="text" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari...">
                 </div>
             </div>
-            <div class="filter-actions">
-                <button class="btn">
-                    <i class="fas fa-filter"></i>
-                    Terapkan Filter
+            <div class="flex gap-3 mt-4">
+                <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
+                    <i class="fas fa-filter text-sm"></i>
+                    Terapkan
                 </button>
-                <button class="btn">
-                    <i class="fas fa-redo"></i>
+                <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
+                    <i class="fas fa-redo text-sm"></i>
                     Reset
                 </button>
             </div>
         </div>
 
-        <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Daftar Karya</h2>
-                <div class="results-count">Menampilkan 12 dari 85 hasil</div>
+        <!-- Artwork List Section -->
+        <div class="bg-white rounded-lg p-5 border border-gray-200">
+            <div class="flex justify-between items-center gap-4 mb-5">
+                <h2 class="text-lg font-semibold text-gray-900">Daftar Karya</h2>
+                <div class="text-sm text-gray-600">12 dari 85</div>
             </div>
-            <div class="table-container">
-                <table>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
                     <thead>
-                        <tr>
-                            <th width="80">Thumbnail</th>
-                            <th>Judul Karya</th>
-                            <th>Kategori</th>
-                            <th>Kreator</th>
-                            <th>Tanggal Upload</th>
-                            <th>Status</th>
-                            <th width="120">Aksi</th>
+                        <tr class="bg-gray-50">
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600 w-12">Thumbnail</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Judul</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Kategori</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Kreator</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Tanggal</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Status</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-600 w-24">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-image"></i></div></td>
-                            <td>
-                                <div class="table-title">Sunset at Bali Beach</div>
-                                <div class="table-meta">1920x1080px · 2.4MB</div>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3"><div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm"><i class="fas fa-image"></i></div></td>
+                            <td class="p-3">
+                                <div class="text-sm font-medium text-gray-900">Sunset at Bali Beach</div>
+                                <div class="text-xs text-gray-600">1920x1080px · 2.4MB</div>
                             </td>
-                            <td>Fotografi</td>
-                            <td>Dewi Santika</td>
-                            <td>12 Agu 2023</td>
-                            <td><span class="status-badge status-published">Tayang</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Sunset at Bali Beach')"><i class="fas fa-trash"></i></a>
+                            <td class="p-3 text-sm text-gray-900">Fotografi</td>
+                            <td class="p-3 text-sm text-gray-900">Dewi Santika</td>
+                            <td class="p-3 text-sm text-gray-900">12 Agu 2023</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Tayang</span></td>
+                            <td class="p-3">
+                                <div class="flex gap-2">
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Sunset at Bali Beach"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Sunset at Bali Beach"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Sunset at Bali Beach')" aria-label="Hapus Sunset at Bali Beach"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-paint-brush"></i></div></td>
-                            <td>
-                                <div class="table-title">Digital Illustration Series</div>
-                                <div class="table-meta">2500x2500px · 5.1MB</div>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3"><div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm"><i class="fas fa-paint-brush"></i></div></td>
+                            <td class="p-3">
+                                <div class="text-sm font-medium text-gray-900">Digital Illustration Series</div>
+                                <div class="text-xs text-gray-600">2500x2500px · 5.1MB</div>
                             </td>
-                            <td>Ilustrasi</td>
-                            <td>Aldi Pratama</td>
-                            <td>10 Agu 2023</td>
-                            <td><span class="status-badge status-published">Tayang</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Digital Illustration Series')"><i class="fas fa-trash"></i></a>
+                            <td class="p-3 text-sm text-gray-900">Ilustrasi</td>
+                            <td class="p-3 text-sm text-gray-900">Aldi Pratama</td>
+                            <td class="p-3 text-sm text-gray-900">10 Agu 2023</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs">Tayang</span></td>
+                            <td class="p-3">
+                                <div class="flex gap-2">
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Digital Illustration Series"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Digital Illustration Series"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Digital Illustration Series')" aria-label="Hapus Digital Illustration Series"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-code"></i></div></td>
-                            <td>
-                                <div class="table-title">E-commerce Dashboard</div>
-                                <div class="table-meta">Laravel · Vue.js</div>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3"><div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm"><i class="fas fa-code"></i></div></td>
+                            <td class="p-3">
+                                <div class="text-sm font-medium text-gray-900">E-commerce Dashboard</div>
+                                <div class="text-xs text-gray-600">Laravel · Vue.js</div>
                             </td>
-                            <td>Koding</td>
-                            <td>Rina Andriani</td>
-                            <td>08 Agu 2023</td>
-                            <td><span class="status-badge status-pending">Menunggu Review</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('E-commerce Dashboard')"><i class="fas fa-trash"></i></a>
+                            <td class="p-3 text-sm text-gray-900">Koding</td>
+                            <td class="p-3 text-sm text-gray-900">Rina Andriani</td>
+                            <td class="p-3 text-sm text-gray-900">08 Agu 2023</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded-full bg-yellow-100 text-yellow-600 text-xs">Menunggu</span></td>
+                            <td class="p-3">
+                                <div class="flex gap-2">
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat E-commerce Dashboard"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit E-commerce Dashboard"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('E-commerce Dashboard')" aria-label="Hapus E-commerce Dashboard"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-palette"></i></div></td>
-                            <td>
-                                <div class="table-title">Brand Identity Package</div>
-                                <div class="table-meta">Logo · Guideline</div>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3"><div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm"><i class="fas fa-palette"></i></div></td>
+                            <td class="p-3">
+                                <div class="text-sm font-medium text-gray-900">Brand Identity Package</div>
+                                <div class="text-xs text-gray-600">Logo · Guideline</div>
                             </td>
-                            <td>Desain</td>
-                            <td>Budi Santoso</td>
-                            <td>05 Agu 2023</td>
-                            <td><span class="status-badge status-rejected">Ditolak</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Brand Identity Package')"><i class="fas fa-trash"></i></a>
+                            <td class="p-3 text-sm text-gray-900">Desain</td>
+                            <td class="p-3 text-sm text-gray-900">Budi Santoso</td>
+                            <td class="p-3 text-sm text-gray-900">05 Agu 2023</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded-full bg-red-100 text-red-600 text-xs">Ditolak</span></td>
+                            <td class="p-3">
+                                <div class="flex gap-2">
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Brand Identity Package"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Brand Identity Package"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Brand Identity Package')" aria-label="Hapus Brand Identity Package"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-image"></i></div></td>
-                            <td>
-                                <div class="table-title">Urban Architecture</div>
-                                <div class="table-meta">3000x2000px · 4.8MB</div>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3"><div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm"><i class="fas fa-image"></i></div></td>
+                            <td class="p-3">
+                                <div class="text-sm font-medium text-gray-900">Urban Architecture</div>
+                                <div class="text-xs text-gray-600">3000x2000px · 4.8MB</div>
                             </td>
-                            <td>Fotografi</td>
-                            <td>Sari Indah</td>
-                            <td>03 Agu 2023</td>
-                            <td><span class="status-badge status-draft">Draft</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Urban Architecture')"><i class="fas fa-trash"></i></a>
+                            <td class="p-3 text-sm text-gray-900">Fotografi</td>
+                            <td class="p-3 text-sm text-gray-900">Sari Indah</td>
+                            <td class="p-3 text-sm text-gray-900">03 Agu 2023</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs">Draft</span></td>
+                            <td class="p-3">
+                                <div class="flex gap-2">
+                                    <a href="#" class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-sm" aria-label="Lihat Urban Architecture"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="w-8 h-8 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-sm" aria-label="Edit Urban Architecture"><i class="fas fa-edit"></i></a>
+                                    <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-sm" onclick="showDeleteModal('Urban Architecture')" aria-label="Hapus Urban Architecture"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="pagination">
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="pagination-item active">1</a>
-                <a href="#" class="pagination-item">2</a>
-                <a href="#" class="pagination-item">3</a>
-                <span class="pagination-ellipsis">...</span>
-                <a href="#" class="pagination-item">8</a>
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+            <div class="flex justify-center mt-5 gap-2">
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Previous page"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-yellow-400 text-gray-900 font-medium border border-yellow-400 text-sm" aria-label="Page 1">1</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 2">2</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 3">3</a>
+                <span class="flex items-center px-3 text-gray-600 text-sm">...</span>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Page 8">8</a>
+                <a href="#" class="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-gray-200 text-gray-900 hover:bg-yellow-400 hover:border-yellow-400 text-sm" aria-label="Next page"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
 
-        <!-- <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Daftar Kategori</h2>
-                <button class="btn btn-primary" onclick="showCategoryModal('create')">
-                    <i class="fas fa-plus"></i>
-                    Tambah Kategori
-                </button>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama Kategori</th>
-                            <th>Deskripsi</th>
-                            <th width="120">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Fotografi</td>
-                            <td>Gambar-gambar yang diambil dengan kamera profesional.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Fotografi', 'Gambar-gambar yang diambil dengan kamera profesional.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Fotografi')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Desain</td>
-                            <td>Karya desain grafis seperti logo dan poster.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Desain', 'Karya desain grafis seperti logo dan poster.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Desain')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ilustrasi</td>
-                            <td>Gambar ilustrasi digital atau tradisional.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Ilustrasi', 'Gambar ilustrasi digital atau tradisional.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Ilustrasi')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Koding</td>
-                            <td>Proyek pengembangan perangkat lunak atau aplikasi.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Koding', 'Proyek pengembangan perangkat lunak atau aplikasi.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Koding')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="pagination-item active">1</a>
-                <a href="#" class="pagination-item">2</a>
-                <a href="#" class="pagination-item">3</a>
-                <span class="pagination-ellipsis">...</span>
-                <a href="#" class="pagination-item">5</a>
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div> -->
-    </div>
-
-    <div class="modal" id="deleteModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Hapus Karya</h3>
-                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-text">Apakah Anda yakin ingin menghapus karya <strong id="deleteArtworkName"></strong>?</p>
-                <p class="modal-text">Tindakan ini tidak dapat dibatalkan dan semua data terkait karya ini akan dihapus permanen.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeDeleteModal()">Batal</button>
-                <button class="btn btn-primary">Hapus Karya</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="categoryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="categoryModalTitle">Tambah Kategori</h3>
-                <button class="modal-close" onclick="closeCategoryModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="filter-group">
-                    <label class="filter-label">Nama Kategori</label>
-                    <input type="text" id="categoryName" class="filter-input" placeholder="Masukkan nama kategori...">
+        <!-- Delete Artwork Modal -->
+        <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="deleteModal">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
+                    <h3 class="text-lg font-semibold text-gray-900">Hapus Karya</h3>
+                    <button class="text-xl text-gray-600 hover:text-gray-900" onclick="closeDeleteModal()" aria-label="Tutup modal">&times;</button>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Deskripsi</label>
-                    <textarea id="categoryDescription" class="filter-input" rows="4" placeholder="Masukkan deskripsi kategori..."></textarea>
+                <div class="mb-4 text-sm text-gray-700">
+                    <p class="mb-2">Apakah Anda yakin ingin menghapus karya <strong id="deleteArtworkName"></strong>?</p>
+                    <p>Tindakan ini tidak dapat dibatalkan dan semua data terkait karya ini akan dihapus permanen.</p>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md" onclick="closeDeleteModal()">Batal</button>
+                    <button class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-md" onclick="deleteArtwork()">Hapus Karya</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeCategoryModal()">Batal</button>
-                <button class="btn btn-primary" onclick="saveCategory()">Simpan</button>
+        </div>
+
+        <!-- Category Modal -->
+        <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="categoryModal">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
+                    <h3 class="text-lg font-semibold text-gray-900" id="categoryModalTitle">Tambah Kategori</h3>
+                    <button class="text-xl text-gray-600 hover:text-gray-900" onclick="closeCategoryModal()" aria-label="Tutup modal">&times;</button>
+                </div>
+                <div class="mb-4">
+                    <div class="mb-4">
+                        <label for="categoryName" class="block text-sm font-medium text-gray-700 mb-1.5">Nama</label>
+                        <input type="text" id="categoryName" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Nama kategori..." required>
+                    </div>
+                    <div>
+                        <label for="categoryDescription" class="block text-sm font-medium text-gray-700 mb-1.5">Deskripsi</label>
+                        <textarea id="categoryDescription" class="w-full p-2 border border-gray-200 rounded-md text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" rows="4" placeholder="Deskripsi kategori..."></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md" onclick="closeCategoryModal()">Batal</button>
+                    <button class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md" onclick="saveCategory()">Simpan</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal" id="categoryDeleteModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Hapus Kategori</h3>
-                <button class="modal-close" onclick="closeCategoryDeleteModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-text">Apakah Anda yakin ingin menghapus kategori <strong id="deleteCategoryName"></strong>?</p>
-                <p class="modal-text">Tindakan ini tidak dapat dibatalkan dan semua data terkait kategori ini akan dihapus permanen.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeCategoryDeleteModal()">Batal</button>
-                <button class="btn btn-primary">Hapus Kategori</button>
+        <!-- Delete Category Modal -->
+        <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="categoryDeleteModal">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
+                    <h3 class="text-lg font-semibold text-gray-900">Hapus Kategori</h3>
+                    <button class="text-xl text-gray-600 hover:text-gray-900" onclick="closeCategoryDeleteModal()" aria-label="Tutup modal">&times;</button>
+                </div>
+                <div class="mb-4 text-sm text-gray-700">
+                    <p class="mb-2">Yakin hapus kategori <strong id="deleteCategoryName"></strong>?</p>
+                    <p>Tindakan ini tidak dapat dibatalkan.</p>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md" onclick="closeCategoryDeleteModal()">Batal</button>
+                    <button class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-md">Hapus</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    @push('styles')
-    <style>
-        :root {
-            --primary-bg: #ffffff;
-            --secondary-bg: #f8f8f8;
-            --text-color: #1a1a1a;
-            --accent-color: #FFD700;
-            --border-color: #e0e0e0;
-            --hover-color: #f5f5f5;
-            --sidebar-width: 280px;
-            --content-margin: 40px;
-            --navbar-height: 70px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--secondary-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--primary-bg);
-            border-right: 1px solid var(--border-color);
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            z-index: 100;
-        }
-
-        .sidebar-header {
-            padding: 25px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-bg);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #FFC000 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            font-weight: 700;
-            font-size: 20px;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-        }
-
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .sidebar-nav {
-            padding: 20px 0;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        .nav-section {
-            margin-bottom: 25px;
-        }
-
-        .nav-title {
-            padding: 0 25px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 25px;
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover {
-            background: var(--hover-color);
-            border-left-color: var(--accent-color);
-        }
-
-        .nav-item.active {
-            background: rgba(255, 215, 0, 0.1);
-            border-left-color: var(--accent-color);
-            color: var(--text-color);
-            font-weight: 600;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-        }
-
-        .nav-item.active .nav-icon {
-            color: var(--accent-color);
-        }
-
-        .nav-text {
-            flex-grow: 1;
-        }
-
-        .nav-badge {
-            background: var(--accent-color);
-            color: var(--text-color);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .sidebar-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            background: var(--secondary-bg);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #FFC000 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .user-info {
-            flex-grow: 1;
-        }
-
-        .user-name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .user-role {
-            font-size: 12px;
-            color: #666;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--primary-bg);
-            padding: 15px var(--content-margin);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            top: 0;
-            left: var(--sidebar-width);
-            right: 0;
-            z-index: 900;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--secondary-bg);
-            padding: 10px 15px;
-            border-radius: 8px;
-            width: 300px;
-        }
-
-        .search-bar input {
-            border: none;
-            background: none;
-            width: 100%;
-            font-family: 'Space Grotesk', sans-serif;
-            outline: none;
-        }
-
-        .navbar-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-action {
-            position: relative;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent-color);
-            color: var(--text-color);
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            padding-top: 80px; /* Account for fixed navbar height */
-        }
-
-        .content-background {
-            background: var(--primary-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-        }
-
-        .content-wrapper {
-            margin: 0 var(--content-margin);
-        }
-
-        /* Page Header */
-        .page-header {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .page-title i {
-            color: var(--accent-color);
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background: var(--text-color);
-            color: var(--primary-bg);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: #333;
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: var(--text-color);
-        }
-
-        .btn-primary:hover {
-            background: #e6c300;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            background: var(--primary-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .filter-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .filter-title i {
-            color: var(--accent-color);
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .filter-group {
-            margin-bottom: 15px;
-        }
-
-        .filter-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .filter-select,
-        .filter-input,
-        textarea.filter-input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--primary-bg);
-            color: var(--text-color);
-            resize: vertical;
-        }
-
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* Content Section */
-        .content-section {
-            background: var(--primary-bg);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .results-count {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            font-weight: 600;
-            color: #666;
-            font-size: 14px;
-            background: var(--secondary-bg);
-        }
-
-        tr:hover {
-            background: var(--secondary-bg);
-        }
-
-        .table-title {
-            font-weight: 500;
-        }
-
-        .table-meta {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            display: inline-block;
-        }
-
-        .status-published {
-            background: rgba(46, 213, 115, 0.2);
-            color: #2ed573;
-        }
-
-        .status-pending {
-            background: rgba(255, 165, 2, 0.2);
-            color: #ffa502;
-        }
-
-        .status-rejected {
-            background: rgba(255, 71, 87, 0.2);
-            color: #ff4757;
-        }
-
-        .status-draft {
-            background: rgba(116, 125, 140, 0.2);
-            color: #747d8c;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--secondary-bg);
-            color: var(--text-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .action-btn:hover {
-            background: var(--accent-color);
-            color: var(--text-color);
-        }
-
-        .btn-view {
-            background: rgba(46, 213, 115, 0.1);
-            color: #2ed573;
-        }
-
-        .btn-edit {
-            background: rgba(52, 152, 219, 0.1);
-            color: #3498db;
-        }
-
-        .btn-delete {
-            background: rgba(255, 71, 87, 0.1);
-            color: #ff4757;
-        }
-
-        .thumbnail {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            background: var(--secondary-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 12px;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            gap: 8px;
-        }
-
-        .pagination-item {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            background: var(--primary-bg);
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s;
-        }
-
-        .pagination-item:hover,
-        .pagination-item.active {
-            background: var(--accent-color);
-            color: var(--text-color);
-            border-color: var(--accent-color);
-        }
-
-        .pagination-ellipsis {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10px;
-            color: #666;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--primary-bg);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 500px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .modal-body {
-            margin-bottom: 20px;
-        }
-
-        .modal-text {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
+        @push('scripts')
+        <script>
+            let currentArtworkName = '';
+
+            function showDeleteModal(artworkName) {
+                try {
+                    currentArtworkName = artworkName;
+                    const modal = document.getElementById('deleteModal');
+                    const artworkNameElement = document.getElementById('deleteArtworkName');
+                    if (!modal || !artworkNameElement) {
+                        console.error('Modal or artwork name element not found');
+                        return;
+                    }
+                    artworkNameElement.textContent = artworkName;
+                    modal.classList.remove('hidden');
+                    modal.focus();
+                    console.log('Delete modal opened for:', artworkName);
+                } catch (error) {
+                    console.error('Error opening delete modal:', error);
+                }
             }
 
-            .sidebar.active {
-                transform: translateX(0);
+            function closeDeleteModal() {
+                try {
+                    const modal = document.getElementById('deleteModal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        currentArtworkName = '';
+                        console.log('Delete modal closed');
+                    }
+                } catch (error) {
+                    console.error('Error closing delete modal:', error);
+                }
             }
 
-            .main-content {
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 100%;
-            }
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                box-shadow: none;
-                transform: none;
-            }
-            .navbar {
-                position: relative;
-                left: 0;
-                padding: 15px 20px;
-            }
-            .main-content {
-                margin-left: 0;
-                padding-top: 0;
-            }
-            .content-wrapper {
-                margin: 0 20px;
-            }
-            .content-background {
-                margin: 0 20px;
-                padding: 15px;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-            .search-bar {
-                width: 100%;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
-    @endpush
-
-    @push('scripts')
-    <script>
-        function showDeleteModal(artworkName) {
-            document.getElementById('deleteArtworkName').textContent = artworkName;
-            document.getElementById('deleteModal').style.display = 'flex';
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
-        }
-
-        function showCategoryModal(mode, name = '', description = '') {
-            const modal = document.getElementById('categoryModal');
-            const title = document.getElementById('categoryModalTitle');
-            const nameInput = document.getElementById('categoryName');
-            const descInput = document.getElementById('categoryDescription');
-
-            if (mode === 'create') {
-                title.textContent = 'Tambah Kategori';
-                nameInput.value = '';
-                descInput.value = '';
-            } else {
-                title.textContent = 'Edit Kategori';
-                nameInput.value = name;
-                descInput.value = description;
-            }
-            modal.style.display = 'flex';
-        }
-
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').style.display = 'none';
-        }
-
-        function showCategoryDeleteModal(categoryName) {
-            document.getElementById('deleteCategoryName').textContent = categoryName;
-            document.getElementById('categoryDeleteModal').style.display = 'flex';
-        }
-
-        function closeCategoryDeleteModal() {
-            document.getElementById('categoryDeleteModal').style.display = 'none';
-        }
-
-        function saveCategory() {
-            const name = document.getElementById('categoryName').value;
-            const description = document.getElementById('categoryDescription').value;
-            console.log('Saving category:', { name, description });
-            closeCategoryModal();
-        }
-
-        window.onclick = function(event) {
-            const deleteModal = document.getElementById('deleteModal');
-            const categoryModal = document.getElementById('categoryModal');
-            const categoryDeleteModal = document.getElementById('categoryDeleteModal');
-            if (event.target === deleteModal) {
+            function deleteArtwork() {
+                console.log('Deleting artwork:', currentArtworkName);
+                // Implement actual delete logic here (e.g., API call)
                 closeDeleteModal();
-            } else if (event.target === categoryModal) {
-                closeCategoryModal();
-            } else if (event.target === categoryDeleteModal) {
-                closeCategoryDeleteModal();
             }
-        };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterSelects = document.querySelectorAll('.filter-select');
-            filterSelects.forEach(select => {
-                select.addEventListener('change', function() {
-                    console.log('Filter changed:', this.value);
-                });
+            function showCategoryModal(mode, name = '', description = '') {
+                try {
+                    const modal = document.getElementById('categoryModal');
+                    const title = document.getElementById('categoryModalTitle');
+                    const nameInput = document.getElementById('categoryName');
+                    const descInput = document.getElementById('categoryDescription');
+
+                    if (!modal || !title || !nameInput || !descInput) {
+                        console.error('Category modal elements not found');
+                        return;
+                    }
+
+                    title.textContent = mode === 'create' ? 'Tambah Kategori' : 'Edit Kategori';
+                    nameInput.value = name;
+                    descInput.value = description;
+                    modal.classList.remove('hidden');
+                    modal.focus();
+                } catch (error) {
+                    console.error('Error opening category modal:', error);
+                }
+            }
+
+            function closeCategoryModal() {
+                try {
+                    const modal = document.getElementById('categoryModal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        document.getElementById('categoryName').value = '';
+                        document.getElementById('categoryDescription').value = '';
+                    }
+                } catch (error) {
+                    console.error('Error closing category modal:', error);
+                }
+            }
+
+            function showCategoryDeleteModal(categoryName) {
+                try {
+                    const modal = document.getElementById('categoryDeleteModal');
+                    const categoryNameElement = document.getElementById('deleteCategoryName');
+                    if (!modal || !categoryNameElement) {
+                        console.error('Category delete modal elements not found');
+                        return;
+                    }
+                    categoryNameElement.textContent = categoryName;
+                    modal.classList.remove('hidden');
+                    modal.focus();
+                } catch (error) {
+                    console.error('Error opening category delete modal:', error);
+                }
+            }
+
+            function closeCategoryDeleteModal() {
+                try {
+                    const modal = document.getElementById('categoryDeleteModal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                    }
+                } catch (error) {
+                    console.error('Error closing category delete modal:', error);
+                }
+            }
+
+            function saveCategory() {
+                try {
+                    const name = document.getElementById('categoryName').value.trim();
+                    const description = document.getElementById('categoryDescription').value.trim();
+                    
+                    if (!name) {
+                        alert('Nama kategori harus diisi!');
+                        return;
+                    }
+
+                    console.log('Saving category:', { name, description });
+                    closeCategoryModal();
+                } catch (error) {
+                    console.error('Error saving category:', error);
+                }
+            }
+
+            window.onclick = function(event) {
+                try {
+                    const deleteModal = document.getElementById('deleteModal');
+                    const categoryModal = document.getElementById('categoryModal');
+                    const categoryDeleteModal = document.getElementById('categoryDeleteModal');
+                    if (event.target === deleteModal) closeDeleteModal();
+                    if (event.target === categoryModal) closeCategoryModal();
+                    if (event.target === categoryDeleteModal) closeCategoryDeleteModal();
+                } catch (error) {
+                    console.error('Error in window click handler:', error);
+                }
+            };
+
+            document.addEventListener('DOMContentLoaded', function() {
+                try {
+                    document.querySelectorAll('select, #keyword-filter').forEach(element => {
+                        element.addEventListener('change', function() {
+                            console.log('Filter changed:', this.id, this.value);
+                        });
+                    });
+
+                    // Add keyboard accessibility for modals
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.addEventListener('keydown', function(e) {
+                            if (e.key === 'Escape') {
+                                if (modal.id === 'deleteModal') closeDeleteModal();
+                                if (modal.id === 'categoryModal') closeCategoryModal();
+                                if (modal.id === 'categoryDeleteModal') closeCategoryDeleteModal();
+                            }
+                        });
+                    });
+
+                    // Add click event listeners to delete buttons
+                    document.querySelectorAll('button[aria-label*="Hapus"]').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const artworkName = this.getAttribute('aria-label').replace('Hapus ', '');
+                            showDeleteModal(artworkName);
+                        });
+                    });
+                } catch (error) {
+                    console.error('Error in DOMContentLoaded:', error);
+                }
             });
-        });
-    </script>
-    @endpush
+        </script>
+        @endpush
+    </div>
 </x-admin-layout>
