@@ -1,0 +1,1608 @@
+<x-layout>
+
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif;">Notifikasi
+            </h2>
+            <div class="flex gap-2 mb-4">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read"
+                class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition mb-4">Tandai
+                Semua Dibaca</button>
+            <div id="notification-list" class="space-y-4"></div>
+        </div>
+    </div>
+    <!-- Notification Modal -->
+    <div id="notification-modal" class="notification-modal">
+        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-3">Notifikasi</h2>
+            <div class="flex gap-2 mb-3">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
+            </div>
+            <button id="mark-all-read" class="action-btn mb-3">Tandai Semua Dibaca</button>
+            <div id="notification-list" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <!-- Join Project Modal -->
+    <div id="join-modal" class="join-modal">
+        <div class="join-modal-content">
+            <i class="fas fa-times close-btn" onclick="toggleJoinModal()"></i>
+            <h2 class="text-xl font-bold mb-3">Gabung Proyek</h2>
+            <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek
+                ini.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium">Nama Lengkap</label>
+                    <input type="text" id="join-name"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Masukkan nama Anda" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Email</label>
+                    <input type="email" id="join-email"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Masukkan email Anda" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Peran yang Diinginkan</label>
+                    <input type="text" id="join-role"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Contoh: UI/UX Designer" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Pesan</label>
+                    <textarea id="join-message"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        rows="5" placeholder="Mengapa Anda ingin bergabung?"></textarea>
+                </div>
+                <button id="submit-join" class="join-btn w-full">Kirim Pengajuan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Detail Section -->
+    <section class="pt-20 pb-12 mt-10">
+        <div class="container">
+            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
+                <p class="text-sm">Notifikasi placeholder.</p>
+            </div>
+            <div class="project-header mb-8">
+                <div class="inner"></div>
+            </div>
+            <!-- Creator and Goals -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-1 creator-card">
+                    <h2 class="text-lg font-bold mb-3">Pembuat Proyek</h2>
+                    <div class="flex items-center gap-4">
+                        <img src="" id="creator-avatar" alt="Pembuat"
+                            class="w-16 h-16 rounded-full border border-gray-200" />
+                        <div>
+                            <h3 class="text-base font-semibold" id="creator-name"></h3>
+                            <p class="text-sm text-gray-600" id="creator-role"></p>
+                            <a href="" id="creator-profile" class="text-sm text-yellow-400 hover:underline">Lihat
+                                Profil</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 goals-card">
+                    <h2 class="text-lg font-bold mb-3">Tujuan Kolaborasi</h2>
+                    <p class="text-sm text-gray-600" id="collaboration-goals"></p>
+                </div>
+            </div>
+            <!-- Team Members -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Anggota Tim</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container"></div>
+            </div>
+            <!-- Project Timeline -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Linimasa Proyek</h2>
+                <div class="timeline"></div>
+            </div>
+            <!-- Task Progress Tracker -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Progres Tugas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 tasks-container"></div>
+            </div>
+            <!-- Comments Section -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Komentar</h2>
+                    <button id="show-hidden-comments" class="join-btn hidden"><i class="fas fa-eye"></i> Tampilkan
+                        Komentar Tersembunyi</button>
+                </div>
+                <div class="mb-4 flex items-center gap-2">
+                    <input type="text" id="comment-input"
+                        class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Tulis komentar Anda..." />
+                    <button aria-label="a" id="submit-comment" class="join-btn"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+                <div class="comments-container"></div>
+                <div class="flex justify-center gap-2 mt-4" id="pagination-container"></div>
+            </div>
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-black">Rekomendasi Kolaborasi Lainnya</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects">
+                </div>
+            </div>
+    </section>
+
+    @push('styles')
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.6));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000000;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+
+        .project-header img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .badge {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #111;
+        }
+
+        .badge-populer {
+            background: #f59e0b;
+            color: #ffffff;
+        }
+
+        .badge-baru {
+            background: #ffffff;
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .badge-open {
+            background: #f59e0b;
+            color: #ffffff;
+        }
+
+        .badge-closed {
+            background: #ffffff;
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #e5e7eb;
+            border-radius: 2.5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #f59e0b;
+            border-radius: 2.5px;
+        }
+
+        .member-card,
+        .task-card,
+        .comment-card,
+        .notification-card,
+        .recommended-project,
+        .creator-card,
+        .goals-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .timeline-event {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: #f59e0b;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+        }
+
+        .timeline-event::after {
+            content: '';
+            position: absolute;
+            left: 0.95rem;
+            top: 1.25rem;
+            width: 2px;
+            height: calc(100% - 1.25rem);
+            background: #e5e7eb;
+        }
+
+        .action-btn,
+        .join-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #111;
+            color: #ffffff;
+            text-transform: uppercase;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .action-btn:hover,
+        .join-btn:hover {
+            transform: scale(1.05);
+            background: #333;
+        }
+
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 360px;
+            background: #ffffff;
+            border-left: 1px solid #e5e7eb;
+            z-index: 50;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .notification-modal.open {
+            display: block;
+        }
+
+        .notification-modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.25rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+
+        .notification-card.unread {
+            background: #f9fafb;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #f59e0b;
+            color: #ffffff;
+            border-color: #f59e0b;
+        }
+
+        .comment-card {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comment-card:last-child {
+            border-bottom: none;
+        }
+
+        .comment-card.hidden {
+            display: none;
+        }
+
+        .comment-action-btn {
+            font-size: 0.85rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .comment-action-btn:hover {
+            color: #1a202c;
+        }
+
+        .comment-action-btn.liked {
+            color: #ef4444;
+        }
+
+        .reply-container {
+            margin-left: 2.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .reply-form {
+            margin-top: 0.5rem;
+        }
+
+        .pagination-btn {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #111;
+            cursor: pointer;
+            min-width: 2rem;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .pagination-btn.active {
+            background: #f59e0b;
+            color: #ffffff;
+            border-color: #f59e0b;
+        }
+
+        .pagination-btn.disabled {
+            color: #4b5563;
+            border-color: #4b5563;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .recommended-project img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .notification-bar {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .join-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            overflow-y: auto;
+        }
+
+        .join-modal.open {
+            display: flex;
+        }
+
+        .join-modal-content {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            margin: 1rem;
+        }
+
+        .join-modal-content .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.25rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+
+        /* Enhanced Media Queries for Responsiveness */
+        @media (max-width: 1024px) {
+            .notification-modal {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .project-header img {
+                height: 300px;
+            }
+
+            .join-modal-content {
+                margin: 1rem;
+                max-width: 90%;
+            }
+
+            .members-container,
+            .tasks-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .creator-card,
+            .goals-card {
+                padding: 1.25rem;
+            }
+
+            .recommended-project img {
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 896px) {
+            .project-header img {
+                height: 250px;
+            }
+
+            .grid.grid-cols-1.lg:grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .creator-card,
+            .goals-card {
+                padding: 1rem;
+            }
+
+            .members-container,
+            .tasks-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .recommended-project img {
+                height: 90px;
+            }
+
+            .footer .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer .col-span-2 {
+                grid-column: span 2;
+            }
+
+            .timeline-event {
+                padding-left: 2rem;
+            }
+
+            .timeline-event::before {
+                left: 0.5rem;
+            }
+
+            .timeline-event::after {
+                left: 0.7rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+
+            .project-header img {
+                height: 200px;
+            }
+
+            .action-btn,
+            .join-btn,
+            .filter-btn,
+            .pagination-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            .creator-card,
+            .goals-card,
+            .member-card,
+            .task-card,
+            .comment-card,
+            .recommended-project {
+                padding: 1rem;
+            }
+
+            .members-container,
+            .tasks-container {
+                grid-template-columns: 1fr;
+            }
+
+            .recommended-project img {
+                height: 80px;
+            }
+
+            .comment-input {
+                font-size: 0.8rem;
+            }
+
+            .pagination-container {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .footer .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer .col-span-2 {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .project-header img {
+                height: 150px;
+            }
+
+            .action-btn,
+            .join-btn,
+            .filter-btn,
+            .pagination-btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.4rem;
+                font-size: 0.7rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .creator-card,
+            .goals-card,
+            .member-card,
+            .task-card,
+            .comment-card,
+            .recommended-project {
+                padding: 0.75rem;
+            }
+
+            .recommended-project img {
+                height: 70px;
+            }
+
+            .timeline-event {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-event::before {
+                left: 0.25rem;
+                width: 12px;
+                height: 12px;
+            }
+
+            .timeline-event::after {
+                left: 0.45rem;
+            }
+
+            .comment-card {
+                padding: 0.5rem 0;
+            }
+
+            .comment-action-btn {
+                font-size: 0.7rem;
+            }
+
+            .reply-container {
+                margin-left: 1.5rem;
+            }
+
+            .notification-modal {
+                max-width: 100%;
+            }
+
+            .join-modal-content {
+                padding: 1.5rem;
+            }
+
+            .footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer .grid {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .project-header img {
+                height: 120px;
+            }
+
+            .badge {
+                font-size: 0.65rem;
+                padding: 0.15rem 0.4rem;
+            }
+
+            .action-btn,
+            .join-btn,
+            .filter-btn,
+            .pagination-btn {
+                font-size: 0.65rem;
+                padding: 0.3rem;
+            }
+
+            .comment-input {
+                font-size: 0.75rem;
+            }
+
+            .comment-card h3 {
+                font-size: 0.8rem;
+            }
+
+            .comment-card p {
+                font-size: 0.75rem;
+            }
+
+            .recommended-project img {
+                height: 60px;
+            }
+
+            .footer .text-2xl {
+                font-size: 1.25rem;
+            }
+
+            .footer .text-sm {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 896px) and (orientation: landscape) {
+            .project-header img {
+                height: 180px;
+            }
+
+            .join-modal-content {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .notification-modal {
+                max-height: 100vh;
+                overflow-y: auto;
+            }
+        }
+
+        /* Ensure smooth scrolling for modals */
+        .notification-modal,
+        .join-modal-content {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script>
+        // Simulated Project Data
+        const projects = [
+            {
+                id: 1,
+                name: "Aplikasi Edukasi Kode",
+                category: "coding",
+                progress: 70,
+                likes: 10,
+                status: "open",
+                creator: { name: "Budi Santoso", role: "Lead Developer", profileUrl: "/profil/budi", avatar: "https://picsum.photos/100/100?person1" },
+                collaborationGoals: "Menciptakan aplikasi edukasi interaktif yang membantu pemula belajar pemrograman dengan pendekatan gamifikasi, meningkatkan keterlibatan pengguna, dan mendukung pembelajaran mandiri.",
+                members: [
+                    { name: "Budi Santoso", role: "Lead Developer", profileUrl: "/profil/budi", avatar: "https://picsum.photos/100/100?person1" },
+                    { name: "Siti Aisyah", role: "UI/UX Designer", profileUrl: "/profil/siti", avatar: "https://picsum.photos/100/100?person2" },
+                    { name: "Ahmad Yani", role: "Backend Developer", profileUrl: "/profil/ahmad", avatar: "https://picsum.photos/100/100?person3" },
+                    { name: "Rina Putri", role: "Content Creator", profileUrl: "/profil/rina", avatar: "https://picsum.photos/100/100?person4" },
+                    { name: "Dewi Lestari", role: "QA Engineer", profileUrl: "/profil/dewi", avatar: "https://picsum.photos/100/100?person5" }
+                ],
+                description: "Proyek ini bertujuan untuk menciptakan aplikasi edukasi interaktif yang membantu pengguna belajar pemrograman dengan cara yang menyenangkan dan mudah dipahami.",
+                image: "https://picsum.photos/1200/400?coding",
+                created: "15 Juli 2025",
+                timeline: [
+                    { date: "15 Juli 2025", title: "Proyek Dimulai", description: "Tim awal dibentuk dan perencanaan dimulai." },
+                    { date: "30 Juli 2025", title: "Prototipe Selesai", description: "Versi awal aplikasi selesai untuk pengujian." },
+                    { date: "10 Agustus 2025", title: "Pengujian Beta", description: "Aplikasi diuji oleh pengguna terpilih." }
+                ],
+                tasks: [
+                    { name: "Desain UI/UX", progress: 90 },
+                    { name: "Pengembangan Backend", progress: 60 },
+                    { name: "Konten Edukasi", progress: 50 }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: "John Doe",
+                        avatar: "https://picsum.photos/50/50?commenter1",
+                        time: "2 jam lalu",
+                        text: "Proyek ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi.",
+                        replies: [],
+                        hidden: false,
+                        likes: 5,
+                        likedBy: []
+                    },
+                    {
+                        id: 2,
+                        user: "Jane Smith",
+                        avatar: "https://picsum.photos/50/50?commenter2",
+                        time: "1 hari lalu",
+                        text: "UI/UX-nya sangat menjanjikan. Semoga sukses untuk tim!",
+                        replies: [],
+                        hidden: false,
+                        likes: 3,
+                        likedBy: []
+                    },
+                    {
+                        id: 3,
+                        user: "Alice Brown",
+                        avatar: "https://picsum.photos/50/50?commenter3",
+                        time: "2 hari lalu",
+                        text: "Saya suka pendekatan gamifikasi dalam proyek ini!",
+                        replies: [],
+                        hidden: false,
+                        likes: 2,
+                        likedBy: []
+                    },
+                    {
+                        id: 4,
+                        user: "Bob Johnson",
+                        avatar: "https://picsum.photos/50/50?commenter4",
+                        time: "3 hari lalu",
+                        text: "Kapan kita bisa melihat demo aplikasinya?",
+                        replies: [],
+                        hidden: false,
+                        likes: 4,
+                        likedBy: []
+                    },
+                    {
+                        id: 5,
+                        user: "Emma Wilson",
+                        avatar: "https://picsum.photos/50/50?commenter5",
+                        time: "4 hari lalu",
+                        text: "Timnya luar biasa, teruskan kerja hebatnya!",
+                        replies: [],
+                        hidden: false,
+                        likes: 1,
+                        likedBy: []
+                    },
+                    {
+                        id: 6,
+                        user: "Michael Lee",
+                        avatar: "https://picsum.photos/50/50?commenter6",
+                        time: "5 hari lalu",
+                        text: "Saya tertarik untuk membantu di bagian backend.",
+                        replies: [],
+                        hidden: false,
+                        likes: 3,
+                        likedBy: []
+                    }
+                ],
+                populer: true,
+                bookmarked: false
+            },
+            {
+                id: 2,
+                name: "Proyek Musik Kolaborasi",
+                category: "musik",
+                progress: 45,
+                likes: 8,
+                status: "open",
+                creator: { name: "Andi Pratama", role: "Komposer", profileUrl: "/profil/andi", avatar: "https://picsum.photos/100/100?person6" },
+                collaborationGoals: "Menggabungkan elemen musik tradisional dan modern untuk menghasilkan album indie yang unik dan menarik bagi audiens global.",
+                members: [
+                    { name: "Andi Pratama", role: "Komposer", profileUrl: "/profil/andi", avatar: "https://picsum.photos/100/100?person6" },
+                    { name: "Lina Sari", role: "Vokalis", profileUrl: "/profil/lina", avatar: "https://picsum.photos/100/100?person7" },
+                    { name: "Rudi Hartono", role: "Produser", profileUrl: "/profil/rudi", avatar: "https://picsum.photos/100/100?person8" }
+                ],
+                description: "Kolaborasi musik untuk menciptakan album indie dengan pengaruh tradisional dan modern.",
+                image: "https://picsum.photos/1200/400?musik",
+                created: "10 Juli 2025",
+                timeline: [
+                    { date: "10 Juli 2025", title: "Proyek Dimulai", description: "Pembentukan tim dan konsep awal." },
+                    { date: "20 Juli 2025", title: "Rekaman Demo", description: "Demo lagu pertama selesai." }
+                ],
+                tasks: [
+                    { name: "Komposisi Lagu", progress: 50 },
+                    { name: "Rekaman", progress: 30 },
+                    { name: "Mixing", progress: 10 }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: "Maya Anggita",
+                        avatar: "https://picsum.photos/50/50?commenter3",
+                        time: "3 jam lalu",
+                        text: "Keren banget konsepnya! Kapan rilis albumnya?",
+                        replies: [],
+                        hidden: false,
+                        likes: 2,
+                        likedBy: []
+                    }
+                ],
+                bookmarked: false
+            },
+            {
+                id: 3,
+                name: "Desain Poster Kreatif",
+                category: "desain",
+                progress: 88,
+                likes: 12,
+                status: "closed",
+                creator: { name: "Tina Melati", role: "Graphic Designer", profileUrl: "/profil/tina", avatar: "https://picsum.photos/100/100?person9" },
+                collaborationGoals: "Menghasilkan poster dengan desain futuristik yang menarik perhatian untuk acara seni tahunan, meningkatkan awareness dan partisipasi.",
+                members: [
+                    { name: "Tina Melati", role: "Graphic Designer", profileUrl: "/profil/tina", avatar: "https://picsum.photos/100/100?person9" },
+                    { name: "Eko Wijaya", role: "Art Director", profileUrl: "/profil/eko", avatar: "https://picsum.photos/100/100?person10" }
+                ],
+                description: "Membuat poster kreatif untuk acara seni tahunan dengan tema futuristik.",
+                image: "https://picsum.photos/1200/400?desain",
+                created: "5 Juli 2025",
+                timeline: [
+                    { date: "5 Juli 2025", title: "Proyek Dimulai", description: "Konsep desain awal dibuat." },
+                    { date: "15 Juli 2025", title: "Desain Final", description: "Desain poster selesai." },
+                    { date: "25 Juli 2025", title: "Cetak", description: "Poster mulai dicetak." }
+                ],
+                tasks: [
+                    { name: "Konsep Desain", progress: 100 },
+                    { name: "Revisi Desain", progress: 80 },
+                    { name: "Produksi", progress: 70 }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: "Rian Nugroho",
+                        avatar: "https://picsum.photos/50/50?commenter4",
+                        time: "5 jam lalu",
+                        text: "Desainnya sangat futuristik, sukses selalu!",
+                        replies: [],
+                        hidden: false,
+                        likes: 4,
+                        likedBy: []
+                    }
+                ],
+                bookmarked: false
+            },
+            {
+                id: 4,
+                name: "Antologi Puisi Baru",
+                category: "sastra",
+                progress: 60,
+                likes: 15,
+                status: "open",
+                creator: { name: "Sari Puspita", role: "Penulis", profileUrl: "/profil/sari", avatar: "https://picsum.photos/100/100?person11" },
+                collaborationGoals: "Menyusun antologi puisi yang mencerminkan suara penulis muda, dengan ilustrasi yang mendukung tema emosional dan estetika modern.",
+                members: [
+                    { name: "Sari Puspita", role: "Penulis", profileUrl: "/profil/sari", avatar: "https://picsum.photos/100/100?person11" },
+                    { name: "Adi Nugroho", role: "Editor", profileUrl: "/profil/adi", avatar: "https://picsum.photos/100/100?person12" },
+                    { name: "Lia Amalia", role: "Penulis", profileUrl: "/profil/lia", avatar: "https://picsum.photos/100/100?person13" },
+                    { name: "Bima Sakti", role: "Ilustrator", profileUrl: "/profil/bima", avatar: "https://picsum.photos/100/100?person14" }
+                ],
+                description: "Mengumpulkan puisi-puisi baru dari penulis muda untuk antologi sastra.",
+                image: "https://picsum.photos/1200/400?sastra",
+                created: "12 Juli 2025",
+                timeline: [
+                    { date: "12 Juli 2025", title: "Proyek Dimulai", description: "Pengumpulan naskah dimulai." },
+                    { date: "22 Juli 2025", title: "Seleksi Naskah", description: "Naskah terpilih disusun." }
+                ],
+                tasks: [
+                    { name: "Penulisan Puisi", progress: 70 },
+                    { name: "Editing", progress: 50 },
+                    { name: "Ilustrasi", progress: 40 }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: "Anita Sari",
+                        avatar: "https://picsum.photos/50/50?commenter5",
+                        time: "1 hari lalu",
+                        text: "Puisi-puisinya sangat menyentuh, kapan terbit?",
+                        replies: [],
+                        hidden: false,
+                        likes: 6,
+                        likedBy: []
+                    }
+                ],
+                populer: true,
+                bookmarked: false
+            },
+            {
+                id: 5,
+                name: "Aplikasi AI Sederhana",
+                category: "coding",
+                progress: 20,
+                likes: 3,
+                status: "open",
+                creator: { name: "Fajar Ramadhan", role: "AI Developer", profileUrl: "/profil/fajar", avatar: "https://picsum.photos/100/100?person15" },
+                collaborationGoals: "Membangun aplikasi AI yang mudah digunakan untuk analisis data dasar, mendukung pengguna non-teknis dalam pengambilan keputusan berbasis data.",
+                members: [
+                    { name: "Fajar Ramadhan", role: "AI Developer", profileUrl: "/profil/fajar", avatar: "https://picsum.photos/100/100?person15" }
+                ],
+                description: "Mengembangkan aplikasi AI sederhana untuk analisis data dasar.",
+                image: "https://picsum.photos/1200/400?newcoding",
+                created: "18 Juli 2025",
+                timeline: [
+                    { date: "18 Juli 2025", title: "Proyek Dimulai", description: "Perencanaan model AI dimulai." }
+                ],
+                tasks: [
+                    { name: "Model AI", progress: 30 },
+                    { name: "Integrasi API", progress: 10 }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: "Dika Pratama",
+                        avatar: "https://picsum.photos/50/50?commenter6",
+                        time: "4 jam lalu",
+                        text: "Menarik! Saya ingin ikut berkontribusi.",
+                        replies: [],
+                        hidden: false,
+                        likes: 1,
+                        likedBy: []
+                    }
+                ],
+                baru: true,
+                bookmarked: false
+            }
+        ];
+
+        // Simulated Notification Data
+        const notifications = [
+            { id: 1, text: "New project update: Aplikasi Edukasi Kode", time: "2 jam lalu", read: false },
+            { id: 2, text: "New collaboration request: Proyek Musik Kolaborasi", time: "4 jam lalu", read: false },
+        ];
+
+        // Simulated Current User
+        const currentUser = "User";
+
+        // Pagination State
+        let currentPage = 1;
+        const commentsPerPage = 5;
+
+        // Get Project ID from URL Query Parameter
+        function getProjectIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'));
+        }
+
+        // Render Project Header
+        function renderProjectHeader(project) {
+            const projectHeader = document.querySelector('.project-header .inner');
+            projectHeader.innerHTML = `
+                <img src="${project.image}" alt="${project.name}" />
+                <div class="mt-4">
+                    <h1 class="text-2xl font-bold">${project.name}</h1>
+                    <div class="flex items-center gap-2 mt-2 flex-wrap">
+                        <span class="badge">${project.category.charAt(0).toUpperCase() + project.category.slice(1)}</span>
+                        ${project.populer ? '<span class="badge badge-populer">Populer</span>' : ''}
+                        ${project.baru ? '<span class="badge badge-baru">Baru</span>' : ''}
+                        <span class="badge badge-${project.status === 'open' ? 'open' : 'closed'}">${project.status === 'open' ? 'Buka Kolaborasi' : 'Kolaborasi Ditutup'}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Dibuat: ${project.created}</p>
+                    <p class="text-sm text-gray-600 mt-2">${project.description}</p>
+                    <p class="text-sm text-gray-600 mt-2">Progress: ${project.progress}%</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress" style="width: ${project.progress}%"></div>
+                    </div>
+                    <div class="flex gap-2 mt-4 flex-wrap">
+                        <button id="like-project-btn" class="join-btn"><i class="fas fa-heart"></i> Suka (${project.likes})</button>
+                        <button id="bookmark-project-btn" class="join-btn"><i class="fas fa-bookmark"></i> ${project.bookmarked ? 'Hapus Bookmark' : 'Bookmark'}</button>
+                        <button id="share-project-btn" class="join-btn"><i class="fas fa-share"></i> Bagikan</button>
+                        ${project.status === 'open' ? `<button id="join-project-btn" class="join-btn"><i class="fas fa-user-plus"></i> Gabung Proyek</button>` : ''}
+                        <button id="download-summary-btn" class="join-btn"><i class="fas fa-download"></i> Unduh Ringkasan</button>
+                        <a href="/proyek" id="back-to-projects-btn" class="join-btn"><i class="fas fa-arrow-left"></i> Kembali ke Proyek</a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('creator-avatar').src = project.creator.avatar;
+            document.getElementById('creator-name').textContent = project.creator.name;
+            document.getElementById('creator-role').textContent = project.creator.role;
+            document.getElementById('creator-profile').href = project.creator.profileUrl;
+            document.getElementById('collaboration-goals').textContent = project.collaborationGoals;
+
+            document.getElementById('like-project-btn').addEventListener('click', () => toggleProjectLike(project.id));
+            document.getElementById('bookmark-project-btn').addEventListener('click', () => toggleBookmark(project.id));
+            document.getElementById('share-project-btn').addEventListener('click', () => shareProject(project.id));
+            if (project.status === 'open') {
+                document.getElementById('join-project-btn').addEventListener('click', () => toggleJoinModal());
+            }
+            document.getElementById('download-summary-btn').addEventListener('click', () => downloadProjectSummary(project));
+        }
+
+        // Render Team Members
+        function renderMembers(members) {
+            const membersContainer = document.querySelector('.members-container');
+            membersContainer.innerHTML = members.map(member => `
+                <div class="member-card">
+                    <img src="${member.avatar}" alt="${member.name}" class="w-16 h-16 rounded-full mb-2 mx-auto border border-gray-200" />
+                    <h3 class="text-sm font-semibold text-center">${member.name}</h3>
+                    <p class="text-sm text-gray-600 text-center">${member.role}</p>
+                    <a href="${member.profileUrl}" class="block text-sm text-yellow-400 hover:underline text-center mt-1">Lihat Profil</a>
+                </div>
+            `).join('');
+        }
+
+        // Render Timeline
+        function renderTimeline(timeline) {
+            const timelineContainer = document.querySelector('.timeline');
+            timelineContainer.innerHTML = timeline.map(event => `
+                <div class="timeline-event">
+                    <p class="text-sm text-gray-600">${event.date}</p>
+                    <h3 class="text-base font-semibold">${event.title}</h3>
+                    <p class="text-sm text-gray-600">${event.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Render Tasks
+        function renderTasks(tasks) {
+            const tasksContainer = document.querySelector('.tasks-container');
+            tasksContainer.innerHTML = tasks.map(task => `
+                <div class="task-card">
+                    <h3 class="text-base font-semibold">${task.name}</h3>
+                    <p class="text-sm text-gray-600 mt-1">Progress: ${task.progress}%</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress" style="width: ${task.progress}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Comments
+        function renderComments(comments, projectId, page = 1) {
+            const commentsContainer = document.querySelector('.comments-container');
+            const showHiddenCommentsBtn = document.getElementById('show-hidden-comments');
+            const hasHiddenComments = comments.some(c => c.hidden || c.replies.some(r => r.hidden));
+            showHiddenCommentsBtn.classList.toggle('hidden', !hasHiddenComments);
+
+            // Pagination logic
+            const startIndex = (page - 1) * commentsPerPage;
+            const endIndex = startIndex + commentsPerPage;
+            const paginatedComments = comments.slice(startIndex, endIndex);
+
+            commentsContainer.innerHTML = paginatedComments.map(comment => `
+                <div class="comment-card ${comment.hidden ? 'hidden' : ''}" data-comment-id="${comment.id}">
+                    <div class="flex gap-3 items-start">
+                        <img src="${comment.avatar}" alt="${comment.user}" class="w-8 h-8 rounded-full border border-gray-200" />
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${comment.user}</h3>
+                                <p class="text-xs text-gray-600">${comment.time}</p>
+                            </div>
+                            <p class="text-sm mt-1">${comment.text}</p>
+                            <div class="flex items-center gap-3 mt-1">
+                                <span class="comment-action-btn" onclick="toggleReplyForm(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-reply"></i> Balas</span>
+                                ${comment.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${comment.id})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
+                                <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${comment.id})"><i class="fas fa-eye${comment.hidden ? '-slash' : ''}"></i> ${comment.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
+                                <span class="comment-action-btn ${comment.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${comment.id})"><i class="fas fa-heart"></i> ${comment.likes}</span>
+                            </div>
+                            <div class="reply-form hidden" data-comment-id="${comment.id}">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Tulis balasan Anda..." />
+                                    <button class="join-btn" onclick="submitReply(${projectId}, ${comment.id}, '${comment.user}')"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                            <div class="reply-container">
+                                ${renderReplies(comment.replies, projectId, comment.id)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            renderPagination(comments.length, page, projectId);
+        }
+
+        // Render Replies
+        function renderReplies(replies, projectId, parentCommentId) {
+            return replies.map(reply => `
+                <div class="comment-card ${reply.hidden ? 'hidden' : ''} mt-2" data-comment-id="${reply.id}">
+                    <div class="flex gap-3 items-start">
+                        <img src="${reply.avatar}" alt="${reply.user}" class="w-8 h-8 rounded-full border border-gray-200" />
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-semibold">${reply.user}</h3>
+                                <p class="text-xs text-gray-600">${reply.time}</p>
+                            </div>
+                            <p class="text-sm mt-1"><span class="font-semibold" onclick="window.location.href='/profil/${reply.tag}'">@${reply.tag}</span> ${reply.text}</p>
+                            <div class="flex items-center gap-3 mt-1">
+                                ${reply.user === currentUser ? `<span class="comment-action-btn" onclick="deleteComment(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-trash"></i> Hapus</span>` : ''}
+                                <span class="comment-action-btn" onclick="toggleCommentVisibility(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-eye${reply.hidden ? '-slash' : ''}"></i> ${reply.hidden ? 'Tampilkan' : 'Sembunyikan'}</span>
+                                <span class="comment-action-btn ${reply.likedBy.includes(currentUser) ? 'liked' : ''}" onclick="toggleCommentLike(${projectId}, ${reply.id}, ${parentCommentId})"><i class="fas fa-heart"></i> ${reply.likes}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Pagination
+        function renderPagination(totalComments, currentPage, projectId) {
+            const paginationContainer = document.getElementById('pagination-container');
+            const totalPages = Math.ceil(totalComments / commentsPerPage);
+            let paginationHTML = '';
+
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}" onclick="changePage(${projectId}, ${currentPage - 1})"><i class="fas fa-chevron-left"></i></button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${projectId}, ${i})">${i}</button>
+                `;
+            }
+
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}" onclick="changePage(${projectId}, ${currentPage + 1})"><i class="fas fa-chevron-right"></i></button>
+            `;
+
+            paginationContainer.innerHTML = paginationHTML;
+        }
+
+        // Change Page
+        function changePage(projectId, page) {
+            if (page < 1 || page > Math.ceil(projects.find(p => p.id === projectId).comments.length / commentsPerPage)) return;
+            currentPage = page;
+            const project = projects.find(p => p.id === projectId);
+            renderComments(project.comments, projectId, currentPage);
+        }
+
+        // Render Recommended Projects
+        function renderRecommendedProjects(currentProjectId) {
+            const recommendedProjects = document.getElementById('recommended-projects');
+            const recommendations = projects.filter(p => p.id !== currentProjectId && (p.populer || p.baru)).slice(0, 3);
+            recommendedProjects.innerHTML = recommendations.length === 0 ?
+                '<p class="text-sm text-gray-600">Tidak ada rekomendasi saat ini.</p>' :
+                recommendations.map(p => `
+                    <div class="recommended-project" onclick="window.location.href='detail-proyek.html?id=${p.id}'">
+                        <img src="${p.image}" alt="${p.name}" />
+                        <div class="p-4">
+                            <p class="text-base font-semibold">${p.name}</p>
+                            <p class="text-sm text-gray-600">${p.members.length} Anggota</p>
+                            <p class="text-sm text-gray-600 mt-1">${p.description.substring(0, 60)}...</p>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        // Render Notifications
+        function renderNotifications(filter = 'all') {
+            const notificationList = document.getElementById('notification-list');
+            notificationList.innerHTML = '';
+            let filteredNotifications = filter === 'all' ? notifications : notifications.filter(n => !n.read);
+            if (filteredNotifications.length === 0) {
+                notificationList.innerHTML = '<div class="text-center text-gray-600"><p class="text-sm">Tidak ada notifikasi.</p></div>';
+                return;
+            }
+            filteredNotifications.forEach(notification => {
+                notificationList.innerHTML += `
+                    <div class="notification-card ${notification.read ? '' : 'unread'}" onclick="viewNotification(${notification.id})">
+                        <p class="text-sm">${notification.text}</p>
+                        <p class="text-xs text-gray-600 mt-1">${notification.time}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Toggle Notifications Modal
+        function toggleNotifications() {
+            const modal = document.getElementById('notification-modal');
+            modal.classList.toggle('open');
+            if (modal.classList.contains('open')) {
+                renderNotifications();
+            }
+        }
+
+        // Toggle Join Modal
+        function toggleJoinModal() {
+            const modal = document.getElementById('join-modal');
+            modal.classList.toggle('open');
+        }
+
+        // Submit Join Request
+        function submitJoinRequest(projectId) {
+            const name = document.getElementById('join-name').value.trim();
+            const email = document.getElementById('join-email').value.trim();
+            const role = document.getElementById('join-role').value.trim();
+            const message = document.getElementById('join-message').value.trim();
+
+            if (name && email && role && message) {
+                notifications.push({
+                    id: notifications.length + 1,
+                    text: `Pengajuan bergabung untuk proyek ${projects.find(p => p.id === projectId).name} dikirim`,
+                    time: "Baru saja",
+                    read: false
+                });
+                toggleJoinModal();
+                renderNotifications();
+                document.getElementById('join-name').value = '';
+                document.getElementById('join-email').value = '';
+                document.getElementById('join-role').value = '';
+                document.getElementById('join-message').value = '';
+                alert("Pengajuan Anda telah dikirim!");
+            } else {
+                alert("Harap isi semua kolom!");
+            }
+        }
+
+        // Download Project Summary
+        function downloadProjectSummary(project) {
+            const summaryContent = `
+                \\documentclass{article}
+                \\usepackage[utf8]{inputenc}
+                \\usepackage{geometry}
+                \\usepackage{parskip}
+                \\usepackage{titling}
+                \\usepackage{sectsty}
+                \\usepackage{enumitem}
+                \\usepackage{xcolor}
+                \\usepackage[T1]{fontenc}
+                \\usepackage{noto}
+                \\geometry{a4paper, margin=1in}
+                \\title{Ringkasan Proyek: ${project.name}}
+                \\author{TARA}
+                \\date{${project.created}}
+                \\begin{document}
+                \\maketitle
+                \\section*{Informasi Proyek}
+                \\textbf{Nama Proyek:} ${project.name}\\\\
+                \\textbf{Kategori:} ${project.category.charAt(0).toUpperCase() + project.category.slice(1)}\\\\
+                \\textbf{Status:} ${project.status === 'open' ? 'Buka Kolaborasi' : 'Kolaborasi Ditutup'}\\\\
+                \\textbf{Pembuat:} ${project.creator.name} (${project.creator.role})\\\\
+                \\textbf{Progress:} ${project.progress}\\%\\\\
+                \\textbf{Deskripsi:} ${project.description}\\\\
+                \\textbf{Tujuan Kolaborasi:} ${project.collaborationGoals}\\\\
+                \\section*{Anggota Tim}
+                \\begin{itemize}
+                    ${project.members.map(m => `\\item ${m.name} (${m.role})`).join('\n')}
+                \\end{itemize}
+                \\section*{Linimasa}
+                \\begin{itemize}
+                    ${project.timeline.map(t => `\\item \\textbf{${t.date}:} ${t.title} - ${t.description}`).join('\n')}
+                \\end{itemize}
+                \\section*{Tugas}
+                \\begin{itemize}
+                    ${project.tasks.map(t => `\\item ${t.name}: ${t.progress}\\%`).join('\n')}
+                \\end{itemize}
+                \\end{document}
+            `;
+            const blob = new Blob([summaryContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${project.name}_summary.tex`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Toggle Bookmark
+        function toggleBookmark(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            project.bookmarked = !project.bookmarked;
+            renderProjectHeader(project);
+            notifications.push({
+                id: notifications.length + 1,
+                text: `Proyek ${project.name} ${project.bookmarked ? 'ditambahkan ke' : 'dihapus dari'} bookmark`,
+                time: "Baru saja",
+                read: false
+            });
+        }
+
+        // Mark All Notifications as Read
+        function markAllAsRead() {
+            notifications.forEach(n => n.read = true);
+            renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+        }
+
+        // View Notification
+        function viewNotification(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification) {
+                notification.read = true;
+                renderNotifications(document.querySelector('#notification-modal .filter-btn.active')?.dataset.filter || 'all');
+                alert(`Viewing notification ${notificationId} (placeholder).`);
+            }
+        }
+
+        // Dismiss Notification Bar
+        function dismissNotification() {
+            const notificationBar = document.getElementById('notification-bar');
+            notificationBar.classList.add('hidden');
+        }
+
+        // Submit Comment
+        function submitComment(projectId) {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const project = projects.find(p => p.id === projectId);
+                project.comments.unshift({
+                    id: project.comments.length + 1,
+                    user: currentUser,
+                    avatar: "https://picsum.photos/50/50?user",
+                    time: "Baru saja",
+                    text: commentText,
+                    replies: [],
+                    hidden: false,
+                    likes: 0,
+                    likedBy: []
+                });
+                currentPage = 1; // Reset to first page after new comment
+                renderComments(project.comments, projectId, currentPage);
+                commentInput.value = '';
+            }
+        }
+
+        // Toggle Reply Form
+        function toggleReplyForm(projectId, commentId, taggedUser) {
+            const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
+            replyForm.classList.toggle('hidden');
+            if (!replyForm.classList.contains('hidden')) {
+                const input = replyForm.querySelector('input');
+                input.value = `@${taggedUser} `;
+                input.focus();
+            }
+        }
+
+        // Submit Reply
+        function submitReply(projectId, commentId, taggedUser) {
+            const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
+            const replyText = replyForm.querySelector('input').value.trim();
+            if (replyText) {
+                const project = projects.find(p => p.id === projectId);
+                const comment = project.comments.find(c => c.id === commentId);
+                comment.replies.unshift({
+                    id: (comment.replies.length + 1) * 1000 + commentId,
+                    user: currentUser,
+                    avatar: "https://picsum.photos/50/50?user",
+                    time: "Baru saja",
+                    text: replyText.replace(`@${taggedUser}`, '').trim(),
+                    tag: taggedUser,
+                    hidden: false,
+                    likes: 0,
+                    likedBy: []
+                });
+                renderComments(project.comments, projectId, currentPage);
+                replyForm.querySelector('input').value = '';
+                replyForm.classList.add('hidden');
+            }
+        }
+
+        // Delete Comment
+        function deleteComment(projectId, commentId, parentCommentId = null) {
+            if (confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
+                const project = projects.find(p => p.id === projectId);
+                if (parentCommentId) {
+                    const parentComment = project.comments.find(c => c.id === parentCommentId);
+                    parentComment.replies = parentComment.replies.filter(r => r.id !== commentId);
+                } else {
+                    project.comments = project.comments.filter(c => c.id !== commentId);
+                    const totalPages = Math.ceil(project.comments.length / commentsPerPage);
+                    if (currentPage > totalPages) currentPage = totalPages;
+                }
+                renderComments(project.comments, projectId, currentPage);
+            }
+        }
+
+        // Toggle Comment Visibility
+        function toggleCommentVisibility(projectId, commentId, parentCommentId = null) {
+            const project = projects.find(p => p.id === projectId);
+            if (parentCommentId) {
+                const parentComment = project.comments.find(c => c.id === parentCommentId);
+                const reply = parentComment.replies.find(r => r.id === commentId);
+                reply.hidden = !reply.hidden;
+            } else {
+                const comment = project.comments.find(c => c.id === commentId);
+                comment.hidden = !comment.hidden;
+            }
+            renderComments(project.comments, projectId, currentPage);
+        }
+
+        // Show All Hidden Comments
+        function showAllHiddenComments(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            project.comments.forEach(comment => {
+                comment.hidden = false;
+                comment.replies.forEach(reply => {
+                    reply.hidden = false;
+                });
+            });
+            renderComments(project.comments, projectId, currentPage);
+        }
+
+        // Toggle Comment Like
+        function toggleCommentLike(projectId, commentId, parentCommentId = null) {
+            const project = projects.find(p => p.id === projectId);
+            let targetComment;
+            if (parentCommentId) {
+                const parentComment = project.comments.find(c => c.id === parentCommentId);
+                targetComment = parentComment.replies.find(r => r.id === commentId);
+            } else {
+                targetComment = project.comments.find(c => c.id === commentId);
+            }
+            if (targetComment.likedBy.includes(currentUser)) {
+                targetComment.likes--;
+                targetComment.likedBy = targetComment.likedBy.filter(u => u !== currentUser);
+            } else {
+                targetComment.likes++;
+                targetComment.likedBy.push(currentUser);
+            }
+            renderComments(project.comments, projectId, currentPage);
+        }
+
+        // Toggle Project Like
+        function toggleProjectLike(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (project.likedBy && project.likedBy.includes(currentUser)) {
+                project.likes--;
+                project.likedBy = project.likedBy.filter(u => u !== currentUser);
+            } else {
+                project.likes++;
+                if (!project.likedBy) project.likedBy = [];
+                project.likedBy.push(currentUser);
+            }
+            renderProjectHeader(project);
+        }
+
+        // Share Project
+        function shareProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            const projectUrl = `${window.location.origin}/detail-proyek.html?id=${projectId}`;
+            const shareData = {
+                title: project.name,
+                text: project.description,
+                url: projectUrl
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => {
+                        alert("Proyek berhasil dibagikan!");
+                    })
+                    .catch(() => {
+                        navigator.clipboard.writeText(projectUrl)
+                            .then(() => {
+                                alert("Link proyek telah disalin ke clipboard!");
+                            })
+                            .catch(() => {
+                                alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
+                            });
+                    });
+            } else {
+                navigator.clipboard.writeText(projectUrl)
+                    .then(() => {
+                        alert("Link proyek telah disalin ke clipboard!");
+                    })
+                    .catch(() => {
+                        alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
+                    });
+            }
+        }
+
+        // Initialize Page
+        window.addEventListener('load', () => {
+            const projectId = getProjectIdFromUrl();
+            const project = projects.find(p => p.id === projectId);
+
+            if (!project) {
+                document.querySelector('.project-header .inner').innerHTML = `
+                    <div class="text-center text-gray-600">
+                        <p class="text-lg font-semibold">Proyek tidak ditemukan.</p>
+                        <a href="/proyek" class="inline-block mt-4 action-btn">Kembali ke Proyek</a>
+                    </div>
+                `;
+                return;
+            }
+
+            renderProjectHeader(project);
+            renderMembers(project.members);
+            renderTimeline(project.timeline);
+            renderTasks(project.tasks);
+            renderComments(project.comments, projectId, currentPage);
+            renderRecommendedProjects(projectId);
+            renderNotifications();
+
+            document.getElementById('submit-comment').addEventListener('click', () => submitComment(projectId));
+            document.getElementById('show-hidden-comments').addEventListener('click', () => showAllHiddenComments(projectId));
+            document.getElementById('submit-join').addEventListener('click', () => submitJoinRequest(projectId));
+
+            document.querySelectorAll('#notification-modal .filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#notification-modal .filter-btn').forEach(f => f.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderNotifications(btn.dataset.filter);
+                });
+            });
+        });
+    </script>
+    @endpush
+</x-layout>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA – Showcase</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP Core + ScrollTrigger + Draggable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
+        rel="stylesheet" />
+
+
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: "Vantage";
+            src: url("./assets/fonts/VantageRegular-L3xY5.ttf") format("truetype");
+        }
+
+        .font-vantage {
+            font-family: "Vantage", sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-floating {
+            width: 56px !important;
+            height: 56px !important;
+            border-radius: 9999px !important;
+            padding: 0 !important;
+            justify-content: center !important;
+            overflow: hidden;
+        }
+
+        .hide-on-float {
+            transition: opacity 0.3s ease;
+        }
+
+        .hidden-opacity {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-search-open #navLinks {
+            display: none;
+        }
+
+        .nav-search-open #searchDropdown {
+            left: 0;
+            transform: none;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
+        main {
+            pointer-events: auto;
+        }
+
+        .hero {
+            pointer-events: none;
+        }
+
+        main section>* {
+            pointer-events: auto;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .deck-active {
+            transform-origin: center top;
+            transform: translateY(-30px) scale(1.2) rotate(0deg) !important;
+            transition: transform 0.3s;
+        }
+
+        .deck-card {
+            transition: all 0.5s ease-in-out;
+            transform-origin: center top;
+        }
+
+        .dimmed::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: inherit;
+        }
+
+        /* Draggable hero tiles */
+        .gallery-hero img {
+            cursor: grab;
+            will-change: transform;
+        }
+
+        .gallery-hero img:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black font-vantage tracking-wide">
+    <div id="particles-js"></div>
+
+    <!-- LOADING -->
+    <div id="loadingScreen" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center space-y-6">
+        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
+            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+        <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik...</p>
+    </div>
+    <!-- NAVBAR -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl
+            px-6 py-2 bg-white/80 border border-black/10 shadow-xl
+            backdrop-blur-md rounded-full flex items-center justify-between
+            transition-all duration-300">
+
+        <!-- Wrapper (group for focus handling) -->
+        <div class="flex flex-1 items-center justify-between gap-4 group">
+
+            <!-- Logo -->
+            <div class="shrink-0 font-semibold text-sm" style="font-family: 'Space Grotesk', sans-serif;">
+                TARA<span class="text-yellow-400">●</span>
+            </div>
+
+            <!-- Search -->
+            <div class="relative flex-1 flex justify-center">
+                <input type="text" placeholder="Cari karya..." class="peer w-[90%] max-w-[240px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px]
+                    peer-focus:max-w-full transition-all duration-300 ease-in-out
+                    px-4 py-1.5 rounded-full bg-gray-100 text-black 
+                    placeholder:text-gray-400 text-sm focus:outline-none 
+                    focus:ring-2 focus:ring-black focus:bg-gray-200" />
+
+                <!-- Search Dropdown -->
+                <div class="absolute top-full mt-2 left-1/2 -translate-x-1/2
+                  w-[95%] sm:w-[90%] md:w-[85%] max-w-5xl
+                  bg-white border border-gray-200 rounded-xl shadow-xl
+                  p-6 z-30 opacity-0 scale-95 pointer-events-none
+                  transition-all duration-300
+                  peer-focus:opacity-100 peer-focus:scale-100 peer-focus:pointer-events-auto">
+
+                    <!-- Histori Pencarian -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-gray-600 mb-2">Riwayat Pencarian</h3>
+                        <ul class="space-y-2">
+                            <li
+                                class="flex items-center justify-between bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-md">
+                                <span class="text-sm text-gray-700">Situs Portofolio</span>
+                                <button class="text-gray-400 hover:text-red-500 transition">✕</button>
+                            </li>
+                            <li
+                                class="flex items-center justify-between bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-md">
+                                <span class="text-sm text-gray-700">Font Gratis</span>
+                                <button class="text-gray-400 hover:text-red-500 transition">✕</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 3 Kolom Konten -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
+                        <div>
+                            <h3 class="font-bold text-gray-600 mb-2">Trending</h3>
+                            <ul class="space-y-1">
+                                <li><a href="#" class="hover:text-black">Situs Portofolio</a></li>
+                                <li><a href="#" class="hover:text-black">Font Gratis</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-600 mb-2">Kategori</h3>
+                            <ul class="space-y-1">
+                                <li><a href="#" class="hover:text-black">Desain UI</a></li>
+                                <li><a href="#" class="hover:text-black">E-Commerce</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-600 mb-2">Teknologi</h3>
+                            <ul class="space-y-1">
+                                <li><a href="#" class="hover:text-black">GSAP</a></li>
+                                <li><a href="#" class="hover:text-black">Tailwind</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links (hilang saat search aktif) -->
+            <div class="hidden sm:flex items-center gap-6 text-sm font-semibold
+                group-focus-within:hidden">
+                <a href="#" class="hover:text-gray-600">Beranda</a>
+                <a href="#" class="hover:text-gray-600">Artikel</a>
+                <a href="#" class="hover:text-gray-600">Blog</a>
+                <a href="#" class="hover:text-gray-600">Tentang</a>
+            </div>
+
+            <!-- User Dropdown (opsional) -->
+            <div class="relative group-focus-within:hidden">
+                <button
+                    class="flex items-center space-x-2 text-sm font-semibold text-black hover:text-gray-600 transition focus:outline-none">
+                    <span>Guest</span>
+                    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor"
+                        stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div
+                    class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 origin-top-right z-40">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Login</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Sign Up</a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+
+    <main id="mainContent" class="pt-15 opacity-0">
+        <section class="min-h-screen relative z-10 flex items-center justify-center text-center px-4 pt-[160px] pb-20">
+            <div
+                class="flex flex-col-reverse md:flex-row items-center justify-center gap-y-10 md:gap-8 w-full max-w-7xl">
+
+                <!-- Kiri: Teks -->
+                <div class="text-center md:text-left max-w-2xl px-4">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase mb-4 leading-tight">
+                        Selamat Datang <br class="hidden sm:block">
+                        <span class="text-black font-[Space Grotesk,sans-serif]">
+                            di TARA<span
+                                class="text-yellow-400 align-middle text-3xl sm:text-4xl md:text-5xl ml-1">●</span>
+                        </span>
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-500">Temukan inspirasi dari karya kreatif anak
+                        bangsa</p>
+                    <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="/assets/main_assets/login-signin/login2.html"
+                            class="px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">
+                            Gabung Sekarang
+                        </a>
+                        <a href="/category.html"
+                            class="px-6 py-3 bg-gray-100 text-black rounded-full font-semibold hover:bg-gray-200 transition">
+                            Eksplor Karya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kanan: Galeri -->
+                <div class="gallery-hero relative w-[300px] sm:w-[440px] md:w-[500px] h-[460px]">
+                    <img data-idx="0" src="https://picsum.photos/600/800?random=11"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:0;left:0;width:120px;height:120px" />
+                    <img data-idx="1" src="https://picsum.photos/600/800?random=12"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:0;left:130px;width:140px;height:200px" />
+                    <img data-idx="2" src="https://picsum.photos/600/800?random=13"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:0;left:280px;width:100px;height:100px" />
+                    <img data-idx="3" src="https://picsum.photos/600/800?random=14"
+                        class="draggable-tile relative rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:285px;left:286px;width:170px;height:120px" />
+                    <img data-idx="4" src="https://picsum.photos/600/800?random=15"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:135px;left:0px;width:120px;height:200px" />
+                    <img data-idx="5" src="https://picsum.photos/600/800?random=16"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:112px;left:285px;width:160px;height:160px" />
+                    <img data-idx="6" src="https://picsum.photos/600/800?random=17"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:215px;left:130px;width:140px;height:120px" />
+                    <img data-idx="7" src="https://picsum.photos/600/800?random=18"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:0px;left:400px;width:100px;height:100px" />
+                    <img data-idx="8" src="https://picsum.photos/600/800?random=19"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:350px;left:130px;width:140px;height:90px" />
+                    <img data-idx="9" src="https://picsum.photos/600/800?random=20"
+                        class="draggable-tile absolute rounded-lg shadow-lg object-cover transition-transform duration-300"
+                        style="top:370px;left:0;width:120px;height:100px" />
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <!-- Karya Unggulan -->
+        <section class="py-28 bg-transparent backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-black">Karya Unggulan</h2>
+                    <p class="text-lg text-gray-700 mt-2">Koleksi terbaik dari kreator Indonesia</p>
+                </div>
+
+                <div id="gallery" class="relative w-full max-w-7xl h-[500px] mx-auto select-none"></div>
+
+                <div class="mt-5 text-center">
+                    <a href="/category.html"
+                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">
+                        Lihat Semua Karya
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Komunitas -->
+        <section class="py-28 bg-transparent backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-3 text-accent font-medium">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span>Komunitas Kreatif</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-black">Bergabung & Berkolaborasi</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        TARA adalah rumah bagi komunitas kreatif. Gabung dengan grup sesuai minatmu dan wujudkan ide
+                        bersama.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="/komunitas?group=puisi"
+                            class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                            <h3 class="text-lg font-semibold text-black">Komunitas Puisi</h3>
+                            <p class="text-sm text-gray-700">Berbagi kata, menenun makna</p>
+                        </a>
+                        <a href="/komunitas?group=desain"
+                            class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                            <h3 class="text-lg font-semibold text-black">Komunitas Desain</h3>
+                            <p class="text-sm text-gray-700">Ciptakan visual yang memukau</p>
+                        </a>
+                    </div>
+                    <a href="/komunitas.html"
+                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat
+                        Semua Komunitas</a>
+                </div>
+                <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200 hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/400?community" alt="Komunitas"
+                            class="w-full h-full object-cover transition-transform duration-500" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyek Sosial -->
+        <section class="py-28 bg-transparent backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200 hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/400?project" alt="Proyek"
+                            class="w-full h-full object-cover transition-transform duration-500" />
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-3 text-accent font-medium">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 8c-1.105 0-2 .895-2 2 0 1.105.895 2 2 2s2-.895 2-2-.895-2-2-2z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 20v-6m0 0a4 4 0 100-8 4 4 0 000 8z" />
+                        </svg>
+                        <span>Proyek Sosial</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-black">Wujudkan Ide Bersama</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Buat atau gabung proyek sosial untuk membangun dampak nyata dengan komunitas kreatif.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="/category.html" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                            <h3 class="text-lg font-semibold text-black">Pameran Virtual 2025</h3>
+                            <p class="text-sm text-gray-700">Showcase karya digital</p>
+                            <p class="text-xs text-gray-500">Deadline: 31 Des 2025</p>
+                        </a>
+                        <a href="/category.html/2" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                            <h3 class="text-lg font-semibold text-black">Musik untuk Pendidikan</h3>
+                            <p class="text-sm text-gray-700">Lagu untuk anak-anak</p>
+                            <p class="text-xs text-gray-500">Deadline: 15 Nov 2025</p>
+                        </a>
+                    </div>
+                    <a href="/category.html"
+                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat
+                        Semua Proyek</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Sorotan -->
+        <section class="py-28 bg-transparent backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-black">Sorotan Mingguan</h2>
+                    <p class="text-lg text-gray-700 mt-2">Inspirasi dari wawancara, tutorial, dan tips</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <a href="/blog/1" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                        <div class="inner">
+                            <img src="https://picsum.photos/600/400?blog1" alt="Blog"
+                                class="w-full h-48 object-cover" />
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold text-black">Wawancara: Kerennya Karya Anak Muda</h3>
+                                <p class="text-sm text-gray-700">Inspirasi dari kreator muda Indonesia</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/blog/2" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                        <div class="inner">
+                            <img src="https://picsum.photos/600/400?blog2" alt="Blog"
+                                class="w-full h-48 object-cover" />
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold text-black">Tutorial: Animasi GSAP</h3>
+                                <p class="text-sm text-gray-700">Pelajari trik animasi modern</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/blog/3" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                        <div class="inner">
+                            <img src="https://picsum.photos/600/400?blog3" alt="Blog"
+                                class="w-full h-48 object-cover" />
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold text-black">Tips: Desain UI Menarik</h3>
+                                <p class="text-sm text-gray-700">Buat desain yang memukau</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="mt-10 text-center">
+                    <a href="/blog"
+                        class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat
+                        Semua Artikel</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-28 bg-transparent backdrop-blur-sm text-center">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Gabung Sekarang</h2>
+                <p class="text-lg text-gray-700 mb-6">Jadilah bagian dari gerakan kreatif digital Indonesia</p>
+                <a href="/register"
+                    class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Daftar
+                    Sekarang</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
+            <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+                <div class="col-span-1 sm:col-span-2">
+                    <div class="text-2xl font-bold tracking-normal uppercase"
+                        style="font-family: 'Space Grotesk', sans-serif;">
+                        TARA<span class="text-accent">●</span>
+                    </div>
+                    <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa
+                        depan.</p>
+                    <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                        <a href="#" class="hover:text-black transition" aria-label="Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-black transition" aria-label="Twitter"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i
+                                class="fab fa-dribbble"></i></a>
+                        <a href="#" class="hover:text-black transition" aria-label="Behance"><i
+                                class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                        <li><a href="/category.html" class="hover:text-black transition">Eksplor Karya</a></li>
+                        <li><a href="/komunitas.html" class="hover:text-black transition">Komunitas</a></li>
+                        <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                        <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                        <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/eksplor?kategori=puisi" class="hover:text-black transition">Puisi</a></li>
+                        <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                        <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                        <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                        <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                        <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                        <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                    <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                    <form class="flex items-center gap-2">
+                        <input type="email" placeholder="Email Tuan..."
+                            class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                            required />
+                        <button type="submit"
+                            class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+                © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+                <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+                <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+                <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+                <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            const input = document.querySelector('#searchBar input');
+
+            // Saat focus → buka mode search
+            input.addEventListener('focus', () => {
+                navbar.classList.add('nav-search-open');
+                document.getElementById('searchDropdown').classList.remove('hidden');
+                input.classList.replace('max-w-xs', 'max-w-full');
+            });
+
+            // Saat blur → tutup mode search (delay dikit biar sempat klik isi dropdown)
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    navbar.classList.remove('nav-search-open');
+                    document.getElementById('searchDropdown').classList.add('hidden');
+                    input.classList.replace('max-w-full', 'max-w-xs');
+                }, 150);
+            });
+
+            // Esc juga nutup
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Escape') input.blur();
+            });
+        });
+
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+
+        const karyaList = [
+            { id: 1, img: "https://picsum.photos/600/800?random=1", alt: "Karya 1", creator: "Evelyn Carter" },
+            { id: 2, img: "https://picsum.photos/600/800?random=2", alt: "Karya 2", creator: "Liam Anderson" },
+            { id: 3, img: "https://picsum.photos/600/800?random=3", alt: "Karya 3", creator: "Sophia Bennett" },
+            { id: 4, img: "https://picsum.photos/600/800?random=4", alt: "Karya 4", creator: "Noah Sullivan" },
+            { id: 5, img: "https://picsum.photos/600/800?random=5", alt: "Karya 5", creator: "Isabella Hayes" },
+            { id: 6, img: "https://picsum.photos/600/800?random=6", alt: "Karya 6", creator: "Mason Brooks" },
+            { id: 7, img: "https://picsum.photos/600/800?random=7", alt: "Karya 7", creator: "Olivia Blake" },
+            { id: 8, img: "https://picsum.photos/600/800?random=8", alt: "Karya 8", creator: "James Thornton" }
+        ];
+
+        const total = karyaList.length;
+        const cardW = 256;
+        const cardH = 320;
+        const spread = 80;
+        const startDeg = -12;
+        const endDeg = 12;
+        const gapDeg = (endDeg - startDeg) / (total - 1);
+        const containerW = () => gallery.offsetWidth;
+        const kipasStart = () => (containerW() - (cardW + spread * (total - 1))) / 2;
+
+        let topZ = total + 10;
+        let activeCard = null;
+        const cardData = [];
+
+        // render deck
+        karyaList.forEach((karya, i) => {
+            const rot = startDeg + i * gapDeg;
+            const left = kipasStart() + i * spread;
+
+            gallery.innerHTML += `
+        <a href="prototype/stress.html?id=${karya.id}"
+           class="deck-card absolute top-0 group"
+           data-idx="${i}"
+           style="left:${left}px;width:${cardW}px;height:${cardH}px;
+                  transform:rotate(${rot}deg);z-index:${i};">
+          <div class="relative w-full h-full overflow-hidden rounded-xl shadow-xl bg-white">
+            <div class="overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 pointer-events-none rounded-xl"></div>
+            <img src="${karya.img}" alt="${karya.alt}"
+                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
+
+            <div class="card-info absolute inset-0 p-4 z-10 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent opacity-0 scale-95 transition-all duration-300 pointer-events-none">
+              <h4 class="text-white text-sm font-semibold">${karya.alt}</h4>
+              <p class="text-white text-xs">Oleh: ${karya.creator} | ${Math.floor(Math.random() * 1000)}B View</p>
+              <div class="flex gap-2 mt-2">
+                <div class="text-white text-xs hover:text-accent transition"><i class="fas fa-heart"></i> ${Math.floor(Math.random() * 1000)}M Like</div>
+              </div>
+            </div>
+          </div>
+        </a>
+        `;
+            cardData.push({ rot, left, z: i });
+        });
+
+        const cards = document.querySelectorAll('.deck-card');
+
+        function resetCard(card) {
+            const idx = +card.dataset.idx;
+            const { rot, left, z } = cardData[idx];
+            card.style.transform = `rotate(${rot}deg)`;
+            card.style.left = `${left}px`;
+            card.style.zIndex = z;
+            card.querySelector('.overlay').style.opacity = '1';
+            card.querySelector('.card-info').classList.add('opacity-0', 'scale-95');
+            card.querySelector('.card-info').classList.remove('opacity-100', 'scale-100');
+            activeCard = null;
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', e => {
+                // jika sedang aktif -> ke detail
+                if (card === activeCard) return; // biar link default jalan
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                const centerLeft = (containerW() - cardW) / 2;
+                if (activeCard) resetCard(activeCard);
+                activeCard = card;
+
+                cards.forEach(c => {
+                    c.querySelector('.overlay').style.opacity = '1';
+                    c.querySelector('.card-info').classList.add('opacity-0', 'scale-95');
+                    c.querySelector('.card-info').classList.remove('opacity-100', 'scale-100');
+                });
+
+                card.querySelector('.overlay').style.opacity = '0';
+                card.querySelector('.card-info').classList.remove('opacity-0', 'scale-95');
+                card.querySelector('.card-info').classList.add('opacity-100', 'scale-100');
+
+                card.style.transform = `translateY(-30px) scale(1.2)`;
+                card.style.left = `${centerLeft}px`;
+                card.style.zIndex = ++topZ;
+            });
+        });
+
+        let currentIndex = total - 1;
+        let autoPlay = true;
+
+        function activateCardAuto(idx) {
+            const card = cards[idx];
+            const centerLeft = (containerW() - cardW) / 2;
+            if (activeCard && activeCard !== card) resetCard(activeCard);
+            activeCard = card;
+
+            cards.forEach(c => {
+                c.querySelector('.overlay').style.opacity = '1';
+                c.querySelector('.card-info').classList.add('opacity-0', 'scale-95');
+                c.querySelector('.card-info').classList.remove('opacity-100', 'scale-100');
+            });
+
+            card.querySelector('.overlay').style.opacity = '0';
+            card.querySelector('.card-info').classList.remove('opacity-0', 'scale-95');
+            card.querySelector('.card-info').classList.add('opacity-100', 'scale-100');
+
+            card.style.transform = `translateY(-30px) scale(1.2)`;
+            card.style.left = `${centerLeft}px`;
+            card.style.zIndex = ++topZ;
+        }
+
+        setInterval(() => {
+            if (autoPlay) {
+                activateCardAuto(currentIndex);
+                currentIndex = (currentIndex - 1 + total) % total;
+            }
+        }, 3000);
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                autoPlay = false;
+                setTimeout(() => autoPlay = true, 3000);
+            });
+        });
+
+        document.addEventListener('click', e => {
+            if (activeCard && !e.target.closest('.deck-card')) {
+                resetCard(activeCard);
+            }
+        });
+
+        // reload
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                gsap.to("#loadingScreen", {
+                    duration: 1,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.getElementById("loadingScreen").style.display = "none";
+                        gsap.to("#mainContent", { duration: 1, opacity: 1 });
+                        gsap.to("#navbar", { duration: 1, opacity: 1, y: 0 });
+
+                        particlesJS("particles-js", {
+                            particles: {
+                                number: { value: 200, density: { enable: true, value_area: 800 } },
+                                color: { value: "#000000" },
+                                shape: { type: "circle" },
+                                opacity: { value: 0.3, random: true },
+                                size: { value: 3, random: true },
+                                line_linked: {
+                                    enable: true,
+                                    distance: 100,
+                                    color: "#000000",
+                                    opacity: 0.2,
+                                    width: 1
+                                },
+                                move: {
+                                    enable: true,
+                                    speed: 1.5,
+                                    out_mode: "out"
+                                }
+                            },
+                            interactivity: {
+                                events: {
+                                    onhover: { enable: true, mode: "repulse" },
+                                    onclick: { enable: true, mode: "push" },
+                                },
+                                modes: {
+                                    repulse: { distance: 70, duration: 0.4 },
+                                    push: { particles_nb: 4 },
+                                },
+                            },
+                            retina_detect: true
+                        });
+                    }
+                });
+            }, 1600);
+        });
+
+        const loadingScreen = document.getElementById("loadingScreen");
+        const mainContent = document.getElementById("mainContent");
+
+        // Cek apakah user sudah pernah buka
+        const alreadyVisited = localStorage.getItem("tara_has_visited");
+
+        if (alreadyVisited) {
+            // Udah pernah, langsung tampilkan konten
+            loadingScreen.style.display = "none";
+            mainContent.classList.remove("hidden");
+        } else {
+            // Belum pernah, tampilkan loading lalu simpan flag di localStorage
+            setTimeout(() => {
+                loadingScreen.style.display = "none";
+                mainContent.classList.remove("hidden");
+                localStorage.setItem("tara_has_visited", "true");
+            }, 3000); // durasi loading (ms)
+        }
+
+        // navbar float
+        const navbar = document.getElementById("navbar");
+        const navbarLogo = document.getElementById("navbarLogo");
+        const logoText = navbarLogo.querySelector("span");
+        const searchBar = document.getElementById("searchBar");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+
+        let lastScrollTop = 0;
+        let isFloating = false;
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.scrollY || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                if (!isFloating) {
+                    navbar.classList.add("nav-floating");
+                    gsap.to(navbar, { top: -60, duration: 0.6 });
+                    gsap.to(logoText, { opacity: 0, duration: 0.3 });
+                    searchBar.classList.add("hidden-opacity");
+                    dropdownMenu.classList.add("hidden-opacity");
+                    isFloating = true;
+                }
+            } else {
+                if (isFloating) {
+                    navbar.classList.remove("nav-floating");
+                    gsap.to(navbar, { top: 16, duration: 0.6 });
+                    gsap.to(logoText, { opacity: 1, duration: 0.3 });
+                    searchBar.classList.remove("hidden-opacity");
+                    dropdownMenu.classList.remove("hidden-opacity");
+                    isFloating = false;
+                }
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+
+        // search dropdowm
+        const searchInput = document.querySelector('#searchBar input');
+        const searchDropdown = document.getElementById('searchDropdown');
+
+        searchInput.addEventListener('focus', () => {
+            searchDropdown.classList.remove('hidden');
+            gsap.fromTo(searchDropdown, { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchDropdown.contains(e.target) && e.target !== searchInput) {
+                gsap.to(searchDropdown, {
+                    y: -10, opacity: 0, duration: 0.2,
+                    onComplete: () => searchDropdown.classList.add('hidden')
+                });
+            }
+        });
+
+        // gal
+        document.addEventListener("DOMContentLoaded", () => {
+            const hero = document.querySelector(".gallery-hero");
+            const tiles = hero.querySelectorAll(".draggable-tile");
+
+            // simpan posisi awal (top/left) agar bisa kembali
+            const tilePos = [];
+            tiles.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                const parentRect = hero.getBoundingClientRect();
+                tilePos.push({
+                    el,
+                    top: el.style.top,
+                    left: el.style.left,
+                    startX: rect.left - parentRect.left,
+                    startY: rect.top - parentRect.top
+                });
+            });
+
+            let dragTopZ = 100;
+
+            Draggable.create(tiles, {
+                type: "x,y",
+                bounds: hero,
+                onPress() {
+                    this.target.style.zIndex = ++dragTopZ;
+                    gsap.to(this.target, { scale: 1.1, duration: 0.15, ease: "power2.out" });
+                },
+                onRelease() {
+                    // UBAH: kalau mau dibiarkan di tempat baru, comment blok di bawah ini.
+                    const i = this.target.dataset.idx;
+                    const pos = tilePos[i];
+                    gsap.to(this.target, { scale: 1, duration: 0.15, ease: "power2.out" });
+                    // END balik ke awal
+                },
+                onDragEnd() {
+                    // kalau nggak mau snap balik, ubah scale doang:
+                    // gsap.to(this.target, { scale: 1, duration: 0.15 });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
