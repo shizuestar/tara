@@ -30,7 +30,7 @@
             <h3 class="font-semibold text-black mb-4">Navigasi</h3>
             <ul class="space-y-2">
                 <li><a href="#" class="hover:text-black transition">Beranda</a></li>
-                <li><a href="#" class="hover:text-black transition">Galeri</a></li>
+                <li><a href="<?php echo e(route('galeri')); ?>" class="hover:text-black transition">Galeri</a></li>
                 <li><a href="#" class="hover:text-black transition">Tentang</a></li>
                 <li><a href="#" class="hover:text-black transition">Kontak</a></li>
                 <li><a href="#" class="hover:text-black transition">FAQ</a></li>
@@ -90,4 +90,5 @@
         © 2025 Tara. Dirakit dengan semangat di bumi Nusantara. Estetika,
         teknologi, dan visi Tuan menyatu.
     </div>
-</footer><?php /**PATH C:\laragon\www\tara\backend\resources\views/components/main-footer.blade.php ENDPATH**/ ?>
+</footer>
+<?php /**PATH C:\laragon\www\tara\backend\resources\views/components/main-footer.blade.php ENDPATH**/ ?>
