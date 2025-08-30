@@ -1,56 +1,77 @@
 <x-admin-layout>
-    <div class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen py-8 px-4 sm:px-6 lg:px-10">
-        <div class="w-full max-w-7xl mx-auto bg-white rounded-xl p-6 sm:p-8 lg:p-10 shadow-lg">
-            <div class="relative bottom-5  flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white p-5 rounded-lg shadow-sm">
-                <h1 class="text-2xl lg:text-3xl font-semibold flex items-center gap-3 text-gray-800" style="font-family: 'Space Grotesk', sans-serif;">
+    <div class="bg-gradient-to-b from-gray-50 to-gray-100">
+        <div class="w-full bg-white rounded-xl p-4 sm:p-6 shadow-lg">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white p-5 pt-2 rounded-lg shadow-sm">
+                <h1 class="text-2xl lg:text-3xl font-semibold flex items-center gap-3 text-gray-800"
+                    style="font-family: 'Space Grotesk', sans-serif;">
                     <i class="fas fa-palette text-yellow-500 text-xl"></i>
                     Detail Karya
                 </h1>
                 <div class="flex flex-wrap items-center gap-3">
-                    <button id="edit-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300">
+                    <button id="edit-btn"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300">
                         <i class="fas fa-edit text-xs"></i>
                         Edit
                     </button>
-                    <button id="delete-btn" class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300" onclick="showDeleteModal()">
+                    <button id="delete-btn"
+                        class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300"
+                        onclick="showDeleteModal()">
                         <i class="fas fa-trash text-xs"></i>
                         Hapus
                     </button>
                     <div class="relative">
-                        <select id="status-change" class="appearance-none bg-white border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
+                        <select id="status-change"
+                            class="appearance-none bg-white border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
                             <option value="published">Tayang</option>
                             <option value="pending">Menunggu</option>
                             <option value="rejected">Ditolak</option>
                             <option value="draft">Draft</option>
                         </select>
                         <span class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </span>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-10 relative bottom-8">
+            <!-- Artwork Detail -->
+            <div class="mb-10">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <!-- Carousel -->
                     <div class="lg:col-span-6">
-                        <div class="relative w-full h-[350px] sm:h-[450px] lg:h-[550px] overflow-hidden rounded-xl shadow-md">
+                        <div
+                            class="relative w-full h-[350px] sm:h-[450px] lg:h-[550px] overflow-hidden rounded-xl shadow-md">
                             <div id="carousel" class="flex transition-transform duration-500 ease-in-out h-full">
-                                <img src="https://picsum.photos/1200/800?random=1" alt="Gambar Karya" class="w-full h-full object-cover flex-shrink-0 rounded-xl">
-                                <img src="https://picsum.photos/1200/800?random=2" alt="Gambar Karya" class="w-full h-full object-cover flex-shrink-0 rounded-xl">
-                                <img src="https://picsum.photos/1200/800?random=3" alt="Gambar Karya" class="w-full h-full object-cover flex-shrink-0 rounded-xl">
-                                <img src="https://picsum.photos/1200/800?random=4" alt="Gambar Karya" class="w-full h-full object-cover flex-shrink-0 rounded-xl">
-                                <img src="https://picsum.photos/1200/800?random=5" alt="Gambar Karya" class="w-full h-full object-cover flex-shrink-0 rounded-xl">
+                                <img src="https://picsum.photos/1200/800?random=1" alt="Gambar Karya"
+                                    class="w-full h-full object-cover flex-shrink-0 rounded-xl">
+                                <img src="https://picsum.photos/1200/800?random=2" alt="Gambar Karya"
+                                    class="w-full h-full object-cover flex-shrink-0 rounded-xl">
+                                <img src="https://picsum.photos/1200/800?random=3" alt="Gambar Karya"
+                                    class="w-full h-full object-cover flex-shrink-0 rounded-xl">
+                                <img src="https://picsum.photos/1200/800?random=4" alt="Gambar Karya"
+                                    class="w-full h-full object-cover flex-shrink-0 rounded-xl">
+                                <img src="https://picsum.photos/1200/800?random=5" alt="Gambar Karya"
+                                    class="w-full h-full object-cover flex-shrink-0 rounded-xl">
                             </div>
-                            <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-900 bg-opacity-60 text-white p-2 rounded-r-lg hover:bg-opacity-80 transition-all duration-300">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            <button id="prev-btn"
+                                class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-900 bg-opacity-60 text-white p-2 rounded-r-lg hover:bg-opacity-80 transition-all duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 19l-7-7 7-7"></path>
                                 </svg>
                             </button>
-                            <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-900 bg-opacity-60 text-white p-2 rounded-l-lg hover:bg-opacity-80 transition-all duration-300">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            <button id="next-btn"
+                                class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-900 bg-opacity-60 text-white p-2 rounded-l-lg hover:bg-opacity-80 transition-all duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </button>
                             <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -62,17 +83,24 @@
                             </div>
                         </div>
                         <div class="flex gap-2 mt-3 overflow-x-auto">
-                            <img src="https://picsum.photos/1200/800?random=1" class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg active" data-index="0">
-                            <img src="https://picsum.photos/1200/800?random=2" class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="1">
-                            <img src="https://picsum.photos/1200/800?random=3" class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="2">
-                            <img src="https://picsum.photos/1200/800?random=4" class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="3">
-                            <img src="https://picsum.photos/1200/800?random=5" class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="4">
+                            <img src="https://picsum.photos/1200/800?random=1"
+                                class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg active"
+                                data-index="0">
+                            <img src="https://picsum.photos/1200/800?random=2"
+                                class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="1">
+                            <img src="https://picsum.photos/1200/800?random=3"
+                                class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="2">
+                            <img src="https://picsum.photos/1200/800?random=4"
+                                class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="3">
+                            <img src="https://picsum.photos/1200/800?random=5"
+                                class="thumbnail w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg" data-index="4">
                         </div>
                     </div>
                     <!-- Details -->
                     <div class="lg:col-span-6">
                         <div id="view-mode">
-                            <h2 id="gallery-title" class="text-xl sm:text-2xl font-semibold text-gray-800 mb-5" style="font-family: 'Space Grotesk', sans-serif;">Sunset at Bali Beach</h2>
+                            <h2 id="gallery-title" class="text-xl sm:text-2xl font-semibold text-gray-800 mb-5"
+                                style="font-family: 'Space Grotesk', sans-serif;">Sunset at Bali Beach</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Kategori</label>
@@ -80,7 +108,8 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Kreator</label>
-                                    <div id="gallery-creator" class="text-sm text-gray-800 font-medium">Dewi Santika</div>
+                                    <div id="gallery-creator" class="text-sm text-gray-800 font-medium">Dewi Santika
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Tanggal</label>
@@ -88,23 +117,31 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
-                                    <div id="gallery-status" class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold inline-block">Tayang</div>
+                                    <div id="gallery-status"
+                                        class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold inline-block">
+                                        Tayang</div>
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
-                                <div id="gallery-description" class="text-sm text-gray-700 leading-relaxed">Potret senja dengan nuansa hangat di tepi pantai Bali, menangkap keindahan alam dengan lensa 50mm. Karya ini menggambarkan harmoni warna oranye dan ungu di langit senja, dengan siluet pohon kelapa yang menambah kesan dramatis.</div>
+                                <div id="gallery-description" class="text-sm text-gray-700 leading-relaxed">Potret senja
+                                    dengan nuansa hangat di tepi pantai Bali, menangkap keindahan alam dengan lensa
+                                    50mm. Karya ini menggambarkan harmoni warna oranye dan ungu di langit senja, dengan
+                                    siluet pohon kelapa yang menambah kesan dramatis.</div>
                             </div>
                         </div>
                         <div id="edit-mode" class="hidden opacity-0 transition-all duration-500">
                             <div class="mb-5">
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Judul</label>
-                                <input id="edit-title" type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300" value="Sunset at Bali Beach" />
+                                <input id="edit-title" type="text"
+                                    class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300"
+                                    value="Sunset at Bali Beach" />
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Kategori</label>
-                                    <select id="edit-category" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
+                                    <select id="edit-category"
+                                        class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
                                         <option value="fotografi">Fotografi</option>
                                         <option value="desain">Desain</option>
                                         <option value="ilustrasi">Ilustrasi</option>
@@ -113,7 +150,8 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Kreator</label>
-                                    <select id="edit-creator" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
+                                    <select id="edit-creator"
+                                        class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
                                         <option value="1">Dewi Santika</option>
                                         <option value="2">Aldi Pratama</option>
                                         <option value="3">Rina Andriani</option>
@@ -121,11 +159,14 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Tanggal</label>
-                                    <input id="edit-date" type="date" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300" value="2023-08-12" />
+                                    <input id="edit-date" type="date"
+                                        class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300"
+                                        value="2023-08-12" />
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
-                                    <select id="edit-status" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
+                                    <select id="edit-status"
+                                        class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300">
                                         <option value="published">Tayang</option>
                                         <option value="pending">Menunggu</option>
                                         <option value="rejected">Ditolak</option>
@@ -135,11 +176,15 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
-                                <textarea id="edit-description" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300" rows="5">Potret senja dengan nuansa hangat di tepi pantai Bali, menangkap keindahan alam dengan lensa 50mm. Karya ini menggambarkan harmoni warna oranye dan ungu di langit senja, dengan siluet pohon kelapa yang menambah kesan dramatis.</textarea>
+                                <textarea id="edit-description"
+                                    class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm transition-all duration-300"
+                                    rows="5">Potret senja dengan nuansa hangat di tepi pantai Bali, menangkap keindahan alam dengan lensa 50mm. Karya ini menggambarkan harmoni warna oranye dan ungu di langit senja, dengan siluet pohon kelapa yang menambah kesan dramatis.</textarea>
                             </div>
                             <div class="flex gap-3 mt-5">
-                                <button id="save-btn" class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-all duration-300">Simpan</button>
-                                <button id="cancel-btn" class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-all duration-300">Batal</button>
+                                <button id="save-btn"
+                                    class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-all duration-300">Simpan</button>
+                                <button id="cancel-btn"
+                                    class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-all duration-300">Batal</button>
                             </div>
                         </div>
                     </div>
@@ -152,95 +197,133 @@
                     .comment-scroll::-webkit-scrollbar {
                         width: 6px;
                     }
+
                     .comment-scroll::-webkit-scrollbar-track {
                         background: #f3f4f6;
                         border-radius: 3px;
                     }
+
                     .comment-scroll::-webkit-scrollbar-thumb {
                         background: #4b5563;
                         border-radius: 3px;
                     }
+
                     .comment-scroll::-webkit-scrollbar-thumb:hover {
                         background: #374151;
                     }
+
                     .comment-scroll {
                         scrollbar-color: #4b5563 #f3f4f6;
                         scrollbar-width: thin;
                     }
+
                     .comment-table td {
                         vertical-align: top;
                         word-wrap: break-word;
                     }
+
                     .comment-table {
                         table-layout: fixed;
                     }
+
                 </style>
                 <div class="flex justify-between items-center mb-5">
-                    <h2 class="text-lg sm:text-xl font-semibold text-gray-800" style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
+                    <h2 class="text-lg sm:text-xl font-semibold text-gray-800"
+                        style="font-family: 'Space Grotesk', sans-serif;">Komentar</h2>
                     <div class="text-sm text-gray-500 font-medium" id="comment-count">4 Komentar</div>
                 </div>
-                <div class="comment-scroll max-h-[350px] overflow-y-auto rounded-lg shadow-sm bg-gray-50 p-4">
-                    <table class="w-full border-collapse comment-table">
+
+                <div class="comment-scroll max-h-[350px] overflow-y-auto rounded-lg shadow border border-gray-200">
+                    <table class="w-full ">
                         <thead>
-                            <tr class="bg-gray-100 rounded-t-lg">
-                                <th class="p-3 text-left text-xs font-semibold text-gray-500 w-1/5">Pengguna</th>
-                                <th class="p-3 text-left text-xs font-semibold text-gray-500 w-3/5">Komentar</th>
-                                <th class="p-3 text-left text-xs font-semibold text-gray-500 w-1/5">Tanggal</th>
-                                <th class="p-3 text-left text-xs font-semibold text-gray-500 w-10">Aksi</th>
+                            <tr class="bg-yellow-300">
+                                <th class="p-3 text-left text-xs font-semibold text-black w-1/5">Pengguna</th>
+                                <th class="p-3 text-left text-xs font-semibold text-black w-3/5">Komentar</th>
+                                <th class="p-3 text-left text-xs font-semibold text-black w-1/5">Tanggal</th>
+                                <th class="p-3 text-center text-xs font-semibold text-black w-10">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="comment-list" class="divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-100 transition-all duration-300">
+                            <tr class="hover:bg-yellow-50 transition-all duration-300">
                                 <td class="p-3 text-sm text-gray-800">Adi Nugroho</td>
-                                <td class="p-3 text-sm text-gray-800">Sunset-nya sangat memukau! Warna langitnya begitu hidup.</td>
-                                <td class="p-3 text-sm text-gray-800">12 Agu 2023, 10:00</td>
-                                <td class="p-3">
-                                    <a href="#" class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center hover:bg-red-700 text-sm transition-all duration-300" onclick="deleteComment(101)"><i class="fas fa-trash"></i></a>
+                                <td class="p-3 text-sm text-gray-800">Sunset-nya sangat memukau! Warna langitnya begitu
+                                    hidup.</td>
+                                <td class="p-3 text-sm text-gray-600">12 Agu 2023, 10:00</td>
+                                <td class="p-3 text-center">
+                                    <a href="#"
+                                        class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        onclick="deleteComment(101)">
+                                        <i class="fas fa-trash text-xs"></i>
+                                    </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-gray-100 transition-all duration-300">
+                            <tr class="hover:bg-yellow-50 transition-all duration-300">
                                 <td class="p-3 text-sm text-gray-800">Siti Aisyah</td>
-                                <td class="p-3 text-sm text-gray-800">Apa lensa yang digunakan untuk menangkap detail ini? Keren banget!</td>
-                                <td class="p-3 text-sm text-gray-800">12 Agu 2023, 12:30</td>
-                                <td class="p-3">
-                                    <a href="#" class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center hover:bg-red-700 text-sm transition-all duration-300" onclick="deleteComment(102)"><i class="fas fa-trash"></i></a>
+                                <td class="p-3 text-sm text-gray-800">Apa lensa yang digunakan untuk menangkap detail
+                                    ini? Keren banget!</td>
+                                <td class="p-3 text-sm text-gray-600">12 Agu 2023, 12:30</td>
+                                <td class="p-3 text-center">
+                                    <a href="#"
+                                        class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        onclick="deleteComment(102)">
+                                        <i class="fas fa-trash text-xs"></i>
+                                    </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-gray-100 transition-all duration-300">
+                            <tr class="hover:bg-yellow-50 transition-all duration-300">
                                 <td class="p-3 text-sm text-gray-800">Budi Santoso</td>
-                                <td class="p-3 text-sm text-gray-800">Karya ini bikin saya ingin langsung ke Bali! 😍</td>
-                                <td class="p-3 text-sm text-gray-800">13 Agu 2023, 09:15</td>
-                                <td class="p-3">
-                                    <a href="#" class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center hover:bg-red-700 text-sm transition-all duration-300" onclick="deleteComment(103)"><i class="fas fa-trash"></i></a>
+                                <td class="p-3 text-sm text-gray-800">Karya ini bikin saya ingin langsung ke Bali! 😍
+                                </td>
+                                <td class="p-3 text-sm text-gray-600">13 Agu 2023, 09:15</td>
+                                <td class="p-3 text-center">
+                                    <a href="#"
+                                        class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        onclick="deleteComment(103)">
+                                        <i class="fas fa-trash text-xs"></i>
+                                    </a>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-gray-100 transition-all duration-300">
+                            <tr class="hover:bg-yellow-50 transition-all duration-300">
                                 <td class="p-3 text-sm text-gray-800">Lina Marlina</td>
-                                <td class="p-3 text-sm text-gray-800">Komposisi fotonya sangat seimbang, siluetnya menambah estetika.</td>
-                                <td class="p-3 text-sm text-gray-800">13 Agu 2023, 14:20</td>
-                                <td class="p-3">
-                                    <a href="#" class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center hover:bg-red-700 text-sm transition-all duration-300" onclick="deleteComment(104)"><i class="fas fa-trash"></i></a>
+                                <td class="p-3 text-sm text-gray-800">Komposisi fotonya sangat seimbang, siluetnya
+                                    menambah estetika.</td>
+                                <td class="p-3 text-sm text-gray-600">13 Agu 2023, 14:20</td>
+                                <td class="p-3 text-center">
+                                    <a href="#"
+                                        class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        onclick="deleteComment(104)">
+                                        <i class="fas fa-trash text-xs"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
             </div>
 
             <!-- Delete Modal -->
-            <div class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 opacity-0 transition-all duration-500" id="deleteModal">
-                <div class="bg-white rounded-xl p-5 w-full max-w-sm shadow-xl transform scale-95 transition-transform duration-300">
+            <div class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 opacity-0 transition-all duration-500"
+                id="deleteModal">
+                <div
+                    class="bg-white rounded-xl p-5 w-full max-w-sm shadow-xl transform scale-95 transition-transform duration-300">
                     <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
-                        <h3 class="text-lg font-semibold text-gray-800" style="font-family: 'Space Grotesk', sans-serif;">Hapus Karya</h3>
-                        <button class="text-lg text-gray-500 hover:text-gray-800 transition-all duration-300" onclick="closeDeleteModal()">&times;</button>
+                        <h3 class="text-lg font-semibold text-gray-800"
+                            style="font-family: 'Space Grotesk', sans-serif;">Hapus Karya</h3>
+                        <button class="text-lg text-gray-500 hover:text-gray-800 transition-all duration-300"
+                            onclick="closeDeleteModal()">&times;</button>
                     </div>
                     <div class="mb-5 text-sm text-gray-600 leading-relaxed">
-                        <p class="mb-2">Yakin ingin menghapus karya <strong id="deleteArtworkName">Sunset at Bali Beach</strong>?</p>
+                        <p class="mb-2">Yakin ingin menghapus karya <strong id="deleteArtworkName">Sunset at Bali
+                                Beach</strong>?</p>
                         <p>Tindakan ini tidak dapat dibatalkan.</p>
                     </div>
                     <div class="flex justify-end gap-3">
-                        <button class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300" onclick="closeDeleteModal()">Batal</button>
-                        <button class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300">Hapus</button>
+                        <button
+                            class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300"
+                            onclick="closeDeleteModal()">Batal</button>
+                        <button
+                            class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -261,7 +344,14 @@
                     color: var(--gray-dark);
                 }
 
-                h1, h2, h3, label, input, select, textarea, button {
+                h1,
+                h2,
+                h3,
+                label,
+                input,
+                select,
+                textarea,
+                button {
                     font-family: 'Space Grotesk', sans-serif;
                 }
 
@@ -273,7 +363,9 @@
                     background-image: none;
                 }
 
-                input:focus, select:focus, textarea:focus {
+                input:focus,
+                select:focus,
+                textarea:focus {
                     box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
                 }
 
@@ -321,10 +413,12 @@
                     .sm\:grid-cols-2 {
                         grid-template-columns: 1fr;
                     }
+
                     .comment-table td {
                         font-size: 0.75rem;
                     }
                 }
+
             </style>
             @endpush
 
@@ -334,7 +428,13 @@
                 function fmtDateISOtoDisplay(iso) {
                     if (!iso) return "";
                     const d = new Date(iso);
-                    return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    return d.toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
                 }
 
                 // Carousel Functionality
@@ -421,7 +521,7 @@
                         pending: 'Menunggu',
                         rejected: 'Ditolak',
                         draft: 'Draft'
-                    }[e.target.value];
+                    } [e.target.value];
                     document.getElementById('gallery-status').className = `px-3 py-1.5 rounded-full text-xs font-semibold inline-block ${
                         e.target.value === 'published' ? 'bg-amber-100 text-amber-700' :
                         e.target.value === 'pending' ? 'bg-yellow-100 text-yellow-700' :
@@ -437,6 +537,7 @@
                         document.querySelector('#deleteModal .transform').classList.remove('scale-95');
                     }, 50);
                 }
+
                 function closeDeleteModal() {
                     document.getElementById('deleteModal').classList.remove('opacity-100');
                     document.querySelector('#deleteModal .transform').classList.add('scale-95');
@@ -450,7 +551,8 @@
                 function deleteComment(id) {
                     console.log('Deleting comment:', id);
                 }
+
             </script>
             @endpush
         </div>
-    </x-admin-layout>
+</x-admin-layout>
