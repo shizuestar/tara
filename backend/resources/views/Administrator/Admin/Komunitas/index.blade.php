@@ -1,54 +1,53 @@
+
 <x-admin-layout>
     <div class="content-background">
         <div class="page-header">
             <h1 class="page-title">
-                <i class="fas fa-photo-video"></i>
-                Galeri Karya
+                <i class="fas fa-users"></i>
+                Manajemen Komunitas
             </h1>
             <a href="#" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
-                Tambah Karya Baru
+                Tambah Komunitas Baru
             </a>
         </div>
 
         <div class="filter-section">
             <h3 class="filter-title">
                 <i class="fas fa-filter"></i>
-                Filter Karya
+                Filter Komunitas
             </h3>
             <div class="filter-grid">
                 <div class="filter-group">
                     <label class="filter-label">Kategori</label>
                     <select class="filter-select">
                         <option value="">Semua Kategori</option>
-                        <option value="photography">Fotografi</option>
-                        <option value="design">Desain</option>
-                        <option value="illustration">Ilustrasi</option>
-                        <option value="coding">Koding</option>
+                        <option value="fotografi">Fotografi</option>
+                        <option value="desain">Desain</option>
+                        <option value="ilustrasi">Ilustrasi</option>
+                        <option value="koding">Koding</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">Status Kurasi</label>
+                    <label class="filter-label">Jumlah Anggota</label>
+                    <select class="filter-select">
+                        <option value="">Semua</option>
+                        <option value="0-50">0-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="101+">101+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
                     <select class="filter-select">
                         <option value="">Semua Status</option>
-                        <option value="published">Tayang</option>
-                        <option value="pending">Menunggu Review</option>
-                        <option value="rejected">Ditolak</option>
-                        <option value="draft">Draft</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Kreator</label>
-                    <select class="filter-select">
-                        <option value="">Semua Kreator</option>
-                        <option value="1">Dewi Santika</option>
-                        <option value="2">Aldi Pratama</option>
-                        <option value="3">Rina Andriani</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak-aktif">Tidak Aktif</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label">Kata Kunci</label>
-                    <input type="text" class="filter-input" placeholder="Cari judul atau deskripsi...">
+                    <input type="text" class="filter-input" placeholder="Cari nama atau deskripsi...">
                 </div>
             </div>
             <div class="filter-actions">
@@ -65,182 +64,89 @@
 
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title">Daftar Karya</h2>
-                <div class="results-count">Menampilkan 12 dari 85 hasil</div>
+                <h2 class="section-title">Daftar Komunitas</h2>
+                <div class="results-count">Menampilkan 5 dari 20 komunitas</div>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th width="80">Thumbnail</th>
-                            <th>Judul Karya</th>
-                            <th>Kategori</th>
-                            <th>Kreator</th>
-                            <th>Tanggal Upload</th>
+                            <th>Nama Komunitas</th>
+                            <th>Deskripsi Singkat</th>
                             <th>Status</th>
+                            <th>Jumlah Anggota</th>
+                            <th>Kategori</th>
                             <th width="120">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><div class="thumbnail"><i class="fas fa-image"></i></div></td>
-                            <td>
-                                <div class="table-title">Sunset at Bali Beach</div>
-                                <div class="table-meta">1920x1080px · 2.4MB</div>
-                            </td>
+                            <td>Fotografi Enthusiast</td>
+                            <td>Komunitas pecinta fotografi di Bali</td>
+                            <td><span class="status-badge status-published">Aktif</span></td>
+                            <td>150</td>
                             <td>Fotografi</td>
-                            <td>Dewi Santika</td>
-                            <td>12 Agu 2023</td>
-                            <td><span class="status-badge status-published">Tayang</span></td>
                             <td>
                                 <div class="action-buttons">
                                     <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
                                     <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Sunset at Bali Beach')"><i class="fas fa-trash"></i></a>
+                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Fotografi Enthusiast')"><i class="fas fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td><div class="thumbnail"><i class="fas fa-paint-brush"></i></div></td>
-                            <td>
-                                <div class="table-title">Digital Illustration Series</div>
-                                <div class="table-meta">2500x2500px · 5.1MB</div>
-                            </td>
-                            <td>Ilustrasi</td>
-                            <td>Aldi Pratama</td>
-                            <td>10 Agu 2023</td>
-                            <td><span class="status-badge status-published">Tayang</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Digital Illustration Series')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-code"></i></div></td>
-                            <td>
-                                <div class="table-title">E-commerce Dashboard</div>
-                                <div class="table-meta">Laravel · Vue.js</div>
-                            </td>
-                            <td>Koding</td>
-                            <td>Rina Andriani</td>
-                            <td>08 Agu 2023</td>
-                            <td><span class="status-badge status-pending">Menunggu Review</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('E-commerce Dashboard')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="thumbnail"><i class="fas fa-palette"></i></div></td>
-                            <td>
-                                <div class="table-title">Brand Identity Package</div>
-                                <div class="table-meta">Logo · Guideline</div>
-                            </td>
+                            <td>Desain Grafis Indonesia</td>
+                            <td>Tempat berbagi tips desain grafis</td>
+                            <td><span class="status-badge status-published">Aktif</span></td>
+                            <td>200</td>
                             <td>Desain</td>
-                            <td>Budi Santoso</td>
-                            <td>05 Agu 2023</td>
-                            <td><span class="status-badge status-rejected">Ditolak</span></td>
                             <td>
                                 <div class="action-buttons">
                                     <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
                                     <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Brand Identity Package')"><i class="fas fa-trash"></i></a>
+                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Desain Grafis Indonesia')"><i class="fas fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td><div class="thumbnail"><i class="fas fa-image"></i></div></td>
-                            <td>
-                                <div class="table-title">Urban Architecture</div>
-                                <div class="table-meta">3000x2000px · 4.8MB</div>
-                            </td>
-                            <td>Fotografi</td>
-                            <td>Sari Indah</td>
-                            <td>03 Agu 2023</td>
-                            <td><span class="status-badge status-draft">Draft</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Urban Architecture')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="pagination-item active">1</a>
-                <a href="#" class="pagination-item">2</a>
-                <a href="#" class="pagination-item">3</a>
-                <span class="pagination-ellipsis">...</span>
-                <a href="#" class="pagination-item">8</a>
-                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div>
-
-        <!-- <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Daftar Kategori</h2>
-                <button class="btn btn-primary" onclick="showCategoryModal('create')">
-                    <i class="fas fa-plus"></i>
-                    Tambah Kategori
-                </button>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama Kategori</th>
-                            <th>Deskripsi</th>
-                            <th width="120">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Fotografi</td>
-                            <td>Gambar-gambar yang diambil dengan kamera profesional.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Fotografi', 'Gambar-gambar yang diambil dengan kamera profesional.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Fotografi')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Desain</td>
-                            <td>Karya desain grafis seperti logo dan poster.</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Desain', 'Karya desain grafis seperti logo dan poster.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Desain')"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
+                            <td>Ilustrator Muda</td>
+                            <td>Komunitas ilustrator pemula</td>
+                            <td><span class="status-badge status-rejected">Tidak Aktif</span></td>
+                            <td>80</td>
                             <td>Ilustrasi</td>
-                            <td>Gambar ilustrasi digital atau tradisional.</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Ilustrasi', 'Gambar ilustrasi digital atau tradisional.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Ilustrasi')"><i class="fas fa-trash"></i></a>
+                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Ilustrator Muda')"><i class="fas fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
                         <tr>
+                            <td>Koder Komunitas</td>
+                            <td>Belajar coding bersama</td>
+                            <td><span class="status-badge status-published">Aktif</span></td>
+                            <td>120</td>
                             <td>Koding</td>
-                            <td>Proyek pengembangan perangkat lunak atau aplikasi.</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-edit" onclick="showCategoryModal('edit', 'Koding', 'Proyek pengembangan perangkat lunak atau aplikasi.')"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="action-btn btn-delete" onclick="showCategoryDeleteModal('Koding')"><i class="fas fa-trash"></i></a>
+                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Koder Komunitas')"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Artist United</td>
+                            <td>Seniman bersatu</td>
+                            <td><span class="status-badge status-published">Aktif</span></td>
+                            <td>300</td>
+                            <td>Desain, Ilustrasi</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="action-btn btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="action-btn btn-delete" onclick="showDeleteModal('Artist United')"><i class="fas fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -256,62 +162,22 @@
                 <a href="#" class="pagination-item">5</a>
                 <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
             </div>
-        </div> -->
-    </div>
-
-    <div class="modal" id="deleteModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Hapus Karya</h3>
-                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-text">Apakah Anda yakin ingin menghapus karya <strong id="deleteArtworkName"></strong>?</p>
-                <p class="modal-text">Tindakan ini tidak dapat dibatalkan dan semua data terkait karya ini akan dihapus permanen.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeDeleteModal()">Batal</button>
-                <button class="btn btn-primary">Hapus Karya</button>
-            </div>
         </div>
-    </div>
 
-    <div class="modal" id="categoryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="categoryModalTitle">Tambah Kategori</h3>
-                <button class="modal-close" onclick="closeCategoryModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="filter-group">
-                    <label class="filter-label">Nama Kategori</label>
-                    <input type="text" id="categoryName" class="filter-input" placeholder="Masukkan nama kategori...">
+        <div class="modal" id="deleteModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Hapus Komunitas</h3>
+                    <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Deskripsi</label>
-                    <textarea id="categoryDescription" class="filter-input" rows="4" placeholder="Masukkan deskripsi kategori..."></textarea>
+                <div class="modal-body">
+                    <p class="modal-text">Apakah Anda yakin ingin menghapus komunitas <strong id="deleteCommunityName"></strong>?</p>
+                    <p class="modal-text">Tindakan ini tidak dapat dibatalkan dan semua data terkait komunitas ini akan dihapus permanen.</p>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeCategoryModal()">Batal</button>
-                <button class="btn btn-primary" onclick="saveCategory()">Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="categoryDeleteModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Hapus Kategori</h3>
-                <button class="modal-close" onclick="closeCategoryDeleteModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-text">Apakah Anda yakin ingin menghapus kategori <strong id="deleteCategoryName"></strong>?</p>
-                <p class="modal-text">Tindakan ini tidak dapat dibatalkan dan semua data terkait kategori ini akan dihapus permanen.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeCategoryDeleteModal()">Batal</button>
-                <button class="btn btn-primary">Hapus Kategori</button>
+                <div class="modal-footer">
+                    <button class="btn" onclick="closeDeleteModal()">Batal</button>
+                    <button class="btn btn-primary">Hapus Komunitas</button>
+                </div>
             </div>
         </div>
     </div>
@@ -345,7 +211,6 @@
             display: flex;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--primary-bg);
@@ -503,7 +368,6 @@
             color: #666;
         }
 
-        /* Navbar Styles */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -559,11 +423,10 @@
             font-size: 12px;
         }
 
-        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
-            padding-top: 80px; /* Account for fixed navbar height */
+            padding-top: 80px;
         }
 
         .content-background {
@@ -578,7 +441,6 @@
             margin: 0 var(--content-margin);
         }
 
-        /* Page Header */
         .page-header {
             margin-bottom: 30px;
             display: flex;
@@ -629,7 +491,6 @@
             background: #e6c300;
         }
 
-        /* Filter Section */
         .filter-section {
             background: var(--primary-bg);
             border-radius: 12px;
@@ -687,7 +548,6 @@
             margin-top: 20px;
         }
 
-        /* Content Section */
         .content-section {
             background: var(--primary-bg);
             border-radius: 12px;
@@ -830,7 +690,6 @@
             font-size: 12px;
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -868,7 +727,6 @@
             color: #666;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -928,70 +786,36 @@
             gap: 10px;
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
+        .detail-info {
+            margin-bottom: 30px;
         }
 
-        @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 100%;
-            }
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                box-shadow: none;
-                transform: none;
-            }
-            .navbar {
-                position: relative;
-                left: 0;
-                padding: 15px 20px;
-            }
-            .main-content {
-                margin-left: 0;
-                padding-top: 0;
-            }
-            .content-wrapper {
-                margin: 0 20px;
-            }
-            .content-background {
-                margin: 0 20px;
-                padding: 15px;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-            .search-bar {
-                width: 100%;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
+        .detail-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .detail-info p {
+            margin-bottom: 10px;
+        }
+
+        .detail-list {
+            margin-bottom: 30px;
+        }
+
+        .detail-list h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
     </style>
     @endpush
 
     @push('scripts')
     <script>
-        function showDeleteModal(artworkName) {
-            document.getElementById('deleteArtworkName').textContent = artworkName;
+        function showDeleteModal(communityName) {
+            document.getElementById('deleteCommunityName').textContent = communityName;
             document.getElementById('deleteModal').style.display = 'flex';
         }
 
@@ -999,54 +823,10 @@
             document.getElementById('deleteModal').style.display = 'none';
         }
 
-        function showCategoryModal(mode, name = '', description = '') {
-            const modal = document.getElementById('categoryModal');
-            const title = document.getElementById('categoryModalTitle');
-            const nameInput = document.getElementById('categoryName');
-            const descInput = document.getElementById('categoryDescription');
-
-            if (mode === 'create') {
-                title.textContent = 'Tambah Kategori';
-                nameInput.value = '';
-                descInput.value = '';
-            } else {
-                title.textContent = 'Edit Kategori';
-                nameInput.value = name;
-                descInput.value = description;
-            }
-            modal.style.display = 'flex';
-        }
-
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').style.display = 'none';
-        }
-
-        function showCategoryDeleteModal(categoryName) {
-            document.getElementById('deleteCategoryName').textContent = categoryName;
-            document.getElementById('categoryDeleteModal').style.display = 'flex';
-        }
-
-        function closeCategoryDeleteModal() {
-            document.getElementById('categoryDeleteModal').style.display = 'none';
-        }
-
-        function saveCategory() {
-            const name = document.getElementById('categoryName').value;
-            const description = document.getElementById('categoryDescription').value;
-            console.log('Saving category:', { name, description });
-            closeCategoryModal();
-        }
-
         window.onclick = function(event) {
             const deleteModal = document.getElementById('deleteModal');
-            const categoryModal = document.getElementById('categoryModal');
-            const categoryDeleteModal = document.getElementById('categoryDeleteModal');
             if (event.target === deleteModal) {
                 closeDeleteModal();
-            } else if (event.target === categoryModal) {
-                closeCategoryModal();
-            } else if (event.target === categoryDeleteModal) {
-                closeCategoryDeleteModal();
             }
         };
 
@@ -1061,3 +841,4 @@
     </script>
     @endpush
 </x-admin-layout>
+```

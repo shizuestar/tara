@@ -186,7 +186,7 @@
             </div>
         </div>
 
-        <div class="content-section">
+        <!-- <div class="content-section">
             <div class="section-header">
                 <h2 class="section-title">Daftar Kategori Proyek</h2>
                 <button class="btn btn-primary" onclick="showCategoryModal('create')">
@@ -256,7 +256,7 @@
                 <a href="#" class="pagination-item">5</a>
                 <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="modal" id="deleteModal">

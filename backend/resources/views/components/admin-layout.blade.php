@@ -14,13 +14,10 @@
 
     <main class="main-content">
         <x-admin-navbar />
-<<<<<<< HEAD
-        {{ $slot }}
-=======
+
         <div class="content-wrapper">
             {{ $slot }}
         </div>
->>>>>>> 1a5e53b7a1e4d9e3e92000c712e1912466a76b83
     </main>
 
     @stack('scripts')

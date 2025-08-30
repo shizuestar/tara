@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminKomunitasController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -48,4 +49,6 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 
  Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
  Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
+ Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
+ Route::get('/admin/komunitas', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
 
