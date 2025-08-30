@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\proyek;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Proyek;
@@ -13,7 +13,7 @@ class ProyekController extends Controller
      */
     public function index()
     {
-        //
+        return view('public.proyek.index');
     }
 
     /**

@@ -28,20 +28,20 @@
                     </a>
                     <a href="{{ route('galeri') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
-                    <a href="/komunitas.html"
+                    <a href="{{ route('komunitas') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
-                    <a href="/proyek.html"
+                    <a href="{{ route('proyek') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
-                    <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
-                    <a href="/agenda.html"
+                    <a href="{{ route('blog') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+                    <a href="{{ route('agenda') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
 
                     <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
-                        <a href="/login"
+                        <a href="{{ route('login') }}"
                             class="px-4 py-2 text-gray-700 font-medium bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition w-full md:w-auto text-center">
                             Log In
                         </a>
-                        <a href="/register"
+                        <a href="{{ route('register') }}"
                             class="px-4 py-2 text-white font-medium bg-black rounded-md hover:bg-gray-800 transition w-full md:w-auto text-center">
                             Sign Up
                         </a>
