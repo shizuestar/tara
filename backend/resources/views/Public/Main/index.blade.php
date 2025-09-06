@@ -9,7 +9,7 @@
             mouseY = 0;
         let cursorX = 0,
             cursorY = 0;
-        const speed = 0.9; // Kamu bisa ubah ini biar lebih smooth
+        const speed = 0.9;
 
         function animateCursor() {
             cursorX += (mouseX - cursorX) * speed;

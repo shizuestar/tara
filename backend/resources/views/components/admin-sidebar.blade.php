@@ -1,15 +1,11 @@
 <aside class="w-[280px] bg-white border-r border-gray-200 shadow-sm flex flex-col fixed h-screen z-50">
-    <div class="p-6 border-b border-gray-200 flex items-center justify-center bg-white">
-        <div class="flex items-center gap-3">
-            <div
-                class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center text-gray-900 font-bold text-xl shadow-md">
-                T
-            </div>
-            <div class="text-2xl font-bold text-gray-900">TARA</div>
+    <div class="p-6 border-b border-gray-200 flex items-center justify-left bg-white">
+        <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-yellow-400">●</span>
         </div>
     </div>
 
-    <nav class="p-5 flex-grow overflow-y-auto">
+    <nav class="p-5 flex-grow overflow-y-auto custom-scrollbar">
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Menu Utama</div>
             <a href="dashboard"
@@ -43,20 +39,20 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href="#"
+            <a href=""
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-calendar-alt"></i></div>
                 <span class="flex-grow">Agenda</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">30</span>
             </a>
-            <a href="#"
+            <a href=""
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-user-friends"></i></div>
                 <span class="flex-grow">User</span>
             </a>
-            <a href="#"
+            <a href="{{ route('admin.galeri.index') }}"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-photo-video"></i></div>
@@ -103,4 +99,25 @@
             </a>
         </div>
     </div>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #111827;
+        }
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #1f2937 #f1f1f1;
+        }
+    </style>
 </aside>

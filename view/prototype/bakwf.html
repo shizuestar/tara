@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TARA – Showcase Kreativitas Anak Muda</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #ffffff;
+            color: #111827;
+        }
+
+        .perspective {
+            perspective: 1200px;
+        }
+
+        .hover-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .hover-3d .inner {
+            transform: rotateY(0deg) rotateX(0deg);
+            transition: transform 0.4s ease;
+        }
+
+        .hover-3d:hover .inner {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-accent {
+            color: #facc15;
+        }
+    </style>
+</head>
+
+<body class="relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center space-y-6">
+        <lottie-player src="https://lottie.host/2c7998e7-175a-45d7-baf5-7c3c890cfe8f/xzx2zjGCZk.json"
+            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+        <p class="text-sm text-gray-500 animate-pulse">Memuat kreativitas terbaik...</p>
+    </div>
+
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 z-40">
+        <div class="text-2xl font-bold uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">
+            TARA<span class="text-accent">●</span>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-sm text-gray-700">
+            <a href="/" class="hover:text-black transition font-semibold">Beranda</a>
+            <a href="/eksplor" class="hover:text-black transition">Eksplor</a>
+            <a href="/komunitas" class="hover:text-black transition">Komunitas</a>
+            <a href="/proyek" class="hover:text-black transition">Proyek</a>
+            <a href="/blog" class="hover:text-black transition">Blog</a>
+            <a href="/agenda" class="hover:text-black transition">Agenda</a>
+            <a href="/profil" class="hover:text-black transition">Profil</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <input type="text" placeholder="Cari karya, komunitas, proyek..."
+                class="px-4 py-1.5 rounded-full bg-gray-100 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black transition" />
+            <a href="/login" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition">Login</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative text-center py-32 bg-white perspective overflow-hidden">
+        <div class="absolute inset-0 bg-white opacity-90 pointer-events-none"></div>
+        <div id="hero-text" class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-6xl font-bold tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">
+                TARA: Galeri Kreativitas Anak Muda<span class="text-accent align-middle ml-1">●</span>
+            </h1>
+            <p class="mt-4 text-lg text-gray-700 leading-relaxed">
+                Ruang digital untuk memamerkan karya, berkolaborasi dalam proyek sosial, dan membangun komunitas kreatif Indonesia.
+            </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="/register" class="px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Gabung Sekarang</a>
+                <a href="/eksplor" class="px-6 py-3 bg-gray-100 text-black rounded-full font-semibold hover:bg-gray-200 transition">Eksplor Karya</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistik -->
+    <section id="stats" class="relative py-20 bg-white overflow-hidden">
+        <div class="absolute inset-0 bg-white opacity-95 pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover-3d">
+                    <div class="inner">
+                        <div class="flex justify-center mb-4">
+                            <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path d="M3 5h18M5 8h14M7 11h10M9 14h6M11 17h2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="text-5xl font-bold text-accent mb-2" id="count1">0</div>
+                        <p class="text-gray-700 font-medium tracking-wide">Karya Dipamerkan</p>
+                        <div class="mt-2 w-12 h-1 mx-auto bg-accent rounded-full"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover-3d">
+                    <div class="inner">
+                        <div class="flex justify-center mb-4">
+                            <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path d="M16 14a4 4 0 1 0-8 0m12 6v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="text-5xl font-bold text-accent mb-2" id="count2">0</div>
+                        <p class="text-gray-700 font-medium tracking-wide">Kontributor</p>
+                        <div class="mt-2 w-12 h-1 mx-auto bg-accent rounded-full"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl border border-gray-200 p-8 shadow-lg hover-3d">
+                    <div class="inner">
+                        <div class="flex justify-center mb-4">
+                            <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path d="M8 7V3M16 7V3M4 11h16M4 19h16M4 15h16" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="text-5xl font-bold text-accent mb-2" id="count3">0</div>
+                        <p class="text-gray-700 font-medium tracking-wide">Tahun Eksistensi</p>
+                        <div class="mt-2 w-12 h-1 mx-auto bg-accent rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Karya Unggulan -->
+    <section class="py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-black">Karya Unggulan</h2>
+                <p class="text-lg text-gray-700 mt-2">Koleksi terbaik dari kreator Indonesia</p>
+            </div>
+            <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            <div class="mt-10 text-center">
+                <a href="/eksplor" class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Karya</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kategori Karya -->
+    <section class="py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-black">Kategori Karya</h2>
+                <p class="text-lg text-gray-700 mt-2">Temukan inspirasi dari berbagai bidang kreativitas</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="/eksplor?kategori=puisi" class="gallery-item bg-white rounded-lg shadow-lg p-6 text-center hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/200/200?poetry" alt="Puisi" class="w-16 h-16 mx-auto mb-4" />
+                        <h3 class="text-lg font-semibold text-black">Puisi</h3>
+                        <p class="text-sm text-gray-700">Kata-kata yang menyentuh jiwa</p>
+                    </div>
+                </a>
+                <a href="/eksplor?kategori=desain" class="gallery-item bg-white rounded-lg shadow-lg p-6 text-center hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/200/200?design" alt="Desain" class="w-16 h-16 mx-auto mb-4" />
+                        <h3 class="text-lg font-semibold text-black">Desain</h3>
+                        <p class="text-sm text-gray-700">Visual yang memukau</p>
+                    </div>
+                </a>
+                <a href="/eksplor?kategori=musik" class="gallery-item bg-white rounded-lg shadow-lg p-6 text-center hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/200/200?music" alt="Musik" class="w-16 h-16 mx-auto mb-4" />
+                        <h3 class="text-lg font-semibold text-black">Musik</h3>
+                        <p class="text-sm text-gray-700">Melodi yang menginspirasi</p>
+                    </div>
+                </a>
+                <a href="/eksplor?kategori=coding" class="gallery-item bg-white rounded-lg shadow-lg p-6 text-center hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/200/200?coding" alt="Coding" class="w-16 h-16 mx-auto mb-4" />
+                        <h3 class="text-lg font-semibold text-black">Coding</h3>
+                        <p class="text-sm text-gray-700">Inovasi teknologi</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Komunitas -->
+    <section class="py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-6">
+                <div class="inline-flex items-center gap-3 text-accent font-medium">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span>Komunitas Kreatif</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-black">Bergabung & Berkolaborasi</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    TARA adalah rumah bagi komunitas kreatif. Gabung dengan grup sesuai minatmu dan wujudkan ide bersama.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="/komunitas?group=puisi" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                        <h3 class="text-lg font-semibold text-black">Komunitas Puisi</h3>
+                        <p class="text-sm text-gray-700">Berbagi kata, menenun makna</p>
+                    </a>
+                    <a href="/komunitas?group=desain" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                        <h3 class="text-lg font-semibold text-black">Komunitas Desain</h3>
+                        <p class="text-sm text-gray-700">Ciptakan visual yang memukau</p>
+                    </a>
+                </div>
+                <a href="/komunitas" class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Komunitas</a>
+            </div>
+            <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200 hover-3d">
+                <div class="inner">
+                    <img src="https://picsum.photos/600/400?community" alt="Komunitas" class="w-full h-full object-cover transition-transform duration-500" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyek Sosial -->
+    <section class="py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200 hover-3d">
+                <div class="inner">
+                    <img src="https://picsum.photos/600/400?project" alt="Proyek" class="w-full h-full object-cover transition-transform duration-500" />
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="inline-flex items-center gap-3 text-accent font-medium">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.105 0-2 .895-2 2 0 1.105.895 2 2 2s2-.895 2-2-.895-2-2-2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20v-6m0 0a4 4 0 100-8 4 4 0 000 8z" />
+                    </svg>
+                    <span>Proyek Sosial</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-black">Wujudkan Ide Bersama</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Buat atau gabung proyek sosial untuk membangun dampak nyata dengan komunitas kreatif.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="/proyek/1" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                        <h3 class="text-lg font-semibold text-black">Pameran Virtual 2025</h3>
+                        <p class="text-sm text-gray-700">Showcase karya digital</p>
+                        <p class="text-xs text-gray-500">Deadline: 31 Des 2025</p>
+                    </a>
+                    <a href="/proyek/2" class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition">
+                        <h3 class="text-lg font-semibold text-black">Musik untuk Pendidikan</h3>
+                        <p class="text-sm text-gray-700">Lagu untuk anak-anak</p>
+                        <p class="text-xs text-gray-500">Deadline: 15 Nov 2025</p>
+                    </a>
+                </div>
+                <a href="/proyek" class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Proyek</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Sorotan -->
+    <section class="py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-black">Sorotan Mingguan</h2>
+                <p class="text-lg text-gray-700 mt-2">Inspirasi dari wawancara, tutorial, dan tips</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <a href="/blog/1" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/400?blog1" alt="Blog" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-black">Wawancara: Kerennya Karya Anak Muda</h3>
+                            <p class="text-sm text-gray-700">Inspirasi dari kreator muda Indonesia</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/blog/2" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/400?blog2" alt="Blog" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-black">Tutorial: Animasi GSAP</h3>
+                            <p class="text-sm text-gray-700">Pelajari trik animasi modern</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/blog/3" class="bg-white rounded-lg shadow-lg overflow-hidden hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/400?blog3" alt="Blog" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-black">Tips: Desain UI Menarik</h3>
+                            <p class="text-sm text-gray-700">Buat desain yang memukau</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="mt-10 text-center">
+                <a href="/blog" class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Lihat Semua Artikel</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-28 bg-white text-center">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Gabung Sekarang</h2>
+            <p class="text-lg text-gray-700 mb-6">Jadilah bagian dari gerakan kreatif digital Indonesia</p>
+            <a href="/register" class="inline-block px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition">Daftar Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="col-span-1 sm:col-span-2">
+                <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                    TARA<span class="text-accent">●</span>
+                </div>
+                <p class="text-gray-700 mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+                <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+                    <a href="#" class="hover:text-black transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="hover:text-black transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Navigasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-black transition">Beranda</a></li>
+                    <li><a href="/eksplor" class="hover:text-black transition">Eksplor Karya</a></li>
+                    <li><a href="/komunitas" class="hover:text-black transition">Komunitas</a></li>
+                    <li><a href="/proyek" class="hover:text-black transition">Proyek Sosial</a></li>
+                    <li><a href="/blog" class="hover:text-black transition">Blog</a></li>
+                    <li><a href="/agenda" class="hover:text-black transition">Agenda</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Eksplorasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/eksplor?kategori=puisi" class="hover:text-black transition">Puisi</a></li>
+                    <li><a href="/eksplor?kategori=desain" class="hover:text-black transition">Desain</a></li>
+                    <li><a href="/eksplor?kategori=musik" class="hover:text-black transition">Musik</a></li>
+                    <li><a href="/eksplor?kategori=coding" class="hover:text-black transition">Coding</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Kolaborasi</h3>
+                <ul class="space-y-2">
+                    <li><a href="/proyek/submit" class="hover:text-black transition">Submit Karya</a></li>
+                    <li><a href="/komunitas/gabung" class="hover:text-black transition">Gabung Komunitas</a></li>
+                    <li><a href="/proyek/buat" class="hover:text-black transition">Buat Proyek</a></li>
+                    <li><a href="/kontak" class="hover:text-black transition">Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-black mb-4 uppercase">Newsletter</h3>
+                <p class="text-gray-700 mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+                <form class="flex items-center gap-2">
+                    <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-black" required />
+                    <button type="submit" class="px-4 py-2 bg-black text-white text-sm rounded-md hover:bg-gray-800 transition">Kirim</button>
+                </form>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+            © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+            <a href="/tentang" class="hover:text-black transition">Tentang Kami</a> |
+            <a href="/ketentuan" class="hover:text-black transition">Ketentuan Layanan</a> |
+            <a href="/privasi" class="hover:text-black transition">Privasi</a> |
+            <a href="/bantuan" class="hover:text-black transition">Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        // Gallery Karya Unggulan
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        for (let i = 1; i <= 8; i++) {
+            gallery.innerHTML += `
+                <a href="/karya/${i}" class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer hover-3d">
+                    <div class="inner">
+                        <img src="https://picsum.photos/600/800?random=${i}"
+                            alt="Karya"
+                            class="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
+                        <div class="absolute bottom-0 left-0 p-4 z-10">
+                            <h4 class="text-white text-base font-semibold">Judul Karya ${i}</h4>
+                            <p class="text-white text-xs">Oleh: Kreator ${i} | ${Math.floor(Math.random() * 1000)}x Dilihat</p>
+                            <div class="flex gap-2 mt-2">
+                                <button class="text-white text-xs hover:text-accent transition">
+                                    <i class="fas fa-heart"></i> Suka
+                                </button>
+                                <button class="text-white text-xs hover:text-accent transition">
+                                    <i class="fas fa-bookmark"></i> Simpan
+                                </button>
+                                <button class="text-white text-xs hover:text-accent transition">
+                                    <i class="fas fa-share"></i> Bagikan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        // Animasi GSAP
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from("#hero-text", { rotationY: -80, opacity: 0, duration: 1.2, ease: "power4.out" });
+        gsap.utils.toArray("section").forEach((section, i) => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 80,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                },
+                delay: i * 0.1,
+            });
+        });
+
+        // Animasi Statistik
+        window.addEventListener('load', () => {
+            // Loading Screen
+            setTimeout(() => {
+                gsap.to("#loadingScreen", {
+                    duration: 1,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.getElementById("loadingScreen").style.display = "none";
+                        particlesJS("particles-js", {
+                            particles: {
+                                number: { value: 50, density: { enable: true, value_area: 1000 } },
+                                color: { value: "#4b5563" },
+                                shape: { type: "circle" },
+                                opacity: { value: 0.4, random: false },
+                                size: { value: 2, random: false },
+                                line_linked: { enable: false },
+                                move: {
+                                    enable: true,
+                                    speed: 0.5,
+                                    direction: "top",
+                                    random: false,
+                                    straight: false,
+                                    out_mode: "out"
+                                }
+                            },
+                            interactivity: {
+                                events: {
+                                    onhover: { enable: false },
+                                    onclick: { enable: false }
+                                }
+                            },
+                            retina_detect: true
+                        });
+                    }
+                });
+            }, 1600);
+
+            // Statistik Animasi
+            let done = false;
+            const observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting && !done) {
+                    done = true;
+                    anime({
+                        targets: '#count1',
+                        innerHTML: [0, 200],
+                        round: 1,
+                        easing: 'easeOutExpo',
+                        duration: 1800,
+                        update: function(anim) {
+                            document.getElementById('count1').innerText = Math.floor(anim.animations[0].currentValue) + '+';
+                        }
+                    });
+                    anime({
+                        targets: '#count2',
+                        innerHTML: [0, 128],
+                        round: 1,
+                        easing: 'easeOutExpo',
+                        duration: 1600,
+                        update: function(anim) {
+                            document.getElementById('count2').innerText = Math.floor(anim.animations[0].currentValue) + '+';
+                        }
+                    });
+                    anime({
+                        targets: '#count3',
+                        innerHTML: [0, 5],
+                        round: 1,
+                        easing: 'easeOutExpo',
+                        duration: 1400,
+                        update: function(anim) {
+                            document.getElementById('count3').innerText = Math.floor(anim.animations[0].currentValue) + '+';
+                        }
+                    });
+                }
+            }, { threshold: 0.5 });
+            const statsSection = document.getElementById('stats');
+            if (statsSection) observer.observe(statsSection);
+        });
+    </script>
+</body>
+</html>
