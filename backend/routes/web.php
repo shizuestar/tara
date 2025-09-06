@@ -9,6 +9,7 @@ use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
@@ -61,3 +62,5 @@ Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->na
 
 Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
 Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');
+
+Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user.index');
