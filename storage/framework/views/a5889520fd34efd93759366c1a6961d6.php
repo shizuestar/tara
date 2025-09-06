@@ -333,7 +333,7 @@
                 <!-- Aktivitas 1 -->
                 <div class="activity-card" data-category="post" data-date="2" data-likes="24" data-comments="8">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/4A6572/FFFFFF?text=Postingan+Baru"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Postingan Baru">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 24</button>
@@ -355,7 +355,7 @@
                 <!-- Aktivitas 2 -->
                 <div class="activity-card" data-category="event" data-date="5" data-likes="42" data-comments="12">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Event+Baru" alt="Event Baru">
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>" alt="Event Baru">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 42</button>
                             <button class="btn-icon"><i class="fas fa-comment"></i> 12</button>
@@ -377,7 +377,7 @@
                 <div class="activity-card" data-category="project" data-date="24" data-likes="31"
                     data-comments="5">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Proyek+Kolaborasi"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Proyek Kolaborasi">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 31</button>
@@ -400,7 +400,7 @@
                 <div class="activity-card" data-category="community" data-date="48" data-likes="56"
                     data-comments="9">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=Komunitas+Baru"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Komunitas Baru">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 56</button>
@@ -422,7 +422,7 @@
                 <!-- Aktivitas 5 -->
                 <div class="activity-card" data-category="post" data-date="72" data-likes="38" data-comments="6">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/96C93D/FFFFFF?text=Tutorial+Seni"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Tutorial Seni">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 38</button>
@@ -444,7 +444,7 @@
                 <!-- Aktivitas 6 -->
                 <div class="activity-card" data-category="event" data-date="96" data-likes="67" data-comments="14">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/3498DB/FFFFFF?text=Webinar+Seni"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Webinar Seni">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 67</button>
@@ -467,7 +467,7 @@
                 <div class="activity-card" data-category="project" data-date="120" data-likes="29"
                     data-comments="3">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/9B59B6/FFFFFF?text=Proyek+Komunitas"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Proyek Komunitas">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 29</button>
@@ -490,7 +490,7 @@
                 <div class="activity-card" data-category="community" data-date="144" data-likes="83"
                     data-comments="17">
                     <div class="activity-image">
-                        <img src="https://via.placeholder.com/300x200/E67E22/FFFFFF?text=Komunitas+Seni"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Komunitas Seni">
                         <div class="activity-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 83</button>
@@ -561,7 +561,7 @@
                 <div class="gallery-item" data-category="photography" data-title="Sunset di Pantai Sanur"
                     data-author="Budi Santoso" data-date="2">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/4A6572/FFFFFF?text=Fotografi" alt="Karya Seni">
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>" alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 24</button>
                             <button class="btn-icon"><i class="fas fa-comment"></i> 8</button>
@@ -581,7 +581,7 @@
                 <div class="gallery-item" data-category="digital" data-title="Abstract Colors"
                     data-author="Sari Dewi" data-date="5">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Digital+Art"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 42</button>
@@ -602,7 +602,7 @@
                 <div class="gallery-item" data-category="photography" data-title="Potret Budaya"
                     data-author="Ahmad Junaedi" data-date="24">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/4A6572/FFFFFF?text=Potret" alt="Karya Seni">
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>" alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 31</button>
                             <button class="btn-icon"><i class="fas fa-comment"></i> 5</button>
@@ -622,7 +622,7 @@
                 <div class="gallery-item" data-category="painting" data-title="Lukisan Alam"
                     data-author="Dewi Lestari" data-date="48">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Lukisan" alt="Karya Seni">
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>" alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 56</button>
                             <button class="btn-icon"><i class="fas fa-comment"></i> 9</button>
@@ -642,7 +642,7 @@
                 <div class="gallery-item" data-category="sculpture" data-title="Patung Kayu"
                     data-author="Joko Widodo" data-date="72">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=Patung" alt="Karya Seni">
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>" alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 38</button>
                             <button class="btn-icon"><i class="fas fa-comment"></i> 6</button>
@@ -662,7 +662,7 @@
                 <div class="gallery-item" data-category="digital" data-title="Digital Fantasy"
                     data-author="Rina Melati" data-date="96">
                     <div class="gallery-image">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Fantasy+Art"
+                        <img src="<?php echo e(asset('assets/img/Dummy.jpg')); ?>"
                             alt="Karya Seni">
                         <div class="gallery-overlay">
                             <button class="btn-icon"><i class="fas fa-heart"></i> 67</button>
@@ -1289,82 +1289,62 @@
 
             .stat-card {
                 background: var(--primary-bg);
-                border-radius: 12px;
+                border-radius: 8px;
                 padding: 20px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
                 display: flex;
                 align-items: center;
                 gap: 15px;
-                transition: transform 0.3s, box-shadow 0.3s;
+                transition: all 0.3s ease;
                 min-width: 0;
-                border-left: 4px solid; /* Border kiri tanpa warna spesifik */
-                border: 1px solid var(--border-color);
-                position: relative;
-                overflow: hidden;
-            }
-
-            /* Warna border kiri yang berbeda untuk setiap card */
-            .stat-card.traffic {
-                border-left-color: #7e3af2; /* Ungu */
-            }
-
-            .stat-card.users {
-                border-left-color: #0e9f6e; /* Hijau */
-            }
-
-            .stat-card.content {
-                border-left-color: #ff5a1f; /* Oranye */
+                border-left: 6px solid var(--accent-color); /* Border kiri tebal kuning */
+                border-right: 1px solid var(--border-color);
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
             }
 
             .stat-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            }
-
-            /* Efek hover - border kiri menjadi lebih lebar */
-            .stat-card:hover::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 6px; /* Lebar border saat hover */
-                background: inherit;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-right-color: var(--accent-color);
+                border-top-color: var(--accent-color);
+                border-bottom-color: var(--accent-color);
             }
 
             .stat-icon {
-                flex-shrink: 0;
-                width: 60px;
-                height: 60px;
-                border-radius: 12px;
+                width: 48px;
+                height: 48px;
+                border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 24px;
-                background: rgba(255, 215, 0, 0.1);
+                font-size: 18px;
+                transition: all 0.3s ease;
+                background-color: rgba(255, 215, 0, 0.15);
                 color: var(--accent-color);
             }
 
+            .stat-card:hover .stat-icon {
+                transform: scale(1.05);
+                background-color: rgba(255, 215, 0, 0.25);
+            }
+
             .stat-info {
-                flex-grow: 1;
-                min-width: 0;
+                flex: 1;
             }
 
             .stat-value {
-                font-size: 28px;
+                font-size: 22px;
                 font-weight: 700;
-                margin-bottom: 5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                margin-bottom: 4px;
+                color: var(--text-color);
             }
 
             .stat-label {
+                font-size: 13px;
                 color: #666;
-                font-size: 14px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                font-weight: 500;
+                line-height: 1.4;
             }
 
             /* Konten lainnya */
@@ -2154,14 +2134,40 @@
                 list-style: none;
             }
 
-            .activity-item {
+           .activity-item {
                 display: flex;
                 padding: 15px 0;
                 border-bottom: 1px solid var(--border-color);
+                transition: all 0.3s ease;
+                position: relative;
+                cursor: pointer;
             }
 
             .activity-item:last-child {
                 border-bottom: none;
+            }
+
+            .activity-item:hover {
+                transform: translateX(8px);
+                background-color: rgba(255, 215, 0, 0.05); 
+                border-radius: 8px;
+                padding-left: 15px; 
+                margin: 5px -15px;
+                border-bottom-color: transparent; 
+            }
+            .activity-item:hover::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: var(--accent-color);
+                border-radius: 2px;
+            }
+            .activity-item:hover .activity-icon {
+                transform: scale(1.1);
+                color: var(--accent-color);
             }
 
             .activity-icon {
@@ -2171,23 +2177,27 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background-color: rgba(255, 215, 0, 0.1);
+                color: #666;
                 margin-right: 15px;
-                background: rgba(255, 215, 0, 0.1);
-                color: var(--accent-color);
+                flex-shrink: 0;
             }
 
             .activity-content {
-                flex-grow: 1;
+                flex: 1;
             }
 
             .activity-title {
                 font-weight: 500;
                 margin-bottom: 5px;
+                color: var(--text-color);
             }
 
             .activity-time {
-                font-size: 12px;
-                color: #888;
+                font-size: 13px;
+                color: #666;
             }
 
             .quick-actions {
@@ -2911,11 +2921,23 @@
                 border-radius: 12px;
                 padding: 20px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-                transition: transform 0.3s;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+                /* Border yang benar */
+                border-left: 6px solid var(--accent-color); 
+                border-right: 1px solid var(--border-color);
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
             }
 
             .event-card:hover {
-                transform: translateY(-5px);
+                transform: translateY(-5px) scale(1.02); /* Sedikit membesar */
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                border-left-width: 8px; /* Border left lebih tebal */
+                border-right-color: var(--accent-color);
+                border-top-color: var(--accent-color);
+                border-bottom-color: var(--accent-color);
             }
 
             .event-date {
@@ -3037,8 +3059,26 @@
                 border-radius: 12px;
                 padding: 20px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+                /* Border seperti card sebelumnya */
+                border-left: 6px solid var(--accent-color); 
+                border-right: 1px solid var(--border-color);
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
             }
 
+            .analytics-widget:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                border-left-width: 8px;
+                border-right-color: var(--accent-color);
+                border-top-color: var(--accent-color);
+                border-bottom-color: var(--accent-color);
+            }
+
+            /* Style tambahan untuk konsistensi */
             .widget-header {
                 display: flex;
                 justify-content: space-between;
@@ -3049,36 +3089,38 @@
             .widget-header h3 {
                 font-size: 16px;
                 font-weight: 600;
+                color: var(--text-color);
             }
 
             .widget-header i {
-                font-size: 24px;
                 color: var(--accent-color);
+                font-size: 20px;
             }
 
             .widget-value {
                 font-size: 28px;
                 font-weight: 700;
-                margin-bottom: 5px;
+                color: var(--text-color);
+                margin-bottom: 8px;
             }
 
             .widget-change {
                 font-size: 14px;
-                font-weight: 600;
+                font-weight: 500;
                 margin-bottom: 5px;
             }
 
             .widget-change.positive {
-                color: #2ed573;
+                color: #0e9f6e; /* Hijau untuk positif */
             }
 
             .widget-change.negative {
-                color: #ff4757;
+                color: #e02424; /* Merah untuk negatif */
             }
 
             .widget-label {
-                font-size: 12px;
-                color: #888;
+                font-size: 13px;
+                color: #666;
             }
 
             /* Responsive adjustments */
