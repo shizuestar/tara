@@ -55,24 +55,23 @@ Route::get('/register', function () {
 
 // Routes Admin
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
-    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('galeri.index');
-    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('galeri.show');
+    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('admin.galeri.index');
+    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('admin.galeri.show');
 
-    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
-    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
+    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('admin.proyek.index');
+    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('admin.proyek.show');
 
-    Route::get('/komunitas', [AdminKomunitasController::class, 'index'])->name('komunitas.index');
-    Route::get('/komunitas/{id}', [AdminKomunitasController::class, 'show'])->name('komunitas.show');
+    Route::get('/komunitas', [AdminKomunitasController::class, 'index'])->name('admin.komunitas.index');
+    Route::get('/komunitas/{id}', [AdminKomunitasController::class, 'show'])->name('admin.komunitas.show');
 
-    Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog.index');
-    Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('blog.show');
+    Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
+    Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('admin.blog.show');
 
-    Route::get('/user', [AdminUserController::class, 'index'])->name('user.index');
+    Route::get('/user', [AdminUserController::class, 'index'])->name('admin.user.index');
 
-    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 
-    // resource untuk agenda admin
     Route::resource('agenda', AdminAgendaController::class);
 });

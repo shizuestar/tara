@@ -31,7 +31,7 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href=""
+            <a href="/admin/agenda"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-calendar-alt"></i></div>

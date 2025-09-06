@@ -10,15 +10,15 @@
                         'gray-light': '#F5F5F5',
                     },
                     fontFamily: {
-                        poppins: ['Poppins', 'sans-serif'],
-                    },
+                            'space-grotesk': ['Space Grotesk', 'sans-serif'],
+                        },
                 }
             }
         }
     </script>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         [x-cloak] {
@@ -48,7 +48,7 @@
 
     <body class="bg-gray-50 text-dark font-poppins">
         <!-- Content Area (menggantikan x-admin-layout) -->
-        <div class="p-6">
+        <div class="">
             <!-- Agenda Section -->
             <div class="bg-white rounded-lg p-6 shadow-sm mb-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
