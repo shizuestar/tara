@@ -14,6 +14,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\BlogController;
+
+use App\Http\Controllers\AdminGaleriController;
+use App\Http\Controllers\AdminProyekController;
+use App\Http\Controllers\AdminKomunitasController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminAgendaController;
+
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Routes from "main"
@@ -41,6 +48,17 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
+
+Route::get('login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
 // For Admin
 
 Route::get('/admin/', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
@@ -56,3 +74,8 @@ Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->na
 
 Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
 Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('agenda', AdminAgendaController::class);
+});
+
