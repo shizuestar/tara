@@ -15,6 +15,7 @@ use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
+use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminKomunitasController;
 
@@ -64,3 +65,5 @@ Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.b
 Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');
 
 Route::get('/admin/user', [AdminUserController::class, 'index'])->name('admin.user.index');
+
+Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');

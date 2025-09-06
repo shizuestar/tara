@@ -48,11 +48,11 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Pengaturan</div>
-            <a href="/admin/settings/system" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="/admin/settings/" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-cog"></i></div>
                 <span class="flex-grow">Pengaturan Sistem</span>
             </a>
-            <a href="/admin/settings/access" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="/admin/settings/" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-shield-alt"></i></div>
                 <span class="flex-grow">Hak Akses</span>
             </a>
@@ -77,20 +77,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Select all nav items
         const navItems = document.querySelectorAll('.nav-item');
 
-        // Get the current URL path
         const currentPath = window.location.pathname;
 
-        // Iterate through nav items
         navItems.forEach(item => {
             const link = item.getAttribute('href');
             const icon = item.querySelector('i');
 
-            // Check if the link matches the current path
             if (link === currentPath) {
-                // Apply active styles
                 item.classList.add('border-yellow-400', 'bg-yellow-50', 'active');
                 item.classList.remove('border-transparent', 'hover:bg-gray-100', 'hover:border-yellow-400');
                 if (icon) {
@@ -98,7 +93,6 @@
                     icon.parentElement.classList.add('text-yellow-400');
                 }
             } else {
-                // Remove active styles
                 item.classList.remove('border-yellow-400', 'bg-yellow-50', 'active');
                 item.classList.add('border-transparent');
                 if (icon) {
@@ -111,10 +105,8 @@
 </script>
 
 <style>
-    /* Ensure Font Awesome is included */
     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
-    /* Custom scrollbar styles */
     .custom-scrollbar::-webkit-scrollbar {
         width: 6px;
     }
@@ -134,12 +126,11 @@
         scrollbar-color: #1f2937 #f1f1f1;
     }
 
-    /* Active state styles */
     .nav-item.active {
-        background-color: #fefce8; /* Tailwind bg-yellow-50 */
-        border-left-color: #facc15; /* Tailwind border-yellow-400 */
+        background-color: #fefce8;
+        border-left-color: #facc15;
     }
     .nav-item.active .text-gray-500 {
-        color: #facc15; /* Tailwind text-yellow-400 for icons */
+        color: #facc15;
     }
 </style>
