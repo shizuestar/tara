@@ -31,8 +31,10 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href="/admin/agenda" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
-                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-calendar-alt"></i></div>
+            <a href=""
+                class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
+                        class="fas fa-calendar-alt"></i></div>
                 <span class="flex-grow">Agenda</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">30</span>
             </a>
@@ -104,33 +106,24 @@
     });
 </script>
 
-<style>
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #1f2937;
-        border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #111827;
-    }
-    .custom-scrollbar {
-        scrollbar-width: thin;
-        scrollbar-color: #1f2937 #f1f1f1;
-    }
-
-    .nav-item.active {
-        background-color: #fefce8;
-        border-left-color: #facc15;
-    }
-    .nav-item.active .text-gray-500 {
-        color: #facc15;
-    }
-</style>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #111827;
+        }
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #1f2937 #f1f1f1;
+        }
+    </style>
+</aside>
