@@ -148,28 +148,28 @@
           
           <!-- Related Events -->
           <div class="mt-12">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Event Terkait</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <a href=""
-                class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transform transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                <img src="https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=60"
-                    alt="Modern Sculpture Exhibit"
-                    class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Modern Sculpture Exhibit</h3>
-                <p class="text-sm text-gray-600">2025-07-30 | 11:00 - 16:00 WIB</p>
-                <p class="text-sm text-gray-600">Downtown Gallery, Surabaya</p>
-              </a>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Event Terkait</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href=""
+              class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transform transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+              <img src="https://images.unsplash.com/photo-1505322022379-7c3353ee6291?auto=compress&cs=tinysrgb&w=60"
+                  alt="Modern Sculpture Exhibit"
+                  class="w-full h-40 object-cover rounded-lg mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Modern Sculpture Exhibit</h3>
+              <p class="text-sm text-gray-600">2025-07-30 | 11:00 - 16:00 WIB</p>
+              <p class="text-sm text-gray-600">Downtown Gallery, Surabaya</p>
+            </a>
 
-              <a href=""
-                class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transform transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                <img src="https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600"
-                    alt="Contemporary Painting Workshop"
-                    class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Contemporary Painting Workshop</h3>
-                <p class="text-sm text-gray-600">2025-08-15 | 13:00 - 16:00 WIB</p>
-                <p class="text-sm text-gray-600">Online (via Webex)</p>
-              </a>
-            </div>
+            <a href=""
+              class="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transform transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+              <img src="https://images.unsplash.com/photo-1513366208864-8752b8bd20ac?auto=compress&cs=tinysrgb&w=600"
+                  alt="Contemporary Painting Workshop"
+                  class="w-full h-40 object-cover rounded-lg mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Contemporary Painting Workshop</h3>
+              <p class="text-sm text-gray-600">2025-08-15 | 13:00 - 16:00 WIB</p>
+              <p class="text-sm text-gray-600">Online (via Webex)</p>
+            </a>
+          </div>
           </div>
         </div>
       </div>

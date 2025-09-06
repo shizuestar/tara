@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstract Expressionism Exhibit - TARA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: #ffffff;
+        color: #111827;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+      *, *::before, *::after {
+        box-sizing: inherit;
+      }
+      #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.4;
+      }
+      .event-detail-container {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .btn-primary {
+        padding: 0.5rem 1.5rem;
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        background: #111827;
+        color: #ffffff;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .btn-primary:hover {
+        background: #374151;
+      }
+      .btn-preorder {
+        padding: 0.75rem 2rem;
+        border-radius: 9999px;
+        font-size: 1rem;
+        font-weight: 600;
+        background: #facc15;
+        color: #111827;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .btn-preorder:hover {
+        background: #eab308;
+        transform: scale(1.05);
+      }
+      .btn-comment {
+        padding: 0.5rem 1.5rem;
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        background: #f3f4f6;
+        color: #374151;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .btn-comment:hover {
+        background: #e5e7eb;
+        color: #1f2937;
+      }
+      .event-status {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      .event-status.upcoming {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .gallery-container {
+        position: relative;
+        overflow: hidden;
+      }
+      .gallery-slider {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+      .gallery-image {
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        flex-shrink: 0;
+      }
+      .gallery-image:hover {
+        transform: scale(1.05);
+      }
+      .gallery-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(17, 24, 39, 0.7);
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+        z-index: 10;
+      }
+      .gallery-btn-left {
+        left: 0;
+      }
+      .gallery-btn-right {
+        right: 0;
+      }
+      .map-container {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5e7eb;
+      }
+      .countdown-timer {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.2rem;
+        color: #111827;
+      }
+      .organizer-info {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 1.5rem;
+      }
+      .ticket-info {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+        margin-right: 0.5rem;
+        transition: background 0.3s ease;
+      }
+      .tag:hover {
+        background: #e5e7eb;
+      }
+      .comment-section {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 1.5rem;
+      }
+      .comment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .comment-form textarea {
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        resize: vertical;
+        font-family: "Space Grotesk", sans-serif;
+        color: #111827;
+      }
+      .comment {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+      }
+      .social-share-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid #e5e7eb;
+        background: #f3f4f6;
+        color: #374151;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .social-share-btn:hover {
+        background: #e5e7eb;
+        color: #1f2937;
+      }
+      @media (max-width: 767px) {
+        .event-detail-container {
+          padding: 1rem;
+        }
+        .btn-primary, .btn-comment, .social-share-btn {
+          font-size: 0.75rem;
+          padding: 0.4rem 1rem;
+        }
+        .btn-preorder {
+          font-size: 0.85rem;
+          padding: 0.5rem 1.5rem;
+        }
+        .event-status, .tag {
+          font-size: 0.7rem;
+        }
+        .countdown-timer {
+          font-size: 1rem;
+        }
+      }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-gray-700 text-sm">
+      <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div class="col-span-1 sm:col-span-2">
+          <div class="text-2xl font-bold tracking-normal uppercase">
+            TARA<span class="text-[#facc15]">●</span>
+          </div>
+          <p class="mt-4">Rumah bagi karya visual menawan, inovasi muda, dan estetika web masa depan.</p>
+          <div class="flex gap-4 mt-4 text-gray-700 text-lg">
+            <a href="#" class="hover:text-gray-900 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-900 transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-900 transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="hover:text-gray-900 transition" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+            <a href="#" class="hover:text-gray-900 transition" aria-label="Behance"><i class="fab fa-behance"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4 uppercase">Navigasi</h3>
+          <ul class="space-y-2">
+            <li><a href="/" class="hover:text-gray-900 transition">Beranda</a></li>
+            <li><a href="/eksplor" class="hover:text-gray-900 transition">Eksplor Karya</a></li>
+            <li><a href="/komunitas" class="hover:text-gray-900 transition">Komunitas</a></li>
+            <li><a href="/proyek" class="hover:text-gray-900 transition">Proyek Sosial</a></li>
+            <li><a href="/blog" class="hover:text-gray-900 transition">Blog</a></li>
+            <li><a href="/agenda" class="hover:text-gray-900 transition">Agenda</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4 uppercase">Eksplorasi</h3>
+          <ul class="space-y-2">
+            <li><a href="/eksplor?kategori=painting" class="hover:text-gray-900 transition">Painting</a></li>
+            <li><a href="/eksplor?kategori=sculpture" class="hover:text-gray-900 transition">Sculpture</a></li>
+            <li><a href="/eksplor?kategori=digital-art" class="hover:text-gray-900 transition">Digital Art</a></li>
+            <li><a href="/eksplor?kategori=photography" class="hover:text-gray-900 transition">Photography</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4 uppercase">Kolaborasi</h3>
+          <ul class="space-y-2">
+            <li><a href="/proyek/submit" class="hover:text-gray-900 transition">Submit Karya</a></li>
+            <li><a href="/komunitas/gabung" class="hover:text-gray-900 transition">Gabung Komunitas</a></li>
+            <li><a href="/proyek/buat" class="hover:text-gray-900 transition">Buat Proyek</a></li>
+            <li><a href="/kontak" class="hover:text-gray-900 transition">Kontak</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4 uppercase">Newsletter</h3>
+          <p class="mb-3">Dapatkan inspirasi mingguan di kotak masuk Tuan.</p>
+          <div class="flex items-center gap-2">
+            <input type="email" placeholder="Email Tuan..." class="w-full px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900" />
+            <button class="btn-primary">Kirim</button>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 text-center py-4 text-xs text-gray-700">
+        © 2025 TARA. Dirakit dengan semangat di bumi Nusantara.
+        <a href="/tentang" class="hover:text-gray-900 transition">Tentang Kami</a> |
+        <a href="/ketentuan" class="hover:text-gray-900 transition">Ketentuan Layanan</a> |
+        <a href="/privasi" class="hover:text-gray-900 transition">Privasi</a> |
+        <a href="/bantuan" class="hover:text-gray-900 transition">Bantuan</a>
+      </div>
+    </footer>
+
+    <script>
+      // Particles.js Initialization
+      window.addEventListener("load", () => {
+        particlesJS("particles-js", {
+          particles: {
+            number: { value: 50, density: { enable: true, value_area: 1000 } },
+            color: { value: "#4B5563" },
+            shape: { type: "circle" },
+            opacity: { value: 0.4, random: true },
+            size: { value: 2, random: true },
+            line_linked: { enable: false },
+            move: {
+              enable: true,
+              speed: 0.5,
+              direction: "top",
+              random: false,
+              straight: false,
+              out_mode: "out",
+            },
+          },
+          interactivity: {
+            events: {
+              onhover: { enable: true, mode: "repulse" },
+              onclick: { enable: false },
+            },
+            modes: {
+              repulse: { distance: 100, duration: 0.4 },
+            },
+          },
+          retina_detect: true,
+        });
+      });
+
+      // Mobile Menu Logic
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const closeMobileMenuBtn = document.getElementById("closeMobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenuOverlay.classList.remove("hidden");
+        mobileMenuOverlay.classList.add("opacity-100");
+        anime({
+          targets: "#mobileMenu",
+          translateX: [300, 0],
+          easing: "easeOutQuad",
+          duration: 300,
+        });
+      });
+
+      closeMobileMenuBtn.addEventListener("click", closeMobileMenu);
+      mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+
+      function closeMobileMenu() {
+        anime({
+          targets: "#mobileMenu",
+          translateX: [0, 300],
+          easing: "easeOutQuad",
+          duration: 300,
+          complete: () => {
+            mobileMenu.classList.add("translate-x-full");
+            mobileMenuOverlay.classList.remove("opacity-100");
+            mobileMenuOverlay.classList.add("hidden");
+          },
+        });
+      }
+
+      // Gallery Slider Logic
+      const slider = document.getElementById("gallerySlider");
+      let currentSlide = 0;
+      const slides = slider.querySelectorAll(".gallery-image");
+      const totalSlides = slides.length;
+      const leftBtn = document.querySelector(".gallery-btn-left");
+      const rightBtn = document.querySelector(".gallery-btn-right");
+
+      leftBtn.addEventListener("click", () => {
+        if (currentSlide > 0) {
+          currentSlide--;
+          slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+      });
+
+      rightBtn.addEventListener("click", () => {
+        if (currentSlide < totalSlides - 1) {
+          currentSlide++;
+          slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+      });
+
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      }, 5000);
+
+      // Countdown Timer
+      function startCountdown() {
+        const eventDate = new Date("2025-07-25");
+        const countdown = setInterval(() => {
+          const now = new Date();
+          const distance = eventDate - now;
+          if (distance < 0) {
+            clearInterval(countdown);
+            document.getElementById("event-countdown").innerHTML = '<p class="text-gray-700">Event telah dimulai!</p>';
+            return;
+          }
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          document.getElementById("event-countdown").innerHTML = `
+            <div class="countdown-timer">
+              <span>${days} Hari </span>
+              <span>${hours} Jam </span>
+              <span>${minutes} Menit </span>
+              <span>${seconds} Detik</span>
+            </div>
+          `;
+        }, 1000);
+      }
+
+      // Share Button Logic
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        const shareUrl = window.location.href;
+        if (navigator.share) {
+          navigator.share({
+            title: "Abstract Expressionism Exhibit",
+            text: "Jelajahi karya abstrak penuh warna dengan tur yang dipandu oleh kurator.",
+            url: shareUrl,
+          });
+        } else {
+          navigator.clipboard.writeText(shareUrl);
+          anime({
+            targets: "#shareBtn",
+            scale: [1, 1.1, 1],
+            backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
+            color: ["#374151", "#FFFFFF", "#374151"],
+            duration: 300,
+            easing: "easeOutQuad",
+          });
+          alert("Link event telah disalin ke clipboard!");
+        }
+      });
+
+      // Bookmark Button Logic
+      document.getElementById("bookmarkBtn").addEventListener("click", () => {
+        const isBookmarked = localStorage.getItem("bookmark_event1") === "true";
+        localStorage.setItem("bookmark_event1", !isBookmarked);
+        document.getElementById("bookmarkBtn").innerHTML = `
+          <i class="${!isBookmarked ? "fas" : "far"} fa-bookmark mr-2"></i> ${!isBookmarked ? "Bookmarked" : "Bookmark"}
+        `;
+        anime({
+          targets: "#bookmarkBtn",
+          scale: [1, 1.1, 1],
+          backgroundColor: ["#F3F4F6", "#111827", "#F3F4F6"],
+          color: ["#374151", "#FFFFFF", "#374151"],
+          duration: 300,
+          easing: "easeOutQuad",
+        });
+      });
+
+      // GSAP Animations
+      document.addEventListener("DOMContentLoaded", () => {
+        startCountdown();
+        gsap.fromTo(
+          ".event-detail-container",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 }
+        );
+        gsap.from(".gallery-image", {
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+        });
+        gsap.from(".event-detail-container h1, .event-detail-container p, .event-detail-container a, .event-detail-container button, .event-status", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.4,
+        });
+        gsap.from("#event-additional-info > div > div, #event-tags", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#event-additional-info",
+            start: "top 80%",
+          },
+        });
+        gsap.from("#comment-section, #comment-section > div", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#comment-section",
+            start: "top 80%",
+          },
+        });
+        gsap.from(".event-card", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#related-events",
+            start: "top 80%",
+          },
+        });
+      });
+    </script>
+</body>
+</html>
