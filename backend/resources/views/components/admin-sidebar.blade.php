@@ -12,27 +12,27 @@
     <nav class="p-5 flex-grow overflow-y-auto">
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Menu Utama</div>
-            <a href="#"
+            <a href="dashboard"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-yellow-400 bg-yellow-50 active">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-yellow-400"><i
                         class="fas fa-th-large"></i></div>
                 <span class="flex-grow">Dashboard</span>
             </a>
-            <a href="#"
+            <a href="komunitas"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-users"></i>
                 </div>
                 <span class="flex-grow">Komunitas</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">50</span>
             </a>
-            <a href="#"
+            <a href="proyek"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-folder"></i>
                 </div>
                 <span class="flex-grow">Proyek</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">100</span>
             </a>
-            <a href="#"
+            <a href="blog"
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-blog"></i>
                 </div>
