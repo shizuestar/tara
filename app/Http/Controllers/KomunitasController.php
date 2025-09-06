@@ -36,9 +36,8 @@ class KomunitasController extends Controller
      */
     public function show(string $id)
     {
-        $getKomunitasById = Komunitas::findOrFail($id);
 
-        return view('public.komunitas.show', compact('getKomunitasById'));
+        return view('public.komunitas.show');
     }
 
     /**

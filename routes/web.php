@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminSettingsController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
+use App\View\Components\AdminSidebar;
 
 // For Authentication
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -28,7 +30,7 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
 
 Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas');
-Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
+Route::get('/komunitas/1', [KomunitasController::class, 'show'])->name('komunitas.show');
 
 Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
 
@@ -50,6 +52,7 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
  Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
  Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
  Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+ Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
  
 
 
