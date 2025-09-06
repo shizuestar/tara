@@ -27,12 +27,13 @@
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Beranda</a>
                     <a href="{{ route('galeri.index') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
-                    <a href="/komunitas.html"
+                    <a href="{{ route('komunitas') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
-                    <a href="/proyek.html"
+                    <a href="{{ route('proyek') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
-                    <a href="/blog.html" class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
-                    <a href="/agenda.html"
+                    <a href="{{ route('blog') }}"
+                        class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
+                    <a href="{{ route('agenda') }}"
                         class="nav-link block text-gray-700 hover:text-black font-medium py-2">Agenda</a>
 
                     <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
