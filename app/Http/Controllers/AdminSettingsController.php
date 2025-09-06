@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Komunitas;
 use Illuminate\Http\Request;
 
-class KomunitasController extends Controller
+class AdminSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('public.komunitas.index');
+        return view('Administrator.Admin.Settings.index');
     }
 
     /**
@@ -36,8 +35,7 @@ class KomunitasController extends Controller
      */
     public function show(string $id)
     {
-
-        return view('public.komunitas.show');
+        //
     }
 
     /**
