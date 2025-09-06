@@ -49,16 +49,16 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 
 // For Admin
 
-Route::get('/admin/', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
 Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
 Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('admin.galeri.show');
 
 Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
-Route::get('/admin/proyek/1', [AdminProyekController::class , 'show'])->name('admin.proyek.index');
+Route::get('/admin/proyek/1', [AdminProyekController::class , 'show'])->name('admin.proyek.show');
 
 Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
-Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
+Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.show');
 
 Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
 Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');
