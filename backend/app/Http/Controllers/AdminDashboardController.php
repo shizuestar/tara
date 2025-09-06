@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdminProyekController extends Controller
+class AdminDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('administrator.admin.proyek.index');
+        return view('Administrator.Admin.Dashboard.index');
     }
 
     /**
@@ -33,9 +33,9 @@ class AdminProyekController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(string $id)
     {
-        return view('administrator.admin.proyek.show');
+        //
     }
 
     /**

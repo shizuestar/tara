@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminBlogController;
-use App\Http\Controllers\AdminKomunitasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
@@ -10,11 +8,14 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminKomunitasController;
 
 // For Authentication
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -47,12 +48,16 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 
 // For Admin
 
+Route::get('/admin/', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+
 Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
 Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('admin.galeri.show');
 
 Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
+Route::get('/admin/proyek/1', [AdminProyekController::class , 'show'])->name('admin.proyek.index');
 
 Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
-Route::get('/admin/komunitas/{id}', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
-Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
+Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
 
+Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
+Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');

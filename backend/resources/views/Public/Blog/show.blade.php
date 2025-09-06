@@ -1,5 +1,4 @@
-<x-layout>
-
+<x-admin-layout>
     <div id="reading-progress"></div>
     <div id="particles-js"></div>
 
@@ -121,7 +120,7 @@
             </nav>
 
             <!-- Recommended -->
-            <section class="max-w-6xl mx-auto mt-24 px-4" id="article-reco-wrapper">
+            <section class="max-w-3xl mx-auto mt-24 px-4" id="article-reco-wrapper">
                 <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center"
                     style="font-family: 'Space Grotesk', sans-serif">
                     Artikel Rekomendasi Lainnya<span class="text-[var(--tara-accent)] ml-1">●</span>
@@ -185,7 +184,6 @@
         </div>
     </div>
 
-    @push('styles')
     <style>
         :root {
             --tara-accent: #facc15;
@@ -801,16 +799,6 @@
             position: relative;
         }
 
-        .share-modal-content button.close {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            font-size: 1.25rem;
-            color: #374151;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
         .share-modal-content a,
         .share-modal-content button {
             display: block;
@@ -828,9 +816,7 @@
             filter: brightness(0.9);
         }
     </style>
-    @endpush
 
-    @push('scripts')
     <script>
         /* --------------------------------------------------
      DEMO DATA (You can replace w/ real API)
@@ -840,7 +826,7 @@
                 id: 1,
                 title: "Wawancara: Kerennya Karya Anak Muda",
                 category: "wawancara",
-                description: "Inspirasi dari kreator muda Indonesia",
+                description: "Inspirasi dari kreator kreatif muda Indonesia",
                 image: "https://picsum.photos/seed/blog1/1200/800",
                 date: "2025-07-10",
                 views: 534,
@@ -1039,7 +1025,7 @@
         const rt = estimateReadTimeFromBody(articleData.body);
         qs(
             "#article-readtime-meta"
-        ).innerHTML = `<i class=\"fas fa-book-open mr-1\"></i>${rt} menit baca`;
+        ).innerHTML = `<i class=\"fas fa-book-open mr-1"></i>${rt} menit baca`;
 
         // tags
         const tagWrap = qs("#article-tags");
@@ -1701,5 +1687,4 @@
             }
         });
     </script>
-    @endpush
-</x-layout>
+</x-admin-layout>
