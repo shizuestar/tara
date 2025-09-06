@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
@@ -33,6 +34,8 @@ Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas
 Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
 
 Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
