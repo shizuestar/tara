@@ -49,7 +49,7 @@
             
             <div class="nav-section">
                 <div class="nav-title">Pengaturan</div>
-                <a href="#" class="nav-item">
+                <a href="{{ route('admin.settings.index') }}" class="nav-item">
                     <div class="nav-icon"><i class="fas fa-cog"></i></div>
                     <span class="nav-text">Pengaturan Sistem</span>
                 </a>

@@ -1288,11 +1288,39 @@
                 gap: 15px;
                 transition: transform 0.3s, box-shadow 0.3s;
                 min-width: 0;
+                border-left: 4px solid; /* Border kiri tanpa warna spesifik */
+                border: 1px solid var(--border-color);
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Warna border kiri yang berbeda untuk setiap card */
+            .stat-card.traffic {
+                border-left-color: #7e3af2; /* Ungu */
+            }
+
+            .stat-card.users {
+                border-left-color: #0e9f6e; /* Hijau */
+            }
+
+            .stat-card.content {
+                border-left-color: #ff5a1f; /* Oranye */
             }
 
             .stat-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Efek hover - border kiri menjadi lebih lebar */
+            .stat-card:hover::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 6px; /* Lebar border saat hover */
+                background: inherit;
             }
 
             .stat-icon {

@@ -21,6 +21,7 @@
         <div class="content-wrapper">
             <div class="page-header">
                 <h1 class="page-title">Pengaturan Sistem</h1>
+                <p class="page-description">Kelola konfigurasi dan preferensi sistem sesuai kebutuhan Anda</p>
             </div>
 
             <div class="settings-container">
@@ -386,26 +387,39 @@
                 background: var(--secondary-bg);
             }
 
-            .page-header {
+           .page-header {
                 margin-bottom: 30px;
-                display: flex;
-                align-items: center;
+                padding-bottom: 15px;
+                border-bottom: 1px solid var(--border-color);
+                display: block;
+                position: relative;
             }
 
             .page-title {
                 font-size: 28px;
                 font-weight: 700;
-                margin-right: 15px;
-                position: relative;
-                padding-bottom: 10px;
+                margin-bottom: 8px;
+                text-align: left;
             }
 
-            .page-title::after {
+            .page-description {
+                font-size: 16px;
+                color: #666;
+                margin-top: 10px;
+                font-weight: 400;
+                line-height: 1.5;
+                text-align: left;
+                display: block;
+                width: 100%;
+                padding-bottom: 15px; /* Tambahkan padding untuk garis */
+            }
+
+            .page-header::after {
                 content: "";
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                width: 60px;
+                width: 100%;
                 height: 3px;
                 background: var(--accent-color);
                 border-radius: 3px;
