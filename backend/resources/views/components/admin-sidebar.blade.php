@@ -39,14 +39,14 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href="{{ route('admin.agenda.index') }}"
+            <a href=""
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-calendar-alt"></i></div>
                 <span class="flex-grow">Agenda</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">30</span>
             </a>
-            <a href="{{ route('admin.user.index') }}"
+            <a href=""
                 class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium transition-all border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i
                         class="fas fa-user-friends"></i></div>

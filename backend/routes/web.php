@@ -9,6 +9,7 @@ use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
@@ -40,24 +41,18 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
-// Unique routes from "panjoel" not present in "main"
-Route::prefix('galeri')->group(function () {
-    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
-    Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
-});
+// For Admin
 
-Route::get('/blog', fn() => view('blog.index'))->name('blog');
+Route::get('/admin/', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
-Route::get('/login', fn() => view('auth.login'))->name('login');
-Route::get('/register', fn() => view('auth.register'))->name('register');
+Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
+Route::get('/admin/galeri/1', [AdminGaleriController::class , 'show'])->name('admin.galeri.show');
 
-?>
+Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
+Route::get('/admin/proyek/1', [AdminProyekController::class , 'show'])->name('admin.proyek.index');
 
-<!--
+Route::get('/admin/komunitas', [AdminKomunitasController::class , 'index'])->name('admin.komunitas.index');
+Route::get('/admin/komunitas/1', [AdminKomunitasController::class , 'show'])->name('admin.komunitas.detail');
 
-});
-
-Route::get('/main', [GaleriController::class, 'index'])->name('main.index'); -->
-
-
-
+Route::get('/admin/blog', [AdminBlogController::class , 'index'])->name('admin.blog.index');
+Route::get('/admin/blog/1', [AdminBlogController::class, 'show'])->name('admin.blog.show');
