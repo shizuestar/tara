@@ -2,35 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CommunityPost extends Model
 {
-    use HasFactory;
-
+    protected $table = 'community_posts';
     protected $fillable = [
         'community_id',
         'user_id',
         'title',
         'content',
         'type',
-        'file_path'
+        'file_url',
     ];
 
-    public function community(): BelongsTo
+    public function community()
     {
-        return $this->belongsTo(Community::class);
+        return $this->belongsTo(Community::class, 'community_id');
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function comments(): HasMany
+    public function comments()
     {
         return $this->hasMany(CommunityPostComment::class, 'post_id');
     }

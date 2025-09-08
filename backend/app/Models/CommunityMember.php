@@ -2,32 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CommunityMember extends Model
 {
-    use HasFactory;
-
+    protected $table = 'community_member';
     protected $fillable = [
         'community_id',
         'user_id',
         'role',
-        'joined_at'
+        'joined_at',
     ];
 
-    protected $casts = [
-        'joined_at' => 'datetime',
-    ];
-
-    public function community(): BelongsTo
+    public function community()
     {
-        return $this->belongsTo(Community::class);
+        return $this->belongsTo(Community::class, 'community_id');
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

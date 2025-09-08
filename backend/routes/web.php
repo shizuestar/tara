@@ -16,16 +16,17 @@ use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
-use App\Http\Controllers\AdminKomunitasController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAgendaController;
+use App\Http\Controllers\AdminCommunityController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\CommunityController;
 
 // Routes Public
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas.index');
-Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
+Route::get('/komunitas', [CommunityController::class, 'index'])->name('komunitas.index');
+Route::get('/komunitas/{id}', [CommunityController::class, 'show'])->name('komunitas.show');
 
 Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
 
@@ -63,8 +64,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('admin.proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('admin.proyek.show');
 
-    Route::get('/komunitas', [AdminKomunitasController::class, 'index'])->name('admin.komunitas.index');
-    Route::get('/komunitas/{id}', [AdminKomunitasController::class, 'show'])->name('admin.komunitas.show');
+    Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('admin.komunitas.index');
+    Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('admin.komunitas.show');
+    Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('admin.komunitas.store');
+    Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('admin.komunitas.update');
+    Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('admin.komunitas.destroy');
 
     Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
     Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('admin.blog.show');
