@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -250,10 +248,8 @@
                 font-size: 3rem;
             }
         }
-
     </style>
 </head>
-
 <body>
     <main class="main-container">
         <div class="left-section">
@@ -264,23 +260,34 @@
                         Daftar ke <span class="text-black">TARA</span><span class="text-yellow-400">●</span>
                     </div>
                 </div>
+                @if ($errors->any())
+                    <div style="color: red; margin-bottom: 1rem;">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ route('register') }}" method="POST" class="space-y-5">
-                    <input type="text" placeholder="Nama Lengkap"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" />
-                    <input type="email" placeholder="Email"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" />
-                    <input type="password" placeholder="Password"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" />
-                    <input type="password" placeholder="Konfirmasi Password"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" />
+                    @csrf
+                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Username"
+                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
+                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap"
+                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
+                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
+                    <input type="password" name="password" placeholder="Password"
+                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
+                    <input type="password" name="password_confirmation" placeholder="Konfirmasi Password"
+                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
                     <button type="submit"
                         class="form-button w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 text-sm font-medium">
                         Daftar
                     </button>
                 </form>
                 <div class="my-6 border-t border-gray-100 text-center text-xs text-gray-400 relative">
-                    <span class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2">atau daftar
-                        dengan</span>
+                    <span class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2">atau daftar dengan</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                     <button
@@ -315,20 +322,17 @@
                     <div class="gallery-desc">Unggah karya seni dan portofolio untuk dilihat dunia.</div>
                 </div>
                 <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?creative"
-                        alt="Artwork 2" />
+                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?creative" alt="Artwork 2" />
                     <div class="gallery-title">Dapatkan Inspirasi</div>
                     <div class="gallery-desc">Jelajahi karya kreatif dari seniman seluruh Indonesia.</div>
                 </div>
                 <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?design"
-                        alt="Artwork 3" />
+                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?design" alt="Artwork 3" />
                     <div class="gallery-title">Bangun Reputasi</div>
                     <div class="gallery-desc">Dapatkan pengakuan dari komunitas seni global.</div>
                 </div>
                 <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?illustration"
-                        alt="Artwork 4" />
+                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?illustration" alt="Artwork 4" />
                     <div class="gallery-title">Kolaborasi Keren</div>
                     <div class="gallery-desc">Terhubung dan berkarya bersama kreator lain.</div>
                 </div>
@@ -352,7 +356,6 @@
         </div>
     </main>
     <script>
-        // Three.js Particle System
         const canvas = document.getElementById("three-canvas");
         if (canvas) {
             const scene = new THREE.Scene();
@@ -362,10 +365,7 @@
                 0.1,
                 1000
             );
-            const renderer = new THREE.WebGLRenderer({
-                canvas,
-                alpha: true
-            });
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
             renderer.setSize(canvas.clientWidth, canvas.clientHeight);
             camera.position.z = 5;
 
@@ -427,7 +427,6 @@
             });
         }
 
-        // Gallery Card Animation
         const gallerySection = document.getElementById("gallery-section");
         const galleryCards = gallerySection.querySelectorAll(".gallery-card");
 
@@ -438,14 +437,11 @@
                 scale: [0.9, 1],
                 translateY: [20, 0],
                 duration: 800,
-                delay: anime.stagger(150, {
-                    start: 500
-                }),
+                delay: anime.stagger(150, { start: 500 }),
                 easing: "easeOutCubic",
             });
         }
 
-        // Welcome Text Animation
         const welcomeLetters = document.querySelectorAll(
             "#welcome-text .welcome-letter, #welcome-text .welcome-dot"
         );
@@ -458,9 +454,7 @@
             opacity: [0, 1],
             duration: 1600,
             easing: "easeOutCubic",
-            delay: anime.stagger(150, {
-                start: 300
-            }),
+            delay: anime.stagger(150, { start: 300 }),
             complete: function () {
                 setTimeout(() => {
                     anime({
@@ -503,7 +497,6 @@
             });
         });
 
-        // Transition to login page
         const loginLink = document.getElementById("login-link");
         loginLink.addEventListener("click", (e) => {
             e.preventDefault();
@@ -514,10 +507,7 @@
                 targets: [leftSection, rightSection],
                 translateX: [
                     0,
-                    (el) =>
-                    el === leftSection ?
-                    window.innerWidth - 520 :
-                    -window.innerWidth + 520,
+                    (el) => el === leftSection ? -(window.innerWidth - 520) : window.innerWidth - 520,
                 ],
                 duration: 600,
                 easing: "easeInOutQuad",
@@ -526,8 +516,6 @@
                 },
             });
         });
-
     </script>
 </body>
-
 </html>

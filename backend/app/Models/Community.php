@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Community extends Model
 {
-    protected $table = 'communities';
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'description',
@@ -15,17 +17,21 @@ class Community extends Model
         'user_id',
         'category',
         'status',
-        'moderator_ids',
         'rules',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function members()
     {
-        return $this->hasMany(CommunityMember::class, 'community_id');
+        return $this->hasMany(CommunityMember::class);
+    }
+
+    public function moderators()
+    {
+        return $this->members()->where('role', 'moderator');
     }
 }
