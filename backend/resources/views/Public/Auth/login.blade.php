@@ -35,7 +35,7 @@
       }
 
       .right-section {
-      width: 430px; /* default untuk 14 inch */
+      width: 430px;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -252,16 +252,31 @@
               ><span class="text-yellow-400">●</span>
             </div>
           </div>
-          <form action="{{ route('login') }}" method="GET" class="space-y-5">
+          @if ($errors->any())
+            <div style="color: red; margin-bottom: 1rem;">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+          <form action="{{ route('login') }}" method="POST" class="space-y-5">
+            @csrf
             <input
               type="email"
+              name="email"
+              value="{{ old('email') }}"
               placeholder="Email"
               class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
+              required
             />
             <input
               type="password"
+              name="password"
               placeholder="Password"
               class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
+              required
             />
             <div class="text-right text-xs">
               <a
@@ -451,10 +466,10 @@
             cardElement.addEventListener("mouseenter", () => {
               anime({
                 targets: cardElement,
-                scale: 1.02, // Reduced scale for more relaxed feel
-                translateY: -5, // Reduced translation
-                rotateZ: Math.random() * 1 - 0.5, // Subtler rotation
-                duration: 500, // Slower duration
+                scale: 1.02,
+                translateY: -5,
+                rotateZ: Math.random() * 1 - 0.5,
+                duration: 500,
                 easing: "easeOutQuad",
               });
             });
@@ -486,7 +501,7 @@
             totalHeight += cards[i].offsetHeight + 20;
           }
 
-          let duration = index === 1 || index === 3 ? 30000 : 40000; // Increased duration for slower, more relaxed scroll
+          let duration = index === 1 || index === 3 ? 30000 : 40000;
 
           anime({
             targets: column,

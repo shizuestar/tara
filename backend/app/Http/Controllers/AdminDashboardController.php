@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Artwork;
+use App\Models\Community;
+use App\Models\Event;
+use App\Models\Proyek;
+use App\Models\User;
 
 class AdminDashboardController extends Controller
 {
@@ -11,6 +16,20 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
+        // $total_komunitas = Community::count();
+        // $total_proyek_kolaborasi = Proyek::count();
+        // $total_karya_galeri = Artwork::count();
+        // $total_event = Event::count();
+        // $total_user_aktif = User::count();
+
+        // $context = [
+        //     'total_komunitas' => $total_komunitas,
+        //     'total_proyek_kolaborasi' => $total_proyek_kolaborasi,
+        //     'total_karya_galeri' => $total_karya_galeri,
+        //     'total_event' => $total_event,
+        //     'total_user_aktif' => $total_user_aktif,
+        // ];
+
         return view('Administrator.Admin.Dashboard.index');
     }
 

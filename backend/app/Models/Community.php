@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Community extends Model
 {
@@ -17,44 +14,24 @@ class Community extends Model
         'description',
         'type',
         'cover_image',
-        'user_id'
+        'user_id',
+        'category',
+        'status',
+        'rules',
     ];
 
-    // Community creator
-    public function creator(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    // Community members
-    public function members(): HasMany
+    public function members()
     {
         return $this->hasMany(CommunityMember::class);
     }
 
-    // Community posts
-    public function posts(): HasMany
+    public function moderators()
     {
-        return $this->hasMany(CommunityPost::class);
-    }
-
-    // Artworks in this community
-    public function artworks(): HasMany
-    {
-        return $this->hasMany(Artwork::class);
-    }
-
-    // Projects in this community
-    public function projects(): HasMany
-    {
-        return $this->hasMany(Project::class);
-    }
-
-    // Get all users who are members
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'community_members')
-                    ->withPivot('role', 'joined_at')
-                    ->withTimestamps();
+        return $this->members()->where('role', 'moderator');
     }
 }

@@ -16,16 +16,18 @@ use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
-use App\Http\Controllers\AdminKomunitasController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAgendaController;
+use App\Http\Controllers\AdminCommunityController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommunityController;
 
 // Routes Public
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas.index');
-Route::get('/komunitas/{id}', [KomunitasController::class, 'show'])->name('komunitas.show');
+Route::get('/komunitas', [CommunityController::class, 'index'])->name('komunitas.index');
+Route::get('/komunitas/{id}', [CommunityController::class, 'show'])->name('komunitas.show');
 
 Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
 
@@ -45,17 +47,15 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
 
 // Auth
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes Admin
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('admin.galeri.index');
     Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('admin.galeri.show');
@@ -63,8 +63,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('admin.proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('admin.proyek.show');
 
-    Route::get('/komunitas', [AdminKomunitasController::class, 'index'])->name('admin.komunitas.index');
-    Route::get('/komunitas/{id}', [AdminKomunitasController::class, 'show'])->name('admin.komunitas.show');
+    Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
+    Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');
+    Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('komunitas.store');
+    Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
+    Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 
     Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
     Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('admin.blog.show');
