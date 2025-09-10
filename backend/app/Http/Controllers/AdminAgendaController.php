@@ -18,6 +18,7 @@ class AdminAgendaController extends Controller
     /**
      * Menampilkan daftar semua event
      */
+
     public function index()
     {
         $events = Event::with(['organizers', 'tickets'])->latest()->get();
@@ -32,16 +33,18 @@ class AdminAgendaController extends Controller
     /**
      * Form tambah event
      */
+
     public function create()
     {
         return view('administrator.admin.agenda.create');
     }
 
     /**
-     * Simpan event baru    
+     * Simpan event baru
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'category_id'   => 'required|integer',
             'title'         => 'required|string|max:100',
@@ -151,4 +154,6 @@ class AdminAgendaController extends Controller
 
         return redirect()->route('administrator.admin.agenda.index')->with('success', 'Event berhasil dihapus');
     }
+
+
 }
