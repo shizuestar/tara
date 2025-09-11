@@ -12,7 +12,6 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
@@ -64,8 +63,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
-    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('admin.proyek.index');
-    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('admin.proyek.show');
+    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
+    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
 
     Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
     Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');
@@ -73,14 +72,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
     Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 
-    Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
-    Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('admin.blog.show');
+    Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('blog.show');
 
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('users', AdminUserController::class);
-    });
+    Route::resource('users', AdminUserController::class);
 
-    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
 
     Route::resource('agenda', AdminAgendaController::class);
 });

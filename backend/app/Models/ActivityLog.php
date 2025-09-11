@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ArtworkTag extends Model
+class ActivityLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['artwork_id', 'tag'];
+    protected $fillable = ['user_id', 'description'];
 
-    public function artwork()
+    public function user()
     {
-        return $this->belongsTo(Artwork::class);
+        return $this->belongsTo(User::class);
     }
 }

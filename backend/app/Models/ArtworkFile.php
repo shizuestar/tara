@@ -2,24 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ArtworkFile extends Model
 {
-    protected $table = 'images';
-    protected $primaryKey = 'id';
-    public $timestamps = true;
-    protected $fillable = [
-        'gallery_id', 'artwork_id', 'image_path', 'description'
-    ];
+    use HasFactory;
 
-    protected $casts = [
-        'gallery_id' => 'integer',
-        'artwork_id' => 'integer',
-    ];
+    protected $table = 'artwork_files';
+
+    protected $fillable = ['artwork_id', 'image_title', 'image_path', 'description', 'user_id'];
 
     public function artwork()
     {
-        return $this->belongsTo(Artwork::class, 'artwork_id');
+        return $this->belongsTo(Artwork::class);
     }
 }
