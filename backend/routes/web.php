@@ -57,8 +57,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('admin.galeri.index');
-    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('admin.galeri.show');
+    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('galeri.index');
+    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('galeri.show');
+    Route::post('/galeri', [AdminGaleriController::class, 'store'])->name('galeri.store');
+    Route::get('/galeri/{id}/edit', [AdminGaleriController::class, 'edit'])->name('galeri.edit');
+    Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
+    Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('admin.proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('admin.proyek.show');

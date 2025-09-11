@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ArtworkTag extends Model
 {
-    use HasFactory;
-
+    protected $table = 'artwork_tags';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $fillable = [
-        'artwork_id',
-        'tag'
+        'artwork_id', 'tag'
     ];
 
-    public function artwork(): BelongsTo
+    protected $casts = [
+        'artwork_id' => 'integer',
+    ];
+
+    public function artwork()
     {
-        return $this->belongsTo(Artwork::class);
+        return $this->belongsTo(Artwork::class, 'artwork_id');
     }
 }

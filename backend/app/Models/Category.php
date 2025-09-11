@@ -2,33 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    use HasFactory;
-
+    protected $table = 'categories';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
-        'name',
-        'description',
-        'slug',
-        'type'
+        'name', 'description'
     ];
 
-    public function artworks(): HasMany
-    {
-        return $this->hasMany(Artwork::class);
-    }
+    protected $casts = [
+        'id' => 'integer',
+    ];
 
-    public function events(): HasMany
+    public function artworks()
     {
-        return $this->hasMany(Event::class);
-    }
-
-    public function blogs(): HasMany
-    {
-        return $this->hasMany(Blog::class);
+        return $this->hasMany(Artwork::class, 'category_id');
     }
 }

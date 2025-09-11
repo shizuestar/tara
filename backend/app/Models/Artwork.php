@@ -2,73 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Artwork extends Model
 {
-    use HasFactory;
-
+    protected $table = 'artworks';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
-        'title',
-        'description',
-        'thumbnail',
-        'palette',
-        'typography',
-        'period',
-        'status',
-        'community_id',
-        'category_id',
-        'creator_id'
+        'title', 'description', 'thumbnail', 'palette', 'typography', 'period', 'status', 'community_id', 'category_id'
     ];
 
-    public function community(): BelongsTo
-    {
-        return $this->belongsTo(Community::class);
-    }
+    protected $casts = [
+        'status' => 'string',
+        'community_id' => 'integer',
+        'category_id' => 'integer',
+    ];
 
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'creator_id');
-    }
-
-    public function tags(): HasMany
-    {
-        return $this->hasMany(ArtworkTag::class);
-    }
-
-    public function likes(): HasMany
-    {
-        return $this->hasMany(ArtworkLike::class);
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(ArtworkComment::class);
-    }
-
-    public function files(): HasMany
+    public function images()
     {
         return $this->hasMany(ArtworkFile::class, 'artwork_id');
     }
 
-    // Accessor for likes count
-    public function getLikesCountAttribute(): int
+    public function category()
     {
-        return $this->likes()->count();
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // Accessor for comments count
-    public function getCommentsCountAttribute(): int
+    public function tags()
     {
-        return $this->comments()->count();
+        return $this->hasMany(ArtworkTag::class, 'artwork_id');
     }
 }

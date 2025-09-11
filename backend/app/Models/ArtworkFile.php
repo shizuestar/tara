@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ArtworkFile extends Model
 {
-    use HasFactory;
-
+    protected $table = 'images';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
-        'artwork_id',
-        'image_title',
-        'image_path',
-        'description'
+        'gallery_id', 'artwork_id', 'image_path', 'description'
     ];
 
-    public function artwork(): BelongsTo
+    protected $casts = [
+        'gallery_id' => 'integer',
+        'artwork_id' => 'integer',
+    ];
+
+    public function artwork()
     {
         return $this->belongsTo(Artwork::class, 'artwork_id');
     }
