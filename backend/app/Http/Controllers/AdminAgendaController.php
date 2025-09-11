@@ -18,6 +18,7 @@ class AdminAgendaController extends Controller
     /**
      * Menampilkan daftar semua event
      */
+
     public function index()
     {
         $events = Event::with(['organizers', 'tickets'])->latest()->get();
@@ -32,6 +33,7 @@ class AdminAgendaController extends Controller
     /**
      * Form tambah event
      */
+
     public function create()
     {
         return view('administrator.admin.agenda.create');
@@ -42,6 +44,7 @@ class AdminAgendaController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'category_id'   => 'required|integer',
             'title'         => 'required|string|max:100',
@@ -72,12 +75,13 @@ class AdminAgendaController extends Controller
             'image_path'  => $imagePath
         ]);
 
-        return redirect()->route('administrator.admin.agenda.index')->with('success', 'Event berhasil ditambahkan');
+        return redirect()->route('Administrator.Admin.Agenda.index')->with('success', 'Event berhasil ditambahkan');
     }
 
     /**
      * Detail event
      */
+
     public function show($id)
     {
         $event = Event::with(['organizers', 'tickets', 'comments', 'registrations'])->findOrFail($id);
@@ -87,10 +91,11 @@ class AdminAgendaController extends Controller
     /**
      * Form edit event
      */
+
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        return view('administrator.admin.agenda.edit', compact('event'));
+        return view('Administrator.Admin.Agenda.edit', compact('event'));
     }
 
     /**
@@ -149,4 +154,6 @@ class AdminAgendaController extends Controller
 
         return redirect()->route('administrator.admin.agenda.index')->with('success', 'Event berhasil dihapus');
     }
+
+
 }

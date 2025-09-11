@@ -413,7 +413,7 @@
                 document.getElementById('edit_status').value = 'active';
                 document.getElementById('edit_password').value = '';
                 document.getElementById('edit_password_confirmation').value = '';
-                
+
                 const modal = document.getElementById('editModal');
                 modal.classList.remove('hidden');
                 modal.classList.add('show');
@@ -480,7 +480,7 @@
                 const createModal = document.getElementById('createModal');
                 const editModal = document.getElementById('editModal');
                 const deleteModal = document.getElementById('deleteModal');
-                
+
                 if (event.target === createModal) closeCreateModal();
                 if (event.target === editModal) closeEditModal();
                 if (event.target === deleteModal) closeDeleteModal();

@@ -76,7 +76,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
     Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('admin.blog.show');
 
-    Route::get('/user', [AdminUserController::class, 'index'])->name('admin.user.index');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('users', AdminUserController::class);
+    });
 
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 
