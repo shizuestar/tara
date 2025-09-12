@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
@@ -80,4 +81,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
 
     Route::resource('agenda', AdminAgendaController::class);
+    Route::resource('agenda', AdminAgendaController::class);
 });
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+// Route::middleware('auth')->group(function () {
+// });
