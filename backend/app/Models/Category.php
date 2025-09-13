@@ -12,12 +12,16 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
-        'slug',
-        'type',
     ];
 
-    public function artworks()
+    public function blogs()
     {
-        return $this->hasMany(Artwork::class);
+        return $this->hasMany(Blog::class);
+    }
+
+    public function scopeSearch($query, $keyword): void
+    {
+        $query->where('name', 'like', "%{$keyword}%")
+              ->orWhere('description', 'like', "%{$keyword}%");
     }
 }

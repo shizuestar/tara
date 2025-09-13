@@ -2,63 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreBlogRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateBlogRequest;
+use Illuminate\Support\Str;
 
 class AdminBlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('administrator.admin.blog.index');
+        $filters = [
+            'keyword' => $request->input('keyword'),
+            'category' => $request->input('category'),
+            'status' => $request->input('status'),
+        ];
+
+        $query = Blog::with(['category', 'author'])->orderBy('created_at', 'desc');
+        $query->filter($filters);
+
+        $blogs = $query->paginate(6);
+        $categories = Category::pluck('name', 'id');
+        $statuses = ['draft' => 'Draf', 'published' => 'Diterbitkan', 'archived' => 'Arsip'];
+
+        return view('administrator.admin.blog.index', compact('blogs', 'categories', 'statuses', 'filters'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+   public function show(Blog $blog)
+   {
+       $blog->load(['category', 'author', 'comments' => function ($query) {
+           $query->orderBy('created_at', 'desc');
+       }, 'likes']);
+       $categories = Category::pluck('name', 'id');
+       $authors = \App\Models\User::where('role', 'author')->pluck('name', 'id');
+       return view('administrator.admin.blog.show', compact('blog', 'categories', 'authors'));
+   }
+
+    public function store(StoreBlogRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['author_id'] = Auth::id();
+        $data['tags'] = $request->tags ? array_map('trim', explode(',', $request->tags)) : [];
+
+        $data['slug'] = Str::slug($data['title']);
+
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')->store('uploads/blogs', 'public');
+        }
+
+        Blog::create($data);
+
+        return redirect()->route('admin.blog.index')->with('success', 'Blog baru ditambahkan.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function update(UpdateBlogRequest $request, Blog $blog)
+{
+    $data = $request->validated();
+    $data['tags'] = $request->tags ? array_map('trim', explode(',', $request->tags)) : [];
+
+    $data['slug'] = \Illuminate\Support\Str::slug($data['title']);
+
+    if ($request->hasFile('cover_image')) {
+        if ($blog->cover_image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($blog->cover_image);
+        }
+        $data['cover_image'] = $request->file('cover_image')->store('uploads/blogs', 'public');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Request $request)
-    {
-        return view('administrator.admin.blog.show');
-    }
+    $blog->update($data);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    return redirect()
+        ->route('admin.blog.index', $blog->id)
+        ->with('success', 'Blog berhasil diperbarui dan ditampilkan.');
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Blog $blog)
     {
-        //
-    }
+        if ($blog->cover_image) {
+            Storage::disk('public')->delete($blog->cover_image);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $blog->delete();
+
+        return redirect()->route('admin.blog.index')->with('success', 'Blog dihapus.');
     }
 }

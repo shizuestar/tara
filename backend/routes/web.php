@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
@@ -11,16 +12,16 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearnMoreController;
+use App\Http\Controllers\AdminAgendaController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminAgendaController;
-use App\Http\Controllers\AdminCommunityController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSettingsController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\AdminCommunityController;
+use App\Http\Controllers\AdminDashboardController;
 
 // Routes Public
 Route::get('/', [DashboardController::class, 'index'])->name('home');
@@ -63,6 +64,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
+    Route::get('categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::post('categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::put('categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
 
@@ -72,12 +78,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
     Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 
-    Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog.index');
-    Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('blog.show');
+    Route::resource('blog', AdminBlogController::class);
+    Route::post('blog/publish-multiple', [AdminBlogController::class, 'publishMultiple'])->name('blog.publish-multiple');
+    Route::delete('blog/destroy-multiple', [AdminBlogController::class, 'destroyMultiple'])->name('blog.destroy-multiple');
 
     Route::resource('users', AdminUserController::class);
 
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+       Route::put('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
+       Route::post('/roles', [AdminSettingsController::class, 'storeRole'])->name('roles.store');
+       Route::put('/roles/permissions', [AdminSettingsController::class, 'updatePermissions'])->name('roles.update_permissions');
+       Route::put('/notifications', [AdminSettingsController::class, 'updateNotifications'])->name('notifications.update');
+       Route::post('/backups/{type}', [AdminSettingsController::class, 'createBackup'])->name('backups.create');
+       Route::post('/backups/restore', [AdminSettingsController::class, 'restoreBackup'])->name('backups.restore');
+       Route::get('/backups/{backup}/download', [AdminSettingsController::class, 'downloadBackup'])->name('backups.download');
+       Route::put('/backups/schedule', [AdminSettingsController::class, 'updateBackupSchedule'])->name('backups.schedule');
 
     Route::resource('agenda', AdminAgendaController::class);
 });
