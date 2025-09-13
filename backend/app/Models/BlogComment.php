@@ -11,12 +11,7 @@ class BlogComment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'blog_id',
-        'user_id',
-        'comment',
-        'parent_comment_id'
-    ];
+    protected $fillable = ['blog_id', 'user_id', 'comment', 'parent_comment_id'];
 
     public function blog(): BelongsTo
     {

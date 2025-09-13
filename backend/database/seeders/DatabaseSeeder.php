@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'username' => 'superadmin',
-                'email' => 'superadmin@example.com',
+                'email' => 'superadmin@gmail.com',
                 'password' => Hash::make('password'),
                 'avatar' => null,
                 'bio' => 'Akun super administrator',
@@ -31,11 +31,11 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Yusar Brian S',
                 'username' => 'yusrb',
-                'email' => 'yusbrian@example.com',
+                'email' => 'yusbrian@gmail.com',
                 'password' => Hash::make('password'),
                 'avatar' => null,
                 'bio' => 'Akun khusus kurator Brian',
-                'role' => 'curator',
+                'role' => 'kurator',
                 'status' => 'active',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Member Satu',
                 'username' => 'member',
-                'email' => 'member@example.com',
+                'email' => 'member@gmail.com',
                 'password' => Hash::make('password'),
                 'avatar' => null,
                 'bio' => 'Akun anggota biasa',

@@ -10,10 +10,7 @@ class BlogLike extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'blog_id',
-        'user_id'
-    ];
+    protected $fillable = ['blog_id', 'user_id'];
 
     public function blog(): BelongsTo
     {

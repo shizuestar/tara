@@ -1,11 +1,27 @@
 <x-admin-layout>
+    <style>
+        /* Anda bisa menaruh ini di file CSS utama Anda */
+        .custom-option {
+            background-color: white;
+            color: #4B5563;
+            /* Tailwind: text-gray-700 */
+        }
+
+        /* Pseudo-class :hover ini mencoba menerapkan styling saat kursor berada di atas option */
+        .custom-option:hover {
+            background-color: #E0E7FF;
+            /* Tailwind: bg-indigo-100 */
+            color: #4338CA;
+            /* Tailwind: text-indigo-700 */
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        warning: '#FFE100',
-                        'warning-dark': '#FFE100',
+                        warning: '#FFC900',
+                        'warning-dark': '#FF9B00',
                         secondary: '#FFD700',
                         'secondary-dark': '#FFC400',
                         dark: '#1F2937',
@@ -13,7 +29,7 @@
                         light: '#F9FAFB',
                         'gray-light': '#F3F4F6',
                         success: '#10B981',
-                        warning: '#F59E0B',
+                        warning: '#FFBF00',
                         danger: '#EF4444',
                         info: '#3B82F6',
                     },
@@ -168,15 +184,19 @@
                                                 <div class="mb-5">
                                                     <label
                                                         class="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
-                                                    <select name="category_id" required class="w-full ...">
-                                                        <option value="">-- Pilih Kategori --</option>
+                                                    <select id="category_id" name="category_id" required
+                                                        class="w-full border border-gray-300 rounded-xl p-3.5 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200">
+                                                        <option value="" class="">-- Pilih Kategori --
+                                                        </option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category->id }}"
-                                                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                                {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                                                class="custom-option">
                                                                 {{ $category->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+
                                                 </div>
 
                                                 <!-- Judul -->
@@ -409,13 +429,21 @@
                                                 <span class="badge">{{ ucfirst($event->status) }}</span>
                                             </td>
                                             <td class="px-6 py-4">{{ $event->registrations->count() }}</td>
-                                            <td class="px-6 py-4">
-                                                <form action="{{ route('admin.events.destroy', $event) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus agenda?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="text-red-600"><i class="fas fa-trash"></i></button>
-                                                </form>
+                                            <td class="px-6 py-4 flex gap-2 ">
+                                                <div class="flex items-center">
+                                                    <button>
+                                                        <a href="{{ route('admin.events.show', $event->id) }}"
+                                                            class="w-8 h-8 rounded-md bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-[12px] mr-1">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </button>
+                                                    <form action="{{ route('admin.events.destroy', $event) }}"
+                                                        method="POST" onsubmit="return confirm('Hapus agenda?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="w-8 h-8 rounded-md bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-[12px]"><i class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -445,16 +473,7 @@
                                             <span class="sr-only">Previous</span>
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-yellow-50 text-sm font-medium text-yellow-600">2</a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">3</a>
-                                        <span
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">8</a>
+
                                         <a href="#"
                                             class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <span class="sr-only">Next</span>
@@ -468,14 +487,7 @@
                 </div>
             </main>
 
-            <!-- Footer -->
-            <footer class="bg-white border-t border-gray-200 mt-8 py-4">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <p class="text-center text-sm text-gray-500">
-                        © 2023 Event Management System. All rights reserved.
-                    </p>
-                </div>
-            </footer>
+
         </div>
 
         <script>

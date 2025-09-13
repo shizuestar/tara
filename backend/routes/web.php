@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
@@ -11,16 +12,16 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearnMoreController;
+use App\Http\Controllers\AdminAgendaController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminAgendaController;
-use App\Http\Controllers\AdminCommunityController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSettingsController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\AdminCommunityController;
+use App\Http\Controllers\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
+    Route::get('categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::post('categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::put('categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
     // Proyek
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
@@ -89,7 +95,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
     Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 
-    // Blog
     Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('blog.show');
 
@@ -99,6 +104,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Settings
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
 
-    // ✅ Agenda (CRUD otomatis)
     Route::resource('events', AdminAgendaController::class);
 });

@@ -84,4 +84,9 @@ class AdminAgendaController extends Controller
 
         return redirect()->route('admin.events.index')->with('success', 'Event berhasil dihapus');
     }
+
+    public function show(Event $event)
+    {
+       return view('administrator.admin.agenda.show', compact('event'));
+    }
 }

@@ -9,10 +9,15 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'description',
+        'slug',
+        'type',
+    ];
 
-    public function events()
+    public function artworks()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Artwork::class);
     }
 }
