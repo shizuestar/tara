@@ -82,8 +82,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('agenda', AdminAgendaController::class);
     Route::resource('agenda', AdminAgendaController::class);
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/toggle-notifications', [ProfileController::class, 'toggleNotifications'])->name('profile.toggleNotifications');
 });
 
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+// Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+// Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
 // Route::middleware('auth')->group(function () {
 // });

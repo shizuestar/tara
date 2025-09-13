@@ -53,10 +53,12 @@
                         </div>
                         <div class="py-1">
                             <div class="relative group">
-                                <button class="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-all duration-300">
+                                <a href="{{ route('admin.profile.edit') }}">
+                                    <button class="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-all duration-300">
                                     <span><i class="fas fa-user mr-2"></i> Profil</span>
                                     <i class="fas fa-chevron-right text-xs text-gray-500 group-hover:text-amber-700"></i>
                                 </button>
+                                </a>
                                 <div class="hidden group-hover:block absolute left-full top-0 w-48 bg-white rounded-lg shadow-xl border border-gray-200">
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-all duration-300">Lihat Data Diri</a>
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-all duration-300">Edit Data Diri</a>
