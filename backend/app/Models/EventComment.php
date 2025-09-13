@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventComment extends Model
 {
@@ -15,25 +12,25 @@ class EventComment extends Model
         'event_id',
         'user_id',
         'comment',
-        'parent_id'
+        'parent_id',
     ];
 
-    public function event(): BelongsTo
+    public function event()
     {
         return $this->belongsTo(Event::class);
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function parent(): BelongsTo
+    public function parent()
     {
         return $this->belongsTo(EventComment::class, 'parent_id');
     }
 
-    public function replies(): HasMany
+    public function replies()
     {
         return $this->hasMany(EventComment::class, 'parent_id');
     }

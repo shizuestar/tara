@@ -4,28 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Organizer extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'event_id',
-        'user_id',
-        'organizer_name',
-        'phone',
-        'profile',
-        'website'
-    ];
+    protected $fillable = ['name', 'email', 'phone'];
 
-    public function event(): BelongsTo
+    public function events()
     {
-        return $this->belongsTo(Event::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(Event::class, 'event_organizers');
     }
 }

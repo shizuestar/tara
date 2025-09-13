@@ -22,7 +22,12 @@ use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommunityController;
 
-// Routes Public
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 Route::get('/komunitas', [CommunityController::class, 'index'])->name('komunitas.index');
@@ -35,7 +40,7 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/learn-more', [LearnMoreController::class, 'index'])->name('learn_more.index');
 
 Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda');
-Route::get('/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
+Route::get('/agenda/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
@@ -45,17 +50,27 @@ Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('b
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
 
-// Auth
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Routes Admin
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
+    // Galeri (CRUD)
     Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('galeri.index');
     Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('galeri.show');
     Route::post('/galeri', [AdminGaleriController::class, 'store'])->name('galeri.store');
@@ -63,21 +78,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
+    // Proyek
     Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
     Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
 
+    // Komunitas (CRUD)
     Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
     Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');
     Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('komunitas.store');
     Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
     Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 
+    // Blog
     Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{id}', [AdminBlogController::class, 'show'])->name('blog.show');
 
+    // Users
     Route::resource('users', AdminUserController::class);
 
+    // Settings
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
 
-    Route::resource('agenda', AdminAgendaController::class);
+    // ✅ Agenda (CRUD otomatis)
+    Route::resource('events', AdminAgendaController::class);
 });

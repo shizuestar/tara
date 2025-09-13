@@ -1,159 +1,87 @@
 <?php
 
 namespace App\Http\Controllers;
+// Jika controller kamu berada di App\Http\Controllers langsung, ganti namespace ke App\Http\Controllers
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
-use App\Models\Organizer;
 use App\Models\Category;
-use App\Models\Ticket;
-use App\Models\EventRegistration;
-use App\Models\EventComment;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class AdminAgendaController extends Controller
 {
-    /**
-     * Menampilkan daftar semua event
-     */
-
-    public function index()
+    // Tampilkan index (di sini kita kirim $events dan $categories)
+    public function index(Request $request)
     {
-        $events = Event::with(['organizers', 'tickets'])->latest()->get();
-        $categories = Category::all(); // ambil semua kategori dari tabel categories
+        $query = Event::with(['category', 'registrations']);
 
-        return view('administrator.admin.agenda.index', [
-            'events' => $events,
-            'categories' => $categories,
-        ]);
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $events = $query->latest()->paginate(10);
+        $categories = Category::orderBy('name')->get();
+
+        // sesuaikan nama view dengan struktur project-mu:
+        // contoh 1: resources/views/admin/events/index.blade.php
+        return view('administrator.admin.agenda.index', compact('events', 'categories'));
+
+        // jika view-mu ada di resources/views/administrator/admin/agenda/index.blade.php
+        // return view('administrator.admin.agenda.index', compact('events', 'categories'));
     }
 
-    /**
-     * Form tambah event
-     */
-
-    public function create()
-    {
-        return view('administrator.admin.agenda.create');
-    }
-
-    /**
-     * Simpan event baru
-     */
+    // Simpan event baru
     public function store(Request $request)
     {
-        
-        $request->validate([
-            'category_id'   => 'required|integer',
-            'title'         => 'required|string|max:100',
-            'start_date'    => 'required|date',
-            'end_date'      => 'required|date|after_or_equal:start_date',
-            'time_start'    => 'required',
-            'time_end'      => 'required',
-            'location'      => 'required|string|max:100',
-            'description'   => 'required|string',
-            'image'         => 'nullable|image|max:2048'
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title'       => 'required|string|max:100',
+            'start_date'  => 'required|date',
+            'end_date'    => 'required|date|after_or_equal:start_date',
+            'time_start'  => 'required',
+            'time_end'    => 'required',
+            'location'    => 'required|string|max:100',
+            'description' => 'required|string',
+            'status'      => 'required|in:upcoming,ongoing,past',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,svg|max:5120',
         ]);
 
-        $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public');
+            $validated['image_path'] = $request->file('image')->store('agenda', 'public');
         }
 
-        $event = Event::create([
-            'category_id' => $request->category_id,
-            'title'       => $request->title,
-            'start_date'  => $request->start_date,
-            'end_date'    => $request->end_date,
-            'time_start'  => $request->time_start,
-            'time_end'    => $request->time_end,
-            'location'    => $request->location,
-            'description' => $request->description,
-            'status'      => 'upcoming',
-            'image_path'  => $imagePath
+        Event::create([
+            'category_id' => $validated['category_id'],
+            'title'       => $validated['title'],
+            'start_date'  => $validated['start_date'],
+            'end_date'    => $validated['end_date'],
+            'time_start'  => $validated['time_start'],
+            'time_end'    => $validated['time_end'],
+            'location'    => $validated['location'],
+            'description' => $validated['description'],
+            'status'      => $validated['status'],
+            'image_path'  => $validated['image_path'] ?? null,
         ]);
 
-        return redirect()->route('Administrator.Admin.Agenda.index')->with('success', 'Event berhasil ditambahkan');
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil ditambahkan!');
     }
 
-    /**
-     * Detail event
-     */
-
-    public function show($id)
+    // Hapus event
+    public function destroy(Event $event)
     {
-        $event = Event::with(['organizers', 'tickets', 'comments', 'registrations'])->findOrFail($id);
-        return view('administrator.admin.agenda.show', compact('event'));
-    }
-
-    /**
-     * Form edit event
-     */
-
-    public function edit($id)
-    {
-        $event = Event::findOrFail($id);
-        return view('Administrator.Admin.Agenda.edit', compact('event'));
-    }
-
-    /**
-     * Update event
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'category_id'   => 'required|integer',
-            'title'         => 'required|string|max:100',
-            'start_date'    => 'required|date',
-            'end_date'      => 'required|date|after_or_equal:start_date',
-            'time_start'    => 'required',
-            'time_end'      => 'required',
-            'location'      => 'required|string|max:100',
-            'description'   => 'required|string',
-            'image'         => 'nullable|image|max:2048'
-        ]);
-
-        $event = Event::findOrFail($id);
-
-        // Jika ganti gambar
-        if ($request->hasFile('image')) {
-            if ($event->image_path && Storage::disk('public')->exists($event->image_path)) {
-                Storage::disk('public')->delete($event->image_path);
-            }
-            $event->image_path = $request->file('image')->store('events', 'public');
-        }
-
-        $event->update([
-            'category_id' => $request->category_id,
-            'title'       => $request->title,
-            'start_date'  => $request->start_date,
-            'end_date'    => $request->end_date,
-            'time_start'  => $request->time_start,
-            'time_end'    => $request->time_end,
-            'location'    => $request->location,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('administrator.admin.agenda.index')->with('success', 'Event berhasil diperbarui');
-    }
-
-    /**
-     * Hapus event
-     */
-    public function destroy($id)
-    {
-        $event = Event::findOrFail($id);
-
         if ($event->image_path && Storage::disk('public')->exists($event->image_path)) {
             Storage::disk('public')->delete($event->image_path);
         }
 
         $event->delete();
 
-        return redirect()->route('administrator.admin.agenda.index')->with('success', 'Event berhasil dihapus');
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil dihapus');
     }
-
-
 }

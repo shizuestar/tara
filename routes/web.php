@@ -1,36 +1,32 @@
 <?php
 
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminSettingsController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
-use App\View\Components\AdminSidebar;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminAgendaController;
+use App\Http\Controllers\AdminCommunityController;
+use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommunityController;
 
-// For Authentication
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+// Routes Public
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-// For Public
-
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
-Route::get('/galeri{id}', [GaleriController::class, 'show'])->name('galeri.show');
-
-Route::get('/komunitas', [KomunitasController::class, 'index'])->name('komunitas');
-Route::get('/komunitas/1', [KomunitasController::class, 'show'])->name('komunitas.show');
+Route::get('/komunitas', [CommunityController::class, 'index'])->name('komunitas.index');
+Route::get('/komunitas/{id}', [CommunityController::class, 'show'])->name('komunitas.show');
 
 Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
 
@@ -40,20 +36,49 @@ Route::get('/learn-more', [LearnMoreController::class, 'index'])->name('learn_mo
 
 Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda');
 Route::get('/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
-// Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
 Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
 Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
 
-// For Admin
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
 
- Route::get('/admin/galeri', [AdminGaleriController::class , 'index'])->name('admin.galeri.index');
- Route::get('/admin/proyek', [AdminProyekController::class , 'index'])->name('admin.proyek.index');
- Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
- Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
- 
+// Auth
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Routes Admin
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
+    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('galeri.index');
+    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('galeri.show');
+    Route::post('/galeri', [AdminGaleriController::class, 'store'])->name('galeri.store');
+    Route::get('/galeri/{id}/edit', [AdminGaleriController::class, 'edit'])->name('galeri.edit');
+    Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
+    Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
 
+    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
+    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
+
+    Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
+    Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');
+    Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('komunitas.store');
+    Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
+    Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
+
+    Route::resource('blog', AdminBlogController::class);
+    Route::post('blog/publish-multiple', [AdminBlogController::class, 'publishMultiple'])->name('blog.publish-multiple');
+    Route::delete('blog/destroy-multiple', [AdminBlogController::class, 'destroyMultiple'])->name('blog.destroy-multiple');
+
+    Route::resource('users', AdminUserController::class);
+
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+
+    Route::resource('agenda', AdminAgendaController::class);
+});

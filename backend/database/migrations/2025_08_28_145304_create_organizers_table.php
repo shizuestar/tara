@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('organizer_name', 50);
             $table->string('phone', 100)->nullable();
-            $table->string('profile', 255)->nullable(); // Asumsi ini adalah URL atau path ke gambar profil
+            $table->string('profile', 255)->nullable();
             $table->string('website', 150)->nullable();
             $table->unique(['event_id', 'user_id']);
             $table->timestamps();

@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
     use HasFactory;
-
-    protected $table = 'events'; // pastikan nama tabel
 
     protected $fillable = [
         'category_id',
@@ -23,53 +19,36 @@ class Event extends Model
         'location',
         'description',
         'status',
-        'image_path'
+        'image_path',
     ];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date'   => 'date',
-        'time_start' => 'string', // karena di DB tipe TIME, lebih aman pakai string
-        'time_end'   => 'string', // sama dengan time_start
     ];
 
-    /**
-     * Relasi ke Category (satu kategori bisa punya banyak event)
-     */
-    public function category(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Relasi ke Organizers (satu event bisa punya banyak organizer)
-     */
-    public function organizers(): HasMany
+    public function organizers()
     {
-        return $this->hasMany(Organizer::class);
+        return $this->belongsToMany(Organizer::class, 'event_organizers');
     }
 
-    /**
-     * Relasi ke Tickets (satu event bisa punya banyak jenis tiket)
-     */
-    public function tickets(): HasMany
+    public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
-    /**
-     * Relasi ke Registrations (peserta yang daftar di event)
-     */
-    public function registrations(): HasMany
-    {
-        return $this->hasMany(EventRegistration::class);
-    }
-
-    /**
-     * Relasi ke Comments (komentar dari peserta/pengunjung)
-     */
-    public function comments(): HasMany
+    public function comments()
     {
         return $this->hasMany(EventComment::class);
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
     }
 }
