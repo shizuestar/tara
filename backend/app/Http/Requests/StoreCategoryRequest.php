@@ -9,7 +9,7 @@ class StoreCategoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     public function rules(): array

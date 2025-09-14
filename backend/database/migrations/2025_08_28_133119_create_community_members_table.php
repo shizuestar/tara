@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('community_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('community_id')->constrained('communities')->onDelete('cascade'); // Foreign key ke tabel communities
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key ke tabel users
+            $table->foreignId('community_id')->constrained('communities')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->enum('role', ['member', 'moderator', 'admin'])->default('member');
-            $table->timestamp('joined_at')->useCurrent(); // Default current timestamp
-            $table->unique(['community_id', 'user_id']); // Memastikan satu user hanya bisa jadi member sekali di satu komunitas
+            $table->timestamp('joined_at')->useCurrent();
+            $table->unique(['community_id', 'user_id']);
             $table->timestamps();
         });
     }

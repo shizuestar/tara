@@ -9,15 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('communities', function (Blueprint $table) {
-            $table->enum('status', ['active', 'inactive'])->default('active')->after('type');
-            $table->text('rules')->nullable()->after('cover_image'); 
+            $table->unsignedBigInteger('creator_id')->after('status');
+            $table->unsignedBigInteger('category_id')->nullable()->after('creator_id');
+            $table->string('avatar', 255)->nullable();
+
+            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
         Schema::table('communities', function (Blueprint $table) {
-            $table->dropColumn(['category', 'status', 'rules']);
+            $table->dropForeign(['creator_id']);
+            $table->dropColumn('creator_id');
         });
     }
 };

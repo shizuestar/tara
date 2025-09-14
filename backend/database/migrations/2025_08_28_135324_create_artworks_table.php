@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('typography', 100)->nullable();
             $table->string('period', 100)->nullable();
             $table->enum('status', ['draft', 'published', 'archived'])->default('published');
-            $table->foreignId('community_id')->nullable()->constrained('communities')->onDelete('set null'); // Foreign key ke tabel communities
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null'); // Foreign key ke tabel categories (asumsi ada tabel categories)
+            $table->foreignId('community_id')->nullable()->constrained('communities')->onDelete('set null');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

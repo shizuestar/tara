@@ -75,6 +75,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
     Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');
     Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('komunitas.store');
+    Route::get('/komunitas/{id}/edit', [AdminCommunityController::class, 'edit'])->name('komunitas.edit');
     Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('komunitas.update');
     Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('komunitas.destroy');
 

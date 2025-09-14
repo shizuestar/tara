@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body { font-family: 'Space Grotesk', sans-serif; }
@@ -21,11 +22,7 @@
     @stack('styles')
 </head>
 <body class="flex min-h-screen bg-gray-100 overflow-x-hidden">
-
-    <!-- Sidebar -->
     <x-admin-sidebar />
-
-    <!-- Main content -->
     <main class="flex-1 ml-0 md:ml-64 transition-all duration-300">
         <header class="h-[70px] bg-white border-b border-gray-200 px-12 flex items-center justify-between z-40 w-full sticky top-0">
             <div class="flex items-center w-1/3">
@@ -34,14 +31,11 @@
                     <input type="text" placeholder="Cari halaman atau fitur..." class="border-none bg-transparent p-1 w-full font-['Space_Grotesk'] text-sm text-gray-900 outline-none focus:ring-2 focus:ring-yellow-500" id="search-input-header">
                 </div>
             </div>
-
             <div class="flex items-center gap-4">
-                <!-- Tombol Notifikasi -->
                 <a href="#" id="navbar-bell-btn" class="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-50 text-gray-900 hover:bg-yellow-500 hover:text-white transition-all duration-300 relative">
                     <i class="far fa-bell"></i>
                     <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-[18px] h-[18px] rounded-full flex items-center justify-center">3</span>
                 </a>
-
                 <div class="relative">
                     <button id="profile-btn" class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-50 border border-gray-200 hover:border-yellow-500 transition-all duration-300">
                         <img src="https://picsum.photos/40/40?random=1" alt="Profile" class="w-full h-full object-cover">
@@ -80,13 +74,10 @@
                 </div>
             </div>
         </header>
-
-        <!-- Konten halaman -->
         <div class="p-6 ml-3 pt-0 mt-3 bg-gray-100 min-h-[calc(100vh)] w-[100%]">
             {{ $slot }}
         </div>
     </main>
-
     <div id="notification-rightbar" class="hidden fixed right-0 top-0 h-full w-80 bg-white shadow-xl border-l border-gray-200 z-1000 transform translate-x-full transition-transform duration-300 ease-in-out">
         <div class="p-4 border-b border-gray-200">
             <div class="flex justify-between items-center">
@@ -123,7 +114,6 @@
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const profileBtn = document.getElementById('profile-btn');
@@ -132,7 +122,6 @@
             const rightbar = document.getElementById('notification-rightbar');
             const closeRightbarBtn = document.getElementById('close-rightbar-btn');
 
-            // Toggle Profile Dropdown
             profileBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 profileDropdown.classList.toggle('hidden');
@@ -142,12 +131,10 @@
                 }, 10);
             });
 
-            // Prevent dropdown from closing when clicking inside
             profileDropdown.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
 
-            // Toggle Notification Rightbar
             bellBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -160,17 +147,24 @@
 
             closeRightbarBtn.addEventListener('click', () => {
                 rightbar.classList.add('translate-x-full');
-                rightbar.classList.remove('translate-x-0');
+                rightbar.classList.remove                ('translate-x-0');
+                setTimeout(() => {
+                    rightbar.classList.add('hidden');
+                }, 300);
             });
 
-            // Close dropdown and rightbar when clicking outside
             document.addEventListener('click', (e) => {
                 if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-                    profileDropdown.classList.add('hidden', 'opacity-0', 'scale-95');
+                    profileDropdown.classList.add('hidden');
+                    profileDropdown.classList.add('opacity-0');
+                    profileDropdown.classList.add('scale-95');
                 }
                 if (!bellBtn.contains(e.target) && !rightbar.contains(e.target)) {
                     rightbar.classList.add('translate-x-full');
                     rightbar.classList.remove('translate-x-0');
+                    setTimeout(() => {
+                        rightbar.classList.add('hidden');
+                    }, 300);
                 }
             });
         });
