@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
@@ -53,6 +54,11 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Profile
+Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/{id}/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::post('/profile/{id}/toggle-notifications', [ProfileController::class, 'toggleNotifications'])->name('profile.toggleNotifications');
+
 // Routes Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
@@ -97,5 +103,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
        Route::get('/backups/{backup}/download', [AdminSettingsController::class, 'downloadBackup'])->name('backups.download');
        Route::put('/backups/schedule', [AdminSettingsController::class, 'updateBackupSchedule'])->name('backups.schedule');
 
+    Route::resource('agenda', AdminAgendaController::class);
     Route::resource('agenda', AdminAgendaController::class);
 });
