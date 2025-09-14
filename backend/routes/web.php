@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProyekController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminProjectController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminBlogController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminAgendaController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
+use App\Http\Controllers\ProjectTypeController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminCommunityController;
@@ -75,8 +77,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
     Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
 
-    Route::get('/proyek', [AdminProyekController::class, 'index'])->name('proyek.index');
-    Route::get('/proyek/{id}', [AdminProyekController::class, 'show'])->name('proyek.show');
+    Route::get('/admin/projects/', [AdminProyekController::class, 'index'])->name('projects.index');
+    Route::get('/admin/projects/{id}', [AdminProyekController::class, 'show'])->name('projects.show');
+    Route::post('/admin/projects', [AdminProyekController::class, 'store'])->name('projects.store');
+    Route::get('/admin/projects/{id}/edit', [AdminProyekController::class, 'edit'])->name('projects.edit');
+    Route::get('/admin/users/search', [AdminProyekController::class, 'searchUsers'])->name('users.search');
+    Route::put('/admin/projects/{id}', [AdminProyekController::class, 'update'])->name('projects.update');
+    Route::delete('/admin/projects/{id}', [AdminProyekController::class, 'destroy'])->name('projects.destroy');
 
     Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('komunitas.index');
     Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('komunitas.show');

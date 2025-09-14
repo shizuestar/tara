@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProjectTask extends Model
 {
@@ -16,19 +15,15 @@ class ProjectTask extends Model
         'title',
         'description',
         'progress',
-        'status'
+        'status',
     ];
 
-    protected $casts = [
-        'progress' => 'decimal:2'
-    ];
-
-    public function project(): BelongsTo
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }
 
-    public function assignee(): BelongsTo
+    public function assignee()
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }

@@ -14,6 +14,11 @@ class Category extends Model
         'description',
     ];
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'category_id');
+    }
+
     public function blogs()
     {
         return $this->hasMany(Blog::class);
