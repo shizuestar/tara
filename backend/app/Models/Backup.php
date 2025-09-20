@@ -1,9 +1,9 @@
 <?php
-     namespace App\Models;
+namespace App\Models;
 
-     use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
-     class Backup extends Model
-     {
-         protected $fillable = ['type', 'file_path'];
-     }
+class Backup extends Model
+{
+    protected $fillable = ['type', 'file_path'];
+}

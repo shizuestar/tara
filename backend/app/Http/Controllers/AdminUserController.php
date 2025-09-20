@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +40,7 @@ class AdminUserController extends Controller
 
         $users = $query->latest()->paginate(10);
 
-        $activities = ActivityLog::latest()->take(10)->get();
+        $activities = ActivityLog::where('type', 'user')->latest()->take(10)->get();
 
         return view('administrator.admin.user.index', compact('users', 'activities'));
     }
@@ -83,6 +82,7 @@ class AdminUserController extends Controller
 
         ActivityLog::create([
             'user_id' => Auth::id(),
+            'type' => 'user',
             'description' => 'Pengguna baru "' . $user->name . '" telah ditambahkan',
         ]);
 
@@ -143,6 +143,7 @@ class AdminUserController extends Controller
 
         ActivityLog::create([
             'user_id' => Auth::id(),
+            'type' => 'user',
             'description' => 'Pengguna "' . $user->name . '" berhasil diperbarui datanya',
         ]);
 
@@ -160,6 +161,7 @@ class AdminUserController extends Controller
 
         ActivityLog::create([
             'user_id' => Auth::id(),
+            'type' => 'user',
             'description' => 'Pengguna "' . $userName . '" berhasil dihapus',
         ]);
 

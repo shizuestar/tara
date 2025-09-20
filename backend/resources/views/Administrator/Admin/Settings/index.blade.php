@@ -23,14 +23,6 @@
                         <i class="fas fa-palette text-yellow-400"></i>
                         <span>Logo & Nama Platform</span>
                     </div>
-                    <div class="settings-menu-item" data-target="role-access">
-                        <i class="fas fa-user-lock text-yellow-400"></i>
-                        <span>Role & Hak Akses</span>
-                    </div>
-                    <div class="settings-menu-item" data-target="notification">
-                        <i class="fas fa-bell text-yellow-400"></i>
-                        <span>Pengaturan Notifikasi</span>
-                    </div>
                     <div class="settings-menu-item" data-target="backup-restore">
                         <i class="fas fa-database text-yellow-400"></i>
                         <span>Backup & Restore Data</span>
@@ -86,83 +78,6 @@
                         </form>
                     </div>
 
-                    <!-- Role & Hak Akses Section -->
-                    <div class="settings-section" id="role-access">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Role & Hak Akses</h2>
-                        <form action="{{ route('admin.roles.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-600 mb-1">Tambah Role Baru</label>
-                                <div class="flex gap-3">
-                                    <input type="text" name="name" class="w-full p-2 border border-gray-300 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Nama Role">
-                                    <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Tambah</button>
-                                </div>
-                                @error('name')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </form>
-                        <form action="{{ route('admin.roles.update_permissions') }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-600 mb-1">Daftar Role</label>
-                                <select name="role_id" class="w-full p-2 border border-gray-300 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" onchange="this.form.submit()">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" {{ $selected_role_id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('role_id')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <h3 class="text-sm font-medium text-gray-600 mb-4">Hak Akses untuk: {{ $selected_role->name ?? 'Pilih Role' }}</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                @foreach ($permissions as $permission)
-                                    <div class="flex items-center p-3 bg-[#FFFBEB] border-l-4 border-yellow-400 rounded-md">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" {{ in_array($permission->id, $selected_role_permissions) ? 'checked' : '' }} class="mr-2">
-                                        <span class="text-sm text-gray-700">{{ $permission->name }}</span>
-                                    </div>
-                                @endforeach
-                            </div>
-                            @error('permissions')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
-                            <div class="flex justify-end gap-3 mt-4">
-                                <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Reset</button>
-                                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Simpan Perubahan</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Pengaturan Notifikasi Section -->
-                    <div class="settings-section" id="notification">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Pengaturan Notifikasi</h2>
-                        <form action="{{ route('admin.notifications.update') }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="space-y-4">
-                                @foreach (['email_enabled' => 'Notifikasi Email', 'browser_enabled' => 'Notifikasi Browser', 'sms_enabled' => 'Notifikasi SMS', 'new_user_enabled' => 'Notifikasi Pengguna Baru', 'system_update_enabled' => 'Notifikasi Pembaruan Sistem'] as $key => $label)
-                                    <div class="flex justify-between items-center p-3 bg-[#FFFBEB] border-l-4 border-yellow-400 rounded-md">
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">{{ $label }}</div>
-                                            <div class="text-sm text-gray-600">Aktifkan {{ strtolower($label) }}</div>
-                                        </div>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" name="{{ $key }}" {{ $notification_settings->$key ?? false ? 'checked' : '' }} class="sr-only">
-                                            <span class="w-10 h-5 bg-gray-300 rounded-full transition"></span>
-                                            <span class="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform duration-300 {{ $notification_settings->$key ?? false ? 'translate-x-5 bg-yellow-400' : '' }}"></span>
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="flex justify-end gap-3 mt-4">
-                                <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Reset ke Default</button>
-                                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Simpan Perubahan</button>
-                            </div>
-                        </form>
-                    </div>
-
                     <!-- Backup & Restore Data Section -->
                     <div class="settings-section" id="backup-restore">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Backup & Restore Data</h2>
@@ -202,26 +117,29 @@
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Jadwal Backup Otomatis</label>
                                 <select name="schedule" class="w-full p-2 border border-gray-300 rounded-md text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                                    <option value="disabled" {{ $backup_schedule == 'disabled' ? 'selected' : '' }}>Nonaktif</option>
-                                    <option value="daily" {{ $backup_schedule == 'daily' ? 'selected' : '' }}>Harian</option>
-                                    <option value="weekly" {{ $backup_schedule == 'weekly' ? 'selected' : '' }}>Mingguan</option>
-                                    <option value="monthly" {{ $backup_schedule == 'monthly' ? 'selected' : '' }}>Bulanan</option>
+                                    <option value="disabled" {{ $backup_schedule ?? 'disabled' == 'disabled' ? 'selected' : '' }}>Nonaktif</option>
+                                    <option value="daily" {{ $backup_schedule ?? '' == 'daily' ? 'selected' : '' }}>Harian</option>
+                                    <option value="weekly" {{ $backup_schedule ?? '' == 'weekly' ? 'selected' : '' }}>Mingguan</option>
+                                    <option value="monthly" {{ $backup_schedule ?? '' == 'monthly' ? 'selected' : '' }}>Bulanan</option>
                                 </select>
                                 @error('schedule')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="flex justify-end gap-3 mt-4">
+                                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-md">Simpan Jadwal</button>
+                            </div>
                         </form>
                         <div class="mt-6">
                             <h3 class="text-sm font-medium text-gray-600 mb-4">Riwayat Backup</h3>
                             <div class="space-y-2">
-                                @foreach ($backups as $backup)
+                                @foreach ($backups ?? [] as $backup)
                                     <div class="flex justify-between items-center p-3 bg-[#FFFBEB] border-l-4 border-yellow-400 rounded-md">
                                         <div>
-                                            <div class="text-sm font-medium text-gray-900">Backup {{ ucfirst($backup->type) }}</div>
-                                            <div class="text-xs text-gray-600">{{ \Carbon\Carbon::parse($backup->created_at)->translatedFormat('d M Y, H:i:s') }}</div>
+                                            <div class="text-sm font-medium text-gray-900">Backup {{ ucfirst($backup->type ?? '') }}</div>
+                                            <div class="text-xs text-gray-600">{{ \Carbon\Carbon::parse($backup->created_at ?? now())->translatedFormat('d M Y, H:i:s') }}</div>
                                         </div>
-                                        <a href="{{ route('admin.backups.download', $backup->id) }}" class="bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium px-3 py-1 rounded-md">Unduh</a>
+                                        <a href="{{ route('admin.backups.download', $backup->id ?? '') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium px-3 py-1 rounded-md">Unduh</a>
                                     </div>
                                 @endforeach
                             </div>
@@ -232,9 +150,11 @@
         </div>
 
         @push('styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                overflow-x: hidden;
             }
             .settings-menu-item {
                 display: flex;
@@ -308,9 +228,6 @@
                 .grid-cols-3 {
                     grid-template-columns: 1fr;
                 }
-                .grid-cols-2 {
-                    grid-template-columns: 1fr;
-                }
             }
         </style>
         @endpush
@@ -338,26 +255,36 @@
                 const logoPreview = document.getElementById('logo-preview-img');
                 const faviconPreview = document.getElementById('favicon-preview-img');
 
-                logoInput?.addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            logoPreview.src = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
+                if (logoInput) {
+                    logoInput.addEventListener('change', function() {
+                        const file = this.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                logoPreview.src = e.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
 
-                faviconInput?.addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            faviconPreview.src = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
+                if (faviconInput) {
+                    faviconInput.addEventListener('change', function() {
+                        const file = this.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                faviconPreview.src = e.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                // Prevent horizontal overflow
+                document.body.style.overflowX = 'hidden';
+                window.addEventListener('resize', () => {
+                    document.body.style.overflowX = 'hidden';
                 });
             });
         </script>

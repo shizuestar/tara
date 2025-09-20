@@ -73,33 +73,8 @@
             </a>
         </div>
     </div>
-</aside>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const navItems = document.querySelectorAll('.nav-item');
-    const currentPath = window.location.pathname;
-    navItems.forEach(item => {
-        const link = item.getAttribute('href');
-        const icon = item.querySelector('i');
-        if (link === currentPath) {
-            item.classList.add('border-yellow-400', 'bg-yellow-50');
-            item.classList.remove('border-transparent', 'hover:bg-gray-100', 'hover:border-yellow-400');
-            if (icon) {
-                icon.parentElement.classList.replace('text-gray-500', 'text-yellow-400');
-            }
-        } else {
-            item.classList.remove('border-yellow-400', 'bg-yellow-50');
-            item.classList.add('border-transparent');
-            if (icon) {
-                icon.parentElement.classList.replace('text-yellow-400', 'text-gray-500');
-            }
-        }
-    });
-});
-</script>
-
- <style>
+    <style>
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; }
@@ -107,3 +82,28 @@ document.addEventListener('DOMContentLoaded', () => {
         .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #1f2937 #f1f1f1; }
         .nav-item { transition: all 0.3s ease; }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            const currentPath = window.location.pathname;
+            navItems.forEach(item => {
+                const link = item.getAttribute('href');
+                const icon = item.querySelector('i');
+                if (link === currentPath) {
+                    item.classList.add('border-yellow-400', 'bg-yellow-50');
+                    item.classList.remove('border-transparent', 'hover:bg-gray-100', 'hover:border-yellow-400');
+                    if (icon) {
+                        icon.parentElement.classList.replace('text-gray-500', 'text-yellow-400');
+                    }
+                } else {
+                    item.classList.remove('border-yellow-400', 'bg-yellow-50');
+                    item.classList.add('border-transparent');
+                    if (icon) {
+                        icon.parentElement.classList.replace('text-yellow-400', 'text-gray-500');
+                    }
+                }
+            });
+        });
+    </script>
+</aside>
