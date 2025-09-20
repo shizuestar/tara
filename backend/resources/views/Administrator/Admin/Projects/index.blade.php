@@ -1,6 +1,6 @@
-```blade
 <x-admin-layout>
     <div class="bg-white rounded-xl shadow-sm p-4">
+        <!-- Display Session Messages -->
         @if (session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg flex items-center gap-2">
                 <i class="fas fa-check-circle"></i>
@@ -14,6 +14,7 @@
             </div>
         @endif
 
+        <!-- Page Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
             <h1 class="text-lg font-semibold flex items-center gap-2 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-project-diagram text-yellow-400 text-base"></i>
@@ -31,6 +32,7 @@
             </div>
         </div>
 
+        <!-- Chart Section -->
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
             <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-chart-bar text-yellow-400 text-sm"></i>
@@ -39,6 +41,7 @@
             <div id="chartCanvas" class="w-full h-64"></div>
         </div>
 
+        <!-- Filter Section -->
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
             <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-filter text-yellow-400 text-sm"></i>
@@ -89,6 +92,50 @@
                     </a>
                 </div>
             </form>
+        </div>
+
+        <!-- Grid View -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center gap-3 mb-4">
+                <h2 class="text-base font-semibold text-gray-900 font-['Space_Grotesk']">Daftar Proyek</h2>
+                <div class="text-xs text-gray-800">Menampilkan {{ $projects->firstItem() }}-{{ $projects->lastItem() }} dari {{ $projects->total() }} hasil</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ($projects as $project)
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="relative">
+                            <img src="{{ $project->cover_images ? asset('storage/' . $project->cover_images) : 'https://picsum.photos/id/' . ($project->id + 99) . '/400/120' }}" alt="Cover {{ $project->project_name }}" class="w-full project-cover">
+                            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="{{ getThumbnailIcon($project->category ? $project->category->name : '') }}"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold text-gray-900 mb-1 text-sm font-['Space_Grotesk']">{{ $project->project_name }}</h3>
+                            <p class="text-xs text-gray-800 mb-2">{{ $project->description ? Str::limit($project->description, 50) : '' }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-user mr-1"></i>
+                                    <span>{{ $project->creator ? $project->creator->name : 'Tidak Diketahui' }}</span>
+                                </div>
+                                <span class="px-2 py-1 rounded-full {{ $project->status === 'ongoing' ? 'bg-green-100 text-green-600' : ($project->status === 'pending' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600') }} text-xs">{{ getStatusText($project->status) }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-800">{{ $project->category ? $project->category->name : '-' }}</span>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('admin.projects.show', $project->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $project->project_name }}"><i class="fas fa-eye"></i></a>
+                                    <button onclick="showEditModal({{ $project->id }})" class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-xs" aria-label="Edit {{ $project->project_name }}"><i class="fas fa-edit"></i></button>
+                                    <button onclick="showDeleteModal('{{ addslashes($project->project_name) }}', {{ $project->id }})" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-xs" aria-label="Hapus {{ $project->project_name }}"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-4 gap-2">
+            {{ $projects->appends(request()->query())->links('vendor.pagination.tailwind') }}
         </div>
 
         <!-- Create Modal -->
@@ -444,68 +491,14 @@
                 </form>
             </div>
         </div>
-
-        <div class="bg-white rounded-lg p-4 border border-gray-200">
-            <div class="flex justify-between items-center gap-3 mb-4">
-                <h2 class="text-base font-semibold text-gray-900 font-['Space_Grotesk']">Daftar Proyek</h2>
-                <div class="text-xs text-gray-800">Menampilkan {{ $projects->firstItem() }}-{{ $projects->lastItem() }} dari {{ $projects->total() }} hasil</div>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600 w-12">Thumbnail</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Nama Proyek</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Kategori</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Manajer</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Tanggal Mulai</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600">Status</th>
-                            <th class="p-3 text-left text-sm font-semibold text-gray-600 w-24">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="projectTableBody">
-                        @foreach ($projects as $project)
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-3">
-                                    <div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-                                        <i class="{{ getThumbnailIcon($project->category ? $project->category->name : '') }}"></i>
-                                    </div>
-                                </td>
-                                <td class="p-3">
-                                    <div class="text-sm font-medium text-gray-900">{{ $project->project_name }}</div>
-                                    <div class="text-xs text-gray-600">{{ $project->description ? Str::limit($project->description, 50) : '' }}</div>
-                                </td>
-                                <td class="p-3 text-sm text-gray-900">{{ $project->category ? $project->category->name : '-' }}</td>
-                                <td class="p-3 text-sm text-gray-900">{{ $project->creator ? $project->creator->name : 'Tidak Diketahui' }}</td>
-                                <td class="p-3 text-sm text-gray-900">{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : '-' }}</td>
-                                <td class="p-3">{!! getStatusBadge($project->status) !!}</td>
-                                <td class="p-3">
-                                    <div class="flex gap-2">
-                                        <a href="{{ route('admin.projects.show', $project->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $project->project_name }}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <button onclick="showEditModal({{ $project->id }})" class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-xs" aria-label="Edit {{ $project->project_name }}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button onclick="showDeleteModal('{{ addslashes($project->project_name) }}', {{ $project->id }})" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-xs" aria-label="Hapus {{ $project->project_name }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="flex justify-center mt-4 gap-2">
-                {{ $projects->appends(request()->query())->links('vendor.pagination.tailwind') }}
-            </div>
-        </div>
-
     </div>
 
     @push('styles')
         <style>
+            .project-cover {
+                height: 120px;
+                object-fit: cover;
+            }
             .modal-open {
                 animation: fadeIn 0.3s ease;
             }
@@ -531,45 +524,46 @@
 
     @push('scripts')
         <script>
-            ```chartjs
-            {
-                "type": "bar",
-                "data": {
-                    "labels": {!! json_encode($categoryNames) !!},
-                    "datasets": [{
-                        "label": "Jumlah Proyek",
-                        "data": {!! json_encode($projectCounts) !!},
-                        "backgroundColor": ["#f59e0b", "#d97706", "#b45309", "#92400e", "#78350f"],
-                        "borderColor": ["#f59e0b", "#d97706", "#b45309", "#92400e", "#78350f"],
-                        "borderWidth": 1
+            const chartData = {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($categoryNames) !!},
+                    datasets: [{
+                        label: 'Jumlah Proyek',
+                        data: {!! json_encode($projectCounts) !!},
+                        backgroundColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
+                        borderColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
+                        borderWidth: 1
                     }]
                 },
-                "options": {
-                    "scales": {
-                        "y": {
-                            "beginAtZero": true,
-                            "title": {
-                                "display": true,
-                                "text": "Jumlah Proyek"
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah Proyek'
                             }
                         },
-                        "x": {
-                            "title": {
-                                "display": true,
-                                "text": "Kategori"
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Kategori'
                             }
                         }
                     },
-                    "plugins": {
-                        "legend": {
-                            "labels": {
-                                "color": "#111827"
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#111827'
                             }
                         }
                     }
                 }
-            }
-            ```
+            };
+
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            new Chart(ctx, chartData);
 
             function showCreateModal() {
                 document.getElementById('createModal').classList.remove('hidden');
@@ -590,7 +584,7 @@
                             <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
                         </div>
                         <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('create')">
-                        <button type="button" onclick="addMemberInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                        <button type="button" onclick="addMemberInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
                     </div>
                 `;
                 document.getElementById('milestone_inputs_container').innerHTML = `
@@ -869,20 +863,11 @@
                     });
             }
 
-            function getStatusBadge(status) {
-                let color = 'bg-gray-100 text-gray-600';
-                let text = 'Tidak Diketahui';
-                if (status === 'ongoing') {
-                    color = 'bg-green-100 text-green-600';
-                    text = 'Berlangsung';
-                } else if (status === 'pending') {
-                    color = 'bg-yellow-100 text-yellow-600';
-                    text = 'Menunggu Persetujuan';
-                } else if (status === 'completed') {
-                    color = 'bg-blue-100 text-blue-600';
-                    text = 'Selesai';
-                }
-                return `<span class="px-2 py-1 rounded-full ${color} text-xs">${text}</span>`;
+            function getStatusText(status) {
+                if (status === 'ongoing') return 'Berlangsung';
+                if (status === 'pending') return 'Menunggu Persetujuan';
+                if (status === 'completed') return 'Selesai';
+                return 'Tidak Diketahui';
             }
 
             window.onclick = function(event) {
@@ -915,4 +900,3 @@
         </script>
     @endpush
 </x-admin-layout>
-```

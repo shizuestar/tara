@@ -18,7 +18,7 @@
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div>
-                                    <span class="text-lg font-bold text-gray-900">0%</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ array_sum($visitorData['week']) }}</span>
                                     <span class="block text-sm text-gray-600">Traffic Hari Ini</span>
                                 </div>
                             </div>
@@ -27,8 +27,8 @@
                                     <i class="fas fa-users"></i>
                                 </div>
                                 <div>
-                                    <span class="text-lg font-bold text-gray-900">0</span>
-                                    <span class="block text-sm text-gray-600">User Baru</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ $totalActiveUsers }}</span>
+                                    <span class="block text-sm text-gray-600">User Aktif</span>
                                 </div>
                             </div>
                             <div class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-yellow-200">
@@ -36,7 +36,7 @@
                                     <i class="fas fa-image"></i>
                                 </div>
                                 <div>
-                                    <span class="text-lg font-bold text-gray-900">0</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ $totalArtworks }}</span>
                                     <span class="block text-sm text-gray-600">Karya Baru</span>
                                 </div>
                             </div>
@@ -68,14 +68,14 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-4 mt-6 pt-6 border-t border-gray-200">
-                    <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
+                    <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
                         <i class="fas fa-plus-circle"></i>
-                        <span>Buat Konten</span>
-                    </button>
-                    <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
+                        <span>Buat Karya</span>
+                    </a>
+                    <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
                         <i class="fas fa-chart-pie"></i>
                         <span>Lihat Laporan</span>
-                    </button>
+                    </a>
                     <button class="relative flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
                         <i class="fas fa-bell"></i>
                         <span>Notifikasi</span>
@@ -89,20 +89,20 @@
                     </div>
                     <div class="flex items-center gap-2 last-login">
                         <i class="fas fa-clock"></i>
-                        <span>Login terakhir: Hari ini, 11:01</span>
+                        <span>Login terakhir: Hari ini, {{ now()->format('H:i') }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 5 Card Statistik -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-5 mt-5 max-w-7xl mx-auto">
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-400">
                     <i class="fas fa-users"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">0</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalCommunities }}</div>
                     <div class="text-sm text-gray-600">Total Komunitas</div>
                 </div>
             </div>
@@ -111,8 +111,8 @@
                     <i class="fas fa-project-diagram"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">0</div>
-                    <div class="text-sm text-gray-600">Total Proyek Kolaborasi</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalProjects }}</div>
+                    <div class="text-sm text-gray-600">Total Proyek</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
@@ -120,8 +120,8 @@
                     <i class="fas fa-images"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">0</div>
-                    <div class="text-sm text-gray-600">Total Karya di Galeri</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalArtworks }}</div>
+                    <div class="text-sm text-gray-600">Total Karya</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
@@ -129,7 +129,7 @@
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">0</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalEvents }}</div>
                     <div class="text-sm text-gray-600">Total Event</div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                     <i class="fas fa-user-check"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">0</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalActiveUsers }}</div>
                     <div class="text-sm text-gray-600">Total User Aktif</div>
                 </div>
             </div>
@@ -187,10 +187,23 @@
             <div class="bg-white rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h3>
-                    <a href="#" class="text-yellow-400 font-medium">Lihat Semua</a>
+                    <a href="{{ route('admin.activity-logs.index') }}" class="text-yellow-400 font-medium">Lihat Semua</a>
                 </div>
                 <ul class="space-y-4">
-                    <!-- Kosong -->
+                    @foreach ($activities as $activity)
+                        <li class="activity-card" data-category="{{ $activity['category'] }}" data-date="{{ $activity['date'] }}" data-likes="{{ $activity['likes'] }}" data-comments="{{ $activity['comments'] }}" data-title="{{ $activity['title'] }}" data-author="{{ $activity['author'] }}">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400">
+                                    <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($activity['title'], 50) }}</h4>
+                                    <p class="text-xs text-gray-600">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
+                                    <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -199,25 +212,43 @@
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-gray-900">Proyek Kolaborasi Terbaru</h2>
-                <button class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <a href="{{ route('admin.projects.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-plus"></i> Proyek Baru
-                </button>
+                </a>
             </div>
-            <div class="overflow-x-auto rounded-lg shadow-sm">
-                <table class="w-full min-w-max">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-600 uppercase text-sm">
-                            <th class="p-4 text-left">Nama Proyek</th>
-                            <th class="p-4 text-left">Komunitas</th>
-                            <th class="p-4 text-left">Tanggal Mulai</th>
-                            <th class="p-4 text-left">Status</th>
-                            <th class="p-4 text-left">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Kosong -->
-                    </tbody>
-                </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @forelse ($recentProjects as $project)
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="relative">
+                            <img src="{{ $project->cover_images ? asset('storage/' . $project->cover_images) : 'https://picsum.photos/id/' . ($project->id + 99) . '/400/120' }}" alt="Cover {{ $project->project_name }}" class="w-full h-32 object-cover">
+                            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="{{ $project->category ? 'fas fa-' . ($project->category->name == 'Fotografi' ? 'camera' : ($project->category->name == 'Digital Art' ? 'paint-brush' : ($project->category->name == 'Lukisan' ? 'palette' : 'cube'))) : 'fas fa-project-diagram' }}"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold text-gray-900 mb-1 text-sm font-['Space_Grotesk']">{{ Str::limit($project->project_name, 30) }}</h3>
+                            <p class="text-xs text-gray-800 mb-2">{{ $project->description ? Str::limit($project->description, 50) : 'Tidak ada deskripsi' }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-user mr-1"></i>
+                                    <span>{{ $project->creator ? $project->creator->name : 'Unknown' }}</span>
+                                </div>
+                                <span class="px-2 py-1 rounded-full {{ $project->status == 'ongoing' ? 'bg-green-100 text-green-600' : ($project->status == 'pending' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600') }} text-xs">{{ $project->status == 'ongoing' ? 'Berlangsung' : ($project->status == 'pending' ? 'Menunggu' : 'Selesai') }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-800">{{ $project->category ? $project->category->name : '-' }}</span>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('admin.projects.show', $project->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $project->project_name }}"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full text-center p-10 text-gray-600">
+                        <i class="fas fa-project-diagram text-6xl mb-4"></i>
+                        <h3 class="text-xl font-semibold">Tidak ada proyek terbaru</h3>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -229,10 +260,11 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div class="flex flex-wrap gap-2">
                     <button class="filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="post">Postingan</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="communitypost">Postingan</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="event">Event</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Proyek</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="community">Komunitas</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="artwork">Karya</button>
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
                     <div class="relative flex-1">
@@ -248,7 +280,26 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="activities-container">
-                <!-- Kosong -->
+                @foreach ($activities as $activity)
+                    <div class="activity-card bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition" data-category="{{ $activity['category'] }}" data-date="{{ $activity['date'] }}" data-likes="{{ $activity['likes'] }}" data-comments="{{ $activity['comments'] }}" data-title="{{ $activity['title'] }}" data-author="{{ $activity['author'] }}">
+                        <div class="relative">
+                            <div class="w-full h-32 bg-gray-100"></div>
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="text-sm font-semibold text-gray-900 font-['Space_Grotesk']">{{ Str::limit($activity['title'], 30) }}</h4>
+                            <p class="text-xs text-gray-800 mb-2">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <div class="text-center mb-4">
                 <button id="load-more-activities" class="px-6 py-3 border-2 border-yellow-400 text-yellow-400 rounded-md font-medium hover:bg-yellow-400 hover:text-gray-900 transition">
@@ -257,7 +308,7 @@
             </div>
             <div class="flex justify-between items-center bg-gray-100 p-4 rounded-md">
                 <div class="text-gray-600">
-                    Menampilkan <span id="results-number">0</span> dari <span id="total-results">0</span> aktivitas
+                    Menampilkan <span id="results-number">{{ $activities->count() }}</span> dari <span id="total-results">{{ $activities->count() }}</span> aktivitas
                 </div>
                 <div class="flex items-center gap-2">
                     <label for="sort-by" class="text-gray-600">Urutkan:</label>
@@ -288,12 +339,26 @@
             <div class="bg-white rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-semibold text-gray-900">Karya Populer</h2>
-                    <a href="#" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                    <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                         <i class="fas fa-chart-line"></i> Lihat Analitik
                     </a>
                 </div>
                 <div class="space-y-4">
-                    <!-- Kosong -->
+                    @forelse ($popularArtworks as $artwork)
+                        <div class="flex items-center gap-3">
+                            <img src="{{ $artwork->thumbnail ? asset('storage/' . $artwork->thumbnail) : 'https://picsum.photos/id/' . ($artwork->id + 100) . '/80/80' }}" alt="{{ $artwork->title }}" class="w-16 h-16 rounded-lg object-cover">
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($artwork->title, 30) }}</h4>
+                                <p class="text-xs text-gray-600">Oleh {{ $artwork->creator->name ?? 'Unknown' }} | {{ $artwork->category->name ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500">{{ $artwork->created_at->diffForHumans() }} | {{ $artwork->likes_count }} Likes</p>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center p-10 text-gray-600">
+                            <i class="fas fa-image text-6xl mb-4"></i>
+                            <h3 class="text-xl font-semibold">Tidak ada karya populer</h3>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -302,17 +367,16 @@
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-gray-900">Postingan Terbaru di Galeri</h2>
-                <a href="#" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-eye"></i> Lihat Semua
                 </a>
             </div>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div class="flex flex-wrap gap-2">
                     <button class="gallery-filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua Kategori</button>
-                    <button class="gallery-filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="photography">Fotografi</button>
-                    <button class="gallery-filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="digital">Digital Art</button>
-                    <button class="gallery-filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="painting">Lukisan</button>
-                    <button class="gallery-filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="sculpture">Patung</button>
+                    @foreach ($categories as $category)
+                        <button class="gallery-filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="{{ $category->name }}">{{ $category->name }}</button>
+                    @endforeach
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
                     <input id="gallery-search" type="text" class="p-2 border rounded-l-md bg-white flex-1" placeholder="Cari postingan...">
@@ -322,7 +386,32 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6" id="gallery-container">
-                <!-- Kosong -->
+                @forelse ($recentArtworks as $artwork)
+                    <div class="gallery-item bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition" data-category="{{ $artwork->category->name ?? 'all' }}" data-title="{{ $artwork->title }}" data-author="{{ $artwork->creator->name ?? 'Unknown' }}">
+                        <div class="relative">
+                            <img src="{{ $artwork->thumbnail ? asset('storage/' . $artwork->thumbnail) : 'https://picsum.photos/id/' . ($artwork->id + 100) . '/400/120' }}" alt="{{ $artwork->title }}" class="w-full h-32 object-cover">
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="fas {{ $artwork->category ? ($artwork->category->name == 'Fotografi' ? 'fa-camera' : ($artwork->category->name == 'Digital Art' ? 'fa-paint-brush' : ($artwork->category->name == 'Lukisan' ? 'fa-palette' : 'fa-cube'))) : 'fa-image' }}"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="text-sm font-semibold text-gray-900 font-['Space_Grotesk']">{{ Str::limit($artwork->title, 30) }}</h4>
+                            <p class="text-xs text-gray-800 mb-2">Oleh {{ $artwork->creator->name ?? 'Unknown' }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>{{ $artwork->created_at->diffForHumans() }}</span>
+                                </div>
+                                <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">{{ $artwork->category->name ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full text-center p-10 text-gray-600">
+                        <i class="fas fa-image text-6xl mb-4"></i>
+                        <h3 class="text-xl font-semibold">Tidak ada karya terbaru</h3>
+                    </div>
+                @endforelse
             </div>
             <div class="text-center">
                 <button id="load-more" class="px-6 py-3 border-2 border-yellow-400 text-yellow-400 rounded-md font-medium hover:bg-yellow-400 hover:text-gray-900 transition">
@@ -335,12 +424,43 @@
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-gray-900">Event Baru</h2>
-                <a href="#" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <a href="{{ route('admin.agenda.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-plus"></i> Buat Event
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Kosong -->
+                @forelse ($newEvents as $event)
+                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <div class="relative">
+                            <img src="{{ $event->image_path ? asset('storage/' . $event->image_path) : 'https://picsum.photos/id/' . ($event->id + 100) . '/400/120' }}" alt="{{ $event->title }}" class="w-full h-32 object-cover">
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="text-sm font-semibold text-gray-900 font-['Space_Grotesk']">{{ Str::limit($event->title, 30) }}</h4>
+                            <p class="text-xs text-gray-800 mb-2">{{ $event->description ? Str::limit($event->description, 50) : 'Tidak ada deskripsi' }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>{{ $event->start_date->format('d M Y') }}</span>
+                                </div>
+                                <span class="px-2 py-1 rounded-full {{ $event->status == 'active' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' }} text-xs">{{ $event->status == 'active' ? 'Aktif' : 'Pending' }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-800">{{ $event->category->name ?? 'N/A' }}</span>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('admin.events.show', $event->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $event->title }}"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full text-center p-10 text-gray-600">
+                        <i class="fas fa-calendar-alt text-6xl mb-4"></i>
+                        <h3 class="text-xl font-semibold">Tidak ada event baru</h3>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -368,7 +488,7 @@
                         <h3 class="text-base font-semibold text-gray-900">Traffic Pengunjung</h3>
                         <i class="fas fa-chart-line text-yellow-400 text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900">0</div>
+                    <div class="text-2xl font-bold text-gray-900">{{ array_sum($visitorData['month']) }}</div>
                     <div class="text-green-600 text-sm flex items-center gap-1">
                         <i class="fas fa-arrow-up"></i> 0%
                     </div>
@@ -379,7 +499,7 @@
                         <h3 class="text-base font-semibold text-gray-900">Engagement Rate</h3>
                         <i class="fas fa-users text-yellow-400 text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900">0%</div>
+                    <div class="text-2xl font-bold text-gray-900">{{ array_sum($interactionData['month']['likes']) + array_sum($interactionData['month']['comments']) }}</div>
                     <div class="text-green-600 text-sm flex items-center gap-1">
                         <i class="fas fa-arrow-up"></i> 0%
                     </div>
@@ -390,7 +510,7 @@
                         <h3 class="text-base font-semibold text-gray-900">Postingan Baru</h3>
                         <i class="fas fa-image text-yellow-400 text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900">0</div>
+                    <div class="text-2xl font-bold text-gray-900">{{ $totalArtworks }}</div>
                     <div class="text-green-600 text-sm flex items-center gap-1">
                         <i class="fas fa-arrow-up"></i> 0%
                     </div>
@@ -401,7 +521,7 @@
                         <h3 class="text-base font-semibold text-gray-900">Event Aktif</h3>
                         <i class="fas fa-calendar-alt text-yellow-400 text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900">0</div>
+                    <div class="text-2xl font-bold text-gray-900">{{ $totalEvents }}</div>
                     <div class="text-green-600 text-sm flex items-center gap-1">
                         <i class="fas fa-arrow-up"></i> 0%
                     </div>
@@ -414,19 +534,19 @@
         <div class="bg-white rounded-lg p-6 shadow-sm max-w-7xl mx-auto">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Aksi Cepat</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <a href="#" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
+                <a href="{{ route('admin.galeri.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-plus-circle"></i></div>
                     <div class="font-medium">Tambah Karya</div>
                 </a>
-                <a href="#" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
+                <a href="{{ route('admin.communities.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-users"></i></div>
                     <div class="font-medium">Kelola Komunitas</div>
                 </a>
-                <a href="#" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
+                <a href="{{ route('admin.agenda.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-calendar-alt"></i></div>
                     <div class="font-medium">Buat Event</div>
                 </a>
-                <a href="#" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
+                <a href="{{ route('admin.reports.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-chart-pie"></i></div>
                     <div class="font-medium">Lihat Laporan</div>
                 </a>
@@ -443,26 +563,34 @@
                 .delay-300 { animation-delay: 1s; }
                 .delay-450 { animation-delay: 1.5s; }
                 html, body { overflow-x: hidden; }
+                .gallery-item, .activity-card { transition: all 0.3s ease; }
             </style>
         @endpush
 
         @push('scripts')
             <script>
                 // Visitor Chart
+                const visitorData = @json($visitorData);
                 const ctx = document.getElementById('visitorChart').getContext('2d');
                 let visitorChart;
 
                 function updateVisitorChart(period) {
                     let labels, data;
                     if (period === 'week') {
-                        labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-                        data = [0, 0, 0, 0, 0, 0, 0];
+                        labels = ['Ming', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+                        data = Array(7).fill(0);
+                        Object.keys(visitorData.week).forEach(day => {
+                            data[parseInt(day) % 7] = visitorData.week[day];
+                        });
                     } else if (period === 'month') {
                         labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
-                        data = [0, 0, 0, 0];
+                        data = Object.values(visitorData.month);
                     } else {
                         labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                        data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        data = Array(12).fill(0);
+                        Object.keys(visitorData.year).forEach((month, index) => {
+                            data[index] = visitorData.year[month];
+                        });
                     }
                     if (visitorChart) visitorChart.destroy();
                     visitorChart = new Chart(ctx, {
@@ -510,10 +638,10 @@
                     categoryChart = new Chart(categoryCtx, {
                         type: 'pie',
                         data: {
-                            labels: ['Fotografi', 'Digital Art', 'Lukisan', 'Patung'],
+                            labels: @json($categoryNames),
                             datasets: [{
-                                data: [0, 0, 0, 0],
-                                backgroundColor: ['#ffd700', '#ffeb3b', '#fbc02d', '#f57f17'],
+                                data: @json($categoryCounts),
+                                backgroundColor: ['#ffd700', '#ffeb3b', '#fbc02d', '#f57f17', '#ff9800', '#ff5722'],
                                 borderColor: '#fff',
                                 borderWidth: 2
                             }]
@@ -530,24 +658,14 @@
                 }
 
                 // Interaction Chart (Bar)
+                const interactionData = @json($interactionData);
                 const interactionCtx = document.getElementById('interactionChart').getContext('2d');
                 let interactionChart;
 
                 function updateInteractionChart(period) {
-                    let labels, likesData, commentsData;
-                    if (period === 'week') {
-                        labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-                        likesData = [0, 0, 0, 0, 0, 0, 0];
-                        commentsData = [0, 0, 0, 0, 0, 0, 0];
-                    } else if (period === 'month') {
-                        labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
-                        likesData = [0, 0, 0, 0];
-                        commentsData = [0, 0, 0, 0];
-                    } else {
-                        labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                        likesData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        commentsData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    }
+                    let labels = ['Karya', 'Blog', 'Proyek'];
+                    let likesData = interactionData[period].likes;
+                    let commentsData = interactionData[period].comments;
                     if (interactionChart) interactionChart.destroy();
                     interactionChart = new Chart(interactionCtx, {
                         type: 'bar',
@@ -586,21 +704,13 @@
                 }
 
                 // Event Chart (Doughnut)
+                const eventData = @json($eventData);
                 const eventCtx = document.getElementById('eventChart').getContext('2d');
                 let eventChart;
 
                 function updateEventChart(period) {
-                    let labels, data;
-                    if (period === 'month') {
-                        labels = ['Workshop', 'Pameran', 'Kompetisi', 'Lainnya'];
-                        data = [0, 0, 0, 0];
-                    } else if (period === 'quarter') {
-                        labels = ['Q1', 'Q2', 'Q3', 'Q4'];
-                        data = [0, 0, 0, 0];
-                    } else {
-                        labels = ['2020', '2021', '2022', '2023'];
-                        data = [0, 0, 0, 0];
-                    }
+                    let labels = Object.keys(eventData[period]);
+                    let data = Object.values(eventData[period]);
                     if (eventChart) eventChart.destroy();
                     eventChart = new Chart(eventCtx, {
                         type: 'doughnut',
@@ -608,7 +718,7 @@
                             labels: labels,
                             datasets: [{
                                 data: data,
-                                backgroundColor: ['#ffd700', '#ffeb3b', '#fbc02d', '#f57f17'],
+                                backgroundColor: ['#ffd700', '#ffeb3b', '#fbc02d', '#f57f17', '#ff9800', '#ff5722'],
                                 borderColor: '#fff',
                                 borderWidth: 2
                             }]
@@ -625,21 +735,13 @@
                 }
 
                 // Growth Chart
+                const growthData = @json($growthData);
                 const growthCtx = document.getElementById('growthChart').getContext('2d');
                 let growthChart;
 
                 function updateGrowthChart(period) {
-                    let labels, data;
-                    if (period === 'month') {
-                        labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                        data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    } else if (period === 'quarter') {
-                        labels = ['Q1', 'Q2', 'Q3', 'Q4'];
-                        data = [0, 0, 0, 0];
-                    } else {
-                        labels = ['2020', '2021', '2022', '2023'];
-                        data = [0, 0, 0, 0];
-                    }
+                    let labels = Object.keys(growthData[period]);
+                    let data = Object.values(growthData[period]);
                     if (growthChart) growthChart.destroy();
                     growthChart = new Chart(growthCtx, {
                         type: 'bar',
@@ -704,11 +806,112 @@
 
                     // Activity filter tabs
                     const filterTabs = document.querySelectorAll('.filter-tab');
+                    const activitySearchInput = document.getElementById('activity-search');
+                    const searchButton = document.getElementById('search-button');
+                    const resetButton = document.getElementById('reset-filters');
+                    const sortSelect = document.getElementById('sort-by');
+                    const resultsNumber = document.getElementById('results-number');
+                    const totalResults = document.getElementById('total-results');
+                    const activitiesContainer = document.getElementById('activities-container');
+                    const loadMoreBtn = document.getElementById('load-more-activities');
+                    let visibleActivities = 8;
+
+                    function filterAndSortActivities() {
+                        const activeCategory = document.querySelector('.filter-tab.active').getAttribute('data-category');
+                        const searchTerm = activitySearchInput.value.toLowerCase();
+                        const sortBy = sortSelect.value;
+                        const allActivities = Array.from(document.querySelectorAll('.activity-card'));
+
+                        let filteredActivities = allActivities.filter(card => {
+                            const category = card.getAttribute('data-category') || 'all';
+                            const title = card.getAttribute('data-title').toLowerCase();
+                            const author = card.getAttribute('data-author').toLowerCase();
+                            const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                            const matchesSearch = searchTerm === '' || title.includes(searchTerm) || author.includes(searchTerm);
+                            return matchesCategory && matchesSearch;
+                        });
+
+                        filteredActivities = sortActivities(filteredActivities, sortBy);
+                        totalResults.textContent = filteredActivities.length;
+
+                        let visibleCount = 0;
+                        allActivities.forEach(card => card.style.display = 'none');
+
+                        filteredActivities.slice(0, visibleActivities).forEach(card => {
+                            card.style.display = 'block';
+                            visibleCount++;
+                        });
+
+                        resultsNumber.textContent = visibleCount;
+                        loadMoreBtn.style.display = filteredActivities.length > visibleActivities ? 'block' : 'none';
+                        showNoResultsMessage(filteredActivities.length === 0);
+                    }
+
+                    function sortActivities(activities, sortBy) {
+                        return activities.sort((a, b) => {
+                            switch (sortBy) {
+                                case 'newest':
+                                    return parseInt(b.getAttribute('data-date') || 0) - parseInt(a.getAttribute('data-date') || 0);
+                                case 'oldest':
+                                    return parseInt(a.getAttribute('data-date') || 0) - parseInt(b.getAttribute('data-date') || 0);
+                                case 'popular':
+                                    const aPopularity = parseInt(a.getAttribute('data-likes') || 0) + parseInt(a.getAttribute('data-comments') || 0);
+                                    const bPopularity = parseInt(b.getAttribute('data-likes') || 0) + parseInt(b.getAttribute('data-comments') || 0);
+                                    return bPopularity - aPopularity;
+                                default:
+                                    return 0;
+                            }
+                        });
+                    }
+
+                    function showNoResultsMessage(show) {
+                        let noResults = activitiesContainer.querySelector('.no-results');
+                        if (show && !noResults) {
+                            noResults = document.createElement('div');
+                            noResults.className = 'no-results';
+                            noResults.innerHTML = `
+                                <div class="text-center p-10 text-gray-600 col-span-full">
+                                    <i class="fas fa-search text-6xl mb-4"></i>
+                                    <h3 class="text-xl font-semibold">Tidak ada aktivitas ditemukan</h3>
+                                    <p>Coba gunakan kata kunci lain atau pilih kategori yang berbeda</p>
+                                </div>
+                            `;
+                            activitiesContainer.appendChild(noResults);
+                        } else if (!show && noResults) {
+                            noResults.remove();
+                        }
+                    }
+
                     filterTabs.forEach(tab => {
                         tab.addEventListener('click', function() {
                             filterTabs.forEach(t => t.classList.remove('active'));
                             this.classList.add('active');
+                            filterAndSortActivities();
                         });
+                    });
+
+                    activitySearchInput.addEventListener('input', filterAndSortActivities);
+                    searchButton.addEventListener('click', filterAndSortActivities);
+                    sortSelect.addEventListener('change', filterAndSortActivities);
+
+                    resetButton.addEventListener('click', function() {
+                        filterTabs.forEach(tab => tab.classList.remove('active'));
+                        document.querySelector('.filter-tab[data-category="all"]').classList.add('active');
+                        activitySearchInput.value = '';
+                        sortSelect.value = 'newest';
+                        visibleActivities = 8;
+                        filterAndSortActivities();
+                    });
+
+                    loadMoreBtn.addEventListener('click', function() {
+                        visibleActivities += 8;
+                        filterAndSortActivities();
+                        setTimeout(() => {
+                            const newItems = Array.from(activitiesContainer.querySelectorAll('.activity-card[style="display: block"]')).slice(-4);
+                            if (newItems.length > 0) {
+                                newItems[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        }, 100);
                     });
 
                     // Gallery filter tabs
@@ -786,112 +989,6 @@
                         }
                     });
 
-                    // Activity filtering
-                    const activityFilterTabs = document.querySelectorAll('.filter-tab');
-                    const activitySearchInput = document.getElementById('activity-search');
-                    const searchButton = document.getElementById('search-button');
-                    const resetButton = document.getElementById('reset-filters');
-                    const sortSelect = document.getElementById('sort-by');
-                    const resultsNumber = document.getElementById('results-number');
-                    const totalResults = document.getElementById('total-results');
-                    const activitiesContainer = document.getElementById('activities-container');
-                    const loadMoreBtn = document.getElementById('load-more-activities');
-                    let visibleActivities = 8;
-
-                    function filterAndSortActivities() {
-                        const activeCategory = document.querySelector('.filter-tab.active').getAttribute('data-category');
-                        const searchTerm = activitySearchInput.value.toLowerCase();
-                        const sortBy = sortSelect.value;
-                        const allActivities = Array.from(document.querySelectorAll('.activity-card'));
-
-                        let filteredActivities = allActivities.filter(card => {
-                            const category = card.getAttribute('data-category') || 'all';
-                            const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
-                            const author = card.querySelector('p')?.textContent.toLowerCase() || '';
-                            const matchesCategory = activeCategory === 'all' || category === activeCategory;
-                            const matchesSearch = searchTerm === '' || title.includes(searchTerm) || author.includes(searchTerm);
-                            return matchesCategory && matchesSearch;
-                        });
-
-                        filteredActivities = sortActivities(filteredActivities, sortBy);
-                        totalResults.textContent = filteredActivities.length;
-
-                        let visibleCount = 0;
-                        allActivities.forEach(card => card.style.display = 'none');
-
-                        filteredActivities.slice(0, visibleActivities).forEach(card => {
-                            card.style.display = 'block';
-                            visibleCount++;
-                        });
-
-                        resultsNumber.textContent = visibleCount;
-                        loadMoreBtn.style.display = filteredActivities.length > visibleActivities ? 'block' : 'none';
-                        showNoResultsMessage(filteredActivities.length === 0);
-                    }
-
-                    function sortActivities(activities, sortBy) {
-                        return activities.sort((a, b) => {
-                            switch (sortBy) {
-                                case 'newest':
-                                    return parseInt(b.getAttribute('data-date') || 0) - parseInt(a.getAttribute('data-date') || 0);
-                                case 'oldest':
-                                    return parseInt(a.getAttribute('data-date') || 0) - parseInt(b.getAttribute('data-date') || 0);
-                                case 'popular':
-                                    const aPopularity = parseInt(a.getAttribute('data-likes') || 0) + parseInt(a.getAttribute('data-comments') || 0);
-                                    const bPopularity = parseInt(b.getAttribute('data-likes') || 0) + parseInt(b.getAttribute('data-comments') || 0);
-                                    return bPopularity - aPopularity;
-                                default:
-                                    return 0;
-                            }
-                        });
-                    }
-
-                    function showNoResultsMessage(show) {
-                        let noResults = activitiesContainer.querySelector('.no-results');
-                        if (show && !noResults) {
-                            noResults = document.createElement('div');
-                            noResults.className = 'no-results';
-                            noResults.innerHTML = `
-                                <div class="text-center p-10 text-gray-600 col-span-full">
-                                    <i class="fas fa-search text-6xl mb-4"></i>
-                                    <h3 class="text-xl font-semibold">Tidak ada aktivitas ditemukan</h3>
-                                    <p>Coba gunakan kata kunci lain atau pilih kategori yang berbeda</p>
-                                </div>
-                            `;
-                            activitiesContainer.appendChild(noResults);
-                        } else if (!show && noResults) {
-                            noResults.remove();
-                        }
-                    }
-
-                    activityFilterTabs.forEach(tab => {
-                        tab.addEventListener('click', filterAndSortActivities);
-                    });
-
-                    activitySearchInput.addEventListener('input', filterAndSortActivities);
-                    searchButton.addEventListener('click', filterAndSortActivities);
-                    sortSelect.addEventListener('change', filterAndSortActivities);
-
-                    resetButton.addEventListener('click', function() {
-                        activityFilterTabs.forEach(tab => tab.classList.remove('active'));
-                        document.querySelector('.filter-tab[data-category="all"]').classList.add('active');
-                        activitySearchInput.value = '';
-                        sortSelect.value = 'newest';
-                        visibleActivities = 8;
-                        filterAndSortActivities();
-                    });
-
-                    loadMoreBtn.addEventListener('click', function() {
-                        visibleActivities += 8;
-                        filterAndSortActivities();
-                        setTimeout(() => {
-                            const newItems = Array.from(activitiesContainer.querySelectorAll('.activity-card[style="display: block"]')).slice(-4);
-                            if (newItems.length > 0) {
-                                newItems[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                            }
-                        }, 100);
-                    });
-
                     // Update date and time
                     const updateDate = () => {
                         const now = new Date();
@@ -903,12 +1000,6 @@
                     };
                     updateDate();
                     setInterval(updateDate, 60000);
-
-                    // Prevent horizontal overflow on load
-                    document.body.style.overflowX = 'hidden';
-                    window.addEventListener('resize', () => {
-                        document.body.style.overflowX = 'hidden';
-                    });
                 });
             </script>
         @endpush

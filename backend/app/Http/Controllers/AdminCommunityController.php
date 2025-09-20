@@ -42,7 +42,7 @@ class AdminCommunityController extends Controller
             Community::withCount('members')->having('members_count', '>', 100)->count(),
         ];
 
-        return view('Administrator.Admin.Komunitas.index', compact('categories', 'users', 'communities', 'communityCounts'));
+        return view('Administrator.admin.komunitas.index', compact('categories', 'users', 'communities', 'communityCounts'));
     }
 
     public function store(Request $request)
@@ -90,7 +90,7 @@ class AdminCommunityController extends Controller
                 }
             }
 
-            return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil dibuat.');
+            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dibuat.');
         } catch (ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
             return redirect()->back()->withErrors($e->errors())->withInput();
@@ -106,10 +106,10 @@ class AdminCommunityController extends Controller
             $community = Community::with(['admins', 'members', 'posts', 'category', 'creator'])->findOrFail($id);
             $users = User::all();
             $categories = Category::all();
-            return view('administrator.admin.komunitas.show', compact('community', 'users', 'categories'));
+            return view('administrator.admin.communities.show', compact('community', 'users', 'categories'));
         } catch (\Exception $e) {
             Log::error('Error fetching community for show: ' . $e->getMessage());
-            return redirect()->route('admin.komunitas.index')->withErrors(['error' => 'Gagal memuat data komunitas: ' . $e->getMessage()]);
+            return redirect()->route('admin.communities.index')->withErrors(['error' => 'Gagal memuat data komunitas: ' . $e->getMessage()]);
         }
     }
 
@@ -218,7 +218,7 @@ public function update(Request $request, $id)
             }
         }
 
-        return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil diupdate.');
+        return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil diupdate.');
     } catch (ValidationException $e) {
         Log::error('Validation failed: ' . json_encode($e->errors()));
         return redirect()->back()->withErrors($e->errors())->withInput();
@@ -257,7 +257,7 @@ public function update(Request $request, $id)
 
             $community->delete();
 
-            return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil dihapus.');
+            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dihapus.');
         } catch (\Exception $e) {
             Log::error('Error deleting community: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => 'Gagal menghapus komunitas: ' . $e->getMessage()]);

@@ -464,7 +464,7 @@
                         Aksi
                     </h3>
                     <div class="flex flex-col gap-2">
-                        <a href="{{ route('admin.komunitas.index') }}" class="action-button bg-yellow-400 hover:bg-yellow-500 text-gray-900">
+                        <a href="{{ route('admin.communities.index') }}" class="action-button bg-yellow-400 hover:bg-yellow-500 text-gray-900">
                             <i class="fas fa-arrow-left text-sm"></i>
                             Kembali
                         </a>

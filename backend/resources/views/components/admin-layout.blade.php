@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    @if(isset($settings) && $settings->favicon_path)
+        <link rel="icon" type="image/png" href="{{ Storage::url($settings->favicon_path) }}" />
+    @endif
 
     <style>
         body { font-family: 'Space Grotesk', sans-serif; }

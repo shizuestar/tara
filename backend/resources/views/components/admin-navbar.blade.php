@@ -21,7 +21,7 @@
         <div class="relative">
             <button id="profile-btn"
                 class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-50 border border-gray-200 hover:border-yellow-500 transition-all duration-300">
-                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://picsum.photos/40/40?random=1' }}"
+                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' }}"
                     alt="Profile" class="w-full h-full object-cover">
             </button>
             <div id="profile-dropdown"

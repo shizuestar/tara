@@ -15,6 +15,11 @@
     <script>
         new cursoreffects.fairyDustCursor({ colors: ["#5ec5ff", "#ffffff", "#ff57a3"] });
     </script>
+
+    @if(isset($settings) && $settings->favicon_path)
+        <link rel="icon" type="image/png" href="{{ Storage::url($settings->favicon_path) }}" />
+    @endif
+    
     @stack('styles')
 </head>
 

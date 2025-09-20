@@ -40,7 +40,7 @@
                 <i class="fas fa-filter text-yellow-400 text-sm"></i>
                 Filter Komunitas
             </h3>
-            <form id="filterForm" action="{{ route('admin.komunitas.index') }}" method="GET">
+            <form id="filterForm" action="{{ route('admin.communities.index') }}" method="GET">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     <div>
                         <label for="type-filter" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Tipe</label>
@@ -77,7 +77,7 @@
                         <i class="fas fa-filter text-sm"></i>
                         Terapkan
                     </button>
-                    <a href="{{ route('admin.komunitas.index') }}" class="bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-medium px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
+                    <a href="{{ route('admin.communities.index') }}" class="bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-medium px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
                         <i class="fas fa-redo text-sm"></i>
                         Reset
                     </a>
@@ -111,7 +111,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-xs text-gray-800">{{ $community->type === 'public' ? 'Publik' : 'Privat' }}</span>
                                 <div class="flex gap-2">
-                                    <a href="{{ route('admin.komunitas.show', $community->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $community->name }}"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.communities.show', $community->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $community->name }}"><i class="fas fa-eye"></i></a>
                                     <button onclick="showEditModal({{ $community->id }})" class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200 text-xs" aria-label="Edit {{ $community->name }}"><i class="fas fa-edit"></i></button>
                                     <button onclick="showDeleteModal('{{ $community->name }}', {{ $community->id }})" class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 text-xs" aria-label="Hapus {{ $community->name }}"><i class="fas fa-trash"></i></button>
                                 </div>
@@ -144,7 +144,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="createCommunityForm" action="{{ route('admin.komunitas.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="createCommunityForm" action="{{ route('admin.communities.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="mb-4 col-span-2">

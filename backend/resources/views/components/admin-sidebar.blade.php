@@ -1,8 +1,14 @@
 <aside class="w-[280px] bg-white border-r border-gray-200 shadow-sm flex flex-col fixed h-screen z-50">
-    <div class="p-6 border-b border-gray-200 flex items-center justify-left bg-white">
-        <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
-            TARA<span class="text-yellow-400">●</span>
-        </div>
+    <div class="border-b border-gray-200 flex items-center justify-start bg-white h-[70px]">
+        @if(isset($settings) && $settings->logo_path)
+            <img src="{{ Storage::url($settings->logo_path) }}" 
+                alt="Logo" 
+                class="h-full w-auto object-contain ml-3">
+        @else
+            <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
+                TARA<span class="text-yellow-400">●</span>
+            </div>
+        @endif
     </div>
 
     <nav class="p-5 flex-grow overflow-y-auto custom-scrollbar">
@@ -12,7 +18,7 @@
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-th-large"></i></div>
                 <span class="flex-grow">Dashboard</span>
             </a>
-            <a href="{{ route('admin.komunitas.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route('admin.communities.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-users"></i></div>
                 <span class="flex-grow">Komunitas</span>
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">50</span>
@@ -37,7 +43,7 @@
                 <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">30</span>
             </a>
             <a href="{{ route('admin.categories.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
-                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-calendar-alt"></i></div>
+                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-stream"></i></div>
                 <span class="flex-grow">Kategori</span>
             </a>
             <a href="{{ route('admin.users.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
@@ -52,6 +58,14 @@
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Pengaturan</div>
+            <a href="{{ route('admin.reports.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-chart-bar"></i></div>
+                <span class="flex-grow">Laporan</span>
+            </a>
+            <a href="{{ route('admin.activity-logs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-list-alt"></i></div>
+                <span class="flex-grow">Log Aktivitas</span>
+            </a>
             <a href="{{ route('admin.settings.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-cog"></i></div>
                 <span class="flex-grow">Pengaturan Sistem</span>
@@ -62,7 +76,8 @@
     <div class="p-5 border-t border-gray-200 bg-gray-50">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 flex items-center justify-center text-gray-900 font-semibold text-base">
-                {{ Auth::user() ? strtoupper(substr(Auth::user()->name, 0, 1)) : 'A' }}
+                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' }}"
+                    alt="Profile" class="w-full h-full object-cover rounded-full">
             </div>
             <div class="flex-grow">
                 <div class="font-semibold text-sm">{{ Auth::user() ? Auth::user()->name : 'Admin User' }}</div>

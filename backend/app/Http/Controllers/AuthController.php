@@ -11,6 +11,10 @@ class AuthController extends Controller
 {
     public function showLoginForm(Request $request)
     {
+        if (Auth::check()) {
+            return $this->redirectByRole(Auth::user());
+        }
+
         return view('public.auth.login');
     }
 
@@ -24,16 +28,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-            switch ($user->role) {
-                case 'admin':
-                    return redirect()->route('admin.dashboard.index')->with('success', 'Login successful.');
-                case 'curator':
-                    return redirect()->route('kurator.dashboard.index')->with('success', 'Login successful.');
-                case 'member':
-                default:
-                    return redirect()->route('home')->with('success', 'Login successful.');
-            }
+            return $this->redirectByRole(Auth::user())
+                ->with('success', 'Login successful.');
         }
 
         return back()->withErrors([
@@ -82,5 +78,18 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login')->with('success', 'You have been logged out.');
+    }
+
+    private function redirectByRole(User $user)
+    {
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('admin.dashboard.index');
+            case 'curator':
+                return redirect()->route('kurator.dashboard.index');
+            case 'member':
+            default:
+                return redirect()->route('home');
+        }
     }
 }

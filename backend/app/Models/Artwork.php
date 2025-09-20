@@ -36,6 +36,11 @@ class Artwork extends Model
         return $this->hasMany(ArtworkTag::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(ArtworkLike::class);
+    }
+
     public function files()
     {
         return $this->hasMany(ArtworkFile::class);
