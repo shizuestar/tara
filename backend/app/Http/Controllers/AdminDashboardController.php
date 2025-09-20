@@ -15,11 +15,12 @@ use App\Models\ArtworkLike;
 use App\Models\BlogComment;
 use App\Models\ProjectLike;
 use App\Models\EventComment;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\CommunityPost;
 use App\Models\ArtworkComment;
 use App\Models\ProjectComment;
 use App\Models\CommunityMember;
+use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
 {
@@ -157,7 +158,7 @@ class AdminDashboardController extends Controller
             ->map(function ($log) {
                 $subject = $log->subject;
                 $category = $log->subject_type ? explode('\\', $log->subject_type)[3] : 'unknown';
-                $title = '';
+                $title = 'Tidak ada judul';
                 $community = 'N/A';
 
                 if ($category == 'CommunityPost') {
@@ -170,18 +171,21 @@ class AdminDashboardController extends Controller
                     $community = $subject->community->name ?? 'N/A';
                 } elseif ($category == 'Community') {
                     $title = $subject->name ?? 'Komunitas tanpa nama';
-                    $community = $subject->name;
+                    $community = $subject->name ?? 'N/A';
                 } elseif ($category == 'Artwork') {
                     $title = $subject->title ?? 'Karya tanpa judul';
                     $community = $subject->community->name ?? 'N/A';
+                } elseif ($category == 'Settings') {
+                    $title = 'Pengaturan Platform';
                 }
 
                 return [
                     'type' => strtolower($category),
                     'title' => $title,
-                    'author' => $log->user ? $log->user->name : 'Unknown',
+                    'author' => $log->user ? $log->user->name : 'Admin',
                     'category' => strtolower($category),
                     'date' => $log->created_at->timestamp,
+                    'description' => $log->description ?? 'Aktivitas tanpa deskripsi',
                     'likes' => method_exists(optional($subject), 'likes')
                         ? $subject->likes()->count()
                         : 0,

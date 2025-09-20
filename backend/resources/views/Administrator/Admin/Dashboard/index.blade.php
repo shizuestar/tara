@@ -13,7 +13,7 @@
                             Senang melihat Anda kembali. Berikut ringkasan aktivitas platform hari ini.
                         </p>
                         <div class="flex flex-wrap gap-4 mt-6">
-                            <div class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-yellow-200">
+                            <div class="flex items-center bg-white p-4 rounded-xl rounded-lg shadow-sm border border-yellow-200">
                                 <div class="w-10 h-10 flex items-center justify-center bg-yellow-100 rounded-lg text-yellow-400 mr-3">
                                     <i class="fas fa-chart-line"></i>
                                 </div>
@@ -197,7 +197,7 @@
                                     <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($activity['title'], 50) }}</h4>
+                                    <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($activity['description'], 50) }}</h4>
                                     <p class="text-xs text-gray-600">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
                                     <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</p>
                                 </div>
@@ -205,6 +205,75 @@
                         </li>
                     @endforeach
                 </ul>
+            </div>
+        </div>
+
+        <!-- Filtering Kategori Aktivitas -->
+        <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-900">Filtering Kategori Aktivitas</h2>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="communitypost">Postingan</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="event">Event</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Proyek</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="community">Komunitas</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="artwork">Karya</button>
+                </div>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input id="activity-search" type="text" class="pl-10 p-2 border rounded-md bg-white w-full" placeholder="Cari aktivitas...">
+                    </div>
+                    <button id="search-button" class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md font-medium hover:bg-yellow-300 transition">
+                        <i class="fas fa-search"></i> Cari
+                    </button>
+                    <button id="reset-filters" class="px-4 py-2 border border-gray-200 rounded-md text-gray-600 hover:bg-gray-100 transition">
+                        <i class="fas fa-sync-alt"></i> Reset
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="activities-container">
+                @foreach ($activities as $activity)
+                    <div class="activity-card bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition" data-category="{{ $activity['category'] }}" data-date="{{ $activity['date'] }}" data-likes="{{ $activity['likes'] }}" data-comments="{{ $activity['comments'] }}" data-title="{{ $activity['title'] }}" data-author="{{ $activity['author'] }}">
+                        <div class="relative">
+                            <div class="w-full h-32 bg-gray-100"></div>
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
+                                <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="text-sm font-semibold text-gray-900 font-['Space_Grotesk']">{{ Str::limit($activity['description'], 50) }}</h4>
+                            <p class="text-xs text-gray-800 mb-2">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="text-center mb-4">
+                <button id="load-more-activities" class="px-6 py-3 border-2 border-yellow-400 text-yellow-400 rounded-md font-medium hover:bg-yellow-400 hover:text-gray-900 transition">
+                    <i class="fas fa-plus"></i> Muat Lebih Banyak Aktivitas
+                </button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-100 p-4 rounded-md">
+                <div class="text-gray-600">
+                    Menampilkan <span id="results-number">{{ $activities->count() }}</span> dari <span id="total-results">{{ $activities->count() }}</span> aktivitas
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="sort-by" class="text-gray-600">Urutkan:</label>
+                    <select id="sort-by" class="p-2 border rounded-md bg-white text-gray-900">
+                        <option value="newest">Terbaru</option>
+                        <option value="oldest">Terlama</option>
+                        <option value="popular">Terpopuler</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -249,75 +318,6 @@
                         <h3 class="text-xl font-semibold">Tidak ada proyek terbaru</h3>
                     </div>
                 @endforelse
-            </div>
-        </div>
-
-        <!-- Filtering Kategori Aktivitas -->
-        <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Filtering Kategori Aktivitas</h2>
-            </div>
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <div class="flex flex-wrap gap-2">
-                    <button class="filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="communitypost">Postingan</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="event">Event</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Proyek</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="community">Komunitas</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="artwork">Karya</button>
-                </div>
-                <div class="flex gap-2 w-full md:w-auto">
-                    <div class="relative flex-1">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input id="activity-search" type="text" class="pl-10 p-2 border rounded-md bg-white w-full" placeholder="Cari aktivitas...">
-                    </div>
-                    <button id="search-button" class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md font-medium hover:bg-yellow-300 transition">
-                        <i class="fas fa-search"></i> Cari
-                    </button>
-                    <button id="reset-filters" class="px-4 py-2 border border-gray-200 rounded-md text-gray-600 hover:bg-gray-100 transition">
-                        <i class="fas fa-sync-alt"></i> Reset
-                    </button>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="activities-container">
-                @foreach ($activities as $activity)
-                    <div class="activity-card bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition" data-category="{{ $activity['category'] }}" data-date="{{ $activity['date'] }}" data-likes="{{ $activity['likes'] }}" data-comments="{{ $activity['comments'] }}" data-title="{{ $activity['title'] }}" data-author="{{ $activity['author'] }}">
-                        <div class="relative">
-                            <div class="w-full h-32 bg-gray-100"></div>
-                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
-                                <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <h4 class="text-sm font-semibold text-gray-900 font-['Space_Grotesk']">{{ Str::limit($activity['title'], 30) }}</h4>
-                            <p class="text-xs text-gray-800 mb-2">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="flex items-center text-xs text-gray-800">
-                                    <i class="fas fa-clock mr-1"></i>
-                                    <span>{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <div class="text-center mb-4">
-                <button id="load-more-activities" class="px-6 py-3 border-2 border-yellow-400 text-yellow-400 rounded-md font-medium hover:bg-yellow-400 hover:text-gray-900 transition">
-                    <i class="fas fa-plus"></i> Muat Lebih Banyak Aktivitas
-                </button>
-            </div>
-            <div class="flex justify-between items-center bg-gray-100 p-4 rounded-md">
-                <div class="text-gray-600">
-                    Menampilkan <span id="results-number">{{ $activities->count() }}</span> dari <span id="total-results">{{ $activities->count() }}</span> aktivitas
-                </div>
-                <div class="flex items-center gap-2">
-                    <label for="sort-by" class="text-gray-600">Urutkan:</label>
-                    <select id="sort-by" class="p-2 border rounded-md bg-white text-gray-900">
-                        <option value="newest">Terbaru</option>
-                        <option value="oldest">Terlama</option>
-                        <option value="popular">Terpopuler</option>
-                    </select>
-                </div>
             </div>
         </div>
 
