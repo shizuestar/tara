@@ -117,7 +117,7 @@
                                     <i class="fas fa-user mr-1"></i>
                                     <span>{{ $project->creator ? $project->creator->name : 'Tidak Diketahui' }}</span>
                                 </div>
-                                <span class="px-2 py-1 rounded-full {{ $project->status === 'ongoing' ? 'bg-green-100 text-green-600' : ($project->status === 'pending' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600') }} text-xs">{{ getStatusText($project->status) }}</span>
+                                <span class="px-2 py-1 rounded-full {{ $project->status_text }}</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs text-gray-800">{{ $project->category ? $project->category->name : '-' }}</span>

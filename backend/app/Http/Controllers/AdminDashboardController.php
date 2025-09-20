@@ -150,7 +150,7 @@ class AdminDashboardController extends Controller
                 })->toArray(),
         ];
 
-        $activities = ActivityLog::with(['causer', 'subject'])
+        $activities = ActivityLog::with(['user', 'subject'])
             ->latest()
             ->take(8)
             ->get()
@@ -179,11 +179,15 @@ class AdminDashboardController extends Controller
                 return [
                     'type' => strtolower($category),
                     'title' => $title,
-                    'author' => $log->causer ? $log->causer->name : 'Unknown',
+                    'author' => $log->user ? $log->user->name : 'Unknown',
                     'category' => strtolower($category),
                     'date' => $log->created_at->timestamp,
-                    'likes' => method_exists($subject, 'likes') ? $subject->likes()->count() : 0,
-                    'comments' => method_exists($subject, 'comments') ? $subject->comments()->count() : 0,
+                    'likes' => method_exists(optional($subject), 'likes')
+                        ? $subject->likes()->count()
+                        : 0,
+                    'comments' => $subject && method_exists($subject, 'comments')
+                        ? optional($subject->comments())->count()
+                        : 0,
                     'community' => $community,
                 ];
             });

@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProyekController;
@@ -15,16 +14,14 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearnMoreController;
-use App\Http\Controllers\AdminAgendaController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminProyekController;
 use App\Http\Controllers\AdminReportController;
-use App\Http\Controllers\ProjectTypeController;
-use App\Http\Controllers\AdminProjectController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminCommunityController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\AdminLogActivityController;
 
 // Routes Public (Accessible by guest)
@@ -97,6 +94,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::post('/backups/restore', [AdminSettingsController::class, 'restoreBackup'])->name('backups.restore');
     Route::get('/backups/{backup}/download', [AdminSettingsController::class, 'downloadBackup'])->name('backups.download');
     Route::put('/backups/schedule', [AdminSettingsController::class, 'updateBackupSchedule'])->name('backups.schedule');
-    Route::resource('agenda', AdminAgendaController::class);
+    Route::resource('events', controller: AdminEventController::class);
     Route::get('activity-logs', [AdminLogActivityController::class, 'index'])->name('activity-logs.index');
 });

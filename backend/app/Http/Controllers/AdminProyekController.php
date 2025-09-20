@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\Community;
+use App\Models\ActivityLog;
 use App\Models\ProjectMember;
 use App\Models\ProjectMilestone;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -48,8 +50,9 @@ class AdminProyekController extends Controller
 
         $categoryNames = Category::pluck('name')->toArray();
         $projectCounts = Category::withCount('projects')->pluck('projects_count')->toArray();
+        $activities = ActivityLog::where('type', 'project')->latest()->take(10)->get();
 
-        return view('administrator.admin.projects.index', compact('projects', 'categories', 'users', 'communities', 'categoryNames', 'projectCounts'));
+        return view('administrator.admin.projects.index', compact('projects', 'categories', 'users', 'communities', 'categoryNames', 'projectCounts', 'activities'));
     }
 
     /**
@@ -111,6 +114,12 @@ class AdminProyekController extends Controller
             }
         }
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'project',
+            'description' => 'Proyek baru "' . $project->project_name . '" telah ditambahkan',
+        ]);
+
         return redirect()->route('admin.projects.index')->with('success', 'Proyek berhasil dibuat.');
     }
 
@@ -118,16 +127,17 @@ class AdminProyekController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-        {
-            $project = Project::with(['creator', 'community', 'category', 'members.user', 'milestones'])
-                ->findOrFail($id);
+    {
+        $project = Project::with(['creator', 'community', 'category', 'members.user', 'milestones'])
+            ->findOrFail($id);
 
-            $users = User::select('id', 'name')->orderBy('name')->get();
-            $communities = Community::select('id', 'name')->orderBy('name')->get();
-            $categories = Category::select('id', 'name')->orderBy('name')->get();
+        $users = User::select('id', 'name')->orderBy('name')->get();
+        $communities = Community::select('id', 'name')->orderBy('name')->get();
+        $categories = Category::select('id', 'name')->orderBy('name')->get();
 
-            return view('administrator.admin.projects.show', compact('project', 'users', 'communities', 'categories'));
-        }
+        return view('administrator.admin.projects.show', compact('project', 'users', 'communities', 'categories'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -203,6 +213,12 @@ class AdminProyekController extends Controller
             }
         }
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'project',
+            'description' => 'Proyek "' . $project->project_name . '" berhasil diperbarui',
+        ]);
+
         return redirect()->route('admin.projects.index')->with('success', 'Proyek berhasil diperbarui.');
     }
 
@@ -212,12 +228,21 @@ class AdminProyekController extends Controller
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
+        $projectName = $project->project_name;
+        
         if ($project->cover_images) {
             Storage::disk('public')->delete($project->cover_images);
         }
         ProjectMember::where('project_id', $project->id)->delete();
         ProjectMilestone::where('project_id', $project->id)->delete();
         $project->delete();
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'project',
+            'description' => 'Proyek "' . $projectName . '" berhasil dihapus',
+        ]);
+
         return redirect()->route('admin.projects.index')->with('success', 'Proyek berhasil dihapus.');
     }
 

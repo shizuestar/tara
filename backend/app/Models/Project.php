@@ -46,4 +46,15 @@ class Project extends Model
     {
         return $this->hasMany(ProjectMilestone::class);
     }
+
+    public function getStatusTextAttribute()
+    {
+        return match($this->status) {
+            'ongoing' => 'Sedang Berjalan',
+            'pending' => 'Menunggu',
+            'completed' => 'Selesai',
+            default => 'Tidak Diketahui',
+        };
+    }
+
 }

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Community;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\CommunityMember;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -42,7 +44,9 @@ class AdminCommunityController extends Controller
             Community::withCount('members')->having('members_count', '>', 100)->count(),
         ];
 
-        return view('Administrator.admin.komunitas.index', compact('categories', 'users', 'communities', 'communityCounts'));
+        $activities = ActivityLog::where('type', 'community')->latest()->take(10)->get();
+
+        return view('Administrator.admin.komunitas.index', compact('categories', 'users', 'communities', 'communityCounts', 'activities'));
     }
 
     public function store(Request $request)
@@ -90,6 +94,12 @@ class AdminCommunityController extends Controller
                 }
             }
 
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'type' => 'community',
+                'description' => 'Komunitas baru "' . $community->name . '" telah ditambahkan',
+            ]);
+
             return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dibuat.');
         } catch (ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
@@ -113,7 +123,7 @@ class AdminCommunityController extends Controller
         }
     }
 
-public function edit($id)
+    public function edit($id)
     {
         try {
             $community = Community::with('category', 'creator', 'moderators')->find($id);
@@ -141,103 +151,107 @@ public function edit($id)
         }
     }
 
-public function update(Request $request, $id)
-{
-    try {
-        $community = Community::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        try {
+            $community = Community::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-            'type' => 'required|in:public,private',
-            'status' => 'required|in:active,inactive',
-            'creator_id' => 'required|exists:users,id',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'moderator_ids' => 'nullable|string',
-            'rules' => 'nullable|string',
-        ]);
-
-        if ($request->hasFile('cover_image')) {
-            if ($community->cover_image) {
-                Storage::disk('public')->delete($community->cover_image);
-            }
-            $validated['cover_image'] = $request->file('cover_image')->store('community_cover_images', 'public');
-        } else {
-            $validated['cover_image'] = $community->cover_image;
-        }
-        if ($request->hasFile('avatar')) {
-            if ($community->avatar) {
-                Storage::disk('public')->delete($community->avatar);
-            }
-            $validated['avatar'] = $request->file('avatar')->store('community_avatars', 'public');
-        } else {
-            $validated['avatar'] = $community->avatar;
-        }
-
-        $community->update($validated);
-
-        // Update or create admin member
-        $adminMember = $community->members()
-            ->where('community_members.role', 'admin')
-            ->first();
-
-        if ($adminMember && $adminMember->pivot->user_id != $validated['creator_id']) {
-            // Delete old admin and create new one to avoid duplicates
-            $adminMember->pivot->delete();
-            CommunityMember::create([
-                'community_id' => $community->id,
-                'user_id' => $validated['creator_id'],
-                'role' => 'admin',
-                'joined_at' => now(),
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'category_id' => 'required|exists:categories,id',
+                'type' => 'required|in:public,private',
+                'status' => 'required|in:active,inactive',
+                'creator_id' => 'required|exists:users,id',
+                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+                'moderator_ids' => 'nullable|string',
+                'rules' => 'nullable|string',
             ]);
-        } elseif (!$adminMember) {
-            CommunityMember::create([
-                'community_id' => $community->id,
-                'user_id' => $validated['creator_id'],
-                'role' => 'admin',
-                'joined_at' => now(),
-            ]);
-        }
 
-        // Delete existing moderators
-        $community->moderators()->detach(); // Use detach for belongsToMany
-        if (!empty($validated['moderator_ids'])) {
-            $modIds = array_filter(explode(',', $validated['moderator_ids']));
-            foreach ($modIds as $modId) {
-                $modId = trim($modId);
-                if (User::where('id', $modId)->exists() && $modId != $validated['creator_id']) { // Prevent creator from being moderator
-                    CommunityMember::create([
-                        'community_id' => $community->id,
-                        'user_id' => $modId,
-                        'role' => 'moderator',
-                        'joined_at' => now(),
-                    ]);
+            if ($request->hasFile('cover_image')) {
+                if ($community->cover_image) {
+                    Storage::disk('public')->delete($community->cover_image);
+                }
+                $validated['cover_image'] = $request->file('cover_image')->store('community_cover_images', 'public');
+            } else {
+                $validated['cover_image'] = $community->cover_image;
+            }
+            if ($request->hasFile('avatar')) {
+                if ($community->avatar) {
+                    Storage::disk('public')->delete($community->avatar);
+                }
+                $validated['avatar'] = $request->file('avatar')->store('community_avatars', 'public');
+            } else {
+                $validated['avatar'] = $community->avatar;
+            }
+
+            $community->update($validated);
+
+            $adminMember = $community->members()
+                ->where('community_members.role', 'admin')
+                ->first();
+
+            if ($adminMember && $adminMember->pivot->user_id != $validated['creator_id']) {
+                $adminMember->pivot->delete();
+                CommunityMember::create([
+                    'community_id' => $community->id,
+                    'user_id' => $validated['creator_id'],
+                    'role' => 'admin',
+                    'joined_at' => now(),
+                ]);
+            } elseif (!$adminMember) {
+                CommunityMember::create([
+                    'community_id' => $community->id,
+                    'user_id' => $validated['creator_id'],
+                    'role' => 'admin',
+                    'joined_at' => now(),
+                ]);
+            }
+
+            $community->moderators()->detach();
+            if (!empty($validated['moderator_ids'])) {
+                $modIds = array_filter(explode(',', $validated['moderator_ids']));
+                foreach ($modIds as $modId) {
+                    $modId = trim($modId);
+                    if (User::where('id', $modId)->exists() && $modId != $validated['creator_id']) {
+                        CommunityMember::create([
+                            'community_id' => $community->id,
+                            'user_id' => $modId,
+                            'role' => 'moderator',
+                            'joined_at' => now(),
+                        ]);
+                    }
                 }
             }
-        }
 
-        return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil diupdate.');
-    } catch (ValidationException $e) {
-        Log::error('Validation failed: ' . json_encode($e->errors()));
-        return redirect()->back()->withErrors($e->errors())->withInput();
-    } catch (\Exception $e) {
-        Log::error('Error updating community: ' . $e->getMessage());
-        $errorMessage = 'Gagal mengupdate komunitas: ';
-        if (str_contains($e->getMessage(), 'SQLSTATE[23000]')) {
-            $errorMessage .= 'Terjadi masalah dengan data anggota komunitas. Pastikan pembuat dan moderator valid.';
-        } else {
-            $errorMessage .= 'Silakan coba lagi atau hubungi administrator.';
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'type' => 'community',
+                'description' => 'Komunitas "' . $community->name . '" berhasil diperbarui',
+            ]);
+
+            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil diupdate.');
+        } catch (ValidationException $e) {
+            Log::error('Validation failed: ' . json_encode($e->errors()));
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            Log::error('Error updating community: ' . $e->getMessage());
+            $errorMessage = 'Gagal mengupdate komunitas: ';
+            if (str_contains($e->getMessage(), 'SQLSTATE[23000]')) {
+                $errorMessage .= 'Terjadi masalah dengan data anggota komunitas. Pastikan pembuat dan moderator valid.';
+            } else {
+                $errorMessage .= 'Silakan coba lagi atau hubungi administrator.';
+            }
+            return redirect()->back()->withErrors(['error' => $errorMessage])->withInput();
         }
-        return redirect()->back()->withErrors(['error' => $errorMessage])->withInput();
     }
-}
 
     public function destroy($id)
     {
         try {
             $community = Community::findOrFail($id);
+            $communityName = $community->name;
 
             if ($community->cover_image) {
                 Storage::disk('public')->delete($community->cover_image);
@@ -256,6 +270,12 @@ public function update(Request $request, $id)
             });
 
             $community->delete();
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'type' => 'community',
+                'description' => 'Komunitas "' . $communityName . '" berhasil dihapus',
+            ]);
 
             return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dihapus.');
         } catch (\Exception $e) {

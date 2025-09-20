@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
@@ -13,22 +11,24 @@ class Ticket extends Model
 
     protected $fillable = [
         'event_id',
-        'stock',
+        'type',
         'price',
-        'status'
+        'quantity_available',
+        'quantity_sold',
     ];
 
-    protected $casts = [
-        'price' => 'decimal:2',
-    ];
-
-    public function event(): BelongsTo
+    public function event()
     {
         return $this->belongsTo(Event::class);
     }
 
-    public function registrations(): HasMany
+    public function registrations()
     {
         return $this->hasMany(EventRegistration::class);
+    }
+
+    public function isAvailable()
+    {
+        return $this->quantity_available > $this->quantity_sold;
     }
 }

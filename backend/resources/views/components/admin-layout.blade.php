@@ -10,7 +10,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    @if(isset($settings) && $settings->favicon_path)
+    @if($settings?->favicon_path)
         <link rel="icon" type="image/png" href="{{ Storage::url($settings->favicon_path) }}" />
     @endif
 
@@ -42,7 +42,7 @@
                 </a>
                 <div class="relative">
                     <button id="profile-btn" class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-50 border border-gray-200 hover:border-yellow-500 transition-all duration-300">
-                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://picsum.photos/40/40?random=1' }}" alt="Profile" class="w-full h-full object-cover">
+                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' }}" alt="Profile" class="w-full h-full object-cover">
                     </button>
                     <div id="profile-dropdown" class="hidden absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 scale-95 transition-all duration-300">
                         <div class="p-3 border-b border-gray-200">

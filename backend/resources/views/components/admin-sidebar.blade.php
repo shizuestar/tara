@@ -3,7 +3,7 @@
         @if(isset($settings) && $settings->logo_path)
             <img src="{{ Storage::url($settings->logo_path) }}" 
                 alt="Logo" 
-                class="h-full w-auto object-contain ml-3">
+                class="h-full w-auto object-contain ml-5">
         @else
             <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
                 TARA<span class="text-yellow-400">●</span>
@@ -21,26 +21,26 @@
             <a href="{{ route('admin.communities.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-users"></i></div>
                 <span class="flex-grow">Komunitas</span>
-                <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">50</span>
+                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">50</span> --}}
             </a>
             <a href="{{ route('admin.projects.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-folder"></i></div>
                 <span class="flex-grow">Proyek</span>
-                <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">100</span>
+                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">100</span> --}}
             </a>
             <a href="{{ route('admin.blog.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-blog"></i></div>
                 <span class="flex-grow">Blog</span>
-                <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">200</span>
+                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">200</span> --}}
             </a>
         </div>
 
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href="{{ route('admin.agenda.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route('admin.events.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-calendar-alt"></i></div>
                 <span class="flex-grow">Agenda</span>
-                <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">30</span>
+                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold"></span> --}}
             </a>
             <a href="{{ route('admin.categories.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-stream"></i></div>

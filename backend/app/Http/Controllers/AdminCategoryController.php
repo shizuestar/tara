@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminCategoryController extends Controller
 {
@@ -18,13 +20,20 @@ class AdminCategoryController extends Controller
         }
 
         $categories = $query->paginate(6);
+        $activities = ActivityLog::where('type', 'category')->latest()->take(10)->get();
 
-        return view('administrator.admin.category.index', compact('categories', 'keyword'));
+        return view('administrator.admin.category.index', compact('categories', 'keyword', 'activities'));
     }
 
     public function store(StoreCategoryRequest $request)
     {
-        Category::create($request->validated());
+        $category = Category::create($request->validated());
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'category',
+            'description' => 'Kategori baru "' . $category->name . '" telah ditambahkan',
+        ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori baru ditambahkan.');
     }
@@ -32,6 +41,12 @@ class AdminCategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->validated());
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'category',
+            'description' => 'Kategori "' . $category->name . '" berhasil diperbarui',
+        ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori diperbarui.');
     }
@@ -42,7 +57,14 @@ class AdminCategoryController extends Controller
             return redirect()->route('admin.categories.index')->with('error', 'Kategori masih digunakan oleh blog.');
         }
 
+        $categoryName = $category->name;
         $category->delete();
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'category',
+            'description' => 'Kategori "' . $categoryName . '" berhasil dihapus',
+        ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori dihapus.');
     }

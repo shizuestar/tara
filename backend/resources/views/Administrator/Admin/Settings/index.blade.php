@@ -47,7 +47,7 @@
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Logo Platform</label>
                                 <div class="logo-preview mb-2">
-                                    <img id="logo-preview-img" src="{{ $settings->logo_path ? asset('storage/' . $settings->logo_path) : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U0ZTVlNiIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNjY2Ij5Mb2dvPC90ZXh0Pjwvc3ZnPg==' }}" alt="Logo Preview">
+                                    <img id="logo-preview-img" src="{{ $settings?->logo_path ? asset('storage/' . $settings->logo_path) : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U0ZTVlNiIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNjY2Ij5Mb2dvPC90ZXh0Pjwvc3ZnPg==' }}" alt="Logo Preview">
                                 </div>
                                 <input type="file" id="logo-upload" name="logo" class="hidden" accept="image/png">
                                 <label for="logo-upload" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-md text-sm text-gray-900 cursor-pointer">
@@ -61,7 +61,7 @@
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Favicon</label>
                                 <div class="logo-preview w-[60px] h-[60px] mb-2">
-                                    <img id="favicon-preview-img" src="{{ $settings->favicon_path ? asset('storage/' . $settings->favicon_path) : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZkNzAwIi8+PHRleHQgeD0iMTYiIHk9IjE2IiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IndoaXRlIj5UPC90ZXh0Pjwvc3ZnPg==' }}" alt="Favicon Preview">
+                                    <img id="favicon-preview-img" src="{{ $settings?->favicon_path ? asset('storage/' . $settings->favicon_path) : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZkNzAwIi8+PHRleHQgeD0iMTYiIHk9IjE2IiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IndoaXRlIj5UPC90ZXh0Pjwvc3ZnPg==' }}" alt="Favicon Preview">
                                 </div>
                                 <input type="file" id="favicon-upload" name="favicon" class="hidden" accept="image/png">
                                 <label for="favicon-upload" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-md text-sm text-gray-900 cursor-pointer">

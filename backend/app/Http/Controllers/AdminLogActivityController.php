@@ -31,10 +31,15 @@ class AdminLogActivityController extends Controller
             $query->where('description', 'like', '%' . $request->keyword . '%');
         }
 
+        $type = $request->query('type');
+        if ($type && in_array($type, ['community', 'project', 'blog', 'event', 'category', 'user', 'artwork', 'settings'])) {
+            $query->where('type', $type);
+        }
+
         $logs = $query->latest()->paginate(10);
 
         $users = User::all();
 
-        return view('administrator.admin.log_activity.index', compact('logs', 'users'));
+        return view('administrator.admin.log_activity.index', compact('logs', 'users', 'type'));
     }
 }

@@ -15,43 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'Super Admin',
-                'username' => 'superadmin',
-                'email' => 'superadmin@gmail.com',
-                'password' => Hash::make('password'),
-                'avatar' => null,
-                'bio' => 'Akun super administrator',
-                'role' => 'admin',
-                'status' => 'active',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Yusar Brian S',
-                'username' => 'yusrb',
-                'email' => 'yusbrian@gmail.com',
-                'password' => Hash::make('password'),
-                'avatar' => null,
-                'bio' => 'Akun khusus kurator Brian',
-                'role' => 'kurator',
-                'status' => 'active',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Member Satu',
-                'username' => 'member',
-                'email' => 'member@gmail.com',
-                'password' => Hash::make('password'),
-                'avatar' => null,
-                'bio' => 'Akun anggota biasa',
-                'role' => 'member',
-                'status' => 'active',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

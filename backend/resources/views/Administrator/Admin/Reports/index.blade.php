@@ -207,7 +207,7 @@
                         @forelse ($activities as $activity)
                             <tr class="hover:bg-gray-50">
                                 <td class="p-3 text-sm text-gray-900">{{ $activity->id }}</td>
-                                <td class="p-3 text-sm text-gray-900">{{ $activity->causer ? $activity->causer->name : 'Sistem' }}</td>
+                                <td class="p-3 text-sm text-gray-900">{{ $activity->user ? $activity->user->name : 'Sistem' }}</td>
                                 <td class="p-3 text-sm text-gray-900">{{ $activity->description }}</td>
                                 <td class="p-3 text-sm text-gray-900">{{ $activity->subject_type ? class_basename($activity->subject_type) : 'N/A' }}</td>
                                 <td class="p-3 text-sm text-gray-900">{{ $activity->created_at->format('d M Y H:i') }}</td>

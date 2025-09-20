@@ -110,7 +110,7 @@ class AdminReportController extends Controller
             })->toArray();
 
         // Laporan aktivitas
-        $activitiesQuery = ActivityLog::with(['causer', 'subject'])
+        $activitiesQuery = ActivityLog::with(['user', 'subject'])
             ->whereBetween('created_at', [$startDate, $endDate]);
         
         if ($categoryId) {
@@ -147,7 +147,7 @@ class AdminReportController extends Controller
                               BlogComment::whereBetween('created_at', [$startDate, $endDate])->count() +
                               ProjectComment::whereBetween('created_at', [$startDate, $endDate])->count() +
                               EventComment::whereBetween('created_at', [$startDate, $endDate])->count(),
-            'activities' => ActivityLog::with(['causer', 'subject'])
+            'activities' => ActivityLog::with(['user', 'subject'])
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($categoryId, function ($query) use ($categoryId) {
                     return $query->where('subject_id', $categoryId);
@@ -157,7 +157,7 @@ class AdminReportController extends Controller
                 ->map(function ($log) {
                     return [
                         'id' => $log->id,
-                        'user' => $log->causer ? $log->causer->name : 'Sistem',
+                        'user' => $log->user ? $log->user->name : 'Sistem',
                         'description' => $log->description,
                         'subject' => $log->subject_type ? class_basename($log->subject_type) : 'N/A',
                         'date' => $log->created_at->format('d M Y H:i'),

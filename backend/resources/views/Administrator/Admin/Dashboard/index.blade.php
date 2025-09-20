@@ -424,7 +424,7 @@
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-gray-900">Event Baru</h2>
-                <a href="{{ route('admin.agenda.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <a href="{{ route('admin.events.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-plus"></i> Buat Event
                 </a>
             </div>
@@ -542,7 +542,7 @@
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-users"></i></div>
                     <div class="font-medium">Kelola Komunitas</div>
                 </a>
-                <a href="{{ route('admin.agenda.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
+                <a href="{{ route('admin.events.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
                     <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-calendar-alt"></i></div>
                     <div class="font-medium">Buat Event</div>
                 </a>

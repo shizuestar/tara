@@ -17,7 +17,7 @@
     </script>
 
     @if(isset($settings) && $settings->favicon_path)
-        <link rel="icon" type="image/png" href="{{ Storage::url($settings->favicon_path) }}" />
+        <link rel="icon" type="image/png" href="{{ Storage::url($settings?->favicon_path) }}" />
     @endif
     
     @stack('styles')

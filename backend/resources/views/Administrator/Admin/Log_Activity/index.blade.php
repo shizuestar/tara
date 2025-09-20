@@ -35,7 +35,7 @@
                         <i class="fas fa-blog text-yellow-400"></i>
                         <span>Log Blog</span>
                     </a>
-                    <a href="{{ route('admin.activity-logs.index', ['type' => 'agenda']) }}" class="settings-menu-item {{ $type == 'agenda' ? 'active' : '' }}" data-target="agenda-logs">
+                    <a href="{{ route('admin.activity-logs.index', ['type' => 'event']) }}" class="settings-menu-item {{ $type == 'event' ? 'active' : '' }}" data-target="agenda-logs">
                         <i class="fas fa-calendar-alt text-yellow-400"></i>
                         <span>Log Agenda</span>
                     </a>
@@ -47,7 +47,7 @@
                         <i class="fas fa-user text-yellow-400"></i>
                         <span>Log User</span>
                     </a>
-                    <a href="{{ route('admin.activity-logs.index', ['type' => 'galeri']) }}" class="settings-menu-item {{ $type == 'galeri' ? 'active' : '' }}" data-target="galeri-logs">
+                    <a href="{{ route('admin.activity-logs.index', ['type' => 'artwork']) }}" class="settings-menu-item {{ $type == 'artwork' ? 'active' : '' }}" data-target="galeri-logs">
                         <i class="fas fa-images text-yellow-400"></i>
                         <span>Log Galeri</span>
                     </a>
@@ -185,8 +185,7 @@
                         {{ $logs->links() ?? '' }}
                     </div>
 
-                    <!-- Agenda Logs Section -->
-                    <div class="settings-section {{ $type == 'agenda' ? 'active' : '' }}" id="agenda-logs">
+                    <div class="settings-section {{ $type == 'event' ? 'active' : '' }}" id="agenda-logs">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Log Aktivitas Agenda</h2>
                         <div class="overflow-x-auto rounded-lg shadow-sm">
                             <table class="w-full min-w-max">
@@ -264,7 +263,7 @@
                     </div>
 
                     <!-- Galeri Logs Section -->
-                    <div class="settings-section {{ $type == 'galeri' ? 'active' : '' }}" id="galeri-logs">
+                    <div class="settings-section {{ $type == 'artwork' ? 'active' : '' }}" id="galeri-logs">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Log Aktivitas Galeri</h2>
                         <div class="overflow-x-auto rounded-lg shadow-sm">
                             <table class="w-full min-w-max">
