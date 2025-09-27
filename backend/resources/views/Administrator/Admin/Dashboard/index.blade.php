@@ -112,7 +112,7 @@
                 </div>
                 <div>
                     <div class="text-xl font-bold text-gray-900">{{ $totalProjects }}</div>
-                    <div class="text-sm text-gray-600">Total Proyek</div>
+                    <div class="text-sm text-gray-600">Total Project</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
@@ -218,7 +218,7 @@
                     <button class="filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="communitypost">Postingan</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="event">Event</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Proyek</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Project</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="community">Komunitas</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="artwork">Karya</button>
                 </div>
@@ -277,12 +277,12 @@
             </div>
         </div>
 
-        <!-- Proyek Terbaru -->
+        <!-- Project Terbaru -->
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Proyek Kolaborasi Terbaru</h2>
+                <h2 class="text-xl font-semibold text-gray-900">Project Kolaborasi Terbaru</h2>
                 <a href="{{ route('admin.projects.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
-                    <i class="fas fa-plus"></i> Proyek Baru
+                    <i class="fas fa-plus"></i> Project Baru
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -315,7 +315,7 @@
                 @empty
                     <div class="col-span-full text-center p-10 text-gray-600">
                         <i class="fas fa-project-diagram text-6xl mb-4"></i>
-                        <h3 class="text-xl font-semibold">Tidak ada proyek terbaru</h3>
+                        <h3 class="text-xl font-semibold">Tidak ada Project terbaru</h3>
                     </div>
                 @endforelse
             </div>
@@ -663,7 +663,7 @@
                 let interactionChart;
 
                 function updateInteractionChart(period) {
-                    let labels = ['Karya', 'Blog', 'Proyek'];
+                    let labels = ['Karya', 'Blog', 'Project'];
                     let likesData = interactionData[period].likes;
                     let commentsData = interactionData[period].comments;
                     if (interactionChart) interactionChart.destroy();

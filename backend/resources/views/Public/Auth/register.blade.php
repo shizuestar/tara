@@ -1,521 +1,617 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register – TARA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <style>
-        body {
-            font-family: "Space Grotesk", sans-serif;
-            background: #f8fafc;
-            overflow: hidden;
-        }
-
-        .main-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .left-section {
-            width: 520px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #ffffff;
-            padding: 0 16px;
-        }
-
-        .right-section {
-            position: relative;
-            overflow: hidden;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(240, 240, 240, 0.7));
-            flex: 1;
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-        }
-
-        #three-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .form-container {
-            background: linear-gradient(145deg, #ffffff, #f7fafc);
-            border-radius: 2rem;
-            position: relative;
-            right: 10px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .form-input {
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            border-color: #1a202c;
-            box-shadow: 0 0 0 3px rgba(26, 32, 44, 0.1);
-        }
-
-        .form-button {
-            transition: all 0.3s ease;
-        }
-
-        .form-button:hover {
-            background: #1a202c;
-            transform: translateY(-2px);
-        }
-
-        .social-button {
-            transition: all 0.3s ease;
-        }
-
-        .social-button:hover {
-            background: #f7fafc;
-            transform: translateY(-2px);
-        }
-
-        .gallery-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            z-index: 1;
-            justify-content: center;
-            align-content: center;
-            overflow-y: auto;
-        }
-
-        .gallery-card {
-            border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            padding: 15px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .gallery-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
-            border-radius: 1rem;
-            z-index: -1;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .gallery-card:hover::before {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.15));
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            filter: grayscale(100%);
-            transition: all 0.3s ease;
-        }
-
-        .gallery-card:hover .gallery-image {
-            filter: grayscale(50%);
-            transform: scale(1.02);
-        }
-
-        .gallery-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1a202c;
-            margin: 10px 0 5px;
-        }
-
-        .gallery-desc {
-            font-size: 0.9rem;
-            color: #2d3748;
-            font-weight: 300;
-        }
-
-        .welcome-container {
-            position: absolute;
-            z-index: 10;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .welcome-text {
-            display: flex;
-            gap: 0.6rem;
-            font-size: 5rem;
-            font-weight: 700;
-            letter-spacing: 0.25rem;
-            color: #1a202c;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-        }
-
-        .welcome-letter {
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease, filter 0.4s ease;
-        }
-
-        .welcome-dot {
-            font-size: 0.9em;
-            color: #000000;
-            animation: pulse 2s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-
-            100% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        .description {
-            max-width: 28rem;
-            text-align: center;
-            color: #2d3748;
-            font-weight: 300;
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            opacity: 0.9;
-        }
-
-        @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-            }
-
-            .left-section {
-                width: 100%;
-            }
-
-            .gallery-section {
-                padding: 20px;
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            }
-
-            .gallery-card {
-                width: 100%;
-            }
-
-            .welcome-text {
-                font-size: 3rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <main class="main-container">
-        <div class="left-section">
-            <div class="w-full max-w-lg p-7 py-14 pb-9 form-container">
-                <div class="text-center mb-8">
-                    <div class="text-center text-4xl font-semibold tracking-wide text-black"
-                        style="font-family: 'Space Grotesk', sans-serif">
-                        Daftar ke <span class="text-black">TARA</span><span class="text-yellow-400">●</span>
-                    </div>
-                </div>
-                @if ($errors->any())
-                    <div style="color: red; margin-bottom: 1rem;">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <form action="{{ route('register') }}" method="POST" class="space-y-5">
-                    @csrf
-                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Username"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
-                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
-                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
-                    <input type="password" name="password" placeholder="Password"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
-                    <input type="password" name="password_confirmation" placeholder="Konfirmasi Password"
-                        class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50" required />
-                    <button type="submit"
-                        class="form-button w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 text-sm font-medium">
-                        Daftar
-                    </button>
-                </form>
-                <div class="my-6 border-t border-gray-100 text-center text-xs text-gray-400 relative">
-                    <span class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2">atau daftar dengan</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                    <button
-                        class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition">
-                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google" />
-                        Google
-                    </button>
-                    <button
-                        class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition">
-                        <img src="https://www.svgrepo.com/show/512317/github-142.svg" class="w-5 h-5" alt="GitHub" />
-                        GitHub
-                    </button>
-                    <button
-                        class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition">
-                        <img src="https://www.svgrepo.com/show/452234/vk.svg" class="w-5 h-5" alt="VK" />
-                        VK
-                    </button>
-                </div>
-                <p class="text-center text-xs text-gray-500 mt-8">
-                    Sudah punya akun?
-                    <a href="{{ route('login') }}" id="login-link"
-                        class="text-gray-500 hover:text-gray-700 hover:underline transition">Masuk</a>
-                </p>
-            </div>
-        </div>
-        <div class="right-section">
-            <canvas id="three-canvas"></canvas>
-            <div class="gallery-section" id="gallery-section">
-                <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?art" alt="Artwork 1" />
-                    <div class="gallery-title">Pamerkan Karyamu</div>
-                    <div class="gallery-desc">Unggah karya seni dan portofolio untuk dilihat dunia.</div>
-                </div>
-                <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?creative" alt="Artwork 2" />
-                    <div class="gallery-title">Dapatkan Inspirasi</div>
-                    <div class="gallery-desc">Jelajahi karya kreatif dari seniman seluruh Indonesia.</div>
-                </div>
-                <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?design" alt="Artwork 3" />
-                    <div class="gallery-title">Bangun Reputasi</div>
-                    <div class="gallery-desc">Dapatkan pengakuan dari komunitas seni global.</div>
-                </div>
-                <div class="gallery-card">
-                    <img class="gallery-image" src="https://source.unsplash.com/random/300x200?illustration" alt="Artwork 4" />
-                    <div class="gallery-title">Kolaborasi Keren</div>
-                    <div class="gallery-desc">Terhubung dan berkarya bersama kreator lain.</div>
-                </div>
-            </div>
-            <div class="welcome-container">
-                <div class="welcome-text relative top-[20px]" id="welcome-text">
-                    <span class="welcome-letter">B</span>
-                    <span class="welcome-letter">E</span>
-                    <span class="welcome-letter">R</span>
-                    <span class="welcome-letter">G</span>
-                    <span class="welcome-letter">A</span>
-                    <span class="welcome-letter">B</span>
-                    <span class="welcome-letter">U</span>
-                    <span class="welcome-letter">N</span>
-                    <span class="welcome-letter">G</span>
-                </div>
-                <p class="description">
-                    Daftar sekarang dan mulailah perjalanan kreatifmu bersama kami.
-                </p>
-            </div>
-        </div>
-    </main>
     <script>
-        const canvas = document.getElementById("three-canvas");
-        if (canvas) {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(
-                75,
-                canvas.clientWidth / canvas.clientHeight,
-                0.1,
-                1000
-            );
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            camera.position.z = 5;
-
-            const particleCount = 800;
-            const particles = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            const velocities = new Float32Array(particleCount * 3);
-
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 12;
-                positions[i + 1] = (Math.random() - 0.5) * 12;
-                positions[i + 2] = (Math.random() - 0.5) * 8;
-                colors[i] = Math.random() * 0.2 + 0.8;
-                colors[i + 1] = Math.random() * 0.2 + 0.8;
-                colors[i + 2] = Math.random() * 0.2 + 0.8;
-                velocities[i] = (Math.random() - 0.5) * 0.008;
-                velocities[i + 1] = (Math.random() - 0.5) * 0.008;
-                velocities[i + 2] = (Math.random() - 0.5) * 0.008;
-            }
-
-            particles.setAttribute(
-                "position",
-                new THREE.BufferAttribute(positions, 3)
-            );
-            particles.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 0.035,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.6,
-            });
-
-            const particleSystem = new THREE.Points(particles, particleMaterial);
-            scene.add(particleSystem);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                particleSystem.rotation.y += 0.0003;
-                for (let i = 0; i < particleCount * 3; i += 3) {
-                    positions[i] += velocities[i];
-                    positions[i + 1] += velocities[i + 1];
-                    positions[i + 2] += velocities[i + 2];
-                    if (Math.abs(positions[i]) > 6) velocities[i] *= -1;
-                    if (Math.abs(positions[i + 1]) > 6) velocities[i + 1] *= -1;
-                    if (Math.abs(positions[i + 2]) > 4) velocities[i + 2] *= -1;
-                }
-                particles.attributes.position.needsUpdate = true;
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            window.addEventListener("resize", () => {
-                camera.aspect = canvas.clientWidth / canvas.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            });
-        }
-
-        const gallerySection = document.getElementById("gallery-section");
-        const galleryCards = gallerySection.querySelectorAll(".gallery-card");
-
-        function animateGalleryCards() {
-            anime({
-                targets: galleryCards,
-                opacity: [0, 1],
-                scale: [0.9, 1],
-                translateY: [20, 0],
-                duration: 800,
-                delay: anime.stagger(150, { start: 500 }),
-                easing: "easeOutCubic",
-            });
-        }
-
-        const welcomeLetters = document.querySelectorAll(
-            "#welcome-text .welcome-letter, #welcome-text .welcome-dot"
-        );
-        const welcomeContainer = document.querySelector(".welcome-container");
-
-        anime({
-            targets: welcomeLetters,
-            translateY: [50, 0],
-            translateZ: [0, 100],
-            opacity: [0, 1],
-            duration: 1600,
-            easing: "easeOutCubic",
-            delay: anime.stagger(150, { start: 300 }),
-            complete: function () {
-                setTimeout(() => {
-                    anime({
-                        targets: welcomeContainer,
-                        opacity: [1, 0],
-                        translateY: [0, -40],
-                        scale: [1, 0.9],
-                        duration: 1000,
-                        easing: "easeInCubic",
-                        complete: function () {
-                            welcomeContainer.style.display = "none";
-                            animateGalleryCards();
-                        },
-                    });
-                }, 1500);
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Space Grotesk", "sans-serif"],
             },
-        });
-
-        welcomeLetters.forEach((letter) => {
-            letter.style.pointerEvents = "auto";
-            letter.addEventListener("mouseenter", () => {
-                anime({
-                    targets: letter,
-                    translateZ: 150,
-                    scale: 1.1,
-                    filter: "drop-shadow(0 0 15px rgba(0, 0, 0, 0.3))",
-                    duration: 300,
-                    easing: "easeOutCubic",
-                });
-            });
-            letter.addEventListener("mouseleave", () => {
-                anime({
-                    targets: letter,
-                    translateZ: 100,
-                    scale: 1,
-                    filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2))",
-                    duration: 300,
-                    easing: "easeOutCubic",
-                });
-            });
-        });
-
-        const loginLink = document.getElementById("login-link");
-        loginLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            const leftSection = document.querySelector(".left-section");
-            const rightSection = document.querySelector(".right-section");
-
-            anime({
-                targets: [leftSection, rightSection],
-                translateX: [
-                    0,
-                    (el) => el === leftSection ? -(window.innerWidth - 520) : window.innerWidth - 520,
-                ],
-                duration: 600,
-                easing: "easeInOutQuad",
-                complete: () => {
-                    window.location.href = "/login";
-                },
-            });
-        });
+            colors: {
+              taraYellow: "#f6e05e",
+              taraDark: "#1a202c", 
+            },
+            boxShadow: {
+              '3xl': '0 50px 100px -20px rgba(0, 0, 0, 0.3)',
+              '4xl': '0 80px 150px -30px rgba(0, 0, 0, 0.4)',
+            }
+          },
+        },
+      };
     </script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: #f8fafc; 
+        overflow: hidden;
+      }
+
+      .main-container {
+        position: relative;
+        min-height: 100vh;
+        display: grid;
+        grid-template-areas: "stack";
+        overflow: hidden;
+      }
+
+      .main-container > * {
+        grid-area: stack;
+        width: 100%;
+        height: 100%;
+      }
+
+      .gallery-layer {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f7fafc, #ffffff); 
+        opacity: 0; 
+        transition: opacity 1s ease-in-out;
+      }
+
+      .content-layer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        z-index: 20; 
+        background: none; 
+        pointer-events: none; 
+        opacity: 0; 
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .content-layer.active {
+        pointer-events: auto; 
+      }
+      
+      .center-card {
+        max-width: 900px;
+        width: 95%;
+        background: rgba(255, 255, 255, 0.95); 
+        backdrop-filter: blur(10px); 
+        border-radius: 2rem;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2); 
+        overflow: hidden;
+        display: flex; 
+        min-height: 580px;
+      }
+
+      .form-column {
+        width: 45%; 
+        min-width: 350px;
+        padding: 3rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #ffffff; 
+        position: relative;
+      }
+
+      .benefit-column {
+        flex: 1;
+        padding: 3rem 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        background-color: #f3f4f6; 
+      }
+      
+      .card-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr); 
+        gap: 20px;
+        padding: 20px;
+        z-index: 1; 
+        overflow: hidden;
+        align-content: start;
+        opacity: 1;
+      }
+      @media (max-width: 1200px) { .card-section { grid-template-columns: repeat(4, 1fr); } }
+      @media (max-width: 768px) { .card-section { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 500px) { .card-section { grid-template-columns: repeat(2, 1fr); } }
+
+      .card-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 200vh;
+      }
+      .card {
+        border-radius: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, box-shadow;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+        background-color: #f0f4f8; 
+      }
+      .card-image-wrapper {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
+      }
+      .card-image-wrapper img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+        transition: filter 0.5s ease, transform 0.5s ease;
+        filter: grayscale(100%) brightness(50%) contrast(120%) blur(2px); 
+      }
+      .card-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.3); 
+        transition: background 0.3s ease; z-index: 2;
+      }
+
+      .card:hover .card-overlay { background: rgba(0, 0, 0, 0); }
+      .card:hover .card-image-wrapper img {
+        filter: grayscale(0%) brightness(100%) contrast(100%) blur(0px);
+        transform: scale(1.05);
+      }
+      .card:hover { transform: scale(1.03) translateY(-8px) rotateZ(0.5deg); box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15); }
+      .card-small { height: 150px; } .card-medium { height: 200px; } .card-large { height: 250px; } .card-xl { height: 300px; }
+
+      .tara-layer {
+        position: absolute; z-index: 30; top: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: linear-gradient(135deg, #f7fafc, #ffffff); 
+        transition: opacity 1s ease-out;
+      }
+      .tara-text {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 7rem;
+        font-weight: 700;
+        letter-spacing: 0.25rem;
+        color: #1a202c; 
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+      }
+      .tara-letter {
+        transform-style: preserve-3d;
+        transition: transform 0.4s ease, filter 0.4s ease;
+      }
+      .tara-dot {
+        font-size: 0.9em;
+        color: #f6e05e;
+        animation: pulse 2s infinite alternate;
+      }
+      @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.7; }
+        100% { transform: scale(1.2); opacity: 1; }
+      }
+      .description {
+        max-width: 24rem;
+        text-align: center;
+        color: #2d3748;
+        font-weight: 300;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        opacity: 0.9;
+      }
+
+      .form-input-style {
+          width: 100%; padding: 0.75rem 1.25rem; border: 1px solid #e2e8f0; 
+          border-radius: 0.75rem; outline: none; font-size: 0.875rem; 
+          background-color: #f7fafc; transition: all 0.3s ease;
+      }
+      .form-input-style:focus {
+          ring-width: 2px; --tw-ring-color: #f6e05e; border-color: #f6e05e; 
+      }
+      .benefit-icon {
+        color: #1a202c; font-size: 1.5rem; line-height: 1.5rem; margin-right: 1rem;
+        font-weight: 700; background-color: rgba(255, 255, 255, 0.8);
+        padding: 4px 8px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      }
+      .benefit-item-list {
+        opacity: 0; transform: translateY(20px);
+        display: flex; align-items: flex-start; margin-bottom: 1.25rem;
+      }
+      
+      @media (max-width: 900px) {
+        .center-card {
+          flex-direction: column; 
+          max-width: 90%;
+        }
+        .form-column {
+          width: 100%;
+          padding: 2rem;
+        }
+        .benefit-column {
+          width: 100%;
+          padding: 2rem;
+          min-height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main-container">
+      <div
+        class="tara-layer bg-gradient-to-br from-gray-50 to-white"
+        id="tara-layer"
+      >
+        <div class="tara-text relative top-[20px]" id="tara-text">
+          <span class="tara-letter">T</span>
+          <span class="tara-letter">A</span>
+          <span class="tara-letter">R</span>
+          <span class="tara-letter">A</span>
+          <span class="tara-dot">.</span>
+        </div>
+        <p class="description max-w-xs text-center text-gray-700 font-light text-lg mt-4 opacity-90">
+           Bergabunglah dengan TARA dan ubah ide kreatifmu menjadi pengakuan nyata.
+        </p>
+      </div>
+
+      <div
+        class="gallery-layer bg-gradient-to-br from-gray-50 to-white"
+        id="gallery-layer"
+      >
+        <div class="card-section" id="card-section"></div>
+      </div>
+
+      <div class="content-layer" id="content-layer">
+        <div class="center-card" id="center-card">
+          <div class="form-column">
+            <div class="text-center mb-8 form-item">
+              <div
+                class="text-center text-3xl font-bold tracking-tight text-gray-900"
+              >
+                Daftar ke <span class="text-gray-900">TARA</span
+                ><span class="text-taraYellow">●</span>
+              </div>
+              <p class="text-sm text-gray-500 mt-2 font-light">
+                Buat akunmu dan pamerkan karyamu sekarang.
+              </p>
+            </div>
+            
+            @if ($errors->any())
+              <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg form-item" role="alert">
+                  <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+              </div>
+            @endif
+
+            <form action="{{ route('register') }}" method="POST" class="space-y-3">
+              @csrf
+              <div class="grid grid-cols-2 gap-3 form-item">
+                  <input
+                      type="text"
+                      name="username"
+                      value="{{ old('username') }}"
+                      placeholder="Username"
+                      class="form-input-style"
+                      required
+                  />
+                  <input
+                      type="text"
+                      name="name"
+                      value="{{ old('name') }}"
+                      placeholder="Nama Lengkap"
+                      class="form-input-style"
+                      required
+                  />
+              </div>
+              <div class="form-item">
+                <input
+                  type="email"
+                  name="email"
+                  value="{{ old('email') }}"
+                  placeholder="Email"
+                  class="form-input-style"
+                  required
+                />
+              </div>
+              <div class="form-item">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  class="form-input-style"
+                  required
+                />
+              </div>
+              <div class="form-item">
+                <input
+                  type="password"
+                  name="password_confirmation"
+                  placeholder="Konfirmasi Password"
+                  class="form-input-style"
+                  required
+                />
+              </div>
+
+              <div class="form-item pt-2">
+                <button
+                  type="submit"
+                  class="w-full bg-taraDark text-white py-3 rounded-xl hover:bg-gray-700 text-sm font-semibold tracking-wide transition duration-300 ease-in-out transform hover:scale-[1.005] hover:shadow-lg"
+                >
+                  Daftar Sekarang
+                </button>
+              </div>
+            </form>
+
+            <div class="text-center text-xs text-gray-500 mt-6 form-item">
+              <span class="text-gray-400">Dengan mendaftar, Anda setuju dengan</span>
+              <a href="#" class="text-gray-500 font-semibold hover:text-gray-700 hover:underline transition">Syarat & Ketentuan</a>
+            </div>
+
+            <p class="text-center text-xs text-gray-500 mt-4 form-item">
+              Sudah punya akun?
+              <a
+                href="{{ route('login') }}"
+                id="login-link"
+                class="text-gray-700 font-semibold hover:text-gray-900 hover:underline transition duration-300"
+                >Masuk</a
+              >
+            </p>
+          </div>
+
+          <div class="benefit-column">
+              <h2 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight">
+                  Mulai Aksi Kreatifmu
+              </h2>
+              
+              <div class="space-y-6 w-full">
+                  <div class="benefit-item-list" data-delay="100">
+                      <span class="benefit-icon">01</span>
+                      <div>
+                          <h3 class="text-lg font-bold text-gray-900 mb-1">Visibilitas Global</h3>
+                          <p class="text-sm text-gray-600 font-light">Pamerkan karya ke jutaan mata, tingkatkan pengakuan profesional.</p>
+                      </div>
+                  </div>
+                  
+                  <div class="benefit-item-list" data-delay="200">
+                      <span class="benefit-icon">02</span>
+                      <div>
+                          <h3 class="text-lg font-bold text-gray-900 mb-1">Peluang Kolaborasi</h3>
+                          <p class="text-sm text-gray-600 font-light">Terhubung dengan kreator lain dan dapatkan Project menarik.</p>
+                      </div>
+                  </div>
+                  
+                  <div class="benefit-item-list" data-delay="300">
+                      <span class="benefit-icon">03</span>
+                      <div>
+                          <h3 class="text-lg font-bold text-gray-900 mb-1">Portofolio Elegance</h3>
+                          <p class="text-sm text-gray-600 font-light">Sajikan karyamu dalam tampilan yang profesional dan minimalis.</p>
+                      </div>
+                  </div>
+                  
+                  <div class="benefit-item-list" data-delay="400">
+                      <span class="benefit-icon">04</span>
+                      <div>
+                          <h3 class="text-lg font-bold text-gray-900 mb-1">Akses Tren Terkini</h3>
+                          <p class="text-sm text-gray-600 font-light">Selalu terdepan dengan inspirasi dan *insight* dari komunitas.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const cardSection = document.getElementById("card-section");
+      const galleryLayer = document.getElementById("gallery-layer");
+      
+      let numberOfColumns = 6;
+      if (window.innerWidth <= 1200) numberOfColumns = 4;
+      if (window.innerWidth <= 768) numberOfColumns = 3;
+      if (window.innerWidth <= 500) numberOfColumns = 2;
+
+      const cardsPerColumn = 10;
+      const cardSizes = ["card-small", "card-medium", "card-large", "card-xl"];
+      let cardColumns = [];
+
+      function getRandomPicsumImage(width, height) {
+        const imageId = Math.floor(Math.random() * 1000) + 1;
+        return `https://picsum.photos/${width + 100}/${height + 100}?random=${imageId}`;
+      }
+
+      function createCardColumns() {
+        for (let col = 0; col < numberOfColumns; col++) {
+          const column = document.createElement("div");
+          column.className = "card-column";
+
+          for (let card = 0; card < cardsPerColumn * 2; card++) {
+            const cardElement = document.createElement("div");
+            const sizeClass = cardSizes[Math.floor(Math.random() * cardSizes.length)];
+            cardElement.className = `card ${sizeClass}`;
+
+            let width = 300, height;
+            switch (sizeClass) {
+              case "card-small": height = 150; break;
+              case "card-medium": height = 200; break;
+              case "card-large": height = 250; break;
+              case "card-xl": height = 300; break;
+              default: height = 200;
+            }
+            
+            const imageWrapper = document.createElement("div");
+            imageWrapper.className = "card-image-wrapper";
+            
+            const imgElement = document.createElement("img");
+            imgElement.src = getRandomPicsumImage(width, height);
+            imgElement.alt = "Gallery Image";
+
+            imageWrapper.appendChild(imgElement);
+            cardElement.appendChild(imageWrapper);
+            
+            const cardOverlay = document.createElement("div");
+            cardOverlay.className = "card-overlay";
+            cardElement.appendChild(cardOverlay);
+            
+            column.appendChild(cardElement);
+          }
+
+          cardSection.appendChild(column);
+          cardColumns.push(column);
+        }
+      }
+
+      function startInfiniteScroll() {
+        cardColumns.forEach((column, index) => {
+          const cards = column.querySelectorAll(".card");
+          let totalHeight = 0;
+          
+          for (let i = 0; i < cardsPerColumn; i++) {
+            totalHeight += cards[i].offsetHeight + 20;
+          }
+
+          let duration = 0;
+          if (index % 3 === 0) duration = 30000;
+          else if (index % 3 === 1) duration = 40000;
+          else duration = 35000;
+          
+          const initialTranslation = index % 2 === 0 ? 0 : -totalHeight;
+          const targetTranslation = index % 2 === 0 ? -totalHeight : 0;
+          
+          column.style.transform = `translateY(${initialTranslation}px)`;
+
+          anime({
+            targets: column,
+            translateY: [initialTranslation, targetTranslation],
+            duration: duration,
+            easing: "linear",
+            direction: index % 2 === 0 ? 'normal' : 'reverse',
+            loop: true,
+            autoplay: true,
+          });
+        });
+      }
+
+      const taraLayer = document.getElementById("tara-layer");
+      const contentLayer = document.getElementById("content-layer");
+      const centerCard = document.getElementById("center-card");
+      const taraLetters = document.querySelectorAll("#tara-text .tara-letter, #tara-text .tara-dot");
+      const formItems = document.querySelectorAll(".form-item");
+      const benefitItems = document.querySelectorAll(".benefit-item-list");
+
+      createCardColumns();
+
+      anime({
+        targets: taraLetters,
+        translateY: [50, 0],
+        translateZ: [0, 100],
+        opacity: [0, 1],
+        duration: 1600,
+        easing: "easeOutCubic",
+        delay: anime.stagger(150, { start: 300 }),
+        complete: function () {
+          setTimeout(() => {
+            anime({
+              targets: taraLetters,
+              scale: [1, 0.5],
+              opacity: [1, 0],
+              translateX: (el, i) => {
+                // Huruf-huruf bergerak ke tengah (indeks tengah adalah 2 untuk 'R')
+                const centerIndex = 2;
+                return (i - centerIndex) * 20; // Gerakan mendekati pusat
+              },
+              duration: 1000,
+              easing: "easeInQuad",
+              delay: anime.stagger(100, { from: 'center' }), // Mulai dari tengah
+              complete: function () {
+                anime({
+                  targets: taraLayer,
+                  opacity: [1, 0],
+                  duration: 500,
+                  easing: "easeInQuad",
+                  complete: function () {
+                    taraLayer.style.display = "none";
+                    galleryLayer.style.opacity = 1;
+                    startInfiniteScroll();
+
+                    contentLayer.style.opacity = 1; 
+                    contentLayer.classList.add('active'); 
+                    
+                    anime({
+                        targets: centerCard,
+                        opacity: [0, 1],
+                        scale: [0.95, 1],
+                        translateY: [20, 0],
+                        duration: 1000,
+                        easing: "easeOutQuart",
+                    });
+
+                    anime({
+                        targets: [...formItems, ...benefitItems],
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 900,
+                        easing: "easeOutQuart",
+                        delay: anime.stagger(80, { start: 400 }),
+                    });
+                  },
+                });
+              },
+            });
+          }, 1500); 
+        },
+      });
+
+      taraLetters.forEach((letter) => {
+        letter.style.pointerEvents = "auto";
+        letter.addEventListener("mouseenter", () => {
+          anime({
+            targets: letter,
+            translateZ: 150,
+            scale: 1.1,
+            filter: "drop-shadow(0 0 15px rgba(246, 224, 94, 0.6))",
+            duration: 300,
+            easing: "easeOutCubic",
+          });
+        });
+        letter.addEventListener("mouseleave", () => {
+          anime({
+            targets: letter,
+            translateZ: 100,
+            scale: 1,
+            filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2))",
+            duration: 300,
+            easing: "easeOutCubic",
+          });
+        });
+      });
+
+      const loginLink = document.getElementById("login-link");
+      loginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        anime({
+          targets: centerCard,
+          opacity: 0,
+          scale: 0.95,
+          translateY: 30,
+          duration: 600,
+          easing: "easeInQuad",
+        });
+        anime({
+          targets: galleryLayer,
+          scale: 1.2,
+          opacity: 0,
+          duration: 800,
+          easing: "easeInQuad",
+          complete: () => {
+            window.location.href = loginLink.href;
+          },
+        });
+      });
+    </script>
+  </body>
 </html>

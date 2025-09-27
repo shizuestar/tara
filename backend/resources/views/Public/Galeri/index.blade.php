@@ -451,12 +451,12 @@
                 length: totalProjects
             }, (_, i) => ({
                 id: i + 1,
-                title: `Proyek ${i + 1}`,
+                title: `Project ${i + 1}`,
                 image: `https://picsum.photos/seed/${i + 1}/400/300`,
                 height: ["row-span-2", "row-span-3", "row-span-2"][Math.floor(Math.random() * 3)],
                 width: ["col-span-1", "col-span-2", "col-span-1"][Math.floor(Math.random() * 3)],
                 category: ["UI/UX", "Desain Grafis", "Pengembangan Web", "Ilustrasi"][i % 4],
-                description: `Deskripsi untuk Proyek ${i + 1}. Representasi unik dari kreativitas dan inovasi.`,
+                description: `Deskripsi untuk Project ${i + 1}. Representasi unik dari kreativitas dan inovasi.`,
                 uploader: `Pengunggah ${(i % 5) + 1}`,
                 uploadTime: new Date().toISOString(),
             }));

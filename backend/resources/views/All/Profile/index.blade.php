@@ -74,9 +74,9 @@
 
                 <!-- Projects -->
                 <div class="mt-8">
-                    <h2 class="text-xl font-bold mb-4">Proyek</h2>
+                    <h2 class="text-xl font-bold mb-4">Project</h2>
                     @if ($projects->isEmpty())
-                        <p class="text-gray-500">Belum ada proyek.</p>
+                        <p class="text-gray-500">Belum ada Project.</p>
                     @else
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             @foreach ($projects as $project)
@@ -84,7 +84,7 @@
                                     <h3 class="text-lg font-semibold">{{ $project->name }}</h3>
                                     <p class="text-gray-500">Role: {{ $project->pivot->role }}</p>
                                     <p class="text-gray-500">Bergabung: {{ $project->pivot->joined_at->diffForHumans() }}</p>
-                                    <a href="{{ route('projects.show', $project->id) }}" class="text-blue-500 hover:underline">Lihat Proyek</a>
+                                    <a href="{{ route('projects.show', $project->id) }}" class="text-blue-500 hover:underline">Lihat Project</a>
                                 </div>
                             @endforeach
                         </div>

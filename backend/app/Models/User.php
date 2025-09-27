@@ -183,4 +183,9 @@ class User extends Authenticatable
                     ->withPivot('role', 'joined_at')
                     ->withTimestamps();
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

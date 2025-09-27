@@ -29,7 +29,7 @@
                     </a>
                     <a href="{{ route('admin.activity-logs.index', ['type' => 'project']) }}" class="settings-menu-item {{ $type == 'project' ? 'active' : '' }}" data-target="project-logs">
                         <i class="fas fa-project-diagram text-yellow-400"></i>
-                        <span>Log Proyek</span>
+                        <span>Log Project</span>
                     </a>
                     <a href="{{ route('admin.activity-logs.index', ['type' => 'blog']) }}" class="settings-menu-item {{ $type == 'blog' ? 'active' : '' }}" data-target="blog-logs">
                         <i class="fas fa-blog text-yellow-400"></i>
@@ -135,7 +135,7 @@
 
                     <!-- Project Logs Section -->
                     <div class="settings-section {{ $type == 'project' ? 'active' : '' }}" id="project-logs">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Log Aktivitas Proyek</h2>
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">Log Aktivitas Project</h2>
                         <div class="overflow-x-auto rounded-lg shadow-sm">
                             <table class="w-full min-w-max">
                                 <thead>

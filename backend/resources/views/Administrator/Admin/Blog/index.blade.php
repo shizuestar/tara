@@ -42,7 +42,7 @@
                 <i class="fas fa-filter text-yellow-400 text-base"></i>
                 Filter Blog
             </h3>
-            <form method="GET" action="{{ route('admin.blog.index') }}">
+            <form method="GET" action="{{ route('admin.blogs.index') }}">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <label for="category" class="block text-sm font-medium text-gray-700 mb-1.5">Kategori</label>
@@ -72,7 +72,7 @@
                         <i class="fas fa-filter text-sm"></i>
                         Terapkan
                     </button>
-                    <a href="{{ route('admin.blog.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
+                    <a href="{{ route('admin.blogs.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors">
                         <i class="fas fa-redo text-sm"></i>
                         Reset
                     </a>
@@ -108,7 +108,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-xs text-gray-600">{{ $blog->views }} views</span>
                                 <div class="flex gap-2">
-                                    <a href="{{ route('admin.blog.show', $blog->id) }}" 
+                                    <a href="{{ route('admin.blogs.show', $blog->id) }}" 
                         class="w-8 h-8 rounded-md bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 text-xs" 
                         aria-label="Detail {{ $blog->title }}">
                             <i class="fas fa-eye"></i>
@@ -140,7 +140,7 @@
                     <h3 class="text-lg font-semibold text-gray-900" style="font-family: 'Space Grotesk', sans-serif;">Tambah Blog Baru</h3>
                     <button class="text-xl text-gray-600 hover:text-gray-900" onclick="closeCreateModal()" aria-label="Tutup modal">&times;</button>
                 </div>
-                <form method="POST" action="{{ route('admin.blog.store') }}" class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.blogs.store') }}" class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="title" class="block text-sm font-medium text-gray-700 mb-1.5">Judul Blog *</label>

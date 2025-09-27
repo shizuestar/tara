@@ -31,11 +31,11 @@
 
                 <div id="nav-menu" class="hidden md:flex md:flex-row flex-col md:items-center md:gap-8 absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-6 py-6 md:p-0 z-50 transition-all duration-300">
                     <a href="{{ route('home') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('home') ? 'text-black font-semibold' : '' }}">Beranda</a>
-                    <a href="{{ route('galeri') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('galeri') ? 'text-black font-semibold' : '' }}">Galeri</a>
+                    <a href="{{ route('galeri.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('galeri') ? 'text-black font-semibold' : '' }}">Galeri</a>
                     <a href="{{ route('komunitas.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('komunitas.index') ? 'text-black font-semibold' : '' }}">Komunitas</a>
-                    <a href="{{ route('proyek') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('proyek') ? 'text-black font-semibold' : '' }}">Proyek</a>
-                    <a href="{{ route('blog') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('blog') ? 'text-black font-semibold' : '' }}">Blog</a>
-                    <a href="{{ route('agenda') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('agenda') ? 'text-black font-semibold' : '' }}">Agenda</a>
+                    <a href="{{ route('project.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('Project') ? 'text-black font-semibold' : '' }}">Project</a>
+                    <a href="{{ route('blogs.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('blog') ? 'text-black font-semibold' : '' }}">Blog</a>
+                    <a href="{{ route('events.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('event.*') ? 'text-black font-semibold' : '' }}">Agenda</a>
 
                     @guest
                         <div class="flex flex-col md:flex-row items-center gap-3 md:gap-2 mt-4 md:mt-0">
@@ -53,14 +53,14 @@
                         </div>
 
                         <div class="relative w-fit">
-                            <a href="{{ route('bookmark') }}" class="hover:text-black text-gray-500 text-xl">
+                            <a href="{{ route('bookmarks.index') }}" class="hover:text-black text-gray-500 text-xl">
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </div>
 
                         <div class="relative hidden md:block">
                             <button id="profile-toggle" class="flex items-center gap-2 focus:outline-none" aria-label="Buka Menu Profil">
-                                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://i.pravatar.cc/300?u=' . Auth::user()->username }}" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-gray-300">
+                                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' . Auth::user()->username }}" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-gray-300">
                             </button>
                             <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200">
                                 <a href="{{ route('profile.edit', Auth::id()) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 font-medium">Profil</a>

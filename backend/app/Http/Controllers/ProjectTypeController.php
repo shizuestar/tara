@@ -26,7 +26,7 @@ class ProjectTypeController extends Controller
         ]);
 
         ProjectType::create($validated);
-        return redirect()->route('project-types.index')->with('success', 'Tipe proyek berhasil dibuat.');
+        return redirect()->route('project-types.index')->with('success', 'Tipe Project berhasil dibuat.');
     }
 
     public function edit(ProjectType $projectType)
@@ -42,12 +42,12 @@ class ProjectTypeController extends Controller
         ]);
 
         $projectType->update($validated);
-        return redirect()->route('project-types.index')->with('success', 'Tipe proyek berhasil diperbarui.');
+        return redirect()->route('project-types.index')->with('success', 'Tipe Project berhasil diperbarui.');
     }
 
     public function destroy(ProjectType $projectType)
     {
         $projectType->delete();
-        return redirect()->route('project-types.index')->with('success', 'Tipe proyek berhasil dihapus.');
+        return redirect()->route('project-types.index')->with('success', 'Tipe Project berhasil dihapus.');
     }
 }

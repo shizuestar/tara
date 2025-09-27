@@ -21,7 +21,7 @@ class ReportsExport implements FromArray, WithHeadings, WithStyles
         $rows = [
             ['Statistik', 'Jumlah'],
             ['Total Komunitas', $this->data['totalCommunities']],
-            ['Total Proyek', $this->data['totalProjects']],
+            ['Total Project', $this->data['totalProjects']],
             ['Total Karya', $this->data['totalArtworks']],
             ['Total Event', $this->data['totalEvents']],
             ['Total Pengguna Aktif', $this->data['totalActiveUsers']],

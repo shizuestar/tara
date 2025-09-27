@@ -25,10 +25,10 @@
             </a>
             <a href="{{ route('admin.projects.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-folder"></i></div>
-                <span class="flex-grow">Proyek</span>
+                <span class="flex-grow">Project</span>
                 {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">100</span> --}}
             </a>
-            <a href="{{ route('admin.blog.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route('admin.blogs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-blog"></i></div>
                 <span class="flex-grow">Blog</span>
                 {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">200</span> --}}

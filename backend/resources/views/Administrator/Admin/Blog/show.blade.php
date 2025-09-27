@@ -16,7 +16,7 @@
                         <i class="fas fa-trash text-sm"></i>
                         Hapus
                     </button>
-                    <form action="{{ route('admin.blog.update', $blog->id) }}" method="POST">
+                    <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <select name="status" onchange="this.form.submit()" class="p-2 border border-gray-300 rounded-md text-sm text-gray-900 focus:ring-2 focus:ring-yellow-400">
@@ -74,7 +74,7 @@
 
             <!-- Edit Mode -->
             <div id="edit-mode" class="hidden">
-                <form action="{{ route('admin.blog.update', $blog->id) }}" method="POST">
+                <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
@@ -211,7 +211,7 @@
                     </div>
                     <div class="flex justify-end gap-3">
                         <button class="bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium px-4 py-2 rounded-md" onclick="closeDeleteModal()">Batal</button>
-                        <form action="{{ route('admin.blog.destroy', $blog->id) }}" method="POST">
+                        <form action="{{ route('admin.blogs.destroy', $blog->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-md">Hapus</button>

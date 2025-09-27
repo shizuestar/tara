@@ -11,7 +11,7 @@ class LearnMoreController extends Controller
         $features = [
             [
                 'title' => 'Komunitas Kreatif',
-                'description' => 'Terhubung dengan kreator lain, berbagi ide, dan kolaborasi dalam proyek impian Tuan.',
+                'description' => 'Terhubung dengan kreator lain, berbagi ide, dan kolaborasi dalam Project impian Tuan.',
                 'image' => 'https://picsum.photos/600/400?community',
             ],
             [
@@ -21,7 +21,7 @@ class LearnMoreController extends Controller
             ],
             [
                 'title' => 'Alat Kolaborasi',
-                'description' => 'Gunakan alat kami untuk mengelola proyek, berkomunikasi, dan berkarya bersama tim.',
+                'description' => 'Gunakan alat kami untuk mengelola Project, berkomunikasi, dan berkarya bersama tim.',
                 'image' => 'https://picsum.photos/600/400?tools',
             ],
         ];
@@ -39,7 +39,7 @@ class LearnMoreController extends Controller
             ],
             [
                 'title' => '3. Berkarya Bersama',
-                'description' => 'Mulai proyek, ajak kolaborator, dan wujudkan ide kreatif Tuan bersama komunitas.',
+                'description' => 'Mulai Project, ajak kolaborator, dan wujudkan ide kreatif Tuan bersama komunitas.',
                 'image' => 'https://picsum.photos/600/400?step3',
             ],
         ];

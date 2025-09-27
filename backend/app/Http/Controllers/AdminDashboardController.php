@@ -167,7 +167,7 @@ class AdminDashboardController extends Controller
                 } elseif ($category == 'Event') {
                     $title = $subject->title ?? 'Event tanpa judul';
                 } elseif ($category == 'Project') {
-                    $title = $subject->project_name ?? 'Proyek tanpa nama';
+                    $title = $subject->project_name ?? 'Project tanpa nama';
                     $community = $subject->community->name ?? 'N/A';
                 } elseif ($category == 'Community') {
                     $title = $subject->name ?? 'Komunitas tanpa nama';

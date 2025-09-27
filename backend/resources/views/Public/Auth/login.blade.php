@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login – TARA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Space Grotesk", "sans-serif"],
+            },
+            colors: {
+              taraYellow: "#f6e05e", // Warna dot TARA
+            },
+            boxShadow: {
+              '3xl': '0 50px 100px -20px rgba(0, 0, 0, 0.3)',
+              '4xl': '0 80px 150px -30px rgba(0, 0, 0, 0.4)',
+            }
+          },
+        },
+      };
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap"
@@ -14,65 +31,81 @@
     <style>
       body {
         font-family: "Space Grotesk", sans-serif;
-        background: rgba(255, 255, 255, 0.25);
-        overflow: hidden;
+        background: #f8fafc; /* Tailwind: bg-gray-50 */
       }
 
       .main-container {
         position: relative;
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        flex-direction: row;
+        min-height: 100vh;
+        display: grid;
+        grid-template-areas: "stack";
+        overflow: hidden;
       }
 
-      .left-section {
+      .main-container > * {
+        grid-area: stack;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* GALLERY LAYER - Latar belakang putih/terang */
+      .gallery-layer {
         position: relative;
         overflow: hidden;
-        height: 100vh;
-        background: linear-gradient(135deg, #f7fafc, #ffffff);
-        flex: 1;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f7fafc, #ffffff); 
+        opacity: 0; 
+        transition: opacity 1s ease-in-out;
       }
 
-      .right-section {
-      width: 430px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      border-left: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 0 1px;
-    }
-
-    @media screen and (min-width: 1600px) {
-      .right-section {
-        width: 600px;
+      /* FORM LAYER */
+      .form-layer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        z-index: 20; 
+        background: none; 
+        pointer-events: none; 
+        opacity: 0; 
+        transition: opacity 0.5s ease-in-out;
       }
-    }
 
-      #three-canvas {
+      .form-layer.active {
+        pointer-events: auto; 
+      }
+      
+      /* GALLERY CARDS */
+      .card-section {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 0;
-      }
-
-      .card-section {
-        position: relative;
-        width: 100%;
-        height: 100vh;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(6, 1fr); 
         gap: 20px;
         padding: 20px;
-        z-index: 1;
+        z-index: 1; 
         overflow: hidden;
         align-content: start;
-        opacity: 0;
+        opacity: 1;
+      }
+
+      @media (max-width: 1200px) {
+        .card-section {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .card-section {
+          grid-template-columns: repeat(3, 1fr); 
+        }
+      }
+      @media (max-width: 500px) {
+        .card-section {
+          grid-template-columns: repeat(2, 1fr); 
+        }
       }
 
       .card-column {
@@ -84,39 +117,70 @@
 
       .card {
         border-radius: 1.5rem;
-        background-size: cover;
-        background-position: center;
-        position: relative;
+        position: relative; /* Penting untuk overlay dan gambar */
         overflow: hidden;
         flex-shrink: 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, box-shadow;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+        background-color: #f0f4f8; /* Latar belakang kartu saat tidak ada gambar */
+      }
+
+      /* Wrapper untuk gambar di dalam kartu */
+      .card-image-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Pastikan gambar tidak keluar dari bounds */
+      }
+
+      .card-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Pastikan gambar mengisi seluruh wrapper */
+        display: block;
+        transition: filter 0.5s ease, transform 0.5s ease;
+        /* ===== NEW: Filter untuk monochrome dan gelap ===== */
+        filter: grayscale(100%) brightness(50%) contrast(120%); 
+      }
+
+      .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2); /* Overlay hitam transparan lebih tipis */
+        transition: background 0.3s ease;
+        z-index: 2; /* Di atas gambar */
+      }
+
+      /* Hover effects */
+      .card:hover .card-overlay {
+        background: rgba(0, 0, 0, 0); /* Overlay hilang saat hover */
+      }
+      .card:hover .card-image-wrapper img {
+        filter: grayscale(0%) brightness(100%) contrast(100%); /* Warna dan terang kembali saat hover */
+        transform: scale(1.05); /* Sedikit zoom pada gambar */
       }
 
       .card:hover {
-        transform: scale(1.03) translateY(-8px);
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
+        transform: scale(1.03) translateY(-8px) rotateZ(0.5deg); 
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15); 
       }
 
-      .card-small {
-        width: 100%;
-        height: 200px;
-      }
-      .card-medium {
-        width: 100%;
-        height: 250px;
-      }
-      .card-large {
-        width: 100%;
-        height: 300px;
-      }
-      .card-xl {
-        width: 100%;
-        height: 350px;
-      }
+      /* Card Sizes */
+      .card-small { height: 150px; }
+      .card-medium { height: 200px; }
+      .card-large { height: 250px; }
+      .card-xl { height: 300px; }
 
-      .tara-container {
+      /* TARA LAYER */
+      .tara-layer {
         position: absolute;
-        z-index: 10;
+        z-index: 30;
         top: 0;
         width: 100%;
         height: 100%;
@@ -124,7 +188,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        pointer-events: none;
+        background: linear-gradient(135deg, #f7fafc, #ffffff); 
+        transition: opacity 1s ease-out;
       }
 
       .tara-text {
@@ -133,7 +198,7 @@
         font-size: 7rem;
         font-weight: 700;
         letter-spacing: 0.25rem;
-        color: #1a202c;
+        color: #1a202c; 
         filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
       }
 
@@ -144,346 +209,237 @@
 
       .tara-dot {
         font-size: 0.9em;
-        color: #f6e05e;
+        color: #f6e05e; 
         animation: pulse 2s infinite alternate;
       }
 
       @keyframes pulse {
-        0% {
-          transform: scale(1);
-          opacity: 0.7;
-        }
-        100% {
-          transform: scale(1.2);
-          opacity: 1;
-        }
+        0% { transform: scale(1); opacity: 0.7; }
+        100% { transform: scale(1.2); opacity: 1; }
       }
-
-      .description {
-        max-width: 24rem;
+      
+      /* FORM STYLING KUSTOM (Separator) */
+      .separator {
+        position: relative;
         text-align: center;
-        color: #2d3748;
-        font-weight: 300;
-        font-size: 1.1rem;
         margin-top: 1.5rem;
-        opacity: 0.9;
+        margin-bottom: 1.5rem;
       }
-
-      .form-container {
-        background: linear-gradient(145deg, #ffffff, #f7fafc);
-        border-radius: 2rem;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      .separator::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        border-top: 1px solid #e2e8f0; 
+        z-index: 1;
       }
-
-      .form-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-      }
-
-      .form-input {
-        transition: all 0.3s ease;
-      }
-
-      .form-input:focus {
-        border-color: #4a5568;
-        box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
-      }
-
-      .form-button {
-        transition: all 0.3s ease;
-      }
-
-      .form-button:hover {
-        background: #2d3748;
-        transform: translateY(-2px);
-      }
-
-      .social-button {
-        transition: all 0.3s ease;
-      }
-
-      .social-button:hover {
-        background: #f7fafc;
-        transform: translateY(-2px);
-      }
-
-      @media (max-width: 768px) {
-        .main-container {
-          flex-direction: column;
-        }
-        .right-section {
-          width: 100%;
-          background: rgba(255, 255, 255, 0.25);
-          backdrop-filter: blur(20px);
-          border-left: none;
-          border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
+      .separator-text {
+        background: #ffffff; 
+        padding: 0 15px;
+        position: relative;
+        z-index: 2;
       }
     </style>
   </head>
-  <body>
+  <body class="bg-gray-50">
     <main class="main-container">
-      <div class="left-section">
-        <canvas id="three-canvas"></canvas>
-        <div class="card-section" id="card-section"></div>
-        <div class="tara-container">
-          <div class="tara-text relative top-[20px]" id="tara-text">
-            <span class="tara-letter">T</span>
-            <span class="tara-letter">A</span>
-            <span class="tara-letter">R</span>
-            <span class="tara-letter">A</span>
-            <span class="tara-dot">.</span>
-          </div>
-          <p class="description">
-            Temukan karya kreatif terbaik dan bangun portofoliomu bersama
-            komunitas digital Indonesia.
-          </p>
+      <div
+        class="tara-layer bg-gradient-to-br from-gray-50 to-white"
+        id="tara-layer"
+      >
+        <div class="tara-text relative top-[20px]" id="tara-text">
+          <span class="tara-letter">T</span>
+          <span class="tara-letter">A</span>
+          <span class="tara-letter">R</span>
+          <span class="tara-letter">A</span>
+          <span class="tara-dot">.</span>
         </div>
+        <p class="description max-w-xs text-center text-gray-700 font-light text-lg mt-4 opacity-90">
+          Temukan karya kreatif terbaik dan bangun portofoliomu bersama
+          komunitas digital Indonesia.
+        </p>
       </div>
-      <div class="right-section">
-        <div class="w-full max-w-lg p-7 py-20 form-container">
-          <div class="text-center mb-8">
+
+      <div
+        class="gallery-layer bg-gradient-to-br from-gray-50 to-white" 
+        id="gallery-layer"
+      >
+        <div class="card-section" id="card-section"></div>
+      </div>
+
+      <div class="form-layer" id="form-layer">
+        <div
+          class="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-10 shadow-3xl hover:shadow-4xl transition duration-500 ease-in-out"
+          id="form-container"
+        >
+          <div class="text-center mb-10 form-item">
             <div
-              class="text-center text-4xl font-semibold tracking-wide text-black"
-              style="font-family: 'Space Grotesk', sans-serif"
+              class="text-center text-4xl font-bold tracking-tight text-gray-900"
             >
-              Login ke <span class="text-black">TARA</span
-              ><span class="text-yellow-400">●</span>
+              Login ke <span class="text-gray-900">TARA</span
+              ><span class="text-taraYellow">●</span>
             </div>
+            <p class="text-sm text-gray-500 mt-2 font-light">
+              Selamat datang kembali, kreator.
+            </p>
           </div>
+
           @if ($errors->any())
-            <div style="color: red; margin-bottom: 1rem;">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
+            <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg form-item" role="alert">
+                <ul class="list-disc list-inside">
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
             </div>
           @endif
+
           <form action="{{ route('login') }}" method="POST" class="space-y-5">
             @csrf
-            <input
-              type="email"
-              name="email"
-              value="{{ old('email') }}"
-              placeholder="Email"
-              class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-1 focus:ring-gray-500 focus:outline-none text-sm bg-gray-50"
-              required
-            />
-            <div class="text-right text-xs">
+            <div class="form-item">
+              <input
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                placeholder="Email"
+                class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-taraYellow focus:border-taraYellow focus:outline-none text-sm bg-gray-50/70 transition duration-300"
+                required
+              />
+            </div>
+            <div class="form-item">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-taraYellow focus:border-taraYellow focus:outline-none text-sm bg-gray-50/70 transition duration-300"
+                required
+              />
+            </div>
+
+            <div class="text-right text-xs form-item">
               <a
                 href="#"
-                class="text-gray-500 hover:text-gray-700 hover:underline transition"
+                class="text-gray-500 hover:text-gray-700 font-medium hover:underline transition duration-300"
                 >Lupa Password?</a
               >
             </div>
-            <button
-              type="submit"
-              class="form-button w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 text-sm font-medium"
-            >
-              Masuk
-            </button>
+
+            <div class="form-item">
+              <button
+                type="submit"
+                class="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-700 text-sm font-semibold tracking-wide transition duration-300 ease-in-out transform hover:scale-[1.005] hover:shadow-lg"
+              >
+                Masuk
+              </button>
+            </div>
           </form>
-          <div
-            class="my-6 border-t border-gray-200 text-center text-xs text-gray-400 relative"
-          >
-            <span
-              class="bg-white px-3 absolute -top-3 left-1/2 transform -translate-x-1/2"
-              >atau masuk dengan</span
-            >
+
+          <div class="separator form-item">
+            <span class="separator-text bg-white/95 px-3 text-gray-400 text-xs tracking-widest font-medium uppercase">atau masuk dengan</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+
+          <div class="grid grid-cols-3 gap-3 text-sm form-item">
             <button
-              class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition"
+              class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition duration-300 transform hover:-translate-y-0.5"
             >
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 class="w-5 h-5"
                 alt="Google"
               />
-              Google
+              <span class="hidden sm:inline">Google</span>
             </button>
             <button
-              class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition"
+              class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition duration-300 transform hover:-translate-y-0.5"
             >
               <img
                 src="https://www.svgrepo.com/show/512317/github-142.svg"
                 class="w-5 h-5"
                 alt="GitHub"
               />
-              GitHub
+              <span class="hidden sm:inline">GitHub</span>
             </button>
             <button
-              class="social-button flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition"
+              class="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition duration-300 transform hover:-translate-y-0.5"
             >
               <img
                 src="https://www.svgrepo.com/show/452234/vk.svg"
                 class="w-5 h-5"
                 alt="VK"
               />
-              VK
+              <span class="hidden sm:inline">VK</span>
             </button>
           </div>
-          <p class="text-center text-xs text-gray-500 mt-8">
+
+          <p class="text-center text-xs text-gray-500 mt-10 form-item">
             Belum punya akun?
             <a
               href="{{ route('register') }}"
               id="register-link"
-              class="text-gray-500 hover:text-gray-700 hover:underline transition"
-              >Daftar</a
+              class="text-gray-700 font-semibold hover:text-gray-900 hover:underline transition duration-300"
+              >Daftar Sekarang</a
             >
           </p>
         </div>
       </div>
     </main>
+
     <script>
-      const canvas = document.getElementById("three-canvas");
-      if (canvas) {
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(
-          75,
-          canvas.clientWidth / canvas.clientHeight,
-          0.1,
-          1000
-        );
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        camera.position.z = 5;
-
-        const particleCount = 800;
-        const particles = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        const velocities = new Float32Array(particleCount * 3);
-
-        for (let i = 0; i < particleCount * 3; i += 3) {
-          positions[i] = (Math.random() - 0.5) * 12;
-          positions[i + 1] = (Math.random() - 0.5) * 12;
-          positions[i + 2] = (Math.random() - 0.5) * 8;
-          colors[i] = Math.random() * 0.3 + 0.6;
-          colors[i + 1] = Math.random() * 0.3 + 0.6;
-          colors[i + 2] = 0.85;
-          velocities[i] = (Math.random() - 0.5) * 0.008;
-          velocities[i + 1] = (Math.random() - 0.5) * 0.008;
-          velocities[i + 2] = (Math.random() - 0.5) * 0.008;
-        }
-
-        particles.setAttribute(
-          "position",
-          new THREE.BufferAttribute(positions, 3)
-        );
-        particles.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-        const particleMaterial = new THREE.PointsMaterial({
-          size: 0.035,
-          vertexColors: true,
-          transparent: true,
-          opacity: 0.6,
-        });
-
-        const particleSystem = new THREE.Points(particles, particleMaterial);
-        scene.add(particleSystem);
-
-        function animate() {
-          requestAnimationFrame(animate);
-          particleSystem.rotation.y += 0.0003;
-          for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] += velocities[i];
-            positions[i + 1] += velocities[i + 1];
-            positions[i + 2] += velocities[i + 2];
-            if (Math.abs(positions[i]) > 6) velocities[i] *= -1;
-            if (Math.abs(positions[i + 1]) > 6) velocities[i + 1] *= -1;
-            if (Math.abs(positions[i + 2]) > 4) velocities[i + 2] *= -1;
-          }
-          particles.attributes.position.needsUpdate = true;
-          renderer.render(scene, camera);
-        }
-
-        animate();
-
-        window.addEventListener("resize", () => {
-          camera.aspect = canvas.clientWidth / canvas.clientHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        });
-      }
-
+      // --- Logika Galeri dan Scroll ---
       const cardSection = document.getElementById("card-section");
-      const numberOfColumns = 4;
-      const cardsPerColumn = 8;
+      const galleryLayer = document.getElementById("gallery-layer");
+      
+      let numberOfColumns = 6;
+      if (window.innerWidth <= 1200) numberOfColumns = 4;
+      if (window.innerWidth <= 768) numberOfColumns = 3;
+      if (window.innerWidth <= 500) numberOfColumns = 2;
+
+      const cardsPerColumn = 10;
       const cardSizes = ["card-small", "card-medium", "card-large", "card-xl"];
       let cardColumns = [];
 
       function getRandomPicsumImage(width, height) {
         const imageId = Math.floor(Math.random() * 1000) + 1;
-        return `https://picsum.photos/${width}/${height}?random=${imageId}`;
+        return `https://picsum.photos/${width + 100}/${height + 100}?random=${imageId}`;
       }
 
       function createCardColumns() {
         for (let col = 0; col < numberOfColumns; col++) {
           const column = document.createElement("div");
           column.className = "card-column";
-          column.style.animationDelay = `${col * 0.5}s`;
 
           for (let card = 0; card < cardsPerColumn * 2; card++) {
             const cardElement = document.createElement("div");
-            const sizeClass =
-              cardSizes[Math.floor(Math.random() * cardSizes.length)];
+            const sizeClass = cardSizes[Math.floor(Math.random() * cardSizes.length)];
             cardElement.className = `card ${sizeClass}`;
 
-            let width = 300,
-              height;
+            let width = 300, height;
             switch (sizeClass) {
-              case "card-small":
-                height = 200;
-                break;
-              case "card-medium":
-                height = 250;
-                break;
-              case "card-large":
-                height = 300;
-                break;
-              case "card-xl":
-                height = 350;
-                break;
-              default:
-                height = 250;
+              case "card-small": height = 150; break;
+              case "card-medium": height = 200; break;
+              case "card-large": height = 250; break;
+              case "card-xl": height = 300; break;
+              default: height = 200;
             }
+            
+            // ===== NEW: Buat wrapper gambar dan elemen img =====
+            const imageWrapper = document.createElement("div");
+            imageWrapper.className = "card-image-wrapper";
+            
+            const imgElement = document.createElement("img");
+            imgElement.src = getRandomPicsumImage(width, height);
+            imgElement.alt = "Gallery Image";
 
-            cardElement.style.backgroundImage = `url(${getRandomPicsumImage(
-              width,
-              height
-            )})`;
+            imageWrapper.appendChild(imgElement);
+            cardElement.appendChild(imageWrapper);
+            // =================================================
 
-            cardElement.addEventListener("mouseenter", () => {
-              anime({
-                targets: cardElement,
-                scale: 1.02,
-                translateY: -5,
-                rotateZ: Math.random() * 1 - 0.5,
-                duration: 500,
-                easing: "easeOutQuad",
-              });
-            });
-
-            cardElement.addEventListener("mouseleave", () => {
-              anime({
-                targets: cardElement,
-                scale: 1,
-                translateY: 0,
-                rotateZ: 0,
-                duration: 500,
-                easing: "easeOutQuad",
-              });
-            });
+            // Tambahkan overlay (jika masih diperlukan untuk efek tambahan)
+            const cardOverlay = document.createElement("div");
+            cardOverlay.className = "card-overlay";
+            cardElement.appendChild(cardOverlay);
+            
 
             column.appendChild(cardElement);
           }
@@ -497,31 +453,45 @@
         cardColumns.forEach((column, index) => {
           const cards = column.querySelectorAll(".card");
           let totalHeight = 0;
+          
           for (let i = 0; i < cardsPerColumn; i++) {
-            totalHeight += cards[i].offsetHeight + 20;
+            totalHeight += cards[i].offsetHeight + 20; // 20px adalah gap
           }
 
-          let duration = index === 1 || index === 3 ? 30000 : 40000;
+          let duration = 0;
+          if (index % 3 === 0) duration = 30000;
+          else if (index % 3 === 1) duration = 40000;
+          else duration = 35000;
+          
+          const direction = index % 2 === 0 ? -totalHeight : totalHeight;
+          const initialTranslation = index % 2 === 0 ? 0 : -totalHeight;
+          const targetTranslation = index % 2 === 0 ? -totalHeight : 0;
+          
+          column.style.transform = `translateY(${initialTranslation}px)`;
 
           anime({
             targets: column,
-            translateY: -totalHeight,
+            translateY: [initialTranslation, targetTranslation],
             duration: duration,
             easing: "linear",
+            direction: index % 2 === 0 ? 'normal' : 'reverse',
             loop: true,
             autoplay: true,
           });
         });
       }
 
-      const taraLetters = document.querySelectorAll(
-        "#tara-text .tara-letter, #tara-text .tara-dot"
-      );
-      const taraContainer = document.querySelector(".tara-container");
-      const leftSection = document.querySelector(".left-section");
-      const rightSection = document.querySelector(".right-section");
+      // --- Logika Animasi Urutan Tampilan ---
+      const taraLayer = document.getElementById("tara-layer");
+      const formLayer = document.getElementById("form-layer");
+      const taraLetters = document.querySelectorAll("#tara-text .tara-letter, #tara-text .tara-dot");
+      const formContainer = document.getElementById("form-container");
+      const formItems = document.querySelectorAll(".form-item");
 
+      // 1. Inisialisasi Galeri
       createCardColumns();
+
+      // 2. Animasi Masuk TARA
       anime({
         targets: taraLetters,
         translateY: [50, 0],
@@ -533,26 +503,49 @@
         complete: function () {
           setTimeout(() => {
             anime({
-              targets: taraContainer,
+              targets: taraLayer,
               opacity: [1, 0],
-              translateY: [0, -40],
-              scale: [1, 0.9],
+              scale: [1, 0.95],
+              translateY: [0, -20],
               duration: 1000,
-              easing: "easeInCubic",
+              easing: "easeInQuad",
               complete: function () {
-                taraContainer.style.display = "none";
-                leftSection.style.backdropFilter = "blur(20px)";
-                leftSection.style.background = "rgba(255, 255, 255, 0.25)";
-                rightSection.style.backdropFilter = "blur(20px)";
-                rightSection.style.background = "rgba(255, 255, 255, 0.25)";
-                cardSection.style.opacity = 1;
+                taraLayer.style.display = "none";
+
+                galleryLayer.style.opacity = 1;
                 startInfiniteScroll();
+
+                formLayer.style.opacity = 1; 
+                formLayer.classList.add('active'); 
+                
+                anime({
+                    targets: formItems,
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    scale: [0.95, 1],
+                    duration: 1200,
+                    easing: "easeOutQuart",
+                    delay: anime.stagger(150, { start: 300 }),
+                });
+                
+                anime({
+                    targets: formContainer,
+                    scale: [0.9, 1],
+                    duration: 800,
+                    easing: "easeOutQuad",
+                    boxShadow: [
+                      '0 40px 100px -20px rgba(0, 0, 0, 0.1)',
+                      '0 50px 100px -20px rgba(0, 0, 0, 0.3)'
+                    ],
+                });
+
               },
             });
-          }, 1500);
+          }, 2000); 
         },
       });
 
+      // Efek hover untuk huruf TARA
       taraLetters.forEach((letter) => {
         letter.style.pointerEvents = "auto";
         letter.addEventListener("mouseenter", () => {
@@ -577,19 +570,28 @@
         });
       });
 
+      // Animasi saat klik Daftar/Register
       const registerLink = document.getElementById("register-link");
       registerLink.addEventListener("click", (e) => {
         e.preventDefault();
-        const leftSection = document.querySelector(".left-section");
-        const rightSection = document.querySelector(".right-section");
 
         anime({
-          targets: [leftSection, rightSection],
-          translateX: [0, (el) => (el === leftSection ? window.innerWidth - 520 : -window.innerWidth + 520)],
-          duration: 600,
-          easing: "easeInOutQuad",
+          targets: formContainer,
+          opacity: 0,
+          translateY: -30,
+          scale: 0.95,
+          duration: 400,
+          easing: "easeInQuad"
+        });
+
+        anime({
+          targets: galleryLayer,
+          scale: 1.2,
+          opacity: 0,
+          duration: 800,
+          easing: "easeInQuad",
           complete: () => {
-            window.location.href = "/register";
+            window.location.href = registerLink.href;
           },
         });
       });

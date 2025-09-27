@@ -27,8 +27,13 @@ namespace App\Models;
            return $this->hasMany(BlogLike::class);
        }
 
+        public function bookmarks()
+        {
+            return $this->morphMany(Bookmark::class, 'bookmarkable');
+        }
+
        protected $casts = [
-        'tags' => 'array', // ✅ otomatis ubah json ke array
+        'tags' => 'array',
     ];
 
        

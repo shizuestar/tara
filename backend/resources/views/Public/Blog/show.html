@@ -51,11 +51,11 @@
             {{ $blog->title }}
           </h1>
           <div class="float-actions relative" id="float-actions">
-            <button type="button" class="like-btn text-gray-600 text-xs hover:text-gray-900 transition {{ $isLiked ? 'text-red-600' : '' }}" data-id="{{ $blog->id }}" data-liked="{{ $isLiked ? '1' : '0' }}">
+            <button type="button" class="like-btn text-gray-600 text-xs hover:text-gray-900 transition {{ $isLiked ? 'text-red-600' : '' }}" data-id="{{ $blog->id }}">
               <i class="fas fa-heart"></i> <span class="like-count">{{ $likeCount }}</span> Suka
             </button>
             <button class="text-gray-600 text-xs hover:text-gray-900 transition"><i class="fas fa-comment"></i> <span class="comment-count">{{ $commentCount }}</span> Komentar</button>
-            <button type="button" class="bookmark-btn text-gray-600 text-xs hover:text-gray-900 transition {{ $isBookmarked ? 'text-gray-900' : '' }}" data-id="{{ $blog->id }}" data-type="App\Models\Blog" data-bookmarked="{{ $isBookmarked ? '1' : '0' }}">
+            <button type="button" class="bookmark-btn text-gray-600 text-xs hover:text-gray-900 transition {{ $isBookmarked ? 'text-gray-900' : '' }}" data-id="{{ $blog->id }}" data-type="App\Models\Blog">
               <i class="fas fa-bookmark"></i> <span class="bookmark-count">{{ $bookmarkCount }}</span> Bookmark
             </button>
             <div class="bookmark-notification hidden absolute -top-4 left-1/2 -translate-x-1/2 bg-gray-900 text-gray-100 text-xs font-bold px-3 py-1 rounded-full"></div>
@@ -477,61 +477,78 @@
       anime({ targets: followBtn, scale: [1, 1.1, 1], duration: 300, easing: "easeOutQuad" });
     });
 
-    const likeBtn = document.querySelector('.like-btn');
-    likeBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const blogId = this.dataset.id;
-      const isLiked = this.dataset.liked === '1';
-      const route = isLiked ? `/blogs/${blogId}/unlike` : `/blogs/${blogId}/like`;
-      fetch(route, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-      })
-      .then(response => response.json())
-      .then(data => {
-        const likeCount = this.querySelector('.like-count');
-        likeCount.textContent = data.likes;
-        this.dataset.liked = data.liked ? '1' : '0';
-        this.classList.toggle('text-red-600', data.liked);
-        this.classList.toggle('text-gray-600', !data.liked);
-        anime({ targets: this, scale: [1, 1.2, 1], duration: 300, easing: "easeOutQuad" });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat memproses like/unlike.');
+    // Logika untuk tombol Like
+    document.querySelectorAll('.like-btn').forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const blogId = this.dataset.id;
+        fetch('{{ route("blogs.like", $blog) }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const likeCount = this.querySelector('.like-count');
+          likeCount.textContent = data.likes;
+          if (data.liked) {
+            this.classList.add('text-red-600');
+            this.classList.remove('text-gray-600');
+          } else {
+            this.classList.remove('text-red-600');
+            this.classList.add('text-gray-600');
+          }
+          anime({ targets: this, scale: [1, 1.2, 1], duration: 300, easing: "easeOutQuad" });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat memproses like.');
+        });
       });
     });
 
-    const bookmarkBtn = document.querySelector('.bookmark-btn');
-    bookmarkBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const bookmarkableId = this.dataset.id;
-      const bookmarkableType = this.dataset.type;
-      const isBookmarked = this.dataset.bookmarked === '1';
-      const route = isBookmarked ? '/bookmarks/remove' : '/bookmarks/add';
-      const notification = document.querySelector('.bookmark-notification');
-      fetch(route, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-        body: JSON.stringify({ bookmarkable_id: bookmarkableId, bookmarkable_type: bookmarkableType })
-      })
-      .then(response => response.json())
-      .then(data => {
-        this.dataset.bookmarked = data.bookmarked ? '1' : '0';
-        this.classList.toggle('text-gray-900', data.bookmarked);
-        this.classList.toggle('text-gray-600', !data.bookmarked);
-        const bookmarkCount = this.querySelector('.bookmark-count');
-        bookmarkCount.textContent = data.bookmark_count;
-        notification.textContent = data.message;
-        notification.classList.add('show');
-        setTimeout(() => {
-          notification.classList.remove('show');
-        }, 2000);
-        anime({ targets: this, scale: [1, 1.2, 1], duration: 300, easing: "easeOutQuad" });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat memproses bookmark.');
+    // Logika untuk tombol Bookmark
+    document.querySelectorAll('.bookmark-btn').forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const bookmarkableId = this.dataset.id;
+        const bookmarkableType = this.dataset.type;
+        const notification = this.closest('.float-actions').querySelector('.bookmark-notification');
+        fetch('{{ route("bookmarks.toggle") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          },
+          body: JSON.stringify({
+            bookmarkable_id: bookmarkableId,
+            bookmarkable_type: bookmarkableType
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.bookmarked) {
+            this.classList.add('text-gray-900');
+            this.classList.remove('text-gray-600');
+          } else {
+            this.classList.remove('text-gray-900');
+            this.classList.add('text-gray-600');
+          }
+          const bookmarkCount = this.querySelector('.bookmark-count');
+          bookmarkCount.textContent = data.bookmark_count;
+          notification.textContent = data.message;
+          notification.classList.add('show');
+          setTimeout(() => {
+            notification.classList.remove('show');
+          }, 2000);
+          anime({ targets: this, scale: [1, 1.2, 1], duration: 300, easing: "easeOutQuad" });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat memproses bookmark.');
+        });
       });
     });
 

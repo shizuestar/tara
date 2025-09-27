@@ -9,12 +9,11 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function showLoginForm(Request $request)
+    public function showLoginForm()
     {
         if (Auth::check()) {
             return $this->redirectByRole(Auth::user());
         }
-
         return view('public.auth.login');
     }
 
@@ -27,17 +26,16 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
             return $this->redirectByRole(Auth::user())
-                ->with('success', 'Login successful.');
+                        ->with('success', 'Login berhasil.');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email atau password salah.',
         ])->withInput();
     }
 
-    public function showRegisterForm(Request $request)
+    public function showRegisterForm()
     {
         return view('public.auth.register');
     }
@@ -45,51 +43,38 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        try {
-            $user = User::create([
-                'username' => $request->username,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'member',
-            ]);
+        $user = User::create([
+            'username' => $request->username,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'member',
+        ]);
 
-            Auth::login($user);
-
-            return redirect()->route('home')->with('success', 'Registration successful.');
-        } catch (\Exception $e) {
-            return back()->withErrors([
-                'error' => 'Failed to register: ' . $e->getMessage(),
-            ])->withInput();
-        }
+        Auth::login($user);
+        return redirect()->route('home')->with('success', 'Registrasi berhasil.');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect()->route('login')->with('success', 'You have been logged out.');
+        return redirect()->route('login')->with('success', 'Anda telah logout.');
     }
 
     private function redirectByRole(User $user)
     {
-        switch ($user->role) {
-            case 'admin':
-                return redirect()->route('admin.dashboard.index');
-            case 'curator':
-                return redirect()->route('kurator.dashboard.index');
-            case 'member':
-            default:
-                return redirect()->route('home');
-        }
+        return match($user->role) {
+            'admin' => redirect()->route('admin.dashboard.index'),
+            'curator' => redirect()->route('kurator.dashboard.index'),
+            default => redirect()->route('home'),
+        };
     }
 }

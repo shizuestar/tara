@@ -594,7 +594,7 @@
                     inputElement.nextElementSibling.classList.add('hidden');
                     return;
                 }
-                fetch("{{ route('admin.users.search') }}?query=" + encodeURIComponent(query) + "&project_id=" + projectId)
+                fetch("{{ route('admin.projects.users.search') }}?query=" + encodeURIComponent(query) + "&project_id=" + projectId)
                     .then(response => response.json())
                     .then(users => {
                         const suggestions = inputElement.nextElementSibling;

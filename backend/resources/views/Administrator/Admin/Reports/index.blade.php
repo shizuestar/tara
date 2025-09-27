@@ -54,7 +54,7 @@
                             <option value="general" {{ $reportType == 'general' ? 'selected' : '' }}>Umum</option>
                             <option value="users" {{ $reportType == 'users' ? 'selected' : '' }}>Pengguna</option>
                             <option value="communities" {{ $reportType == 'communities' ? 'selected' : '' }}>Komunitas</option>
-                            <option value="projects" {{ $reportType == 'projects' ? 'selected' : '' }}>Proyek</option>
+                            <option value="projects" {{ $reportType == 'projects' ? 'selected' : '' }}>Project</option>
                             <option value="artworks" {{ $reportType == 'artworks' ? 'selected' : '' }}>Karya</option>
                             <option value="events" {{ $reportType == 'events' ? 'selected' : '' }}>Event</option>
                         </select>
@@ -89,7 +89,7 @@
                 </div>
                 <div>
                     <div class="text-xl font-bold text-gray-900">{{ $totalProjects }}</div>
-                    <div class="text-sm text-gray-600">Total Proyek</div>
+                    <div class="text-sm text-gray-600">Total Project</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400">
@@ -259,7 +259,7 @@
             new Chart(document.getElementById('interaksiChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Karya','Blog','Proyek','Event'],
+                    labels: ['Karya','Blog','Project','Event'],
                     datasets: [
                         {
                             label: 'Suka',

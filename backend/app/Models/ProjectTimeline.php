@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectType extends Model
+class ProjectTimeline extends Model
 {
     use HasFactory;
 
-    protected $table='project_types';
-
     protected $fillable = [
-        'name',
+        'project_id',
+        'title',
         'description',
+        'date',
+        'status',
     ];
 
-    public function projects()
+    public function project()
     {
-        return $this->hasMany(Project::class, 'type_id');
+        return $this->belongsTo(Project::class);
     }
 }

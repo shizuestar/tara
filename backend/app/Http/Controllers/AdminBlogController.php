@@ -62,7 +62,7 @@ class AdminBlogController extends Controller
             'description' => 'Blog baru "' . $blog->title . '" telah ditambahkan',
         ]);
 
-        return redirect()->route('admin.blog.index')->with('success', 'Blog baru ditambahkan.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog baru ditambahkan.');
     }
 
     public function update(UpdateBlogRequest $request, Blog $blog)
@@ -86,7 +86,7 @@ class AdminBlogController extends Controller
             'description' => 'Blog "' . $blog->title . '" berhasil diperbarui',
         ]);
 
-        return redirect()->route('admin.blog.index')->with('success', 'Blog berhasil diperbarui.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog berhasil diperbarui.');
     }
 
     public function destroy(Blog $blog)
@@ -105,6 +105,6 @@ class AdminBlogController extends Controller
             'description' => 'Blog "' . $blogTitle . '" berhasil dihapus',
         ]);
 
-        return redirect()->route('admin.blog.index')->with('success', 'Blog dihapus.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog dihapus.');
     }
 }

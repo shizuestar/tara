@@ -109,8 +109,8 @@
                 <div class="flex items-start gap-3">
                     <div class="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
                     <div>
-                        <p class="text-sm font-medium text-gray-900">Proyek Disetujui</p>
-                        <p class="text-xs text-gray-500">Proyek "TARA 2025" disetujui oleh admin</p>
+                        <p class="text-sm font-medium text-gray-900">Project Disetujui</p>
+                        <p class="text-xs text-gray-500">Project "TARA 2025" disetujui oleh admin</p>
                         <p class="text-xs text-gray-500 mt-1">1 jam lalu</p>
                     </div>
                 </div>

@@ -1,20 +1,26 @@
 <x-admin-layout>
     <div class="bg-white rounded-xl shadow-sm p-4">
-        <!-- Display Session Messages -->
         @if (session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg flex items-center gap-2">
                 <i class="fas fa-check-circle"></i>
-                {{ session('success') }}
+                <span>{{ session('success') }}</span>
             </div>
         @endif
-        @if (session('error') || $errors->has('error'))
+        @if (session('error') || $errors->any())
             <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
                 <i class="fas fa-exclamation-circle"></i>
-                {{ session('error') ?? $errors->first('error') }}
+                @if (session('error'))
+                    <span>{{ session('error') }}</span>
+                @elseif ($errors->any())
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         @endif
 
-        <!-- Page Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
             <h1 class="text-lg font-semibold flex items-center gap-2 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-project-diagram text-yellow-400 text-base"></i>
@@ -32,7 +38,6 @@
             </div>
         </div>
 
-        <!-- Chart Section -->
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
             <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-chart-bar text-yellow-400 text-sm"></i>
@@ -41,7 +46,6 @@
             <div id="chartCanvas" class="w-full h-64"></div>
         </div>
 
-        <!-- Filter Section -->
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
             <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
                 <i class="fas fa-filter text-yellow-400 text-sm"></i>
@@ -94,7 +98,6 @@
             </form>
         </div>
 
-        <!-- Grid View -->
         <div class="mb-6">
             <div class="flex justify-between items-center gap-3 mb-4">
                 <h2 class="text-base font-semibold text-gray-900 font-['Space_Grotesk']">Daftar Proyek</h2>
@@ -117,7 +120,7 @@
                                     <i class="fas fa-user mr-1"></i>
                                     <span>{{ $project->creator ? $project->creator->name : 'Tidak Diketahui' }}</span>
                                 </div>
-                                <span class="px-2 py-1 rounded-full {{ $project->status_text }}</span>
+                                <span class="px-2 py-1 rounded-full {{ $project->status_text }}"></span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs text-gray-800">{{ $project->category ? $project->category->name : '-' }}</span>
@@ -133,12 +136,10 @@
             </div>
         </div>
 
-        <!-- Pagination -->
         <div class="flex justify-center mt-4 gap-2">
             {{ $projects->appends(request()->query())->links('vendor.pagination.tailwind') }}
         </div>
 
-        <!-- Create Modal -->
         <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="createModal">
             <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 overflow-y-auto max-h-[90vh]">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
@@ -164,7 +165,7 @@
                                 <input type="file" id="cover_images" name="cover_images" accept="image/*" class="hidden" onchange="previewImage(this, 'create_cover_images_preview')">
                                 <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
                             </div>
-                            <img id="create_cover_images_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview cover image">
+                            <img id="create_cover_images_preview" src="https://picsum.photos/id/100/400/120" class="mt-2 w-full h-48 object-cover rounded-lg" alt="Preview cover image">
                             @error('cover_images')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -279,8 +280,14 @@
                             <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Linimasa Proyek</label>
                             <div id="milestone_inputs_container">
                                 <div class="flex gap-2 mb-2">
-                                    <input type="date" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
-                                    <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" onkeydown="if(event.key === 'Enter') addMilestone('create')">
+                                    <input type="date" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                                    <input type="text" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Judul kegiatan">
+                                    <textarea class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" rows="2"></textarea>
+                                    <select class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                                        <option value="upcoming">Upcoming</option>
+                                        <option value="on_progress">On Progress</option>
+                                        <option value="done">Completed</option>
+                                    </select>
                                     <button type="button" onclick="addMilestone('create')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
                                 </div>
                             </div>
@@ -299,7 +306,6 @@
             </div>
         </div>
 
-        <!-- Edit Modal -->
         <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="editModal">
             <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 overflow-y-auto max-h-[90vh]">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
@@ -327,7 +333,7 @@
                                 <input type="file" id="edit_cover_images" name="cover_images" accept="image/*" class="hidden" onchange="previewImage(this, 'edit_cover_images_preview')">
                                 <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
                             </div>
-                            <img id="edit_cover_images_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview cover image">
+                            <img id="edit_cover_images_preview" src="https://picsum.photos/id/100/400/120" class="mt-2 w-full h-48 object-cover rounded-lg" alt="Preview cover image">
                             @error('cover_images')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -439,20 +445,23 @@
                             @enderror
                         </div>
                         <div class="mb-4 col-span-2">
-                            <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Linimasa Proyek</label>
-                            <div id="edit_milestone_inputs_container">
-                                <div class="flex gap-2 mb-2">
-                                    <input type="date" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
-                                    <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" onkeydown="if(event.key === 'Enter') addMilestone('edit')">
-                                    <button type="button" onclick="addMilestone('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                                </div>
-                            </div>
-                            <div id="edit_milestones" class="flex flex-col gap-2 mt-2"></div>
-                            <input type="hidden" id="edit_milestones" name="milestones">
-                            @error('milestones')
-                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+    <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Linimasa Proyek</label>
+    
+    <div id="edit_milestone_inputs_container">
+        <div class="flex gap-2 mb-2">
+            <input type="date" class="w-1/4 p-2.5 ...">
+            <button type="button" onclick="addMilestone('edit')" class="bg-blue-400 ..."> Tambah</button>
+        </div>
+    </div>
+    
+    <div id="edit_milestones" class="flex flex-col gap-2 mt-2"></div>
+    
+    <input type="hidden" id="hidden_edit_milestones_input" name="milestones">
+    
+    @error('milestones')
+        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+    @enderror
+</div>
                     </div>
                     <div class="flex justify-end gap-3 mt-6">
                         <button type="button" class="bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors" onclick="closeEditModal()">Batal</button>
@@ -462,7 +471,6 @@
             </div>
         </div>
 
-        <!-- Delete Modal -->
         <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="deleteModal">
             <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
@@ -523,380 +531,477 @@
     @endpush
 
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const chartData = {
-                type: 'bar',
-                data: {
-                    labels: {!! json_encode($categoryNames) !!},
-                    datasets: [{
-                        label: 'Jumlah Proyek',
-                        data: {!! json_encode($projectCounts) !!},
-                        backgroundColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
-                        borderColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Jumlah Proyek'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Kategori'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#111827'
-                            }
-                        }
-                    }
-                }
-            };
+const chartData = {
+    type: 'bar',
+    data: {
+        labels: {!! json_encode($categoryNames) !!}, 
+        datasets: [{
+            label: 'Jumlah Proyek',
+            data: {!! json_encode($projectCounts) !!},
+            backgroundColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
+            borderColor: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Jumlah Proyek' }
+            },
+            x: {
+                title: { display: true, text: 'Kategori' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#111827' } }
+        }
+    }
+};
 
-            const ctx = document.getElementById('chartCanvas').getContext('2d');
-            new Chart(ctx, chartData);
+const ctx = document.getElementById('chartCanvas') ? document.getElementById('chartCanvas').getContext('2d') : null;
+if (ctx) {
+    new Chart(ctx, chartData);
+}
 
-            function showCreateModal() {
-                document.getElementById('createModal').classList.remove('hidden');
-                document.getElementById('createModal').classList.add('modal-open');
-                document.getElementById('createProjectForm').reset();
-                document.getElementById('create_cover_images_preview').classList.add('hidden');
-                document.getElementById('create_members').innerHTML = '';
-                document.getElementById('member_ids').value = '';
-                document.getElementById('member_roles').value = '';
-                document.getElementById('create_milestones').innerHTML = '';
-                document.getElementById('milestones').value = '';
-                document.getElementById('progress').value = 0;
-                updateProgressValue(0);
-                document.getElementById('member_inputs_container').innerHTML = `
-                    <div class="flex gap-2 mb-2 member-input-group">
-                        <div class="relative flex-grow">
-                            <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
-                            <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
-                        </div>
-                        <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('create')">
-                        <button type="button" onclick="addMemberInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                    </div>
-                `;
-                document.getElementById('milestone_inputs_container').innerHTML = `
-                    <div class="flex gap-2 mb-2">
-                        <input type="date" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
-                        <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" onkeydown="if(event.key === 'Enter') addMilestone('create')">
-                        <button type="button" onclick="addMilestone('create')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                    </div>
-                `;
+// Fungsi Modal dan UI dasar
+function updateProgressValue(value) {
+    const el = document.getElementById('progress-value');
+    if (el) el.textContent = `${value}%`;
+}
+
+function updateEditProgressValue(value) {
+    const el = document.getElementById('edit-progress-value');
+    if (el) el.textContent = `${value}%`;
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('modal-open');
+    }
+}
+
+function showCreateModal() {
+    const modal = document.getElementById('createModal');
+    if (!modal) return;
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('modal-open');
+    
+    // Reset form dan membersihkan tags
+    document.getElementById('createProjectForm')?.reset();
+    document.getElementById('create_cover_images_preview')?.setAttribute('src', 'https://picsum.photos/id/100/400/120');
+    document.getElementById('create_cover_images_preview')?.classList.remove('hidden');
+    document.getElementById('create_members').innerHTML = '';
+    document.getElementById('member_ids').value = '';
+    document.getElementById('member_roles').value = '';
+    document.getElementById('create_milestones').innerHTML = '';
+    document.getElementById('milestones').value = '';
+    document.getElementById('progress').value = 0;
+    updateProgressValue(0);
+
+    // Render ulang input anggota
+    document.getElementById('member_inputs_container').innerHTML = `
+        <div class="flex gap-2 mb-2 member-input-group">
+            <div class="relative flex-grow">
+                <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
+                <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
+            </div>
+            <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('create')">
+            <button type="button" onclick="addMemberInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+        </div>
+    `;
+
+    // Render ulang input milestone
+    document.getElementById('milestone_inputs_container').innerHTML = `
+        <div class="flex gap-2 mb-2">
+            <input type="date" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+            <input type="text" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Judul kegiatan">
+            <textarea class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" rows="2"></textarea>
+            <select class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                <option value="pending">Pending</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+            </select>
+            <button type="button" onclick="addMilestone('create')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+        </div>
+    `;
+}
+
+function closeCreateModal() { closeModal('createModal'); }
+function closeEditModal() { closeModal('editModal'); }
+function closeDeleteModal() { closeModal('deleteModal'); }
+
+function showDeleteModal(projectName, projectId) {
+    document.getElementById('deleteProjectName').textContent = projectName;
+    document.getElementById('delete_id').value = projectId;
+    document.getElementById('deleteProjectForm').action = `/admin/projects/${projectId}`;
+    closeModal('deleteModal'); // ensure it's closed before opening
+    document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('modal-open');
+}
+
+// Fungsi Fetch dan Tampilkan Modal Edit
+function showEditModal(projectId) {
+    fetch(`/admin/projects/${projectId}/edit`)
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 404) throw new Error('Proyek tidak ditemukan.');
+                return response.json().then(data => { throw new Error(data.error || 'Terjadi kesalahan server.'); });
+            }
+            return response.json();
+        })
+        .then(project => {
+            // Mengisi data proyek ke dalam form edit
+            document.getElementById('edit_id').value = project.id;
+            document.getElementById('edit_project_name').value = project.project_name;
+            document.getElementById('edit_creator_id').value = project.creator_id || '';
+            document.getElementById('edit_community_id').value = project.community_id || '';
+            document.getElementById('edit_category_id').value = project.category_id || '';
+            document.getElementById('edit_description').value = project.description || '';
+            document.getElementById('edit_start_date').value = project.start_date ? new Date(project.start_date).toISOString().split('T')[0] : '';
+            document.getElementById('edit_end_date').value = project.end_date ? new Date(project.end_date).toISOString().split('T')[0] : '';
+            document.getElementById('edit_progress').value = project.progress || 0;
+            updateEditProgressValue(project.progress || 0);
+            document.getElementById('edit_status').value = project.status || 'ongoing';
+
+            // Cover Image
+            const coverPreview = document.getElementById('edit_cover_images_preview');
+            coverPreview.src = project.cover_images ? `/storage/${project.cover_images}` : `https://picsum.photos/id/${project.id + 99}/400/120`;
+            coverPreview.classList.remove('hidden');
+
+            // Anggota Proyek
+            const membersContainer = document.getElementById('edit_members');
+            membersContainer.innerHTML = '';
+            if (project.members && project.members.length > 0) {
+                project.members.forEach(member => {
+                    addMemberTag(member.user_id, 'edit', member.user ? member.user.name : `ID ${member.user_id}`, member.role);
+                });
             }
 
-            function closeCreateModal() {
-                document.getElementById('createModal').classList.add('hidden');
-                document.getElementById('createModal').classList.remove('modal-open');
+            // Milestones
+            const milestonesContainer = document.getElementById('edit_milestones');
+            milestonesContainer.innerHTML = '';
+            // PENTING: Milestones yang sudah ada dimuat dan dijadikan tag
+            if (project.milestones && project.milestones.length > 0) {
+                project.milestones.forEach(milestone => {
+                    addMilestoneTag(milestone.due_date, milestone.title, milestone.description, milestone.status, 'edit');
+                });
             }
 
-            function showEditModal(projectId) {
-                fetch(`/admin/projects/${projectId}/edit`)
-                    .then(response => {
-                        if (!response.ok) {
-                            if (response.status === 404) throw new Error('Proyek tidak ditemukan.');
-                            return response.json().then(data => { throw new Error(data.error || 'Terjadi kesalahan server.'); });
-                        }
-                        return response.json();
-                    })
-                    .then(project => {
-                        document.getElementById('edit_id').value = project.id;
-                        document.getElementById('edit_project_name').value = project.project_name;
-                        document.getElementById('edit_creator_id').value = project.creator_id || '';
-                        document.getElementById('edit_community_id').value = project.community_id || '';
-                        document.getElementById('edit_category_id').value = project.category_id || '';
-                        document.getElementById('edit_description').value = project.description || '';
-                        document.getElementById('edit_start_date').value = project.start_date || '';
-                        document.getElementById('edit_end_date').value = project.end_date || '';
-                        document.getElementById('edit_progress').value = project.progress || 0;
-                        updateEditProgressValue(project.progress || 0);
-                        document.getElementById('edit_status').value = project.status || 'ongoing';
-
-                        const coverPreview = document.getElementById('edit_cover_images_preview');
-                        if (project.cover_images) {
-                            coverPreview.src = project.cover_images;
-                            coverPreview.classList.remove('hidden');
-                        } else {
-                            coverPreview.classList.add('hidden');
-                        }
-
-                        const membersContainer = document.getElementById('edit_members');
-                        membersContainer.innerHTML = '';
-                        if (project.members && project.members.length > 0) {
-                            project.members.forEach(member => {
-                                addMemberTag(member.user_id, 'edit', member.user ? member.user.name : `ID ${member.user_id}`, member.role);
-                            });
-                        }
-
-                        const milestonesContainer = document.getElementById('edit_milestones');
-                        milestonesContainer.innerHTML = '';
-                        if (project.milestones && project.milestones.length > 0) {
-                            project.milestones.forEach(milestone => {
-                                addMilestoneTag(milestone.due_date, milestone.title, 'edit');
-                            });
-                        }
-
-                        document.getElementById('edit_milestone_inputs_container').innerHTML = `
-                            <div class="flex gap-2 mb-2">
-                                <input type="date" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
-                                <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" onkeydown="if(event.key === 'Enter') addMilestone('edit')">
-                                <button type="button" onclick="addMilestone('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                            </div>
-                        `;
-
-                        document.getElementById('editProjectForm').action = `/admin/projects/${project.id}`;
-                        document.getElementById('editModal').classList.remove('hidden');
-                        document.getElementById('editModal').classList.add('modal-open');
-                    })
-                    .then(() => {
-                        document.getElementById('edit_member_inputs_container').innerHTML = `
-                            <div class="flex gap-2 mb-2 member-input-group">
-                                <div class="relative flex-grow">
-                                    <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('edit', this.value, this, ${projectId})" autocomplete="off">
-                                    <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
-                                </div>
-                                <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('edit')">
-                                <button type="button" onclick="addMemberInput('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                            </div>
-                        `;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching project data:', error);
-                        alert('Gagal memuat data proyek: ' + error.message);
-                    });
-            }
-
-            function closeEditModal() {
-                document.getElementById('editModal').classList.add('hidden');
-                document.getElementById('editModal').classList.remove('modal-open');
-            }
-
-            function showDeleteModal(projectName, projectId) {
-                document.getElementById('deleteProjectName').textContent = projectName;
-                document.getElementById('delete_id').value = projectId;
-                document.getElementById('deleteProjectForm').action = `/admin/projects/${projectId}`;
-                document.getElementById('deleteModal').classList.remove('hidden');
-                document.getElementById('deleteModal').classList.add('modal-open');
-            }
-
-            function closeDeleteModal() {
-                document.getElementById('deleteModal').classList.add('hidden');
-                document.getElementById('deleteModal').classList.remove('modal-open');
-            }
-
-            function updateProgressValue(value) {
-                document.getElementById('progress-value').textContent = `${value}%`;
-            }
-
-            function updateEditProgressValue(value) {
-                document.getElementById('edit-progress-value').textContent = `${value}%`;
-            }
-
-            function allowDrop(event) {
-                event.preventDefault();
-                event.target.classList.add('border-yellow-400');
-            }
-
-            function handleDrop(event, mode, field) {
-                event.preventDefault();
-                event.target.classList.remove('border-yellow-400');
-                const file = event.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    const input = document.getElementById(mode + '_' + field);
-                    input.files = event.dataTransfer.files;
-                    previewImage(input, mode + '_' + field + '_preview');
-                }
-            }
-
-            function previewImage(input, previewId) {
-                const preview = document.getElementById(previewId);
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                } else if (input.src) {
-                    preview.src = input.src;
-                    preview.classList.remove('hidden');
-                } else {
-                    preview.classList.add('hidden');
-                }
-            }
-
-            function addMemberInput(mode = 'create') {
-                const containerId = mode === 'create' ? 'member_inputs_container' : 'edit_member_inputs_container';
-                const container = document.getElementById(containerId);
-                const newInputGroup = document.createElement('div');
-                newInputGroup.className = 'flex gap-2 mb-2 member-input-group';
-                newInputGroup.innerHTML = `
+            // Render ulang input milestone (HANYA INPUT SAJA)
+            document.getElementById('edit_milestone_inputs_container').innerHTML = `
+                <div class="flex gap-2 mb-2">
+                    <input type="date" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                    <input type="text" class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Judul kegiatan">
+                    <textarea class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Deskripsi kegiatan" rows="2"></textarea>
+                    <select class="w-1/4 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                        <option value="upcoming">Upcoming</option>
+                                        <option value="on_progress">On Progress</option>
+                                        <option value="done">Completed</option>
+                    </select>
+                    <button type="button" onclick="addMilestone('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+            `;
+            
+            // Render ulang input anggota
+            document.getElementById('edit_member_inputs_container').innerHTML = `
+                <div class="flex gap-2 mb-2 member-input-group">
                     <div class="relative flex-grow">
-                        <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('${mode}', this.value, this${mode === 'edit' ? ', document.getElementById(\'edit_id\').value' : ''})" autocomplete="off">
+                        <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('edit', this.value, this, ${projectId})" autocomplete="off">
                         <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
                     </div>
-                    <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('${mode}')">
-                    <button type="button" onclick="addMemberInput('${mode}')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                `;
-                container.appendChild(newInputGroup);
-            }
+                    <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('edit')">
+                    <button type="button" onclick="addMemberInput('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+            `;
 
-            function addMember(mode) {
-                const containerId = mode === 'create' ? 'member_inputs_container' : 'edit_member_inputs_container';
-                const container = document.getElementById(containerId);
-                const input = container.querySelector('.member_search');
-                const roleInput = container.querySelector('input[placeholder="Role anggota"]');
-                const id = input.dataset.selectedId;
-                const name = input.value.trim();
-                const role = roleInput.value.trim();
-                if (id && role) {
-                    addMemberTag(id, mode, name, role);
-                    input.value = '';
-                    input.dataset.selectedId = '';
-                    roleInput.value = '';
-                    input.nextElementSibling.classList.add('hidden');
-                }
-            }
+            document.getElementById('editProjectForm').action = `/admin/projects/${project.id}`;
+            document.getElementById('editModal').classList.remove('hidden');
+            document.getElementById('editModal').classList.add('modal-open');
+        })
+        .catch(error => {
+            console.error('Error fetching project data:', error);
+            alert('Gagal memuat data proyek: ' + error.message);
+        });
+}
 
-            function addMemberTag(id, mode, name, role) {
-                const containerId = mode === 'create' ? 'create_members' : 'edit_members';
-                const container = document.getElementById(containerId);
-                const existingIds = Array.from(container.children).map(tag => tag.dataset.id);
-                if (existingIds.includes(id.toString())) return;
-                const tag = document.createElement('span');
-                tag.className = 'member-tag text-xs';
-                tag.dataset.id = id;
-                tag.innerHTML = `${name} (${role}) <button type="button" onclick="this.parentElement.remove(); updateMembers('${mode}')">&times;</button>`;
-                container.appendChild(tag);
-                updateMembers(mode);
-            }
+// Fungsi Drag & Drop
+function allowDrop(event) {
+    event.preventDefault();
+    event.target.classList.add('border-yellow-400');
+}
 
-            function updateMembers(mode) {
-                const containerId = mode === 'create' ? 'create_members' : 'edit_members';
-                const hiddenId = mode === 'create' ? 'member_ids' : 'edit_member_ids';
-                const hiddenRoles = mode === 'create' ? 'member_roles' : 'edit_member_roles';
-                const container = document.getElementById(containerId);
-                const ids = [];
-                const roles = [];
-                Array.from(container.children).forEach(tag => {
-                    const id = tag.dataset.id;
-                    const role = tag.textContent.replace(/\s*\×$/, '').split('(')[1].slice(0, -1);
-                    ids.push(id);
-                    roles.push(role);
-                });
-                document.getElementById(hiddenId).value = ids.join(',');
-                document.getElementById(hiddenRoles).value = roles.join(',');
-            }
+function handleDrop(event, mode, field) {
+    event.preventDefault();
+    event.target.classList.remove('border-yellow-400');
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const input = document.getElementById(`${mode}_${field}`);
+        input.files = event.dataTransfer.files;
+        previewImage(input, `${mode}_cover_images_preview`);
+    }
+}
 
-            function addMilestone(mode) {
-                const containerId = mode === 'create' ? 'milestone_inputs_container' : 'edit_milestone_inputs_container';
-                const container = document.getElementById(containerId);
-                const dateInput = container.querySelector('input[type="date"]');
-                const titleInput = container.querySelector('input[placeholder="Deskripsi kegiatan"]');
-                const dueDate = dateInput.value;
-                const title = titleInput.value.trim();
-                if (dueDate && title) {
-                    addMilestoneTag(dueDate, title, mode);
-                    dateInput.value = '';
-                    titleInput.value = '';
-                }
-            }
+function previewImage(input, previewId) {
+    const preview = document.getElementById(previewId);
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.src = preview.src || 'https://picsum.photos/id/100/400/120';
+        preview.classList.remove('hidden');
+    }
+}
 
-            function addMilestoneTag(dueDate, title, mode) {
-                const containerId = mode === 'create' ? 'create_milestones' : 'edit_milestones';
-                const container = document.getElementById(containerId);
-                const tag = document.createElement('div');
-                tag.className = 'milestone-tag text-xs';
-                tag.innerHTML = `${title} (${new Date(dueDate).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}) <button type="button" onclick="this.parentElement.remove(); updateMilestones('${mode}')">&times;</button>`;
-                container.appendChild(tag);
-                updateMilestones(mode);
-            }
+// --- FUNGSI ANGGOTA (Members) ---
 
-            function updateMilestones(mode) {
-                const containerId = mode === 'create' ? 'create_milestones' : 'edit_milestones';
-                const hiddenId = mode === 'create' ? 'milestones' : 'edit_milestones';
-                const container = document.getElementById(containerId);
-                const milestones = Array.from(container.querySelectorAll('.milestone-tag')).map(tag => {
-                    const text = tag.textContent.replace(/\s*\×$/, '');
-                    const [title, date] = text.split(' (');
-                    const dueDate = new Date(date.slice(0, -1).split(' ').reverse().join('-')).toISOString().split('T')[0];
-                    return `${dueDate}:${title}`;
-                });
-                document.getElementById(hiddenId).value = milestones.join('\n');
-            }
+function addMemberInput(mode = 'create') {
+    const containerId = mode === 'create' ? 'member_inputs_container' : 'edit_member_inputs_container';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    const projectId = mode === 'edit' ? document.getElementById('edit_id')?.value : '';
+    const projectIdArg = projectId ? `, ${projectId}` : '';
 
-            function searchMembers(mode, query, inputElement, projectId = null) {
-                if (query.length < 2) {
-                    inputElement.nextElementSibling.classList.add('hidden');
-                    return;
-                }
-                let url = `/admin/users/search?query=${encodeURIComponent(query)}`;
-                if (projectId) url += `&project_id=${projectId}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(users => {
-                        const suggestions = inputElement.nextElementSibling;
-                        suggestions.innerHTML = '';
-                        users.forEach(user => {
-                            const item = document.createElement('div');
-                            item.className = 'suggestion-item text-sm';
-                            item.textContent = user.name;
-                            item.onclick = () => {
-                                inputElement.value = user.name;
-                                inputElement.dataset.selectedId = user.id;
-                                suggestions.classList.add('hidden');
-                            };
-                            suggestions.appendChild(item);
-                        });
-                        suggestions.classList.toggle('hidden', users.length === 0);
-                    });
-            }
+    const newInputGroup = document.createElement('div');
+    newInputGroup.className = 'flex gap-2 mb-2 member-input-group';
+    newInputGroup.innerHTML = `
+        <div class="relative flex-grow">
+            <input type="text" class="member_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama anggota..." onkeyup="searchMembers('${mode}', this.value, this${projectIdArg})" autocomplete="off">
+            <div class="member_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
+        </div>
+        <input type="text" class="w-1/3 p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Role anggota" onkeydown="if(event.key === 'Enter') addMember('${mode}')">
+        <button type="button" onclick="addMemberInput('${mode}')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+    `;
+    container.appendChild(newInputGroup);
+}
 
-            function getStatusText(status) {
-                if (status === 'ongoing') return 'Berlangsung';
-                if (status === 'pending') return 'Menunggu Persetujuan';
-                if (status === 'completed') return 'Selesai';
-                return 'Tidak Diketahui';
-            }
+function addMember(mode) {
+    const containerId = mode === 'create' ? 'member_inputs_container' : 'edit_member_inputs_container';
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-            window.onclick = function(event) {
-                const modals = ['createModal', 'editModal', 'deleteModal'];
-                modals.forEach(modalId => {
-                    if (event.target.id === modalId) closeModal(modalId);
-                });
-                document.querySelectorAll('.member_suggestions').forEach(suggestions => {
-                    if (!event.target.closest('.member_search') && !event.target.closest('.member_suggestions')) {
-                        suggestions.classList.add('hidden');
-                    }
-                });
-            };
+    // Ambil input dari group terakhir yang baru saja diisi
+    const lastGroup = container.lastElementChild;
+    if (!lastGroup) return;
+    
+    const input = lastGroup.querySelector('.member_search');
+    const roleInput = lastGroup.querySelector('input[placeholder="Role anggota"]');
+    
+    const id = input?.dataset.selectedId;
+    const name = input?.value.trim();
+    const role = roleInput?.value.trim();
+    
+    if (id && role && name) {
+        addMemberTag(id, mode, name, role);
+        // Clear input setelah berhasil ditambahkan
+        input.value = '';
+        input.dataset.selectedId = '';
+        roleInput.value = '';
+        input.nextElementSibling?.classList.add('hidden');
+    }
+}
 
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeCreateModal();
-                    closeEditModal();
-                    closeDeleteModal();
-                    document.querySelectorAll('.member_suggestions').forEach(suggestions => {
-                        suggestions.classList.add('hidden');
-                    });
-                }
+function addMemberTag(id, mode, name, role) {
+    const containerId = mode === 'create' ? 'create_members' : 'edit_members';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Cegah duplikasi anggota berdasarkan ID
+    const existingIds = Array.from(container.children).map(tag => tag.dataset.id);
+    if (existingIds.includes(id.toString())) return;
+    
+    const tag = document.createElement('span');
+    tag.className = 'member-tag text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center gap-1';
+    tag.dataset.id = id;
+    // Simpan role di dataset agar lebih mudah diambil
+    tag.dataset.role = role;
+    tag.innerHTML = `${name} (${role}) <button type="button" class="text-gray-500 hover:text-gray-800 ml-1" onclick="this.parentElement.remove(); updateMembers('${mode}')">&times;</button>`;
+    
+    container.appendChild(tag);
+    updateMembers(mode);
+}
+
+function updateMembers(mode) {
+    const containerId = mode === 'create' ? 'create_members' : 'edit_members';
+    const hiddenId = mode === 'create' ? 'member_ids' : 'edit_member_ids';
+    const hiddenRoles = mode === 'create' ? 'member_roles' : 'edit_member_roles';
+    
+    const container = document.getElementById(containerId);
+    const hiddenInputId = document.getElementById(hiddenId);
+    const hiddenInputRoles = document.getElementById(hiddenRoles);
+    
+    if (!container || !hiddenInputId || !hiddenInputRoles) return;
+
+    const ids = [];
+    const roles = [];
+    
+    Array.from(container.querySelectorAll('.member-tag')).forEach(tag => {
+        const id = tag.dataset.id;
+        // Ambil role dari dataset, lebih aman daripada parsing textContent
+        const role = tag.dataset.role; 
+        ids.push(id);
+        roles.push(role);
+    });
+    
+    hiddenInputId.value = ids.join(',');
+    hiddenInputRoles.value = roles.join(',');
+}
+
+function searchMembers(mode, query, inputElement, projectId = null) {
+    if (query.length < 2) {
+        inputElement.nextElementSibling.classList.add('hidden');
+        return;
+    }
+    let url = `/admin/projects/search-users?query=${encodeURIComponent(query)}`;
+    if (projectId) url += `&project_id=${projectId}`;
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(users => {
+            const suggestions = inputElement.nextElementSibling;
+            if (!suggestions) return;
+            suggestions.innerHTML = '';
+            
+            users.forEach(user => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item text-sm p-2 cursor-pointer hover:bg-gray-100';
+                item.textContent = user.name;
+                item.onclick = () => {
+                    inputElement.value = user.name;
+                    inputElement.dataset.selectedId = user.id;
+                    suggestions.classList.add('hidden');
+                };
+                suggestions.appendChild(item);
             });
+            suggestions.classList.toggle('hidden', users.length === 0);
+        });
+}
 
-            function closeModal(modalId) {
-                document.getElementById(modalId).classList.add('hidden');
-                document.getElementById(modalId).classList.remove('modal-open');
-            }
+// --- FUNGSI MILESTONES (Perbaikan ID Duplikat) ---
+
+function addMilestone(mode) {
+    const containerId = mode === 'create' ? 'milestone_inputs_container' : 'edit_milestone_inputs_container';
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Ambil input dari container
+    const dateInput = container.querySelector('input[type="date"]');
+    const titleInput = container.querySelector('input[placeholder="Judul kegiatan"]');
+    const descriptionInput = container.querySelector('textarea[placeholder="Deskripsi kegiatan"]');
+    const statusInput = container.querySelector('select');
+    
+    if (!dateInput || !titleInput || !statusInput) return; // Pengecekan keamanan
+
+    const dueDate = dateInput.value;
+    const title = titleInput.value.trim();
+    const description = descriptionInput ? descriptionInput.value.trim() : '';
+    const status = statusInput.value;
+
+    if (!dueDate || !title) {
+        alert('Tanggal dan judul kegiatan wajib diisi!');
+        return;
+    }
+
+    addMilestoneTag(dueDate, title, description, status, mode);
+    
+    // Reset input fields
+    dateInput.value = '';
+    titleInput.value = '';
+    if (descriptionInput) descriptionInput.value = '';
+    statusInput.value = 'pending';
+}
+
+function addMilestoneTag(dueDate, title, description, status, mode) {
+    // containerId ini untuk menampilkan tag
+    const containerId = mode === 'create' ? 'create_milestones' : 'edit_milestones'; 
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const tag = document.createElement('div');
+    tag.className = 'milestone-tag text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center gap-1';
+    tag.dataset.dueDate = dueDate;
+    tag.dataset.title = title;
+    tag.dataset.description = description || '';
+    tag.dataset.status = status;
+    
+    // Format tanggal
+    const formattedDate = new Date(dueDate).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    tag.innerHTML = `${title} (${formattedDate}) - ${status} <span class="ml-2">${description ? `: ${description}` : ''}</span> <button type="button" class="text-gray-500 hover:text-gray-800 ml-1" onclick="this.parentElement.remove(); updateMilestones('${mode}')">&times;</button>`;
+    
+    container.appendChild(tag);
+    updateMilestones(mode);
+}
+
+function updateMilestones(mode) {
+    // containerId untuk mengambil tag-tag yang sudah dibuat
+    const containerId = mode === 'create' ? 'create_milestones' : 'edit_milestones';
+    
+    // *** PERBAIKAN UTAMA: Targetkan ID unik untuk hidden input di mode 'edit' ***
+    const hiddenId = mode === 'create' ? 'milestones' : 'hidden_edit_milestones_input'; 
+
+    const container = document.getElementById(containerId);
+    const hiddenInput = document.getElementById(hiddenId);
+    
+    if (!hiddenInput) {
+        console.error(`Hidden input #${hiddenId} tidak ditemukan! Pastikan ID input tersembunyi sudah diubah di HTML.`);
+        return;
+    }
+
+    const milestones = Array.from(container.querySelectorAll('.milestone-tag')).map(tag => {
+        const dueDate = tag.dataset.dueDate;
+        const title = tag.dataset.title;
+        const description = tag.dataset.description;
+        const status = tag.dataset.status;
+        
+        // Format data menjadi string yang dipisahkan oleh kolon (:)
+        return `${dueDate}:${title}:${description || ''}:${status}`;
+    });
+
+    // Masukkan data milestones ke hidden input, dipisahkan oleh newline
+    hiddenInput.value = milestones.join('\n');
+    console.log(`Milestones (${mode}):`, hiddenInput.value); // Debugging
+}
+
+// --- GLOBAL EVENT LISTENERS ---
+
+window.onclick = function(event) {
+    const modals = ['createModal', 'editModal', 'deleteModal'];
+    modals.forEach(modalId => {
+        // Cek jika klik dilakukan di luar konten modal tapi di dalam backdrop
+        const modal = document.getElementById(modalId);
+        if (modal && event.target === modal) closeModal(modalId);
+    });
+    
+    // Sembunyikan saran anggota
+    document.querySelectorAll('.member_suggestions').forEach(suggestions => {
+        if (!event.target.closest('.member_search') && !event.target.closest('.member_suggestions')) {
+            suggestions.classList.add('hidden');
+        }
+    });
+};
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeCreateModal();
+        closeEditModal();
+        closeDeleteModal();
+        // Sembunyikan semua saran anggota saat Esc
+        document.querySelectorAll('.member_suggestions').forEach(suggestions => {
+            suggestions.classList.add('hidden');
+        });
+    }
+});
         </script>
     @endpush
 </x-admin-layout>

@@ -566,7 +566,7 @@
                             </div>
                         </div>
                         <p class="text-gray-700 text-base">
-                            "Kolaborasi dengan seniman lain di TARA membuat proyekku hidup!"
+                            "Kolaborasi dengan seniman lain di TARA membuat Projectku hidup!"
                         </p>
                     </div>
                     <div class="gallery-item bg-white rounded-3xl shadow-xl p-8 animate-float"
@@ -595,7 +595,7 @@
                             </div>
                         </div>
                         <p class="text-gray-700 text-base">
-                            "TARA menghubungkan saya dengan musisi lain untuk proyek
+                            "TARA menghubungkan saya dengan musisi lain untuk Project
                             impian."
                         </p>
                     </div>
@@ -608,7 +608,7 @@
         <!-- Projects Header -->
         <div class="projects-header text-center px-4">
             <h1 class="projects-title text-7xl sm:text-8xl md:text-9xlxl font-bold uppercase">
-                PROYEK SOSIAL
+                Project SOSIAL
             </h1>
             <p class="projects-subtitle text-base sm:text-lg mt-4 text-gray-600">
                 Kolaborasi lintas disiplin untuk menciptakan perubahan melalui seni dan teknologi yang menginspirasi
@@ -633,7 +633,7 @@
                         AI dengan pendekatan humanis.
                     </p>
                     <p class="project-needs">Butuh: Developer, Desainer UI/UX</p>
-                    <a href="/proyek-detail" class="project-join-btn">
+                    <a href="/Project-detail" class="project-join-btn">
                         Gabung Sekarang <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -655,7 +655,7 @@
                         visual yang memukau.
                     </p>
                     <p class="project-needs">Butuh: Penulis, Videografer</p>
-                    <a href="/proyek-detail" class="project-join-btn">
+                    <a href="/Project-detail" class="project-join-btn">
                         Gabung Sekarang <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -677,7 +677,7 @@
                         teknologi, dan kemanusiaan.
                     </p>
                     <p class="project-needs">Butuh: Musisi, Produser</p>
-                    <a href="/proyek-detail" class="project-join-btn">
+                    <a href="/Project-detail" class="project-join-btn">
                         Gabung Sekarang <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -698,7 +698,7 @@
                         dampak sosial.
                     </p>
                     <p class="project-needs">Butuh: Animator, Desainer Grafis</p>
-                    <a href="/proyek-detail" class="project-join-btn">
+                    <a href="/Project-detail" class="project-join-btn">
                         Gabung Sekarang <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -707,8 +707,8 @@
 
         <!-- Explore More -->
         <div class="projects-explore">
-            <a href="/proyek" class="projects-explore-btn">
-                <span>Jelajahi Semua Proyek</span> <i class="fas fa-compass text-black"></i>
+            <a href="/Project" class="projects-explore-btn">
+                <span>Jelajahi Semua Project</span> <i class="fas fa-compass text-black"></i>
             </a>
         </div>
     </section>

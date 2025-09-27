@@ -28,7 +28,7 @@
         <table>
             <tr><th>Statistik</th><th>Jumlah</th></tr>
             <tr><td>Total Komunitas</td><td>{{ $data['totalCommunities'] }}</td></tr>
-            <tr><td>Total Proyek</td><td>{{ $data['totalProjects'] }}</td></tr>
+            <tr><td>Total Project</td><td>{{ $data['totalProjects'] }}</td></tr>
             <tr><td>Total Karya</td><td>{{ $data['totalArtworks'] }}</td></tr>
             <tr><td>Total Event</td><td>{{ $data['totalEvents'] }}</td></tr>
             <tr><td>Total Pengguna Aktif</td><td>{{ $data['totalActiveUsers'] }}</td></tr>

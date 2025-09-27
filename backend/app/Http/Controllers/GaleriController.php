@@ -17,9 +17,9 @@ class GaleriController extends Controller
         for ($i = 1; $i <= 45; $i++) {
             $this->projects[$i] = [
                 "id" => $i,
-                "title" => "Proyek " . $i,
+                "title" => "Project " . $i,
                 "category" => ["UI/UX", "Desain Grafis", "Pengembangan Web", "Ilustrasi"][$i % 4],
-                "description" => "Deskripsi detail untuk proyek " . $i . ". Ini representasi unik dari kreativitas.",
+                "description" => "Deskripsi detail untuk Project " . $i . ". Ini representasi unik dari kreativitas.",
                 "image" => "https://picsum.photos/seed/" . $i . "/800/600",
                 "uploader" => "Pengunggah " . (($i % 5) + 1),
                 "uploadTime" => now()->toDateTimeString(),

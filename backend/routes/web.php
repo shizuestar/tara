@@ -2,98 +2,99 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\LearnMoreController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminGaleriController;
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminProjectController;
+use App\Http\Controllers\AdminCommunityController;
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\CommunityController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LearnMoreController;
-use App\Http\Controllers\AdminGaleriController;
-use App\Http\Controllers\AdminProyekController;
-use App\Http\Controllers\AdminReportController;
-use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSettingsController;
-use App\Http\Controllers\AdminCommunityController;
-use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\AdminLogActivityController;
 
-// Routes Public (Accessible by guest)
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+// Guest Routes (tidak login)
 Route::middleware('guest')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('home');
-    Route::get('/komunitas', [CommunityController::class, 'index'])->name('komunitas.index');
-    Route::get('/komunitas/{id}', [CommunityController::class, 'show'])->name('komunitas.show');
-    Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek');
-    Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-    Route::get('/learn-more', [LearnMoreController::class, 'index'])->name('learn_more.index');
-    Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda');
-    Route::get('/show', [AgendaController::class, 'ShowAgendaFound'])->name('agenda.showF');
-    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
-    Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 });
 
-// Routes Authenticated Users
+// Halaman Publik (Resource)
+Route::resource('learn-more', LearnMoreController::class)->only(['index']);
+Route::resource('komunitas', CommunityController::class)->only(['index', 'show']);
+Route::resource('projects', ProjectController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update']);
+Route::post('project/{project}/comment', action: [ProjectController::class, 'comment'])->name('project.comment');
+Route::post('project/{project}/join', [ProjectController::class, 'join'])->name('project.join');
+Route::post('project/{project}/like', [ProjectController::class, 'like'])->name('project.like');
+Route::post('project/{project}/bookmark', [ProjectController::class, 'bookmark'])->name('project.bookmark');
+
+Route::post('project/{project}/comment/{comment}/delete', [ProjectController::class, 'deleteComment'])->name('project.comment.delete');
+Route::post('project/{project}/comment/{comment}/toggle-visibility', [ProjectController::class, 'toggleCommentVisibility'])->name('project.comment.toggle-visibility');
+Route::post('project/{project}/comment/{comment}/like', [ProjectController::class, 'likeComment'])->name('project.comment.like');
+Route::post('project/{project}/show-hidden-comments', [ProjectController::class, 'showHiddenComments'])->name('project.show-hidden-comments');
+Route::resource('blogs', BlogController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+Route::post('blogs/{blog}/like', [BlogController::class, 'like'])->name('blogs.like');
+Route::post('blogs/{blog}/comment', [BlogController::class, 'comment'])->name('blogs.comment');
+Route::post('blogs/{blog}/reply/{comment}', [BlogController::class, 'reply'])->name('blogs.reply');
+Route::resource('events', EventController::class)->only(['index', 'show']);
+Route::resource('galeri', GaleriController::class)->only(['index', 'show']);
+
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/{id}/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/{id}/toggle-notifications', [ProfileController::class, 'toggleNotifications'])->name('profile.toggleNotifications');
-    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-    Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark');
-    Route::delete('/bookmark/{id}', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
+    Route::post('events/{event}/comment', [EventController::class, 'storeComment'])->name('events.comment');
+    Route::post('events/{event}/ticket/{ticket}/preorder', [EventController::class, 'preorderTicket'])->name('events.preorder');
+    Route::get('events/registration/{registration}/payment', [EventController::class, 'payment'])->name('events.payment');
+    Route::post('events/registration/{registration}/payment', [EventController::class, 'processPayment'])->name('events.processPayment');
+    Route::patch('events/registration/{registration}/cancel', [EventController::class, 'cancelRegistration'])->name('events.cancelRegistration');
 });
 
-// Routes Admin
+// Authenticated Routes
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::resource('profile', ProfileController::class)->only(['edit', 'update']);
+    Route::post('profile/{id}/toggle-notifications', [ProfileController::class, 'toggleNotifications'])->name('profile.toggleNotifications');
+    Route::resource('settings', SettingsController::class)->only(['index']);
+    Route::get('bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+    Route::post('bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
+    Route::delete('bookmarks/{id}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
+    Route::post('bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+});
+
+// Admin Routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/galeri', [AdminGaleriController::class, 'index'])->name('galeri.index');
-    Route::get('/galeri/{id}', [AdminGaleriController::class, 'show'])->name('galeri.show');
-    Route::post('/galeri', [AdminGaleriController::class, 'store'])->name('galeri.store');
-    Route::get('/galeri/{id}/edit', [AdminGaleriController::class, 'edit'])->name('galeri.edit');
-    Route::put('/galeri/{id}', [AdminGaleriController::class, 'update'])->name('galeri.update');
-    Route::delete('/galeri/{id}', [AdminGaleriController::class, 'destroy'])->name('galeri.destroy');
-    Route::get('categories', [AdminCategoryController::class, 'index'])->name('categories.index');
-    Route::post('categories', [AdminCategoryController::class, 'store'])->name('categories.store');
-    Route::put('categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
-    Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
-    Route::get('/admin/projects/', [AdminProyekController::class, 'index'])->name('projects.index');
-    Route::get('/admin/projects/{id}', [AdminProyekController::class, 'show'])->name('projects.show');
-    Route::post('/admin/projects', [AdminProyekController::class, 'store'])->name('projects.store');
-    Route::get('/admin/projects/{id}/edit', [AdminProyekController::class, 'edit'])->name('projects.edit');
-    Route::get('/admin/users/search', [AdminProyekController::class, 'searchUsers'])->name('users.search');
-    Route::put('/admin/projects/{id}', [AdminProyekController::class, 'update'])->name('projects.update');
-    Route::delete('/admin/projects/{id}', [AdminProyekController::class, 'destroy'])->name('projects.destroy');
-    Route::get('/komunitas', [AdminCommunityController::class, 'index'])->name('communities.index');
-    Route::get('/komunitas/{id}', [AdminCommunityController::class, 'show'])->name('communities.show');
-    Route::post('/komunitas', [AdminCommunityController::class, 'store'])->name('communities.store');
-    Route::get('/komunitas/{id}/edit', [AdminCommunityController::class, 'edit'])->name('communities.edit');
-    Route::put('/komunitas/{id}', [AdminCommunityController::class, 'update'])->name('communities.update');
-    Route::delete('/komunitas/{id}', [AdminCommunityController::class, 'destroy'])->name('communities.destroy');
-    Route::resource('blog', AdminBlogController::class);
-    Route::post('blog/publish-multiple', [AdminBlogController::class, 'publishMultiple'])->name('blog.publish-multiple');
-    Route::delete('blog/destroy-multiple', [AdminBlogController::class, 'destroyMultiple'])->name('blog.destroy-multiple');
+    Route::resource('dashboard', AdminDashboardController::class)->only(['index']);
+    Route::resource('galeri', AdminGaleriController::class);
+    Route::resource('categories', AdminCategoryController::class)->except(['show']);
+    Route::resource('projects', AdminProjectController::class);
+    Route::get('projects/users/search', [AdminProjectController::class, 'searchUsers'])->name('projects.users.search');
+    Route::resource('communities', AdminCommunityController::class);
+    Route::resource('blogs', AdminBlogController::class);
+    Route::post('blogs/publish-multiple', [AdminBlogController::class, 'publishMultiple'])->name('blogs.publish-multiple');
+    Route::delete('blogs/destroy-multiple', [AdminBlogController::class, 'destroyMultiple'])->name('blogs.destroy-multiple');
     Route::resource('users', AdminUserController::class);
-    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
-    Route::put('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
-    Route::post('/roles', [AdminSettingsController::class, 'storeRole'])->name('roles.store');
-    Route::put('/roles/permissions', [AdminSettingsController::class, 'updatePermissions'])->name('roles.update_permissions');
+    // Rute Settings tanpa parameter {setting}
+    Route::get('settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+    Route::put('settings', [AdminSettingsController::class, 'update'])->name('settings.update');
+    Route::post('backups/{type}', [AdminSettingsController::class, 'createBackup'])->name('backups.create');
+    Route::post('backups/restore', [AdminSettingsController::class, 'restoreBackup'])->name('backups.restore');
+    Route::get('backups/{backup}/download', [AdminSettingsController::class, 'downloadBackup'])->name('backups.download');
+    Route::put('backups/schedule', [AdminSettingsController::class, 'updateBackupSchedule'])->name('backups.schedule');
     Route::resource('reports', AdminReportController::class);
     Route::get('reports/export/{format}', [AdminReportController::class, 'export'])->name('reports.export');
-    Route::put('/notifications', [AdminSettingsController::class, 'updateNotifications'])->name('notifications.update');
-    Route::post('/backups/{type}', [AdminSettingsController::class, 'createBackup'])->name('backups.create');
-    Route::post('/backups/restore', [AdminSettingsController::class, 'restoreBackup'])->name('backups.restore');
-    Route::get('/backups/{backup}/download', [AdminSettingsController::class, 'downloadBackup'])->name('backups.download');
-    Route::put('/backups/schedule', [AdminSettingsController::class, 'updateBackupSchedule'])->name('backups.schedule');
-    Route::resource('events', controller: AdminEventController::class);
-    Route::get('activity-logs', [AdminLogActivityController::class, 'index'])->name('activity-logs.index');
+    Route::resource('events', AdminEventController::class);
+    Route::resource('activity-logs', AdminLogActivityController::class)->only(['index']);
 });
