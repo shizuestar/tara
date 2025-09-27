@@ -38,15 +38,15 @@ Route::middleware('guest')->group(function () {
 Route::resource('learn-more', LearnMoreController::class)->only(['index']);
 Route::resource('komunitas', CommunityController::class)->only(['index', 'show']);
 Route::resource('projects', ProjectController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update']);
-Route::post('project/{project}/comment', action: [ProjectController::class, 'comment'])->name('project.comment');
-Route::post('project/{project}/join', [ProjectController::class, 'join'])->name('project.join');
-Route::post('project/{project}/like', [ProjectController::class, 'like'])->name('project.like');
-Route::post('project/{project}/bookmark', [ProjectController::class, 'bookmark'])->name('project.bookmark');
+Route::post('project/{project}/comment', action: [ProjectController::class, 'comment'])->name('projects.comment');
+Route::post('project/{project}/join', [ProjectController::class, 'join'])->name('projects.join');
+Route::post('project/{project}/like', [ProjectController::class, 'like'])->name('projects.like');
+Route::post('project/{project}/bookmark', [ProjectController::class, 'bookmark'])->name('projects.bookmark');
 
-Route::post('project/{project}/comment/{comment}/delete', [ProjectController::class, 'deleteComment'])->name('project.comment.delete');
-Route::post('project/{project}/comment/{comment}/toggle-visibility', [ProjectController::class, 'toggleCommentVisibility'])->name('project.comment.toggle-visibility');
-Route::post('project/{project}/comment/{comment}/like', [ProjectController::class, 'likeComment'])->name('project.comment.like');
-Route::post('project/{project}/show-hidden-comments', [ProjectController::class, 'showHiddenComments'])->name('project.show-hidden-comments');
+Route::post('project/{project}/comment/{comment}/delete', [ProjectController::class, 'deleteComment'])->name('projects.comment.delete');
+Route::post('project/{project}/comment/{comment}/toggle-visibility', [ProjectController::class, 'toggleCommentVisibility'])->name('projects.comment.toggle-visibility');
+Route::post('project/{project}/comment/{comment}/like', [ProjectController::class, 'likeComment'])->name('projects.comment.like');
+Route::post('project/{project}/show-hidden-comments', [ProjectController::class, 'showHiddenComments'])->name('projects.show-hidden-comments');
 Route::resource('blogs', BlogController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
 Route::post('blogs/{blog}/like', [BlogController::class, 'like'])->name('blogs.like');
 Route::post('blogs/{blog}/comment', [BlogController::class, 'comment'])->name('blogs.comment');

@@ -33,7 +33,7 @@
                     <a href="{{ route('home') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('home') ? 'text-black font-semibold' : '' }}">Beranda</a>
                     <a href="{{ route('galeri.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('galeri') ? 'text-black font-semibold' : '' }}">Galeri</a>
                     <a href="{{ route('komunitas.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('komunitas.index') ? 'text-black font-semibold' : '' }}">Komunitas</a>
-                    <a href="{{ route('project.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('Project') ? 'text-black font-semibold' : '' }}">Project</a>
+                    <a href="{{ route('projects.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('Project') ? 'text-black font-semibold' : '' }}">Project</a>
                     <a href="{{ route('blogs.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('blog') ? 'text-black font-semibold' : '' }}">Blog</a>
                     <a href="{{ route('events.index') }}" class="nav-link block text-gray-700 hover:text-black font-medium py-2 {{ Route::is('event.*') ? 'text-black font-semibold' : '' }}">Agenda</a>
 

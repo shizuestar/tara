@@ -24,7 +24,7 @@
                     value="{{ request('search') }}" />
             </div>
             <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <a href="{{ route('project.create') }}" class="create-btn inline-flex items-center px-6 py-3 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-plus mr-2"></i> Buat Kolaborasi</a>
+                <a href="{{ route('projects.create') }}" class="create-btn inline-flex items-center px-6 py-3 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-plus mr-2"></i> Buat Kolaborasi</a>
                 <a href="#" class="join-btn inline-flex items-center px-6 py-3 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-users mr-2"></i> Gabung Kolaborasi</a>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
@@ -65,7 +65,7 @@
                             </div>
                             <div class="flex justify-between items-center mt-4">
                                 <span class="text-sm text-gray-600">{{ $project->members->count() }} Anggota</span>
-                                <a href="{{ route('project.show', $project->id) }}" class="action-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']">Lihat Detail</a>
+                                <a href="{{ route('projects.show', $project->id) }}" class="action-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']">Lihat Detail</a>
                             </div>
                         </div>
                     </div>

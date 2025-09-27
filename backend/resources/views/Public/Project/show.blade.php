@@ -7,7 +7,7 @@
             <i class="fas fa-times close-btn absolute top-4 right-4 text-xl text-gray-700 cursor-pointer hover:scale-110 transition-all" onclick="toggleJoinModal()"></i>
             <h2 class="text-xl font-bold mb-3 font-['Space_Grotesk']">Gabung Project</h2>
             <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan Project ini.</p>
-            <form action="{{ route('project.join', $project->id) }}" method="POST">
+            <form action="{{ route('projects.join', $project->id) }}" method="POST">
                 @csrf
                 <div class="space-y-4">
                     <div>
@@ -56,24 +56,27 @@
                         <h1 class="text-2xl font-bold font-['Space_Grotesk']">{{ $project->project_name }}</h1>
                         <div class="flex items-center gap-2 mt-2 flex-wrap">
                             <span class="badge px-3 py-1 text-sm font-medium rounded-md bg-gray-200 text-gray-900">{{ $project->category->name }}</span>
+                            <span class="badge px-3 py-1 text-sm font-medium rounded-md bg-gray-200 text-gray-900">{{ $project->community->name }}</span>
                             <span class="badge badge-{{ $project->status }} px-3 py-1 text-sm font-medium rounded-md {{ $project->status == 'ongoing' ? 'bg-yellow-500 text-white' : ($project->status == 'pending' ? 'bg-gray-200 text-gray-900' : 'bg-green-500 text-white') }}">
                                 {{ $project->status_text }}
                             </span>
                         </div>
                         <p class="text-sm text-gray-600 mt-2">Dibuat: {{ $project->created_at->format('d M Y') }}</p>
+                        <p class="text-sm text-gray-600 mt-2">Mulai: {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : 'Belum ditentukan' }}</p>
+                        <p class="text-sm text-gray-600 mt-2">Selesai: {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : 'Belum ditentukan' }}</p>
                         <p class="text-sm text-gray-600 mt-2">{{ $project->description }}</p>
                         <p class="text-sm text-gray-600 mt-2">Progress: {{ $project->progress }}%</p>
                         <div class="progress-bar mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                             <div class="progress h-full bg-yellow-500 rounded-full" style="width: {{ $project->progress }}%"></div>
                         </div>
                         <div class="flex gap-2 mt-4 flex-wrap">
-                            <form action="{{ route('project.like', $project->id) }}" method="POST">
+                            <form action="{{ route('projects.like', $project->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" id="like-project-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']">
                                     <i class="fas fa-heart"></i> Suka ({{ $project->likes()->count() }})
                                 </button>
                             </form>
-                            <form action="{{ route('project.bookmark', $project->id) }}" method="POST">
+                            <form action="{{ route('projects.bookmark', $project->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" id="bookmark-project-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']">
                                     <i class="fas fa-bookmark"></i> {{ $project->bookmarks()->where('user_id', Auth::id())->exists() ? 'Hapus Bookmark' : 'Bookmark' }}
@@ -84,7 +87,7 @@
                                 <button id="join-project-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']" onclick="toggleJoinModal()"><i class="fas fa-user-plus"></i> Gabung Project</button>
                             @endif
                             <button id="download-summary-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-download"></i> Unduh Ringkasan</button>
-                            <a href="{{ route('project.index') }}" id="back-to-projects-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-arrow-left"></i> Kembali ke Project</a>
+                            <a href="{{ route('projects.index') }}" id="back-to-projects-btn" class="join-btn px-6 py-2 rounded-lg text-sm font-medium bg-gray-900 text-white uppercase border-2 border-black hover:bg-white hover:text-gray-900 transition-all font-['Space_Grotesk']"><i class="fas fa-arrow-left"></i> Kembali ke Project</a>
                         </div>
                     </div>
                 </div>
@@ -125,18 +128,21 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Project Timeline -->
+            <!-- Project Milestones (as Timeline) -->
             <div class="mb-8">
                 <h2 class="text-2xl font-bold mb-4 font-['Space_Grotesk']">Linimasa Project</h2>
                 <div class="timeline space-y-6">
-                    @forelse($project->timeline as $event)
+                    @forelse($project->milestones as $milestone)
                         <div class="timeline-event relative pl-10">
                             <div class="absolute left-2 top-0 w-4 h-4 bg-yellow-500 rounded-full border-2 border-white"></div>
                             <div class="absolute left-3 top-4 w-0.5 h-full bg-gray-200"></div>
                             <div class="bg-white border border-gray-200 rounded-3xl p-4">
-                                <p class="text-sm text-gray-600">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('d M Y') : 'No date' }}</p>
-                                <h3 class="text-base font-semibold">{{ $event->title }}</h3>
-                                <p class="text-sm text-gray-600">{{ $event->description ?? 'No description' }}</p>
+                                <p class="text-sm text-gray-600">{{ $milestone->due_date ? \Carbon\Carbon::parse($milestone->due_date)->format('d M Y') : 'No date' }}</p>
+                                <h3 class="text-base font-semibold">{{ $milestone->title }}</h3>
+                                <p class="text-sm text-gray-600">{{ $milestone->description ?? 'No description' }}</p>
+                                <span class="badge px-3 py-1 text-sm font-medium rounded-md {{ $milestone->status == 'in_progress' ? 'bg-yellow-500 text-white' : ($milestone->status == 'upcoming' ? 'bg-gray-200 text-gray-900' : 'bg-green-500 text-white') }}">
+                                    {{ ucfirst($milestone->status) }}
+                                </span>
                             </div>
                         </div>
                     @empty
@@ -168,7 +174,7 @@
                     @endif
                 </div>
                 <div class="mb-4 flex items-center gap-2">
-                    <form action="{{ route('project.comment', $project->id) }}" method="POST" class="w-full flex items-center gap-2">
+                    <form action="{{ route('projects.comment', $project->id) }}" method="POST" class="w-full flex items-center gap-2">
                         @csrf
                         <input type="text" name="comment" id="comment-input"
                             class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -209,7 +215,7 @@
                                         </span>
                                     </div>
                                     <div class="reply-form hidden mt-2" data-comment-id="{{ $comment->id }}">
-                                        <form action="{{ route('project.comment', $project->id) }}" method="POST" class="flex items-center gap-2">
+                                        <form action="{{ route('projects.comment', $project->id) }}" method="POST" class="flex items-center gap-2">
                                             @csrf
                                             <input type="hidden" name="parent_comment_id" value="{{ $comment->id }}">
                                             <input type="text" name="comment"
@@ -263,7 +269,7 @@
                 <h2 class="text-2xl font-bold mb-6 text-black font-['Space_Grotesk']">Rekomendasi Kolaborasi Lainnya</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects">
                     @foreach($recommendedProjects as $recommended)
-                        <div class="recommended-project bg-white border border-gray-200 rounded-3xl p-4 cursor-pointer" onclick="window.location.href='{{ route('project.show', $recommended->id) }}'">
+                        <div class="recommended-project bg-white border border-gray-200 rounded-3xl p-4 cursor-pointer" onclick="window.location.href='{{ route('projects.show', $recommended->id) }}'">
                             <img src="{{ $recommended->cover_images ? asset('storage/' . $recommended->cover_images) : 'https://via.placeholder.com/600x400' }}"
                                  alt="{{ $recommended->project_name }}" class="w-full h-32 object-cover rounded-lg" />
                             <div class="p-4">
