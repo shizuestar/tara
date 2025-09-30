@@ -30,12 +30,7 @@
       rel="stylesheet"
     />
     <style>
-      body {
-        font-family: "Space Grotesk", sans-serif;
-        background: #f8fafc; 
-        overflow: hidden;
-      }
-
+      /* --- CSS Kritis (Dipertahankan karena dependensi layout grid & JS) --- */
       .main-container {
         position: relative;
         min-height: 100vh;
@@ -43,22 +38,18 @@
         grid-template-areas: "stack";
         overflow: hidden;
       }
-
       .main-container > * {
         grid-area: stack;
         width: 100%;
         height: 100%;
       }
-
       .gallery-layer {
         position: relative;
         overflow: hidden;
         min-height: 100vh;
-        background: linear-gradient(135deg, #f7fafc, #ffffff); 
         opacity: 0; 
         transition: opacity 1s ease-in-out;
       }
-
       .content-layer {
         display: flex;
         align-items: center;
@@ -70,44 +61,11 @@
         opacity: 0; 
         transition: opacity 0.5s ease-in-out;
       }
-
       .content-layer.active {
         pointer-events: auto; 
       }
       
-      .center-card {
-        max-width: 900px;
-        width: 95%;
-        background: rgba(255, 255, 255, 0.95); 
-        backdrop-filter: blur(10px); 
-        border-radius: 2rem;
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2); 
-        overflow: hidden;
-        display: flex; 
-        min-height: 580px;
-      }
-
-      .form-column {
-        width: 45%; 
-        min-width: 350px;
-        padding: 3rem 2.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color: #ffffff; 
-        position: relative;
-      }
-
-      .benefit-column {
-        flex: 1;
-        padding: 3rem 3rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        background-color: #f3f4f6; 
-      }
-      
+      /* --- Gallery Cards & Columns (Dipertahankan karena animasi grid/column) --- */
       .card-section {
         position: absolute;
         top: 0;
@@ -168,7 +126,6 @@
       .tara-layer {
         position: absolute; z-index: 30; top: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        background: linear-gradient(135deg, #f7fafc, #ffffff); 
         transition: opacity 1s ease-out;
       }
       .tara-text {
@@ -193,52 +150,14 @@
         0% { transform: scale(1); opacity: 0.7; }
         100% { transform: scale(1.2); opacity: 1; }
       }
-      .description {
-        max-width: 24rem;
-        text-align: center;
-        color: #2d3748;
-        font-weight: 300;
-        font-size: 1.1rem;
-        margin-top: 1.5rem;
-        opacity: 0.9;
-      }
-
-      .form-input-style {
-          width: 100%; padding: 0.75rem 1.25rem; border: 1px solid #e2e8f0; 
-          border-radius: 0.75rem; outline: none; font-size: 0.875rem; 
-          background-color: #f7fafc; transition: all 0.3s ease;
-      }
-      .form-input-style:focus {
-          ring-width: 2px; --tw-ring-color: #f6e05e; border-color: #f6e05e; 
-      }
-      .benefit-icon {
-        color: #1a202c; font-size: 1.5rem; line-height: 1.5rem; margin-right: 1rem;
-        font-weight: 700; background-color: rgba(255, 255, 255, 0.8);
-        padding: 4px 8px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      }
+      
       .benefit-item-list {
         opacity: 0; transform: translateY(20px);
         display: flex; align-items: flex-start; margin-bottom: 1.25rem;
       }
-      
-      @media (max-width: 900px) {
-        .center-card {
-          flex-direction: column; 
-          max-width: 90%;
-        }
-        .form-column {
-          width: 100%;
-          padding: 2rem;
-        }
-        .benefit-column {
-          width: 100%;
-          padding: 2rem;
-          min-height: 250px;
-        }
-      }
     </style>
   </head>
-  <body>
+  <body class="bg-gray-50 overflow-hidden">
     <main class="main-container">
       <div
         class="tara-layer bg-gradient-to-br from-gray-50 to-white"
@@ -251,8 +170,8 @@
           <span class="tara-letter">A</span>
           <span class="tara-dot">.</span>
         </div>
-        <p class="description max-w-xs text-center text-gray-700 font-light text-lg mt-4 opacity-90">
-           Bergabunglah dengan TARA dan ubah ide kreatifmu menjadi pengakuan nyata.
+        <p class="max-w-xs text-center text-gray-700 font-light text-lg mt-4 opacity-90">
+          Bergabunglah dengan TARA dan ubah ide kreatifmu menjadi pengakuan nyata.
         </p>
       </div>
 
@@ -264,8 +183,13 @@
       </div>
 
       <div class="content-layer" id="content-layer">
-        <div class="center-card" id="center-card">
-          <div class="form-column">
+        <div
+          class="center-card max-w-[900px] w-[95%] bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-3xl overflow-hidden flex min-h-[580px] transition duration-500 ease-in-out hover:shadow-4xl"
+          id="center-card"
+        >
+          <div 
+            class="form-column w-[45%] min-w-[350px] p-12 flex flex-col justify-center bg-white relative max-lg:w-full max-lg:p-8"
+          >
             <div class="text-center mb-8 form-item">
               <div
                 class="text-center text-3xl font-bold tracking-tight text-gray-900"
@@ -296,7 +220,7 @@
                       name="username"
                       value="{{ old('username') }}"
                       placeholder="Username"
-                      class="form-input-style"
+                      class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 focus:outline-none text-sm bg-gray-50/70 transition duration-300"
                       required
                   />
                   <input
@@ -304,7 +228,7 @@
                       name="name"
                       value="{{ old('name') }}"
                       placeholder="Nama Lengkap"
-                      class="form-input-style"
+                      class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 focus:outline-none text-sm bg-gray-50/70 transition duration-300"
                       required
                   />
               </div>
@@ -314,7 +238,7 @@
                   name="email"
                   value="{{ old('email') }}"
                   placeholder="Email"
-                  class="form-input-style"
+                  class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 focus:outline-none text-sm bg-gray-50/70 transition duration-300"
                   required
                 />
               </div>
@@ -323,7 +247,7 @@
                   type="password"
                   name="password"
                   placeholder="Password"
-                  class="form-input-style"
+                  class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 focus:outline-none text-sm bg-gray-50/70 transition duration-300"
                   required
                 />
               </div>
@@ -332,7 +256,7 @@
                   type="password"
                   name="password_confirmation"
                   placeholder="Konfirmasi Password"
-                  class="form-input-style"
+                  class="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 focus:outline-none text-sm bg-gray-50/70 transition duration-300"
                   required
                 />
               </div>
@@ -363,43 +287,45 @@
             </p>
           </div>
 
-          <div class="benefit-column">
+          <div 
+            class="benefit-column flex-1 p-12 flex flex-col justify-center items-start bg-gray-100 max-lg:hidden"
+          >
               <h2 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight">
-                  Mulai Aksi Kreatifmu
+                Mulai Aksi Kreatifmu
               </h2>
               
               <div class="space-y-6 w-full">
-                  <div class="benefit-item-list" data-delay="100">
-                      <span class="benefit-icon">01</span>
-                      <div>
-                          <h3 class="text-lg font-bold text-gray-900 mb-1">Visibilitas Global</h3>
-                          <p class="text-sm text-gray-600 font-light">Pamerkan karya ke jutaan mata, tingkatkan pengakuan profesional.</p>
-                      </div>
-                  </div>
-                  
-                  <div class="benefit-item-list" data-delay="200">
-                      <span class="benefit-icon">02</span>
-                      <div>
-                          <h3 class="text-lg font-bold text-gray-900 mb-1">Peluang Kolaborasi</h3>
-                          <p class="text-sm text-gray-600 font-light">Terhubung dengan kreator lain dan dapatkan Project menarik.</p>
-                      </div>
-                  </div>
-                  
-                  <div class="benefit-item-list" data-delay="300">
-                      <span class="benefit-icon">03</span>
-                      <div>
-                          <h3 class="text-lg font-bold text-gray-900 mb-1">Portofolio Elegance</h3>
-                          <p class="text-sm text-gray-600 font-light">Sajikan karyamu dalam tampilan yang profesional dan minimalis.</p>
-                      </div>
-                  </div>
-                  
-                  <div class="benefit-item-list" data-delay="400">
-                      <span class="benefit-icon">04</span>
-                      <div>
-                          <h3 class="text-lg font-bold text-gray-900 mb-1">Akses Tren Terkini</h3>
-                          <p class="text-sm text-gray-600 font-light">Selalu terdepan dengan inspirasi dan *insight* dari komunitas.</p>
-                      </div>
-                  </div>
+                <div class="benefit-item-list" data-delay="100">
+                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">01</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Visibilitas Global</h3>
+                        <p class="text-sm text-gray-600 font-light">Pamerkan karya ke jutaan mata, tingkatkan pengakuan profesional.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item-list" data-delay="200">
+                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">02</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Peluang Kolaborasi</h3>
+                        <p class="text-sm text-gray-600 font-light">Terhubung dengan kreator lain dan dapatkan Project menarik.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item-list" data-delay="300">
+                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">03</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Portofolio Elegance</h3>
+                        <p class="text-sm text-gray-600 font-light">Sajikan karyamu dalam tampilan yang profesional dan minimalis.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item-list" data-delay="400">
+                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">04</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Akses Tren Terkini</h3>
+                        <p class="text-sm text-gray-600 font-light">Selalu terdepan dengan inspirasi dan *insight* dari komunitas.</p>
+                    </div>
+                </div>
               </div>
           </div>
         </div>
@@ -520,13 +446,12 @@
               scale: [1, 0.5],
               opacity: [1, 0],
               translateX: (el, i) => {
-                // Huruf-huruf bergerak ke tengah (indeks tengah adalah 2 untuk 'R')
                 const centerIndex = 2;
-                return (i - centerIndex) * 20; // Gerakan mendekati pusat
+                return (i - centerIndex) * 20;
               },
               duration: 1000,
               easing: "easeInQuad",
-              delay: anime.stagger(100, { from: 'center' }), // Mulai dari tengah
+              delay: anime.stagger(100, { from: 'center' }),
               complete: function () {
                 anime({
                   targets: taraLayer,

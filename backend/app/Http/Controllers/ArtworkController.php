@@ -51,6 +51,7 @@ class ArtworkController extends Controller
         $filterCount = count($request->except('page'));
         return view('public.galeri.index', compact('artworks', 'categories', 'visualStyles', 'periods', 'medias', 'typographies', 'palettes', 'filterCount'));
     }
+    
     public function show(Artwork $artwork)
         {
             // Peningkatan views
