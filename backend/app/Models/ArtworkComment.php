@@ -2,27 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ArtworkComment extends Model
 {
-    use HasFactory;
+    protected $fillable = ['artwork_id', 'user_id', 'parent_id', 'text', 'likes'];
 
-    protected $fillable = [
-        'artwork_id',
-        'user_id',
-        'comment'
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    public function artwork(): BelongsTo
+    public function artwork()
     {
         return $this->belongsTo(Artwork::class);
     }
 
-    public function user(): BelongsTo
+    public function replies()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(ArtworkComment::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(ArtworkComment::class, 'parent_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(ArtworkCommentLike::class, 'comment_id');
     }
 }

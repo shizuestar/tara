@@ -86,6 +86,11 @@ class Project extends Model
         return $this->hasMany(ProjectFile::class);
     }
 
+    public function joinRequests()
+    {
+        return $this->hasMany(ProjectJoinRequest::class);
+    }
+
     public function getStatusTextAttribute()
     {
         return match ($this->status) {

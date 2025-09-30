@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('artwork_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('artwork_id')->constrained('artworks')->onDelete('cascade'); // Foreign key ke tabel artwork
+            $table->foreignId('artwork_id')->constrained()->onDelete('cascade');
             $table->string('image_title')->nullable();
             $table->string('image_path');
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

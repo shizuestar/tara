@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectCommentLike extends Model
+class ArtworkCommentLike extends Model
 {
-    protected $fillable = [
-        'comment_id',
-        'user_id',
-    ];
+    protected $fillable = ['comment_id', 'user_id'];
 
     public function comment()
     {
-        return $this->belongsTo(ProjectComment::class, 'comment_id');
+        return $this->belongsTo(ArtworkComment::class, 'comment_id');
     }
 
     public function user()

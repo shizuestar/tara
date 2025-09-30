@@ -35,4 +35,9 @@ class ProjectComment extends Model
     {
         return $this->hasMany(ProjectComment::class, 'parent_comment_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(ProjectCommentLike::class, 'comment_id');
+    }
 }

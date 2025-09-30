@@ -21,6 +21,12 @@
     @if(isset($settings) && $settings->favicon_path)
         <link rel="icon" type="image/png" href="{{ Storage::url($settings?->favicon_path) }}" />
     @endif
+
+    <style>
+        .body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
     
     @stack('styles')
 </head>

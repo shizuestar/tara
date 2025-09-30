@@ -80,6 +80,9 @@
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        header, header * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
         .animate-ping-slow {
             animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }

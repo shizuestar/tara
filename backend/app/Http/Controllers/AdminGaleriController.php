@@ -59,7 +59,7 @@ class AdminGaleriController extends Controller
     public function show($id)
     {
         $artwork = Artwork::with(['category', 'community', 'tags', 'files'])->findOrFail($id);
-        return view('admin.galeri.show', compact('artwork'));
+        return view('administrator.admin.galeri.show', compact('artwork'));
     }
 
     /**

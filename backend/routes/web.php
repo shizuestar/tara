@@ -8,12 +8,11 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminProjectController;
 use App\Http\Controllers\AdminCommunityController;
@@ -22,6 +21,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminLogActivityController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
@@ -38,21 +38,35 @@ Route::middleware('guest')->group(function () {
 Route::resource('learn-more', LearnMoreController::class)->only(['index']);
 Route::resource('komunitas', CommunityController::class)->only(['index', 'show']);
 Route::resource('projects', ProjectController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update']);
-Route::post('project/{project}/comment', action: [ProjectController::class, 'comment'])->name('projects.comment');
-Route::post('project/{project}/join', [ProjectController::class, 'join'])->name('projects.join');
-Route::post('project/{project}/like', [ProjectController::class, 'like'])->name('projects.like');
-Route::post('project/{project}/bookmark', [ProjectController::class, 'bookmark'])->name('projects.bookmark');
-
-Route::post('project/{project}/comment/{comment}/delete', [ProjectController::class, 'deleteComment'])->name('projects.comment.delete');
-Route::post('project/{project}/comment/{comment}/toggle-visibility', [ProjectController::class, 'toggleCommentVisibility'])->name('projects.comment.toggle-visibility');
-Route::post('project/{project}/comment/{comment}/like', [ProjectController::class, 'likeComment'])->name('projects.comment.like');
-Route::post('project/{project}/show-hidden-comments', [ProjectController::class, 'showHiddenComments'])->name('projects.show-hidden-comments');
+Route::post('/projects/{project}/comment', [ProjectController::class, 'comment'])->name('projects.comment');
+    Route::post('/projects/{project}/join', [ProjectController::class, 'join'])->name('projects.join');
+    Route::post('/projects/{project}/like', [ProjectController::class, 'like'])->name('projects.like');
+    Route::post('/projects/{project}/bookmark', [ProjectController::class, 'bookmark'])->name('projects.bookmark');
+    Route::post('/projects/{project}/share', [ProjectController::class, 'share'])->name('projects.share');
+    Route::get('/projects/{project}/download', [ProjectController::class, 'downloadSummary'])->name('projects.download');
+    Route::delete('/projects/{project}/comment/{commentId}/delete', [ProjectController::class, 'deleteComment'])->name('projects.comment.delete');
+    Route::post('/projects/{project}/comment/{commentId}/toggle-visibility', [ProjectController::class, 'toggleCommentVisibility'])->name('projects.comment.toggle-visibility');
+    Route::post('/projects/{project}/comment/{commentId}/like', [ProjectController::class, 'likeComment'])->name('projects.comment.like');
+    Route::post('/projects/{project}/show-hidden-comments', [ProjectController::class, 'showHiddenComments'])->name('projects.show-hidden-comments');
+    Route::get('/projects/search-users', [ProjectController::class, 'searchUsers'])->name('projects.search-users');
+    
 Route::resource('blogs', BlogController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
 Route::post('blogs/{blog}/like', [BlogController::class, 'like'])->name('blogs.like');
 Route::post('blogs/{blog}/comment', [BlogController::class, 'comment'])->name('blogs.comment');
 Route::post('blogs/{blog}/reply/{comment}', [BlogController::class, 'reply'])->name('blogs.reply');
 Route::resource('events', EventController::class)->only(['index', 'show']);
-Route::resource('galeri', GaleriController::class)->only(['index', 'show']);
+Route::resource('galeri', ArtworkController::class);
+Route::post('/galeri/{artwork}/like', [ArtworkController::class, 'like'])->name('galeri.like');
+Route::post('/galeri/{artwork}/comment', [ArtworkController::class, 'comment'])->name('galeri.comment');
+Route::post('/galeri/{artwork}/comment/{comment}/like', [ArtworkController::class, 'commentLike'])->name('galeri.comment.like');
+
+Route::get('galeri/tag/{tag}', [ArtworkController::class, 'index'])->name('galeri.tag');
+
+// Rute untuk hasil 'search' (pencarian)
+// GET /galeri/search
+Route::get('galeri/search', [ArtworkController::class, 'index'])->name('galeri.search');
+
+Route::get('profile/{user}', [ProfileController::class, 'show'])->name('profile');
 
 Route::middleware('auth')->group(function () {
     Route::post('events/{event}/comment', [EventController::class, 'storeComment'])->name('events.comment');

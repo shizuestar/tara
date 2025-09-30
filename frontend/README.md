@@ -67,14 +67,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 sebuah prototipe web galeri yang dirancang sebagai ruang presentasi karya dan jembatan kolaborasi antar pengguna.
 
 Meski masih menggunakan gambar dan data contoh,
-TARA. telah menyimulasikan fitur utama seperti eksplorasi karya, komunitas, proyek kolaboratif, dan pengelolaan akun.
+TARA. telah menyimulasikan fitur utama seperti eksplorasi karya, komunitas, Project kolaboratif, dan pengelolaan akun.
 
 ---
 
 ## Tujuan
 
 - Menyajikan karya anak muda Indonesia  
-- Memfasilitasi komunitas kreatif dan proyek kolaboratif  
+- Memfasilitasi komunitas kreatif dan Project kolaboratif  
 - Menjadi galeri digital yang dinamis dan interaktif  
 
 ---
@@ -110,7 +110,7 @@ designWebBytefest/
 ├── detail_event1.html  
 ├── detail_galeri.html  
 ├── detail_komunitas.html  
-├── detail_proyek.html  
+├── detail_Project.html  
 ├── forum.html  
 ├── galeri.html  
 ├── index.html  
@@ -119,7 +119,7 @@ designWebBytefest/
 ├── login.html  
 ├── notifikasi.html  
 ├── profil_user_lain.html  
-├── proyek.html  
+├── Project.html  
 ├── register.html  
 ├── settings.html  
 ├── thread.html  
@@ -148,7 +148,7 @@ designWebBytefest/
     ├── index.html  
     ├── komunitas.html  
     ├── profil_user.html  
-    └── proyek.html  
+    └── Project.html  
 
 ---
 
@@ -167,9 +167,9 @@ designWebBytefest/
 - Grup minat dan diskusi forum  
 - Thread, voting, dan sistem notifikasi  
 
-### Kolaborasi Proyek  
-- Buat proyek sosial atau kreatif  
-- Cari rekan tim dan lacak progres proyek  
+### Kolaborasi Project  
+- Buat Project sosial atau kreatif  
+- Cari rekan tim dan lacak progres Project  
 
 ### Agenda dan Event  
 - Kalender interaktif  
@@ -188,7 +188,7 @@ designWebBytefest/
 - **Detail Karya:** Gambar/video, deskripsi, komentar, karya sejenis  
 - **Komunitas:** Daftar grup dan aktivitas  
 - **Forum:** Thread, balasan, dll
-- **Proyek:** Daftar, detail proyek, rekrutmen  
+- **Project:** Daftar, detail Project, rekrutmen  
 - **Dashboard:** Profil pengguna dan pengaturan akun  
 - **Agenda:** Kalender kegiatan  
 - **Blog:** Artikel dan filterisasi  
@@ -227,9 +227,9 @@ Berikut ringkasan alurnya:
 
 1. **Pengguna masuk ke beranda** dan dapat langsung melihat karya unggulan.
 2. **Navigasi ke eksplor**, pengguna dapat menelusuri berdasarkan kategori.
-3. Jika pengguna ingin bergabung komunitas atau proyek, ia diarahkan untuk **login atau daftar**.
+3. Jika pengguna ingin bergabung komunitas atau Project, ia diarahkan untuk **login atau daftar**.
 4. Setelah login, tampilan situs akan berubah — halaman dalam `sudah_login/` terbuka.
-5. Pengguna dapat **mengakses profil**, **unggah karya**, **berinteraksi di forum**, atau **bergabung proyek**.
+5. Pengguna dapat **mengakses profil**, **unggah karya**, **berinteraksi di forum**, atau **bergabung Project**.
 6. Agenda dan blog tersedia sebagai sumber informasi dan inspirasi.
 
 ---

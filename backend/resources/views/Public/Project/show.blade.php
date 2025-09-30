@@ -1,7 +1,6 @@
 <x-layout>
     @section('title', $project->project_name)
 
-    <!-- Join Project Modal -->
     <div id="join-modal" class="join-modal fixed top-0 left-0 w-full h-full bg-black/60 flex items-center justify-center z-60 hidden">
         <div class="join-modal-content bg-white border border-gray-200 rounded-3xl p-6 w-full max-w-md mx-4">
             <i class="fas fa-times close-btn absolute top-4 right-4 text-xl text-gray-700 cursor-pointer hover:scale-110 transition-all" onclick="toggleJoinModal()"></i>
@@ -40,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Project Detail Section -->
     <section class="pt-20 pb-12 mt-10">
         <div class="container mx-auto px-6">
             @if (session('success'))
@@ -92,7 +90,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Creator and Goals -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 <div class="lg:col-span-1 creator-card bg-white border border-gray-200 rounded-3xl p-6">
                     <h2 class="text-lg font-bold mb-3 font-['Space_Grotesk']">Pembuat Project</h2>
@@ -112,7 +109,6 @@
                     <p class="text-sm text-gray-600">{{ $project->collaboration_goals ?? 'Belum ada tujuan kolaborasi.' }}</p>
                 </div>
             </div>
-            <!-- Team Members -->
             <div class="mb-8">
                 <h2 class="text-2xl font-bold mb-4 font-['Space_Grotesk']">Anggota Tim</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 members-container">
@@ -128,7 +124,6 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Project Milestones (as Timeline) -->
             <div class="mb-8">
                 <h2 class="text-2xl font-bold mb-4 font-['Space_Grotesk']">Linimasa Project</h2>
                 <div class="timeline space-y-6">
@@ -150,7 +145,6 @@
                     @endforelse
                 </div>
             </div>
-            <!-- Task Progress Tracker -->
             <div class="mb-8">
                 <h2 class="text-2xl font-bold mb-4 font-['Space_Grotesk']">Progres Tugas</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 tasks-container">
@@ -165,7 +159,6 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Comments Section -->
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold font-['Space_Grotesk']">Komentar</h2>
@@ -264,7 +257,6 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Recommended Projects -->
             <div class="mb-12">
                 <h2 class="text-2xl font-bold mb-6 text-black font-['Space_Grotesk']">Rekomendasi Kolaborasi Lainnya</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-projects">
@@ -286,6 +278,10 @@
 
     @push('styles')
     <style>
+        .body {
+            font-family: 'Space_Grotesk';
+        }
+        
         .project-header img {
             width: 100%;
             height: 450px;
@@ -598,10 +594,8 @@
 
     @push('scripts')
     <script>
-        // Simulated Current User
         const currentUser = "{{ Auth::user()->name ?? 'Guest' }}";
 
-        // Toggle Join Modal
         function toggleJoinModal() {
             const modal = document.getElementById('join-modal');
             modal.classList.toggle('open');
@@ -610,13 +604,11 @@
             }
         }
 
-        // Dismiss Notification Bar
         function dismissNotification() {
             const notificationBar = document.getElementById('notification-bar');
             notificationBar.classList.add('hidden');
         }
 
-        // Toggle Reply Form
         function toggleReplyForm(projectId, commentId, taggedUser) {
             const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
             replyForm.classList.toggle('hidden');
@@ -627,10 +619,9 @@
             }
         }
 
-        // Delete Comment
         function deleteComment(projectId, commentId) {
             if (confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
-                fetch(`/project/${projectId}/comment/${commentId}/delete`, {
+                fetch(`/projects/${projectId}/comment/${commentId}/delete`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -649,9 +640,8 @@
             }
         }
 
-        // Toggle Comment Visibility
         function toggleCommentVisibility(projectId, commentId) {
-            fetch(`/project/${projectId}/comment/${commentId}/toggle-visibility`, {
+            fetch(`/projects/${projectId}/comment/${commentId}/toggle-visibility`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -669,9 +659,8 @@
               });
         }
 
-        // Toggle Comment Like
         function toggleCommentLike(projectId, commentId) {
-            fetch(`/project/${projectId}/comment/${commentId}/like`, {
+            fetch(`/projects/${projectId}/comment/${commentId}/like`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -689,9 +678,8 @@
               });
         }
 
-        // Show Hidden Comments
         function showHiddenComments(projectId) {
-            fetch(`/project/${projectId}/show-hidden-comments`, {
+            fetch(`/projects/${projectId}/show-hidden-comments`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -709,19 +697,33 @@
               });
         }
 
-        // Share Project (Placeholder)
-        function shareProject() {
-            alert('Fitur berbagi project belum diimplementasikan.');
-            // Implement share functionality (e.g., copy link or share via social media)
+        function shareProject(projectId) {
+            fetch(`/projects/${projectId}/share`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      navigator.clipboard.writeText(data.data.url).then(() => {
+                          alert('Link project telah disalin ke clipboard!');
+                      }).catch(() => {
+                          alert('Gagal menyalin link project.');
+                      });
+                  } else {
+                      alert(data.message || 'Gagal membagikan project.');
+                  }
+              }).catch(() => {
+                  alert('Terjadi kesalahan saat membagikan project.');
+              });
         }
 
-        // Download Summary (Placeholder)
-        function downloadSummary() {
-            alert('Fitur unduh ringkasan belum diimplementasikan.');
-            // Implement PDF or document download functionality
+        function downloadSummary(projectId) {
+            window.location.href = `/projects/${projectId}/download`;
         }
 
-        // Event Listeners
         window.addEventListener('load', () => {
             const joinButton = document.getElementById('join-project-btn');
             if (joinButton) {
@@ -730,15 +732,14 @@
 
             const shareButton = document.getElementById('share-project-btn');
             if (shareButton) {
-                shareButton.addEventListener('click', shareProject);
+                shareButton.addEventListener('click', () => shareProject({{ $project->id }}));
             }
 
             const downloadButton = document.getElementById('download-summary-btn');
             if (downloadButton) {
-                downloadButton.addEventListener('click', downloadSummary);
+                downloadButton.addEventListener('click', () => downloadSummary({{ $project->id }}));
             }
 
-            // Close modal on Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     const modal = document.getElementById('join-modal');

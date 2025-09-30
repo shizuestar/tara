@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('artwork_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('artwork_id')->constrained('artworks')->onDelete('cascade'); // Foreign key ke tabel artwork
-            $table->string('tag', 50);
-            $table->unique(['artwork_id', 'tag']);
+            $table->foreignId('artwork_id')->constrained()->onDelete('cascade');
+            $table->string('tag');
             $table->timestamps();
         });
     }

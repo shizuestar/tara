@@ -2,26 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Artwork extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'description',
-        'thumbnail',
-        'palette',
-        'typography',
-        'period',
-        'status',
-        'category_id',
-        'community_id',
+        'title', 'description', 'thumbnail', 'palette', 'typography', 'period',
+        'visual_style', 'media', 'status', 'category_id', 'community_id', 'user_id', 'views'
     ];
 
-     public function creator()
+    protected $casts = [
+        'status' => 'string',
+    ];
+
+    public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -49,5 +46,10 @@ class Artwork extends Model
     public function files()
     {
         return $this->hasMany(ArtworkFile::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(ArtworkComment::class)->whereNull('parent_id');
     }
 }

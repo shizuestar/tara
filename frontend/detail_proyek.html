@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>TARA - Detail Proyek</title>
+        <title>TARA - Detail Project</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap"
@@ -690,8 +690,8 @@
                                 class="nav-link block text-gray-700 hover:text-black font-medium py-2">Galeri</a>
                             <a href="/komunitas.html"
                                 class="nav-link block text-gray-700 hover:text-black font-medium py-2">Komunitas</a>
-                            <a href="/proyek.html"
-                                class="nav-link block text-gray-700 hover:text-black font-medium py-2">Proyek</a>
+                            <a href="/Project.html"
+                                class="nav-link block text-gray-700 hover:text-black font-medium py-2">Project</a>
                             <a href="/blog.html"
                                 class="nav-link block text-gray-700 hover:text-black font-medium py-2">Blog</a>
                             <a href="/agenda.html"
@@ -735,10 +735,10 @@
             }
             // Set active navigation link
             const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            const isBlogDetail = currentPath === 'proyek.html' || window.location.search.includes('id='); // Check if on blog detail page
+            const isBlogDetail = currentPath === 'Project.html' || window.location.search.includes('id='); // Check if on blog detail page
             document.querySelectorAll('.nav-link').forEach(link => {
                 const href = link.getAttribute('href').split('/').pop();
-                if (href === currentPath || (href === 'proyek.html' && isBlogDetail)) {
+                if (href === currentPath || (href === 'Project.html' && isBlogDetail)) {
                     link.classList.add('active');
                 }
             });
@@ -762,8 +762,8 @@
         <div id="join-modal" class="join-modal">
             <div class="join-modal-content">
                 <i class="fas fa-times close-btn" onclick="toggleJoinModal()"></i>
-                <h2 class="text-xl font-bold mb-3">Gabung Proyek</h2>
-                <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan proyek
+                <h2 class="text-xl font-bold mb-3">Gabung Project</h2>
+                <p class="text-sm text-gray-600 mb-4">Lengkapi formulir berikut untuk mengajukan bergabung dengan Project
                     ini.</p>
                 <div class="space-y-4">
                     <div>
@@ -807,7 +807,7 @@
                 <!-- Creator and Goals -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     <div class="lg:col-span-1 creator-card">
-                        <h2 class="text-lg font-bold mb-3">Pembuat Proyek</h2>
+                        <h2 class="text-lg font-bold mb-3">Pembuat Project</h2>
                         <div class="flex items-center gap-4">
                             <img src="" id="creator-avatar" alt="Pembuat"
                                 class="w-16 h-16 rounded-full border border-gray-200" />
@@ -831,7 +831,7 @@
                 </div>
                 <!-- Project Timeline -->
                 <div class="mb-8">
-                    <h2 class="text-2xl font-bold mb-4">Linimasa Proyek</h2>
+                    <h2 class="text-2xl font-bold mb-4">Linimasa Project</h2>
                     <div class="timeline"></div>
                 </div>
                 <!-- Task Progress Tracker -->
@@ -944,11 +944,11 @@
                         { name: "Rina Putri", role: "Content Creator", profileUrl: "/profil/rina", avatar: "https://picsum.photos/100/100?person4" },
                         { name: "Dewi Lestari", role: "QA Engineer", profileUrl: "/profil/dewi", avatar: "https://picsum.photos/100/100?person5" }
                     ],
-                    description: "Proyek ini bertujuan untuk menciptakan aplikasi edukasi interaktif yang membantu pengguna belajar pemrograman dengan cara yang menyenangkan dan mudah dipahami.",
+                    description: "Project ini bertujuan untuk menciptakan aplikasi edukasi interaktif yang membantu pengguna belajar pemrograman dengan cara yang menyenangkan dan mudah dipahami.",
                     image: "https://picsum.photos/1200/400?coding",
                     created: "15 Juli 2025",
                     timeline: [
-                        { date: "15 Juli 2025", title: "Proyek Dimulai", description: "Tim awal dibentuk dan perencanaan dimulai." },
+                        { date: "15 Juli 2025", title: "Project Dimulai", description: "Tim awal dibentuk dan perencanaan dimulai." },
                         { date: "30 Juli 2025", title: "Prototipe Selesai", description: "Versi awal aplikasi selesai untuk pengujian." },
                         { date: "10 Agustus 2025", title: "Pengujian Beta", description: "Aplikasi diuji oleh pengguna terpilih." }
                     ],
@@ -963,7 +963,7 @@
                             user: "John Doe",
                             avatar: "https://picsum.photos/50/50?commenter1",
                             time: "2 jam lalu",
-                            text: "Proyek ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi.",
+                            text: "Project ini sangat menarik! Saya ingin berkontribusi pada bagian konten edukasi.",
                             replies: [],
                             hidden: false,
                             likes: 5,
@@ -985,7 +985,7 @@
                             user: "Alice Brown",
                             avatar: "https://picsum.photos/50/50?commenter3",
                             time: "2 hari lalu",
-                            text: "Saya suka pendekatan gamifikasi dalam proyek ini!",
+                            text: "Saya suka pendekatan gamifikasi dalam Project ini!",
                             replies: [],
                             hidden: false,
                             likes: 2,
@@ -1030,7 +1030,7 @@
                 },
                 {
                     id: 2,
-                    name: "Proyek Musik Kolaborasi",
+                    name: "Project Musik Kolaborasi",
                     category: "musik",
                     progress: 45,
                     likes: 8,
@@ -1046,7 +1046,7 @@
                     image: "https://picsum.photos/1200/400?musik",
                     created: "10 Juli 2025",
                     timeline: [
-                        { date: "10 Juli 2025", title: "Proyek Dimulai", description: "Pembentukan tim dan konsep awal." },
+                        { date: "10 Juli 2025", title: "Project Dimulai", description: "Pembentukan tim dan konsep awal." },
                         { date: "20 Juli 2025", title: "Rekaman Demo", description: "Demo lagu pertama selesai." }
                     ],
                     tasks: [
@@ -1086,7 +1086,7 @@
                     image: "https://picsum.photos/1200/400?desain",
                     created: "5 Juli 2025",
                     timeline: [
-                        { date: "5 Juli 2025", title: "Proyek Dimulai", description: "Konsep desain awal dibuat." },
+                        { date: "5 Juli 2025", title: "Project Dimulai", description: "Konsep desain awal dibuat." },
                         { date: "15 Juli 2025", title: "Desain Final", description: "Desain poster selesai." },
                         { date: "25 Juli 2025", title: "Cetak", description: "Poster mulai dicetak." }
                     ],
@@ -1129,7 +1129,7 @@
                     image: "https://picsum.photos/1200/400?sastra",
                     created: "12 Juli 2025",
                     timeline: [
-                        { date: "12 Juli 2025", title: "Proyek Dimulai", description: "Pengumpulan naskah dimulai." },
+                        { date: "12 Juli 2025", title: "Project Dimulai", description: "Pengumpulan naskah dimulai." },
                         { date: "22 Juli 2025", title: "Seleksi Naskah", description: "Naskah terpilih disusun." }
                     ],
                     tasks: [
@@ -1169,7 +1169,7 @@
                     image: "https://picsum.photos/1200/400?newcoding",
                     created: "18 Juli 2025",
                     timeline: [
-                        { date: "18 Juli 2025", title: "Proyek Dimulai", description: "Perencanaan model AI dimulai." }
+                        { date: "18 Juli 2025", title: "Project Dimulai", description: "Perencanaan model AI dimulai." }
                     ],
                     tasks: [
                         { name: "Model AI", progress: 30 },
@@ -1196,7 +1196,7 @@
             // Simulated Notification Data
             const notifications = [
                 { id: 1, text: "New project update: Aplikasi Edukasi Kode", time: "2 jam lalu", read: false },
-                { id: 2, text: "New collaboration request: Proyek Musik Kolaborasi", time: "4 jam lalu", read: false },
+                { id: 2, text: "New collaboration request: Project Musik Kolaborasi", time: "4 jam lalu", read: false },
             ];
 
             // Simulated Current User
@@ -1235,9 +1235,9 @@
                             <button id="like-project-btn" class="join-btn"><i class="fas fa-heart"></i> Suka (${project.likes})</button>
                             <button id="bookmark-project-btn" class="join-btn"><i class="fas fa-bookmark"></i> ${project.bookmarked ? 'Hapus Bookmark' : 'Bookmark'}</button>
                             <button id="share-project-btn" class="join-btn"><i class="fas fa-share"></i> Bagikan</button>
-                            ${project.status === 'open' ? `<button id="join-project-btn" class="join-btn"><i class="fas fa-user-plus"></i> Gabung Proyek</button>` : ''}
+                            ${project.status === 'open' ? `<button id="join-project-btn" class="join-btn"><i class="fas fa-user-plus"></i> Gabung Project</button>` : ''}
                             <button id="download-summary-btn" class="join-btn"><i class="fas fa-download"></i> Unduh Ringkasan</button>
-                            <a href="/proyek" id="back-to-projects-btn" class="join-btn"><i class="fas fa-arrow-left"></i> Kembali ke Proyek</a>
+                            <a href="/Project" id="back-to-projects-btn" class="join-btn"><i class="fas fa-arrow-left"></i> Kembali ke Project</a>
                         </div>
                     </div>
                 `;
@@ -1406,7 +1406,7 @@
                 recommendedProjects.innerHTML = recommendations.length === 0 ?
                     '<p class="text-sm text-gray-600">Tidak ada rekomendasi saat ini.</p>' :
                     recommendations.map(p => `
-                        <div class="recommended-project" onclick="window.location.href='detail-proyek.html?id=${p.id}'">
+                        <div class="recommended-project" onclick="window.location.href='detail-Project.html?id=${p.id}'">
                             <img src="${p.image}" alt="${p.name}" />
                             <div class="p-4">
                                 <p class="text-base font-semibold">${p.name}</p>
@@ -1461,7 +1461,7 @@
                 if (name && email && role && message) {
                     notifications.push({
                         id: notifications.length + 1,
-                        text: `Pengajuan bergabung untuk proyek ${projects.find(p => p.id === projectId).name} dikirim`,
+                        text: `Pengajuan bergabung untuk Project ${projects.find(p => p.id === projectId).name} dikirim`,
                         time: "Baru saja",
                         read: false
                     });
@@ -1491,13 +1491,13 @@
                     \\usepackage[T1]{fontenc}
                     \\usepackage{noto}
                     \\geometry{a4paper, margin=1in}
-                    \\title{Ringkasan Proyek: ${project.name}}
+                    \\title{Ringkasan Project: ${project.name}}
                     \\author{TARA}
                     \\date{${project.created}}
                     \\begin{document}
                     \\maketitle
-                    \\section*{Informasi Proyek}
-                    \\textbf{Nama Proyek:} ${project.name}\\\\
+                    \\section*{Informasi Project}
+                    \\textbf{Nama Project:} ${project.name}\\\\
                     \\textbf{Kategori:} ${project.category.charAt(0).toUpperCase() + project.category.slice(1)}\\\\
                     \\textbf{Status:} ${project.status === 'open' ? 'Buka Kolaborasi' : 'Kolaborasi Ditutup'}\\\\
                     \\textbf{Pembuat:} ${project.creator.name} (${project.creator.role})\\\\
@@ -1534,7 +1534,7 @@
                 renderProjectHeader(project);
                 notifications.push({
                     id: notifications.length + 1,
-                    text: `Proyek ${project.name} ${project.bookmarked ? 'ditambahkan ke' : 'dihapus dari'} bookmark`,
+                    text: `Project ${project.name} ${project.bookmarked ? 'ditambahkan ke' : 'dihapus dari'} bookmark`,
                     time: "Baru saja",
                     read: false
                 });
@@ -1699,7 +1699,7 @@
             // Share Project
             function shareProject(projectId) {
                 const project = projects.find(p => p.id === projectId);
-                const projectUrl = `${window.location.origin}/detail-proyek.html?id=${projectId}`;
+                const projectUrl = `${window.location.origin}/detail-Project.html?id=${projectId}`;
                 const shareData = {
                     title: project.name,
                     text: project.description,
@@ -1709,12 +1709,12 @@
                 if (navigator.share) {
                     navigator.share(shareData)
                         .then(() => {
-                            alert("Proyek berhasil dibagikan!");
+                            alert("Project berhasil dibagikan!");
                         })
                         .catch(() => {
                             navigator.clipboard.writeText(projectUrl)
                                 .then(() => {
-                                    alert("Link proyek telah disalin ke clipboard!");
+                                    alert("Link Project telah disalin ke clipboard!");
                                 })
                                 .catch(() => {
                                     alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
@@ -1723,7 +1723,7 @@
                 } else {
                     navigator.clipboard.writeText(projectUrl)
                         .then(() => {
-                            alert("Link proyek telah disalin ke clipboard!");
+                            alert("Link Project telah disalin ke clipboard!");
                         })
                         .catch(() => {
                             alert("Gagal menyalin link. Silakan salin secara manual: " + projectUrl);
@@ -1739,8 +1739,8 @@
                 if (!project) {
                     document.querySelector('.project-header .inner').innerHTML = `
                         <div class="text-center text-gray-600">
-                            <p class="text-lg font-semibold">Proyek tidak ditemukan.</p>
-                            <a href="/proyek" class="inline-block mt-4 action-btn">Kembali ke Proyek</a>
+                            <p class="text-lg font-semibold">Project tidak ditemukan.</p>
+                            <a href="/Project" class="inline-block mt-4 action-btn">Kembali ke Project</a>
                         </div>
                     `;
                     return;

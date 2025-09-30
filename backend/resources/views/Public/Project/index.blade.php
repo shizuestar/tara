@@ -97,6 +97,14 @@
         </div>
     </div>
 
+    @push('styles')
+        <style>
+            .body {
+                font-family: 'Space_Grotesk' !important;
+            }
+        </style>
+    @endpush
+    
     @push('scripts')
     <script>
         // Simulated Notification Data (replace with backend data in production)

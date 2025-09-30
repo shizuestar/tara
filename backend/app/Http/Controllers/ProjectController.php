@@ -7,6 +7,7 @@ use App\Models\ProjectComment;
 use App\Models\ProjectCommentLike;
 use App\Models\ProjectMember;
 use App\Models\ProjectMilestone;
+use App\Models\ProjectJoinRequest; // New model for join requests
 use App\Models\Category;
 use App\Models\Community;
 use App\Models\ActivityLog;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf; // For PDF generation
+use Illuminate\Support\Facades\URL;
 
 class ProjectController extends Controller
 {
@@ -153,7 +156,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load(['category', 'creator', 'members.user', 'comments.user', 'comments.replies.user', 'tasks', 'timeline', 'community', 'milestones']);
+        $project->load(['category', 'creator', 'members.user', 'comments.user', 'comments.replies.user', 'tasks', 'milestones', 'community']);
 
         $recommendedProjects = Project::where('category_id', $project->category_id)
             ->where('id', '!=', $project->id)
@@ -283,10 +286,10 @@ class ProjectController extends Controller
         $project->members()->delete();
         $project->milestones()->delete();
         $project->tasks()->delete();
-        $project->timeline()->delete();
         $project->comments()->delete();
         $project->likes()->delete();
         $project->bookmarks()->delete();
+        $project->joinRequests()->delete(); // Delete join requests
 
         $project->delete();
 
@@ -330,7 +333,7 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
             'role' => 'required|string|max:255',
             'message' => 'required|string|max:1000',
         ]);
@@ -339,17 +342,26 @@ class ProjectController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        ProjectMember::create([
+        // Check if user is already a member
+        if (ProjectMember::where('project_id', $project->id)->where('user_id', Auth::id())->exists()) {
+            return redirect()->back()->with('error', 'Anda sudah menjadi anggota project ini.');
+        }
+
+        // Create a join request
+        ProjectJoinRequest::create([
             'project_id' => $project->id,
             'user_id' => Auth::id(),
+            'name' => $request->name,
+            'email' => $request->email,
             'role' => $request->role,
-            'joined_at' => now(),
+            'message' => $request->message,
+            'status' => 'pending',
         ]);
 
         ActivityLog::create([
             'user_id' => Auth::id(),
             'type' => 'project',
-            'description' => 'Bergabung dengan project "' . $project->project_name . '" sebagai "' . $request->role . '"',
+            'description' => 'Pengajuan bergabung dikirim untuk project "' . $project->project_name . '" sebagai "' . $request->role . '"',
         ]);
 
         return back()->with('success', 'Pengajuan bergabung berhasil dikirim.');
@@ -397,6 +409,45 @@ class ProjectController extends Controller
         return back()->with('success', $message);
     }
 
+    public function share(Request $request, Project $project)
+    {
+        $shareUrl = URL::route('projects.show', $project->id);
+        $shareData = [
+            'url' => $shareUrl,
+            'title' => $project->project_name,
+            'description' => Str::limit($project->description, 100),
+        ];
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'project',
+            'description' => 'Project "' . $project->project_name . '" dibagikan',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Link project siap untuk dibagikan.',
+            'data' => $shareData,
+        ]);
+    }
+
+    public function downloadSummary(Request $request, Project $project)
+    {
+        $project->load(['category', 'creator', 'members.user', 'milestones', 'tasks', 'community']);
+
+        $pdf = Pdf::loadView('public.project.summary', [
+            'project' => $project,
+        ]);
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'type' => 'project',
+            'description' => 'Ringkasan project "' . $project->project_name . '" diunduh',
+        ]);
+
+        return $pdf->download('project_summary_' . Str::slug($project->project_name) . '.pdf');
+    }
+
     public function deleteComment(Request $request, Project $project, $commentId)
     {
         $comment = ProjectComment::findOrFail($commentId);
@@ -436,26 +487,27 @@ class ProjectController extends Controller
     }
 
     public function likeComment(Request $request, Project $project, $commentId)
-    {
-        $comment = ProjectComment::findOrFail($commentId);
-        $like = $comment->likes()->where('user_id', Auth::id())->first();
+{
+    $comment = ProjectComment::findOrFail($commentId);
+    $like = $comment->likes()->where('user_id', Auth::id())->first();
 
-        if ($like) {
-            $like->delete();
-            $message = 'Like dihapus dari komentar.';
-        } else {
-            $comment->likes()->create(['user_id' => Auth::id()]);
-            $message = 'Komentar disukai.';
-        }
-
-        ActivityLog::create([
-            'user_id' => Auth::id(),
-            'type' => 'project',
-            'description' => $message . ' pada project "' . $project->project_name . '"',
-        ]);
-
-        return response()->json(['success' => true, 'message' => $message]);
+    if ($like) {
+        $like->delete();
+        $message = 'Like dihapus dari komentar.';
+    } else {
+        $comment->likes()->create(['user_id' => Auth::id()]);
+        $message = 'Komentar disukai.';
     }
+
+    ActivityLog::create([
+        'user_id' => Auth::id(),
+        'type' => 'project',
+        'description' => $message . ' pada project "' . $project->project_name . '"',
+    ]);
+
+    return response()->json(['success' => true, 'message' => $message]);
+}
+
 
     public function showHiddenComments(Request $request, Project $project)
     {

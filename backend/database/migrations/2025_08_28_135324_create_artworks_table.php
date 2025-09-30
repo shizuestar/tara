@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('artworks', function (Blueprint $table) {
+       Schema::create('artworks', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 50);
+            $table->string('title');
             $table->text('description')->nullable();
-            $table->string('thumbnail', 255)->nullable();
-            $table->string('palette', 100)->nullable();
-            $table->string('typography', 100)->nullable();
-            $table->string('period', 100)->nullable();
-            $table->enum('status', ['draft', 'published', 'archived'])->default('published');
-            $table->foreignId('community_id')->nullable()->constrained('communities')->onDelete('set null');
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->string('thumbnail')->nullable();
+            $table->string('palette')->nullable();
+            $table->string('typography')->nullable();
+            $table->string('period')->nullable();
+            $table->string('visual_style')->nullable();
+            $table->string('media')->nullable();
+            $table->enum('status', ['draft', 'published', 'rejected'])->default('draft');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('community_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }
