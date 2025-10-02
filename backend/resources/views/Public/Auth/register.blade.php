@@ -65,45 +65,25 @@
         pointer-events: auto; 
       }
       
-      /* --- Gallery Cards & Columns (Dipertahankan karena animasi grid/column) --- */
+      /* --- Gallery Cards & Columns --- */
       .card-section {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: repeat(6, 1fr); 
-        gap: 20px;
-        padding: 20px;
-        z-index: 1; 
-        overflow: hidden;
-        align-content: start;
-        opacity: 1;
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; padding: 20px;
+        z-index: 1; overflow: hidden; align-content: start; opacity: 1;
       }
       @media (max-width: 1200px) { .card-section { grid-template-columns: repeat(4, 1fr); } }
       @media (max-width: 768px) { .card-section { grid-template-columns: repeat(3, 1fr); } }
       @media (max-width: 500px) { .card-section { grid-template-columns: repeat(2, 1fr); } }
 
       .card-column {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        height: 200vh;
+        display: flex; flex-direction: column; gap: 20px; height: 200vh;
       }
       .card {
-        border-radius: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        flex-shrink: 0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform, box-shadow;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
-        background-color: #f0f4f8; 
+        border-radius: 1.5rem; position: relative; overflow: hidden; flex-shrink: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform, box-shadow;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); background-color: #f0f4f8; 
       }
-      .card-image-wrapper {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
-      }
+      .card-image-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
       .card-image-wrapper img {
         width: 100%; height: 100%; object-fit: cover; display: block;
         transition: filter 0.5s ease, transform 0.5s ease;
@@ -111,8 +91,7 @@
       }
       .card-overlay {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.3); 
-        transition: background 0.3s ease; z-index: 2;
+        background: rgba(0, 0, 0, 0.3); transition: background 0.3s ease; z-index: 2;
       }
 
       .card:hover .card-overlay { background: rgba(0, 0, 0, 0); }
@@ -129,39 +108,44 @@
         transition: opacity 1s ease-out;
       }
       .tara-text {
-        display: flex;
-        gap: 0.6rem;
-        font-size: 7rem;
-        font-weight: 700;
-        letter-spacing: 0.25rem;
-        color: #1a202c; 
-        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        display: flex; gap: 0.6rem; font-size: 7rem; font-weight: 700; letter-spacing: 0.25rem;
+        color: #1a202c; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
       }
       .tara-letter {
-        transform-style: preserve-3d;
-        transition: transform 0.4s ease, filter 0.4s ease;
+        transform-style: preserve-3d; transition: transform 0.4s ease, filter 0.4s ease;
       }
       .tara-dot {
-        font-size: 0.9em;
-        color: #f6e05e;
-        animation: pulse 2s infinite alternate;
+        font-size: 0.9em; color: #f6e05e; animation: pulse 2s infinite alternate;
       }
       @keyframes pulse {
         0% { transform: scale(1); opacity: 0.7; }
         100% { transform: scale(1.2); opacity: 1; }
       }
       
-      .benefit-item-list {
+      .form-item, .benefit-item-list {
         opacity: 0; transform: translateY(20px);
-        display: flex; align-items: flex-start; margin-bottom: 1.25rem;
+      }
+      /* Styles for immediate appearance after error */
+      .center-card.has-error {
+          opacity: 1 !important;
+          transform: none !important;
+      }
+      .form-item.has-error, .benefit-item-list.has-error {
+          opacity: 1 !important;
+          transform: none !important;
       }
     </style>
   </head>
   <body class="bg-gray-50 overflow-hidden">
     <main class="main-container">
+        @php
+            $hasErrors = $errors->any();
+        @endphp
+
       <div
         class="tara-layer bg-gradient-to-br from-gray-50 to-white"
         id="tara-layer"
+        style="{{ $hasErrors ? 'display: none;' : '' }}"
       >
         <div class="tara-text relative top-[20px]" id="tara-text">
           <span class="tara-letter">T</span>
@@ -178,19 +162,24 @@
       <div
         class="gallery-layer bg-gradient-to-br from-gray-50 to-white"
         id="gallery-layer"
+        style="opacity: {{ $hasErrors ? '1' : '0' }};"
       >
         <div class="card-section" id="card-section"></div>
       </div>
 
-      <div class="content-layer" id="content-layer">
+      <div 
+        class="content-layer {{ $hasErrors ? 'active' : '' }}" 
+        id="content-layer"
+        style="opacity: {{ $hasErrors ? '1' : '0' }};"
+      >
         <div
-          class="center-card max-w-[900px] w-[95%] bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-3xl overflow-hidden flex min-h-[580px] transition duration-500 ease-in-out hover:shadow-4xl"
+          class="center-card max-w-[900px] w-[95%] bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-3xl overflow-hidden flex min-h-[580px] transition duration-500 ease-in-out hover:shadow-4xl {{ $hasErrors ? 'has-error' : '' }}"
           id="center-card"
         >
           <div 
             class="form-column w-[45%] min-w-[350px] p-12 flex flex-col justify-center bg-white relative max-lg:w-full max-lg:p-8"
           >
-            <div class="text-center mb-8 form-item">
+            <div class="text-center mb-8 form-item {{ $hasErrors ? 'has-error' : '' }}">
               <div
                 class="text-center text-3xl font-bold tracking-tight text-gray-900"
               >
@@ -203,7 +192,7 @@
             </div>
             
             @if ($errors->any())
-              <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg form-item" role="alert">
+              <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg form-item has-error" role="alert">
                   <ul class="list-disc list-inside">
                     @foreach ($errors->all() as $error)
                       <li>{{ $error }}</li>
@@ -214,7 +203,7 @@
 
             <form action="{{ route('register') }}" method="POST" class="space-y-3">
               @csrf
-              <div class="grid grid-cols-2 gap-3 form-item">
+              <div class="grid grid-cols-2 gap-3 form-item {{ $hasErrors ? 'has-error' : '' }}">
                   <input
                       type="text"
                       name="username"
@@ -232,7 +221,7 @@
                       required
                   />
               </div>
-              <div class="form-item">
+              <div class="form-item {{ $hasErrors ? 'has-error' : '' }}">
                 <input
                   type="email"
                   name="email"
@@ -242,7 +231,7 @@
                   required
                 />
               </div>
-              <div class="form-item">
+              <div class="form-item {{ $hasErrors ? 'has-error' : '' }}">
                 <input
                   type="password"
                   name="password"
@@ -251,7 +240,7 @@
                   required
                 />
               </div>
-              <div class="form-item">
+              <div class="form-item {{ $hasErrors ? 'has-error' : '' }}">
                 <input
                   type="password"
                   name="password_confirmation"
@@ -261,7 +250,7 @@
                 />
               </div>
 
-              <div class="form-item pt-2">
+              <div class="form-item pt-2 {{ $hasErrors ? 'has-error' : '' }}">
                 <button
                   type="submit"
                   class="w-full bg-taraDark text-white py-3 rounded-xl hover:bg-gray-700 text-sm font-semibold tracking-wide transition duration-300 ease-in-out transform hover:scale-[1.005] hover:shadow-lg"
@@ -271,12 +260,12 @@
               </div>
             </form>
 
-            <div class="text-center text-xs text-gray-500 mt-6 form-item">
+            <div class="text-center text-xs text-gray-500 mt-6 form-item {{ $hasErrors ? 'has-error' : '' }}">
               <span class="text-gray-400">Dengan mendaftar, Anda setuju dengan</span>
               <a href="#" class="text-gray-500 font-semibold hover:text-gray-700 hover:underline transition">Syarat & Ketentuan</a>
             </div>
 
-            <p class="text-center text-xs text-gray-500 mt-4 form-item">
+            <p class="text-center text-xs text-gray-500 mt-4 form-item {{ $hasErrors ? 'has-error' : '' }}">
               Sudah punya akun?
               <a
                 href="{{ route('login') }}"
@@ -290,43 +279,43 @@
           <div 
             class="benefit-column flex-1 p-12 flex flex-col justify-center items-start bg-gray-100 max-lg:hidden"
           >
-              <h2 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight">
-                Mulai Aksi Kreatifmu
-              </h2>
-              
-              <div class="space-y-6 w-full">
-                <div class="benefit-item-list" data-delay="100">
-                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">01</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">Visibilitas Global</h3>
-                        <p class="text-sm text-gray-600 font-light">Pamerkan karya ke jutaan mata, tingkatkan pengakuan profesional.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item-list" data-delay="200">
-                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">02</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">Peluang Kolaborasi</h3>
-                        <p class="text-sm text-gray-600 font-light">Terhubung dengan kreator lain dan dapatkan Project menarik.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item-list" data-delay="300">
-                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">03</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">Portofolio Elegance</h3>
-                        <p class="text-sm text-gray-600 font-light">Sajikan karyamu dalam tampilan yang profesional dan minimalis.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item-list" data-delay="400">
-                    <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">04</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-1">Akses Tren Terkini</h3>
-                        <p class="text-sm text-gray-600 font-light">Selalu terdepan dengan inspirasi dan *insight* dari komunitas.</p>
-                    </div>
-                </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight form-item {{ $hasErrors ? 'has-error' : '' }}">
+              Mulai Aksi Kreatifmu
+            </h2>
+            
+            <div class="space-y-6 w-full">
+              <div class="benefit-item-list {{ $hasErrors ? 'has-error' : '' }}" data-delay="100">
+                  <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">01</span>
+                  <div>
+                      <h3 class="text-lg font-bold text-gray-900 mb-1">Visibilitas Global</h3>
+                      <p class="text-sm text-gray-600 font-light">Pamerkan karya ke jutaan mata, tingkatkan pengakuan profesional.</p>
+                  </div>
               </div>
+              
+              <div class="benefit-item-list {{ $hasErrors ? 'has-error' : '' }}" data-delay="200">
+                  <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">02</span>
+                  <div>
+                      <h3 class="text-lg font-bold text-gray-900 mb-1">Peluang Kolaborasi</h3>
+                      <p class="text-sm text-gray-600 font-light">Terhubung dengan kreator lain dan dapatkan Project menarik.</p>
+                  </div>
+              </div>
+              
+              <div class="benefit-item-list {{ $hasErrors ? 'has-error' : '' }}" data-delay="300">
+                  <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">03</span>
+                  <div>
+                      <h3 class="text-lg font-bold text-gray-900 mb-1">Portofolio Elegance</h3>
+                      <p class="text-sm text-gray-600 font-light">Sajikan karyamu dalam tampilan yang profesional dan minimalis.</p>
+                  </div>
+              </div>
+              
+              <div class="benefit-item-list {{ $hasErrors ? 'has-error' : '' }}" data-delay="400">
+                  <span class="benefit-icon text-taraDark text-xl leading-none mr-4 font-bold bg-white/80 px-2 py-1 rounded-lg shadow-sm">04</span>
+                  <div>
+                      <h3 class="text-lg font-bold text-gray-900 mb-1">Akses Tren Terkini</h3>
+                      <p class="text-sm text-gray-600 font-light">Selalu terdepan dengan inspirasi dan *insight* dari komunitas.</p>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -335,7 +324,16 @@
     <script>
       const cardSection = document.getElementById("card-section");
       const galleryLayer = document.getElementById("gallery-layer");
-      
+      const taraLayer = document.getElementById("tara-layer");
+      const contentLayer = document.getElementById("content-layer");
+      const centerCard = document.getElementById("center-card");
+      const taraLetters = document.querySelectorAll("#tara-text .tara-letter, #tara-text .tara-dot");
+      const formItems = document.querySelectorAll(".form-item");
+      const benefitItems = document.querySelectorAll(".benefit-item-list");
+
+      // Mendapatkan status error dari Blade
+      const hasErrors = {{ $hasErrors ? 'true' : 'false' }};
+
       let numberOfColumns = 6;
       if (window.innerWidth <= 1200) numberOfColumns = 4;
       if (window.innerWidth <= 768) numberOfColumns = 3;
@@ -422,75 +420,70 @@
         });
       }
 
-      const taraLayer = document.getElementById("tara-layer");
-      const contentLayer = document.getElementById("content-layer");
-      const centerCard = document.getElementById("center-card");
-      const taraLetters = document.querySelectorAll("#tara-text .tara-letter, #tara-text .tara-dot");
-      const formItems = document.querySelectorAll(".form-item");
-      const benefitItems = document.querySelectorAll(".benefit-item-list");
-
       createCardColumns();
 
-      anime({
-        targets: taraLetters,
-        translateY: [50, 0],
-        translateZ: [0, 100],
-        opacity: [0, 1],
-        duration: 1600,
-        easing: "easeOutCubic",
-        delay: anime.stagger(150, { start: 300 }),
-        complete: function () {
-          setTimeout(() => {
-            anime({
-              targets: taraLetters,
-              scale: [1, 0.5],
-              opacity: [1, 0],
-              translateX: (el, i) => {
-                const centerIndex = 2;
-                return (i - centerIndex) * 20;
-              },
-              duration: 1000,
-              easing: "easeInQuad",
-              delay: anime.stagger(100, { from: 'center' }),
-              complete: function () {
-                anime({
-                  targets: taraLayer,
-                  opacity: [1, 0],
-                  duration: 500,
-                  easing: "easeInQuad",
-                  complete: function () {
-                    taraLayer.style.display = "none";
-                    galleryLayer.style.opacity = 1;
-                    startInfiniteScroll();
+      if (hasErrors) {
+        // Jika ada error, langsung mulai scroll dan biarkan form terlihat.
+        startInfiniteScroll();
+      } else {
+        // Alur animasi Login
+        anime({
+          targets: taraLetters,
+          translateY: [50, 0],
+          translateZ: [0, 100],
+          opacity: [0, 1],
+          duration: 1600,
+          easing: "easeOutCubic",
+          delay: anime.stagger(150, { start: 300 }),
+          complete: function () {
+            setTimeout(() => {
+              anime({
+                targets: taraLayer,
+                // Mengubah animasi logo agar fade out bersama layer
+                opacity: [1, 0],
+                scale: [1, 0.95],
+                translateY: [0, -20], 
+                duration: 1000,
+                easing: "easeInQuad",
+                complete: function () {
+                  taraLayer.style.display = "none";
+                  galleryLayer.style.opacity = 1;
+                  startInfiniteScroll();
 
-                    contentLayer.style.opacity = 1; 
-                    contentLayer.classList.add('active'); 
-                    
-                    anime({
-                        targets: centerCard,
-                        opacity: [0, 1],
-                        scale: [0.95, 1],
-                        translateY: [20, 0],
-                        duration: 1000,
-                        easing: "easeOutQuart",
-                    });
+                  contentLayer.style.opacity = 1; 
+                  contentLayer.classList.add('active'); 
+                  
+                  // Animasi masuk form: Scale up dan fade in card utama
+                  anime({
+                      targets: centerCard,
+                      opacity: [0, 1],
+                      scale: [0.9, 1], // Efek scale-up dari kecil
+                      translateY: [20, 0],
+                      duration: 1000,
+                      easing: "easeOutQuart",
+                      boxShadow: [ // Mengatur shadow agar muncul bersama scale
+                        '0 40px 100px -20px rgba(0, 0, 0, 0.1)',
+                        '0 50px 100px -20px rgba(0, 0, 0, 0.3)'
+                      ],
+                  });
 
-                    anime({
-                        targets: [...formItems, ...benefitItems],
-                        opacity: [0, 1],
-                        translateY: [30, 0],
-                        duration: 900,
-                        easing: "easeOutQuart",
-                        delay: anime.stagger(80, { start: 400 }),
-                    });
-                  },
-                });
-              },
-            });
-          }, 1500); 
-        },
-      });
+                  // Animasi masuk item-item form/benefit
+                  anime({
+                      targets: [...formItems, ...benefitItems],
+                      opacity: [0, 1],
+                      translateY: [30, 0],
+                      duration: 900,
+                      easing: "easeOutQuart",
+                      delay: anime.stagger(80, { start: 600 }),
+                  });
+                },
+              });
+            }, 1500); 
+          },
+        });
+      }
 
+      // Interaksi Hover pada huruf TARA tetap berfungsi
       taraLetters.forEach((letter) => {
         letter.style.pointerEvents = "auto";
         letter.addEventListener("mouseenter", () => {
@@ -515,9 +508,11 @@
         });
       });
 
+      // Animasi saat klik Masuk tetap berfungsi
       const loginLink = document.getElementById("login-link");
       loginLink.addEventListener("click", (e) => {
         e.preventDefault();
+        
         anime({
           targets: centerCard,
           opacity: 0,
@@ -526,6 +521,7 @@
           duration: 600,
           easing: "easeInQuad",
         });
+
         anime({
           targets: galleryLayer,
           scale: 1.2,

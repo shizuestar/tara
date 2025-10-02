@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArtworkComment extends Model
 {
-    protected $fillable = ['artwork_id', 'user_id', 'parent_id', 'text', 'likes'];
+    protected $fillable = ['artwork_id', 'user_id', 'parent_id', 'text', 'likes', 'likes_count'];
 
     public function user()
     {

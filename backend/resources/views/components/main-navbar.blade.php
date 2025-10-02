@@ -63,7 +63,8 @@
                                 <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' . Auth::user()->username }}" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-gray-300">
                             </button>
                             <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200">
-                                <a href="{{ route('profile.edit', Auth::id()) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 font-medium">Profil</a>
+                                <a href="{{ route('profile.show', Auth::user()->username) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 font-medium">Lihat Profil</a>
+                                
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 font-medium">Logout</button>

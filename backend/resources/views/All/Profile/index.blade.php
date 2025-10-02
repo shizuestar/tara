@@ -22,7 +22,6 @@
     <div class="gradient-bg"></div>
     <div id="particles-js"></div>
 
-    <!-- Header -->
     <header class="py-6 px-8 flex justify-between items-center bg-white shadow-sm border-b border-gray-200 fixed top-0 w-full z-40">
         <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">

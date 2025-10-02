@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Member Satu',
                 'username' => 'member',
-                'email' => 'member@gmail.com',
+                'email' => 'byrn.uiy@gmail.com',
                 'password' => Hash::make('password'),
                 'avatar' => null,
                 'bio' => 'Akun anggota biasa',

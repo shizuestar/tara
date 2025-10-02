@@ -1,14 +1,19 @@
 <x-layout>
     @section('title', 'Daftar Project')
+
+    @push('styles')
+    <style>
+        body, * {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+
+    </style>
+   @endpush
+   
     <canvas id="particle-bg" class="fixed inset-0 w-full h-full -z-10 opacity-10"></canvas>
 
     <section class="pt-20 pb-20 bg-gradient-to-br from-white/95 to-gray-100/70 backdrop-blur-lg text-center font-['Space_Grotesk']">
         <div class="container mx-auto px-6 max-w-screen-2xl">
-            <!-- Notification Bell -->
-            <div class="flex justify-end mb-4 relative">
-                <i class="fas fa-bell notification-icon text-xl text-gray-900 cursor-pointer hover:scale-110 hover:text-gray-800 transition-all"></i>
-                <span id="unread-count" class="notification-badge absolute -top-2 -right-2 bg-gray-900 text-white text-xs font-medium rounded-full px-2 py-0.5"></span>
-            </div>
 
             <div class="mb-12 mt-20">
                 <h1 class="text-5xl md:text-7xl font-bold text-gray-900 inline-flex items-center font-['Space_Grotesk']">

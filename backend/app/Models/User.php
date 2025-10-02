@@ -60,6 +60,11 @@ class User extends Authenticatable
     //     return $this->hasMany(Community::class);
     // }
 
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
     // Community memberships
     public function communityMemberships(): HasMany
     {
@@ -180,8 +185,7 @@ class User extends Authenticatable
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_members')
-                    ->withPivot('role', 'joined_at')
-                    ->withTimestamps();
+                    ->withPivot('role', 'joined_at'); // FIX: Removed ->withTimestamps()
     }
 
     public function bookmarks()
