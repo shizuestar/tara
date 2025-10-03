@@ -17,7 +17,11 @@
             </div>
             
             <div class="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-lg animate-float z-10">
-                <img src="{{ $user->avatar ?? 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' . $user->id }}" alt="{{ $user->name }}'s profile picture" class="w-full h-full object-cover" />
+                <img 
+                    src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://th.bing.com/th/id/OIP.8Mi9Qr8E5N1dP0GX6Nx3bQHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7' }}" 
+                    alt="{{ Auth::user()->name }}'s profile picture" 
+                    class="w-full h-full object-cover" 
+                />
             </div>
             <div class="flex-1 text-center md:text-left z-10">
                 <h1 class="text-2xl md:text-3xl font-bold text-black animate-appear">{{ $user->name }}</h1>

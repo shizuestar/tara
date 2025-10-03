@@ -84,9 +84,9 @@ class User extends Authenticatable
     }
 
     // Artworks created by user
-    public function artworks(): HasMany
+    public function artworks()
     {
-        return $this->hasMany(Artwork::class, 'creator_id');
+        return $this->hasMany(Artwork::class, 'user_id');
     }
 
     // Artwork likes

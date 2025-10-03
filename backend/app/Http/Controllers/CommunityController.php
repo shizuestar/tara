@@ -15,7 +15,8 @@ class CommunityController extends Controller
     public function index(Request $request): View
     {
         $query = Community::with(['user:id,name,avatar', 'category:id,name'])
-            ->where('status', 'published');
+            ->where('status', 'published')
+            ->withCount('members');
 
         if ($request->has('category') && $request->category) {
             $query->whereHas('category', function ($q) use ($request) {

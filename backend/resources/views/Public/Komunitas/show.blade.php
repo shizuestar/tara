@@ -10,23 +10,6 @@
         </div>
     </div>
 
-    <!-- Notification Modal -->
-    <div id="notification-modal" class="notification-modal">
-        <i class="fas fa-times close-btn" onclick="toggleNotifications()"></i>
-        <div class="p-6">
-            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                Notifikasi
-            </h2>
-            <div class="flex gap-2 mb-4">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="unread">Belum Dibaca</button>
-            </div>
-            <button id="mark-all-read" class="px-4 py-2 bg-black text-white text-sm rounded-full hover:bg-yellow-400 hover:text-black transition mb-4">
-                Tandai Semua Dibaca
-            </button>
-            <div id="notification-list" class="space-y-4"></div>
-        </div>
-    </div>
 
     <!-- Community Detail Section -->
     <section class="relative pt-24 pb-12 bg-white">
