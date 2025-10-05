@@ -1,5 +1,19 @@
 <x-admin-layout>
+    <style>
+        body, * {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
+    </style>
     <div class="bg-white rounded-xl shadow-sm p-4">
+        <!-- Notification Container -->
+        <div id="notificationContainer"></div>
+
         <!-- Display Session Messages -->
         @if (session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg flex items-center gap-2">
@@ -7,16 +21,20 @@
                 {{ session('success') }}
             </div>
         @endif
-        @if (session('error') || $errors->has('error'))
+        @if ($errors->any())
             <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
                 <i class="fas fa-exclamation-circle"></i>
-                {{ session('error') ?? $errors->first('error') }}
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
         <!-- Page Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-            <h1 class="text-lg font-semibold flex items-center gap-2 text-gray-900 font-['Space_Grotesk']">
+            <h1 class="text-lg font-semibold flex items-center gap-2 text-gray-900">
                 <i class="fas fa-users text-yellow-400 text-base"></i>
                 Manajemen Komunitas
             </h1>
@@ -28,7 +46,7 @@
 
         <!-- Chart Section -->
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-            <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
+            <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900">
                 <i class="fas fa-chart-bar text-yellow-400 text-sm"></i>
                 Distribusi Komunitas berdasarkan Jumlah Anggota
             </h3>
@@ -36,23 +54,23 @@
         </div>
 
         <div class="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-            <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900 font-['Space_Grotesk']">
+            <h3 class="text-base font-semibold flex items-center gap-2 mb-3 text-gray-900">
                 <i class="fas fa-filter text-yellow-400 text-sm"></i>
                 Filter Komunitas
             </h3>
             <form id="filterForm" action="{{ route('admin.communities.index') }}" method="GET">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     <div>
-                        <label for="type-filter" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Tipe</label>
-                        <select id="type-filter" name="type" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                        <label for="type-filter" class="block text-sm font-medium text-gray-900 mb-1">Tipe</label>
+                        <select id="type-filter" name="type" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                             <option value="">Semua Tipe</option>
                             <option value="public" {{ request('type') === 'public' ? 'selected' : '' }}>Publik</option>
                             <option value="private" {{ request('type') === 'private' ? 'selected' : '' }}>Privat</option>
                         </select>
                     </div>
                     <div>
-                        <label for="member-filter" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Jumlah Anggota</label>
-                        <select id="member-filter" name="member_count" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                        <label for="member-filter" class="block text-sm font-medium text-gray-900 mb-1">Jumlah Anggota</label>
+                        <select id="member-filter" name="member_count" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                             <option value="">Semua</option>
                             <option value="0-50" {{ request('member_count') === '0-50' ? 'selected' : '' }}>0-50</option>
                             <option value="51-100" {{ request('member_count') === '51-100' ? 'selected' : '' }}>51-100</option>
@@ -60,16 +78,16 @@
                         </select>
                     </div>
                     <div>
-                        <label for="status-filter" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Status</label>
-                        <select id="status-filter" name="status" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']">
+                        <label for="status-filter" class="block text-sm font-medium text-gray-900 mb-1">Status</label>
+                        <select id="status-filter" name="status" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
                             <option value="">Semua Status</option>
                             <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                            <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                            <option value="suspended" {{ request('status') === 'suspended' ? 'selected' : '' }}>Tidak Aktif</option>
                         </select>
                     </div>
                     <div>
-                        <label for="keyword-filter" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Kata Kunci</label>
-                        <input id="keyword-filter" type="text" name="keyword" value="{{ request('keyword') }}" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama atau deskripsi...">
+                        <label for="keyword-filter" class="block text-sm font-medium text-gray-900 mb-1">Kata Kunci</label>
+                        <input id="keyword-filter" type="text" name="keyword" value="{{ request('keyword') }}" class="w-full p-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari nama atau deskripsi...">
                     </div>
                 </div>
                 <div class="flex gap-3 mt-3">
@@ -88,7 +106,7 @@
         <!-- Grid View -->
         <div class="mb-6">
             <div class="flex justify-between items-center gap-3 mb-4">
-                <h2 class="text-base font-semibold text-gray-900 font-['Space_Grotesk']">Daftar Komunitas</h2>
+                <h2 class="text-base font-semibold text-gray-900">Daftar Komunitas</h2>
                 <div class="text-xs text-gray-800">Menampilkan {{ $communities->count() }} dari {{ $communities->total() }} komunitas</div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -99,7 +117,7 @@
                             <img src="{{ $community->avatar ? asset('storage/' . $community->avatar) : 'https://picsum.photos/id/' . ($community->id + 100) . '/100/100' }}" alt="Avatar {{ $community->name }}" class="rounded-full community-avatar relative z-10 ml-4">
                         </div>
                         <div class="p-3">
-                            <h3 class="font-semibold text-gray-900 mb-1 text-sm font-['Space_Grotesk']">{{ $community->name }}</h3>
+                            <h3 class="font-semibold text-gray-900 mb-1 text-sm">{{ $community->name }}</h3>
                             <p class="text-xs text-gray-800 mb-2">{{ Str::limit($community->description, 50) }}</p>
                             <div class="flex justify-between items-center mb-2">
                                 <div class="flex items-center text-xs text-gray-800">
@@ -131,24 +149,14 @@
         <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="createModal">
             <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 overflow-y-auto max-h-[90vh]">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
-                    <h3 class="text-lg font-semibold text-gray-900 font-['Space_Grotesk']">Tambah Komunitas Baru</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Tambah Komunitas Baru</h3>
                     <button class="text-xl text-gray-800 hover:text-gray-900" onclick="closeCreateModal()" aria-label="Tutup modal">&times;</button>
                 </div>
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <ul class="list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form id="createCommunityForm" action="{{ route('admin.communities.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="mb-4 col-span-2">
-                            <label for="cover_image" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Gambar Image</label>
+                            <label for="cover_image" class="block text-sm font-medium text-gray-900 mb-1">Gambar Image</label>
                             <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'create', 'cover_image')" onclick="document.getElementById('cover_image').click()">
                                 <input type="file" id="cover_image" name="cover_image" accept="image/*" class="hidden" onchange="previewImage(this, 'create_cover_image_preview')">
                                 <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
@@ -159,7 +167,7 @@
                             @enderror
                         </div>
                         <div class="mb-4 col-span-2">
-                            <label for="avatar" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Gambar Avatar</label>
+                            <label for="avatar" class="block text-sm font-medium text-gray-900 mb-1">Gambar Avatar</label>
                             <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'create', 'avatar')" onclick="document.getElementById('avatar').click()">
                                 <input type="file" id="avatar" name="avatar" accept="image/*" class="hidden" onchange="previewImage(this, 'create_avatar_preview')">
                                 <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
@@ -170,15 +178,15 @@
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Nama Komunitas</label>
-                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
+                            <label for="name" class="block text-sm font-medium text-gray-900 mb-1">Nama Komunitas</label>
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                             @error('name')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="category_id" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Kategori</label>
-                            <select id="category_id" name="category_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
+                            <label for="category_id" class="block text-sm font-medium text-gray-900 mb-1">Kategori</label>
+                            <select id="category_id" name="category_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                                 <option value="">Pilih Kategori</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_id') === $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
@@ -189,15 +197,15 @@
                             @enderror
                         </div>
                         <div class="mb-4 col-span-2">
-                            <label for="description" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Deskripsi</label>
-                            <textarea id="description" name="description" rows="3" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>{{ old('description') }}</textarea>
+                            <label for="description" class="block text-sm font-medium text-gray-900 mb-1">Deskripsi</label>
+                            <textarea id="description" name="description" rows="3" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>{{ old('description') }}</textarea>
                             @error('description')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="type" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Tipe Komunitas</label>
-                            <select id="type" name="type" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
+                            <label for="type" class="block text-sm font-medium text-gray-900 mb-1">Tipe Komunitas</label>
+                            <select id="type" name="type" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                                 <option value="public" {{ old('type') === 'public' ? 'selected' : '' }}>Publik</option>
                                 <option value="private" {{ old('type') === 'private' ? 'selected' : '' }}>Privat</option>
                             </select>
@@ -206,18 +214,18 @@
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="status" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Status</label>
-                            <select id="status" name="status" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
+                            <label for="status" class="block text-sm font-medium text-gray-900 mb-1">Status</label>
+                            <select id="status" name="status" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                                 <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                                <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                                <option value="suspended" {{ old('status') === 'suspended' ? 'selected' : '' }}>Tidak Aktif</option>
                             </select>
                             @error('status')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="creator_id" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Pembuat</label>
-                            <select id="creator_id" name="creator_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
+                            <label for="creator_id" class="block text-sm font-medium text-gray-900 mb-1">Pembuat</label>
+                            <select id="creator_id" name="creator_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                                 <option value="">Pilih Pembuat</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}" {{ old('creator_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
@@ -228,11 +236,11 @@
                             @enderror
                         </div>
                         <div class="mb-4 col-span-2">
-                            <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Moderator</label>
+                            <label class="block text-sm font-medium text-gray-900 mb-1">Moderator</label>
                             <div id="moderator_inputs_container">
                                 <div class="flex gap-2 mb-2 moderator-input-group">
                                     <div class="relative flex-grow">
-                                        <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama moderator..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
+                                        <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari nama moderator..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
                                         <div class="moderator_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
                                     </div>
                                     <button type="button" onclick="addModeratorInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
@@ -245,10 +253,10 @@
                             @enderror
                         </div>
                         <div class="mb-4 col-span-2">
-                            <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Peraturan Komunitas</label>
+                            <label class="block text-sm font-medium text-gray-900 mb-1">Peraturan Komunitas</label>
                             <div id="create_rules_container">
                                 <div class="flex gap-2 mb-2">
-                                    <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('create')">
+                                    <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('create')">
                                     <button type="button" onclick="addRule('create')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
                                 </div>
                             </div>
@@ -266,163 +274,145 @@
             </div>
         </div>
 
-<div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="editModal">
-    <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 overflow-y-auto max-h-[90vh]">
-        <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
-            <h3 class="text-lg font-semibold text-gray-900 font-['Space_Grotesk']">Edit Komunitas</h3>
-            <button class="text-xl text-gray-800 hover:text-gray-900" onclick="closeEditModal()" aria-label="Tutup modal">&times;</button>
-        </div>
-        @if ($errors->any())
-            <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
-                <i class="fas fa-exclamation-circle"></i>
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form id="editCommunityForm" action="" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <input type="hidden" id="edit_id" name="id">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="mb-4 col-span-2">
-                    <label for="edit_cover_image" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Gambar Image</label>
-                    <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'edit', 'cover_image')" onclick="document.getElementById('edit_cover_image').click()">
-                        <input type="file" id="edit_cover_image" name="cover_image" accept="image/*" class="hidden" onchange="previewImage(this, 'edit_cover_image_preview')">
-                        <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
-                    </div>
-                    <img id="edit_cover_image_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview cover_image">
-                    @error('cover_image')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+        <!-- Edit Modal -->
+        <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="editModal">
+            <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 overflow-y-auto max-h-[90vh]">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
+                    <h3 class="text-lg font-semibold text-gray-900">Edit Komunitas</h3>
+                    <button class="text-xl text-gray-800 hover:text-gray-900" onclick="closeEditModal()" aria-label="Tutup modal">&times;</button>
                 </div>
-                <div class="mb-4 col-span-2">
-                    <label for="edit_avatar" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Gambar Avatar</label>
-                    <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'edit', 'avatar')" onclick="document.getElementById('edit_avatar').click()">
-                        <input type="file" id="edit_avatar" name="avatar" accept="image/*" class="hidden" onchange="previewImage(this, 'edit_avatar_preview')">
-                        <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
-                    </div>
-                    <img id="edit_avatar_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview Avatar">
-                    @error('avatar')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="edit_name" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Nama Komunitas</label>
-                    <input type="text" id="edit_name" name="name" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
-                    @error('name')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="edit_category_id" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Kategori</label>
-                    <select id="edit_category_id" name="category_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
-                        <option value="">Pilih Kategori</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4 col-span-2">
-                    <label for="edit_description" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Deskripsi</label>
-                    <textarea id="edit_description" name="description" rows="3" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required></textarea>
-                    @error('description')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="edit_type" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Tipe Komunitas</label>
-                    <select id="edit_type" name="type" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
-                        <option value="public">Publik</option>
-                        <option value="private">Privat</option>
-                    </select>
-                    @error('type')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="edit_status" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Status</label>
-                    <select id="edit_status" name="status" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
-                        <option value="active">Aktif</option>
-                        <option value="inactive">Tidak Aktif</option>
-                    </select>
-                    @error('status')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="edit_creator_id" class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Pembuat</label>
-                    <select id="edit_creator_id" name="creator_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" required>
-                        <option value="">Pilih Pembuat</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('creator_id')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4 col-span-2">
-                    <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Moderator</label>
-                    <div id="edit_moderator_inputs_container">
-                        <div class="flex gap-2 mb-2 moderator-input-group">
-                            <div class="relative flex-grow">
-                                <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama moderator..." onkeyup="searchMembers('edit', this.value, this, document.getElementById('edit_id').value)" autocomplete="off">
-                                <div class="moderator_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
+                <div id="editNotificationContainer"></div>
+                <form id="editCommunityForm" action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="edit_id" name="id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4 col-span-2">
+                            <label for="edit_cover_image" class="block text-sm font-medium text-gray-900 mb-1">Gambar Image</label>
+                            <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'edit', 'cover_image')" onclick="document.getElementById('edit_cover_image').click()">
+                                <input type="file" id="edit_cover_image" name="cover_image" accept="image/*" class="hidden" onchange="previewImage(this, 'edit_cover_image_preview')">
+                                <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
                             </div>
-                            <button type="button" onclick="addModeratorInput('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                            <img id="edit_cover_image_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview cover_image">
+                            @error('cover_image')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4 col-span-2">
+                            <label for="edit_avatar" class="block text-sm font-medium text-gray-900 mb-1">Gambar Avatar</label>
+                            <div class="w-full h-32 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center cursor-pointer hover:border-yellow-400" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'edit', 'avatar')" onclick="document.getElementById('edit_avatar').click()">
+                                <input type="file" id="edit_avatar" name="avatar" accept="image/*" class="hidden" onchange="previewImage(this, 'edit_avatar_preview')">
+                                <p class="text-sm text-gray-600">Seret dan lepas gambar atau klik untuk memilih</p>
+                            </div>
+                            <img id="edit_avatar_preview" class="mt-2 w-full h-48 object-cover rounded-lg hidden" alt="Preview Avatar">
+                            @error('avatar')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_name" class="block text-sm font-medium text-gray-900 mb-1">Nama Komunitas</label>
+                            <input type="text" id="edit_name" name="name" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                            @error('name')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_category_id" class="block text-sm font-medium text-gray-900 mb-1">Kategori</label>
+                            <select id="edit_category_id" name="category_id" class="w-fullовы p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4 col-span-2">
+                            <label for="edit_description" class="block text-sm font-medium text-gray-900 mb-1">Deskripsi</label>
+                            <textarea id="edit_description" name="description" rows="3" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required></textarea>
+                            @error('description')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_type" class="block text-sm font-medium text-gray-900 mb-1">Tipe Komunitas</label>
+                            <select id="edit_type" name="type" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                                <option value="public">Publik</option>
+                                <option value="private">Privat</option>
+                            </select>
+                            @error('type')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_status" class="block text-sm font-medium text-gray-900 mb-1">Status</label>
+                            <select id="edit_status" name="status" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                                <option value="active">Aktif</option>
+                                <option value="suspended">Tidak Aktif</option>
+                            </select>
+                            @error('status')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_creator_id" class="block text-sm font-medium text-gray-900 mb-1">Pembuat</label>
+                            <select id="edit_creator_id" name="creator_id" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                                <option value="">Pilih Pembuat</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('creator_id')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4 col-span-2">
+                            <label class="block text-sm font-medium text-gray-900 mb-1">Moderator</label>
+                            <div id="edit_moderator_inputs_container">
+                                <div class="flex gap-2 mb-2 moderator-input-group">
+                                    <div class="relative flex-grow">
+                                        <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari nama moderator..." onkeyup="searchMembers('edit', this.value, this, document.getElementById('edit_id').value)" autocomplete="off">
+                                        <div class="moderator_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
+                                    </div>
+                                    <button type="button" onclick="addModeratorInput('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                                </div>
+                            </div>
+                            <div id="edit_moderators" class="flex flex-wrap gap-2 mt-2"></div>
+                            <input type="hidden" id="edit_moderator_ids" name="moderator_ids">
+                            @error('moderator_ids')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4 col-span-2">
+                            <label class="block text-sm font-medium text-gray-900 mb-1">Peraturan Komunitas</label>
+                            <div id="edit_rules_container">
+                                <div class="flex gap-2 mb-2">
+                                    <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('edit')">
+                                    <button type="button" onclick="addRule('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="edit_rules" name="rules">
+                            @error('rules')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-                    <div id="edit_moderators" class="flex flex-wrap gap-2 mt-2"></div>
-                    <input type="hidden" id="edit_moderator_ids" name="moderator_ids">
-                    @error('moderator_ids')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4 col-span-2">
-                    <label class="block text-sm font-medium text-gray-900 mb-1 font-['Space_Grotesk']">Peraturan Komunitas</label>
-                    <div id="edit_rules_container">
-                        <div class="flex gap-2 mb-2">
-                            <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('edit')">
-                            <button type="button" onclick="addRule('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
-                        </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button type="button" class="bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors" onclick="closeEditModal()">Batal</button>
+                        <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors">Simpan Perubahan</button>
                     </div>
-                    <input type="hidden" id="edit_rules" name="rules">
-                    @error('rules')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                </form>
             </div>
-            <div class="flex justify-end gap-3 mt-6">
-                <button type="button" class="bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors" onclick="closeEditModal()">Batal</button>
-                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors">Simpan Perubahan</button>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
         <!-- Delete Modal -->
         <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="deleteModal">
             <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3">
-                    <h3 class="text-lg font-semibold text-gray-900 font-['Space_Grotesk']">Konfirmasi Hapus</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Konfirmasi Hapus</h3>
                     <button class="text-xl text-gray-800 hover:text-gray-900" onclick="closeDeleteModal()" aria-label="Tutup modal">&times;</button>
                 </div>
-                @if ($errors->any())
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg flex items-center gap-2">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <ul class="list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <p class="text-sm text-gray-800 mb-6">Apakah Anda yakin ingin menghapus komunitas <span id="deleteCommunityName" class="font-medium"></span>?</p>
                 <form id="deleteCommunityForm" action="" method="POST">
                     @csrf
@@ -474,6 +464,7 @@
     @endpush
 
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             // Chart Data
             const chartData = {
@@ -490,27 +481,10 @@
                 },
                 options: {
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Jumlah Komunitas'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Rentang Anggota'
-                            }
-                        }
+                        y: { beginAtZero: true, title: { display: true, text: 'Jumlah Komunitas' } },
+                        x: { title: { display: true, text: 'Rentang Anggota' } }
                     },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#111827'
-                            }
-                        }
-                    }
+                    plugins: { legend: { labels: { color: '#111827' } } }
                 }
             };
 
@@ -518,6 +492,18 @@
             const ctx = document.getElementById('chartCanvas').getContext('2d');
             new Chart(ctx, chartData);
 
+            // Notification Handling
+            function showNotification(message, type, containerId = 'notificationContainer') {
+                const container = document.getElementById(containerId);
+                container.innerHTML = ''; // Clear previous notifications
+                const notificationDiv = document.createElement('div');
+                notificationDiv.className = `mb-4 p-4 rounded-lg flex items-center gap-2 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+                notificationDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>${message}`;
+                container.prepend(notificationDiv);
+                setTimeout(() => notificationDiv.remove(), 5000);
+            }
+
+            // Create Modal
             function showCreateModal() {
                 document.getElementById('createModal').classList.remove('hidden');
                 document.getElementById('createModal').classList.add('modal-open');
@@ -525,7 +511,7 @@
                 document.getElementById('moderator_ids').value = '';
                 document.getElementById('create_rules_container').innerHTML = `
                     <div class="flex gap-2 mb-2">
-                        <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('create')">
+                        <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('create')">
                         <button type="button" onclick="addRule('create')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
                     </div>
                 `;
@@ -536,7 +522,7 @@
                 document.getElementById('moderator_inputs_container').innerHTML = `
                     <div class="flex gap-2 mb-2 moderator-input-group">
                         <div class="relative flex-grow">
-                            <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama moderator..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
+                            <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari nama moderator..." onkeyup="searchMembers('create', this.value, this)" autocomplete="off">
                             <div class="moderator_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
                         </div>
                         <button type="button" onclick="addModeratorInput()" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
@@ -549,24 +535,15 @@
                 document.getElementById('createModal').classList.remove('modal-open');
             }
 
+            // Edit Modal
             function showEditModal(communityId) {
-                fetch(`/admin/komunitas/${communityId}/edit`)
+                document.getElementById('editNotificationContainer').innerHTML = ''; // Clear notifications
+                fetch(`/admin/communities/${communityId}/edit`)
                     .then(response => {
-                        if (!response.ok) {
-                            if (response.status === 404) {
-                                throw new Error('Komunitas tidak ditemukan. Mungkin telah dihapus atau ID tidak valid.');
-                            } else if (response.status === 500) {
-                                return response.json().then(data => {
-                                    throw new Error(data.error || 'Terjadi kesalahan server saat memuat data komunitas.');
-                                });
-                            } else {
-                                throw new Error('Gagal memuat data komunitas. Status: ' + response.status);
-                            }
-                        }
+                        if (!response.ok) throw new Error(response.status === 404 ? 'Komunitas tidak ditemukan.' : 'Gagal memuat data komunitas.');
                         return response.json();
                     })
                     .then(community => {
-                        // Populate form fields
                         document.getElementById('edit_id').value = community.id;
                         document.getElementById('edit_name').value = community.name;
                         document.getElementById('edit_description').value = community.description;
@@ -574,117 +551,50 @@
                         document.getElementById('edit_status').value = community.status;
                         document.getElementById('edit_category_id').value = community.category_id || '';
                         document.getElementById('edit_creator_id').value = community.creator_id || '';
-
-                        // Populate cover image preview
                         const coverPreview = document.getElementById('edit_cover_image_preview');
-                        if (community.cover_image) {
-                            coverPreview.src = community.cover_image;
-                            coverPreview.classList.remove('hidden');
-                        } else {
-                            coverPreview.classList.add('hidden');
-                        }
-
-                        // Populate avatar preview
+                        coverPreview.src = community.cover_image || '';
+                        coverPreview.classList.toggle('hidden', !community.cover_image);
                         const avatarPreview = document.getElementById('edit_avatar_preview');
-                        if (community.avatar) {
-                            avatarPreview.src = community.avatar;
-                            avatarPreview.classList.remove('hidden');
-                        } else {
-                            avatarPreview.classList.add('hidden');
-                        }
-
-                        // Populate moderators
+                        avatarPreview.src = community.avatar || '';
+                        avatarPreview.classList.toggle('hidden', !community.avatar);
                         const moderatorsContainer = document.getElementById('edit_moderators');
                         moderatorsContainer.innerHTML = '';
                         if (community.moderator_ids && community.moderator_ids.length > 0) {
                             community.moderator_ids.forEach(id => {
                                 fetch(`/admin/users/${id}`)
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            if (response.status === 404) {
-                                                console.warn(`Pengguna dengan ID ${id} tidak ditemukan.`);
-                                                return { id, name: `Pengguna ID ${id} (Tidak Ditemukan)` };
-                                            }
-                                            throw new Error('Gagal memuat data pengguna.');
-                                        }
-                                        return response.json();
-                                    })
-                                    .then(user => {
-                                        addModeratorTag(user.id, 'edit', user.name);
-                                    })
-                                    .catch(error => {
-                                        console.error('Error fetching user data:', error);
-                                        alert(`Gagal memuat data moderator: ${error.message}`);
-                                    });
+                                    .then(response => response.json())
+                                    .then(user => addModeratorTag(user.id, 'edit', user.name))
+                                    .catch(() => addModeratorTag(id, 'edit', `Pengguna ID ${id}`));
                             });
                         }
-
-                        // Populate rules
                         const rulesContainer = document.getElementById('edit_rules_container');
                         rulesContainer.innerHTML = `
                             <div class="flex gap-2 mb-2">
-                                <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('edit')">
+                                <input type="text" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Masukkan peraturan" onkeydown="if(event.key === 'Enter') addRule('edit')">
                                 <button type="button" onclick="addRule('edit')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>
                             </div>
                         `;
                         if (community.rules && community.rules.length > 0) {
                             community.rules.forEach(rule => addRuleTag(rule, 'edit'));
                         }
-
-                        // Set form action
-                        document.getElementById('editCommunityForm').action = `/admin/komunitas/${community.id}`;
-
-                        // Show modal
-                        const modal = document.getElementById('editModal');
-                        modal.classList.remove('hidden');
-                        modal.classList.add('modal-open');
+                        document.getElementById('editCommunityForm').action = `/admin/communities/${community.id}`;
+                        document.getElementById('editModal').classList.remove('hidden');
+                        document.getElementById('editModal').classList.add('modal-open');
                     })
-                    .catch(error => {
-                        console.error('Error fetching community data:', error);
-                        let errorMessage = 'Gagal memuat data komunitas. ';
-                        if (error.message.includes('Komunitas tidak ditemukan')) {
-                            errorMessage = error.message;
-                        } else if (error.message.includes('Terjadi kesalahan server')) {
-                            errorMessage = error.message;
-                        } else if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
-                            errorMessage = 'Gagal terhubung ke server. Periksa koneksi internet Anda.';
-                        } else {
-                            errorMessage += 'Silakan coba lagi atau hubungi administrator.';
-                        }
-                        alert(errorMessage);
-                    });
+                    .catch(error => showNotification(error.message, 'error', 'editNotificationContainer'));
             }
-
-function closeEditModal() {
-    const modal = document.getElementById('editModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('modal-open');
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const editModal = document.getElementById('editModal');
-    if (event.target === editModal) {
-        closeEditModal();
-    }
-};
-
-// Close modal on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeEditModal();
-    }
-});
 
             function closeEditModal() {
                 document.getElementById('editModal').classList.add('hidden');
                 document.getElementById('editModal').classList.remove('modal-open');
+                document.getElementById('editNotificationContainer').innerHTML = '';
             }
 
+            // Delete Modal
             function showDeleteModal(communityName, communityId) {
                 document.getElementById('deleteCommunityName').textContent = communityName;
                 document.getElementById('delete_id').value = communityId;
-                document.getElementById('deleteCommunityForm').action = `/admin/komunitas/${communityId}`;
+                document.getElementById('deleteCommunityForm').action = `/admin/communities/${communityId}`;
                 document.getElementById('deleteModal').classList.remove('hidden');
                 document.getElementById('deleteModal').classList.add('modal-open');
             }
@@ -694,6 +604,46 @@ document.addEventListener('keydown', function(e) {
                 document.getElementById('deleteModal').classList.remove('modal-open');
             }
 
+            // Form Submission Handling
+            function handleFormSubmission(formId, successMessage, closeModalFn, notificationContainerId = 'notificationContainer') {
+                const form = document.getElementById(formId);
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    // Adjust method for DELETE requests
+                    const method = formId === 'deleteCommunityForm' ? 'DELETE' : form.method;
+                    fetch(form.action, {
+                        method: method,
+                        headers: { 
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                throw new Error(data.message || `Gagal memproses permintaan: ${response.statusText}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        showNotification(successMessage, 'success', notificationContainerId);
+                        closeModalFn();
+                        setTimeout(() => location.reload(), 1000);
+                    })
+                    .catch(error => {
+                        showNotification(error.message, 'error', notificationContainerId);
+                    });
+                });
+            }
+
+            handleFormSubmission('createCommunityForm', 'Komunitas berhasil dibuat!', closeCreateModal);
+            handleFormSubmission('editCommunityForm', 'Komunitas berhasil diperbarui!', closeEditModal, 'editNotificationContainer');
+            handleFormSubmission('deleteCommunityForm', 'Komunitas berhasil dihapus!', closeDeleteModal);
+
+            // Utility Functions
             function allowDrop(event) {
                 event.preventDefault();
                 event.target.classList.add('border-yellow-400');
@@ -734,7 +684,7 @@ document.addEventListener('keydown', function(e) {
                 newInputGroup.className = 'flex gap-2 mb-2 moderator-input-group';
                 newInputGroup.innerHTML = `
                     <div class="relative flex-grow">
-                        <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 font-['Space_Grotesk']" placeholder="Cari nama moderator..." onkeyup="searchMembers('${mode}', this.value, this${mode === 'edit' ? ', document.getElementById(\'edit_id\').value' : ''})" autocomplete="off">
+                        <input type="text" class="moderator_search w-full p-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Cari nama moderator..." onkeyup="searchMembers('${mode}', this.value, this${mode === 'edit' ? ', document.getElementById(\'edit_id\').value' : ''})" autocomplete="off">
                         <div class="moderator_suggestions hidden absolute bg-white border border-gray-200 rounded-lg shadow-md w-full max-h-40 overflow-y-auto z-10"></div>
                     </div>
                     <button type="button" onclick="addModeratorInput('${mode}')" class="bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition-colors"><i class="fas fa-plus"></i> Tambah</button>

@@ -22,6 +22,7 @@ class ProfileController extends Controller
     {
         $user = User::where('username', $username)
             ->select('id', 'name', 'username', 'avatar', 'bio', 'role', 'status', 'social_links')
+            ->with('members') 
             ->firstOrFail();
 
         return $this->loadProfileData($user);

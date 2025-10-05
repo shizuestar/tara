@@ -1,13 +1,11 @@
 <x-layout>
-
     @push('styles')
     <style>
         body, * {
             font-family: 'Space Grotesk', sans-serif !important;
         }
-
     </style>
-   @endpush
+    @endpush
 
     <main class="mt-16 max-w-5xl mx-auto px-4 min-h-[calc(100vh-80px-160px)]">
         <section class="py-16 flex flex-col md:flex-row items-center gap-8 bg-white/50 backdrop-blur-sm relative overflow-hidden">
@@ -55,7 +53,7 @@
         <hr class="border-t border-gray-100" />
         
         <nav class="flex gap-4 border-b border-gray-200 mt-4 mb-6 overflow-x-auto">
-            <button class="tab-link active relative pb-2 text-sm font-bold text-black transition-all duration-300 hover:font-bold before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-black before:scale-x-100 before:hover:scale-x-100 before:transition-transform before:duration-300" data-tab="overview">Ikhtisar</button>
+            <button class="tab-link relative pb-2 text-sm text-gray-600 hover:text-black hover:font-bold transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-black before:scale-x-0 before:hover:scale-x-100 before:transition-transform before:duration-300" data-tab="overview">Ikhtisar</button>
             <button class="tab-link relative pb-2 text-sm text-gray-600 hover:text-black hover:font-bold transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-black before:scale-x-0 before:hover:scale-x-100 before:transition-transform before:duration-300" data-tab="portfolio">Portofolio</button>
             <button class="tab-link relative pb-2 text-sm text-gray-600 hover:text-black hover:font-bold transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-black before:scale-x-0 before:hover:scale-x-100 before:transition-transform before:duration-300" data-tab="projects">Project</button>
             <button class="tab-link relative pb-2 text-sm text-gray-600 hover:text-black hover:font-bold transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-black before:scale-x-0 before:hover:scale-x-100 before:transition-transform before:duration-300" data-tab="activity">Aktivitas</button>
@@ -214,22 +212,56 @@
 
             <section id="community" class="tab-section hidden py-16 pt-6 bg-white/60 backdrop-blur-sm">
                 <div class="max-w-5xl mx-auto">
-                    <div class="mb-6 text-center">
+                    <div class="mb-8 text-center">
                         <h2 class="text-2xl font-bold text-black animate-appear">Komunitas Saya</h2>
                         <p class="text-sm text-gray-600 mt-1 animate-appear">Grup dan forum yang Anda ikuti 🌱</p>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        @foreach($user->communities as $community)
-                            <div class="category-card bg-white/90 backdrop-blur-md border border-gray-100 p-6 rounded-xl hover:shadow-lg hover:-translate-y-2 hover:border-black transition-all duration-400">
-                                <h3 class="text-base font-semibold text-black">{{ $community->name }}</h3>
-                                <p class="text-xs text-gray-600 mt-1">{{ $community->description }}</p>
-                                <div class="flex items-center mt-3">
-                                    <img class="w-6 h-6 rounded-full mr-2" src="https://i.pravatar.cc/32?img={{ $community->id }}" alt="{{ $community->name }} member 1" />
-                                    <img class="w-6 h-6 rounded-full mr-2" src="https://i.pravatar.cc/32?img={{ $community->id + 1 }}" alt="{{ $community->name }} member 2" />
-                                    <span class="text-xs text-gray-600">+{{ $community->member_count }} anggota</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @forelse($user->communities as $community)
+                            <a href="{{ route('komunitas.show', $community->id) }}" 
+                               class="relative bg-white border border-gray-100 shadow-xl rounded-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-400 block group overflow-hidden transform">
+                                <div class="h-28 bg-gray-900/90 relative overflow-hidden">
+                                    <img src="{{ $community->cover_image ? Storage::url($community->cover_image) : 'https://picsum.photos/400/150?random=' . $community->id }}" 
+                                         alt="Cover {{ $community->name }}" 
+                                         class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                                    />
+                                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
                                 </div>
+                                <div class="p-4 relative -mt-8">
+                                    <img src="{{ $community->avatar ? Storage::url($community->avatar) : 'https://i.pravatar.cc/60?img=' . $community->id }}" 
+                                         alt="Avatar {{ $community->name }}" 
+                                         class="w-14 h-14 object-cover rounded-full border-4 border-white shadow-md mb-3"
+                                    />
+                                    <h3 class="text-lg font-bold text-black truncate mt-1">{{ $community->name }}</h3>
+                                    <p class="text-xs text-gray-600 line-clamp-2">{{ $community->description ?? 'Tidak ada deskripsi komunitas.' }}</p>
+                                    <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                                        @php
+                                            $membership = $community->members()->where('user_id', $user->id)->first()->pivot ?? null;
+                                            $role = $membership ? ucfirst($membership->role) : 'Anggota';
+                                            $roleClass = match($role) {
+                                                'Admin' => 'bg-red-100 text-red-700',
+                                                'Moderator' => 'bg-blue-100 text-blue-700',
+                                                default => 'bg-gray-100 text-gray-700',
+                                            };
+                                        @endphp
+                                        <div class="flex items-center text-xs text-gray-500">
+                                            <i class="fas fa-users mr-1"></i>
+                                            <span>{{ number_format($community->member_count ?? 0) }} Anggota</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        @empty
+                            <div class="col-span-full text-center py-10 border border-dashed border-gray-200 rounded-xl bg-white/70">
+                                <svg class="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20v-2c0-.584-.117-1.144-.356-1.643m0 0C12.871 14.774 10 14.582 10 14.582V14M10 14l-2.293-2.293C7.228 11.228 6.671 11 6 11c-.671 0-1.228.228-1.707.707L2 14m10 0v-4"></path></svg>
+                                <p class="text-base font-semibold text-gray-600 mt-2">Belum Bergabung dengan Komunitas</p>
+                                <p class="text-sm text-gray-500 mt-1">Ayo jelajahi dan temukan grup yang sesuai dengan minat Anda!</p>
+                                <a href="{{ route('komunitas.index') }}" class="mt-4 inline-block text-sm text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200">
+                                    Lihat Semua Komunitas →
+                                </a>
                             </div>
-                        @endforeach
+                        @endforelse
                     </div>
                 </div>
             </section>
@@ -238,17 +270,6 @@
 
     @push('styles')
         <style>
-            /* CATATAN: Animasi kustom seperti 'animate-float', 'animate-appear', 'animate-slideIn', 
-               'animate-drift', 'animate-ropeSway', 'animate-fadeIn' dan properti kustom 
-               seperti '[perspective:1000px]', 'rotate-y-180', '[backface-visibility:hidden]' 
-               membutuhkan konfigurasi di tailwind.config.js (atau plugin kustom) 
-               agar sepenuhnya "Tailwind". Untuk tujuan demo, nama kelas dipertahankan 
-               dengan asumsi kustomisasi sudah diatur, dan CSS mentah dihapus. 
-               
-               Saya menambahkan kelas 'group' dan menggunakan sintaks 'group-hover:' 
-               untuk menggantikan beberapa pseudo-element logic.
-            */
-
             .tab-link.active::after {
                 transform: scaleX(1);
             }
@@ -257,27 +278,22 @@
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                width: 100%; /* Ubah dari 0 ke 100% untuk transisi scale */
+                width: 100%;
                 height: 2px;
                 background-color: black;
                 transition: transform 0.3s ease;
-                transform: scaleX(0); /* Awalnya 0 */
-                transform-origin: bottom left; /* Transisi dari kiri */
+                transform: scaleX(0);
+                transform-origin: bottom left;
             }
             .tab-link:hover::after {
                 transform: scaleX(1);
             }
-
-            /* Gallery Item Flip Logic - Menggunakan utilitas transform dan backface */
             .gallery-item.flipped .flip-card {
                 transform: rotateY(180deg);
             }
             .flip-card-back {
-                transform: rotateY(180deg); /* Awalnya putar 180 */
+                transform: rotateY(180deg);
             }
-            
-            /* Shine effects untuk button dan card diganti dengan utilitas group-hover */
-            
         </style>
     @endpush
 
@@ -287,8 +303,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const ctx = document.getElementById("userActivityChart").getContext("2d");
-                // Konversi warna chart ke utilitas Tailwind yang digunakan (black, gray-700, gray-600, gray-500)
-                const chartColors = ["#000000", "#374151", "#4b5563", "#6b7280"]; 
+                const chartColors = ["#000000", "#374151", "#4b5563", "#6b7280"];
 
                 new Chart(ctx, {
                     type: "bar",
@@ -297,7 +312,7 @@
                         datasets: [{
                             label: "Aktivitas",
                             data: @json($activityStats),
-                            backgroundColor: chartColors, // Menggunakan array warna yang diubah
+                            backgroundColor: chartColors,
                             borderRadius: 6,
                             barThickness: 16,
                         }],
@@ -332,17 +347,27 @@
 
                 const tabLinks = document.querySelectorAll(".tab-link");
                 const tabSections = document.querySelectorAll(".tab-section");
+
+                const setActiveTab = (tabId) => {
+                    tabLinks.forEach((l) => {
+                        l.classList.remove("active", "font-bold", "text-black");
+                        l.classList.add("text-gray-600");
+                        l.classList.toggle("active", l.dataset.tab === tabId);
+                        l.classList.toggle("font-bold", l.dataset.tab === tabId);
+                        l.classList.toggle("text-black", l.dataset.tab === tabId);
+                        l.classList.toggle("text-gray-600", l.dataset.tab !== tabId);
+                    });
+                    tabSections.forEach((s) => {
+                        s.classList.add("hidden");
+                        s.classList.toggle("hidden", s.id !== tabId);
+                    });
+                };
+
+                setActiveTab("overview");
+
                 tabLinks.forEach((link) => {
                     link.addEventListener("click", () => {
-                        tabLinks.forEach((l) => {
-                            l.classList.remove("active", "font-bold", "text-black");
-                            l.classList.add("text-gray-600");
-                        });
-                        link.classList.add("active", "font-bold", "text-black");
-                        link.classList.remove("text-gray-600");
-
-                        tabSections.forEach((s) => s.classList.add("hidden"));
-                        document.getElementById(link.dataset.tab).classList.remove("hidden");
+                        setActiveTab(link.dataset.tab);
                     });
                 });
 
@@ -368,7 +393,6 @@
 
                 document.querySelector('[data-filter="year"]').addEventListener("change", (e) => {
                     const year = e.target.value;
-                    // Pastikan tombol kategori aktif juga disorot saat tahun berubah
                     const activeCategoryButton = document.querySelector(".filter-button.active:not([data-filter='year'])");
                     const activeCategory = activeCategoryButton ? activeCategoryButton.dataset.filter : "all";
                     
@@ -400,7 +424,6 @@
                     });
                 }
 
-                // Toggle logic untuk badge dan portfolio item
                 badgeItems.forEach((item) => {
                     item.addEventListener("click", (e) => {
                         if (window.innerWidth <= 768) {
@@ -432,7 +455,6 @@
                     });
                 });
 
-                // Intersection Observer (for scroll animations)
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {

@@ -83,6 +83,13 @@ Route::get('/komunitas/{community}', [CommunityController::class, 'show'])->name
 Route::get('/komunitas/{community}/edit', [CommunityController::class, 'edit'])->name('komunitas.edit');
 Route::put('/komunitas/{community}', [CommunityController::class, 'update'])->name('komunitas.update');
 Route::delete('/komunitas/{community}', [CommunityController::class, 'destroy'])->name('komunitas.destroy');
+Route::post('/komunitas/{community}/join', [CommunityController::class, 'join'])->name('komunitas.join');
+Route::get('/komunitas/{community}/posts/create', [CommunityController::class, 'createPostForm'])->name('posts.create');
+Route::post('/komunitas/{community}/posts', [CommunityController::class, 'storePost'])->name('posts.store');
+Route::get('posts/{post}/edit', [CommunityController::class, 'editPostForm'])->name('posts.edit'); // Baru
+    Route::put('posts/{post}', [CommunityController::class, 'updatePost'])->name('posts.update'); // Baru
+    Route::delete('posts/{post}', [CommunityController::class, 'destroyPost'])->name('posts.destroy'); // Baru
+Route::get('/komunitas/{community}/posts/{post}', [CommunityController::class, 'showPost'])->name('posts.show');
 
 Route::resource('projects', ProjectController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update']);
 Route::post('/projects/{project}/comment', [ProjectController::class, 'comment'])->name('projects.comment');

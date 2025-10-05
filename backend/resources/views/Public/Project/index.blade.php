@@ -6,7 +6,12 @@
         body, * {
             font-family: 'Space Grotesk', sans-serif !important;
         }
-
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
     </style>
    @endpush
    

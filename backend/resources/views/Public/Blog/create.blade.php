@@ -1,11 +1,19 @@
 <x-layout>
+   @push('styles')
     <style>
         body, * {
             font-family: 'Space Grotesk', sans-serif !important;
         }
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
     </style>
+    @endpush
 
-    <section class="py-16 bg-gray-100 min-h-screen flex items-center justify-center">
+    <section class="py-16 min-h-screen flex items-center justify-center mt-10">
         <div class="max-w-4xl w-full mx-auto px-6">
             
             <h1 class="text-4xl font-extrabold text-gray-900 mb-6 text-center">Tulis Artikel Baru</h1>

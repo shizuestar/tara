@@ -1,4 +1,15 @@
 <x-layout>
+    <style>
+        body, * {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
+    </style>
     @section('title', $project->project_name)
 
     <div id="join-modal" class="join-modal fixed top-0 left-0 w-full h-full bg-black/60 flex items-center justify-center z-60 hidden">

@@ -1,847 +1,413 @@
 <x-layout>
-    <!-- Moderator Modal -->
-    <div id="moderator-modal" class="moderator-modal">
-        <div class="moderator-modal-content">
-            <i class="fas fa-times close-btn" onclick="toggleModeratorModal()"></i>
-            <h2 class="text-2xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                Daftar Moderator
-            </h2>
-            <ul id="moderator-list" class="moderator-list"></ul>
-        </div>
-    </div>
+    <style>
+        body, * {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        .fas {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+            font-weight: 900;
+        }
+        /* CSS Tambahan untuk JS */
+        .hidden { display: none !important; }
+    </style>
+    
+    <section class="pt-16 pb-12 mt-8 bg-white min-h-screen">
+        <div class="px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-4">
 
+            <aside class="w-full md:w-64 bg-white border border-gray-200 rounded-xl p-6 sticky top-4 h-[calc(100vh-2rem)] overflow-y-auto shadow-sm no-scrollbar sidebar left-sidebar space-y-6 flex-shrink-0">
 
-    <!-- Community Detail Section -->
-    <section class="relative pt-24 pb-12 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- Notification Bar -->
-            <div id="notification-bar" class="notification-bar hidden" onclick="dismissNotification()">
-                <p class="text-sm text-gray-700">
-                    Selamat datang di komunitas! Lihat aktivitas terbaru.
-                </p>
-            </div>
-
-            <!-- Main Content and Sidebar -->
-            <div class="forum-section">
-                <!-- Main Content -->
-                <div class="flex-1">
-                    <div class="mb-8 flex items-center gap-3">
-                        <a href="{{ route('komunitas.index') }}" 
-                            class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
-                            style="font-family: 'Space Grotesk', sans-serif;">
-                            <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-                            <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-                                ← Daftar Komunitas
-                            </span>
-                        </a>
-                        <a href="{{ route('komunitas.show', $komunitas->id) }}" 
-                            class="relative inline-block px-5 py-2 text-sm text-gray-700 border border-gray-400 rounded-full overflow-hidden group"
-                            style="font-family: 'Space Grotesk', sans-serif;">
-                            <span class="absolute inset-0 bg-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-                            <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-                                Kembali ke Komunitas
-                            </span>
-                        </a>
-                    </div>
-
-                    <div class="forum-header">
-                        <div class="flex items-center gap-2 mb-4">
-                            <h1 id="community-name" class="text-3xl font-bold text-black" style="font-family: 'Space Grotesk', sans-serif">
-                                {{ $komunitas->name }}
-                            </h1>
-                            <span id="community-badge" class="badge badge-{{ $komunitas->badge }}">{{ ucfirst($komunitas->badge) }}</span>
-                        </div>
-                        <p id="community-description" class="text-lg text-gray-600 mb-4">{{ $komunitas->description }}</p>
-                        <div class="flex items-center gap-4">
-                            <button id="join-btn" class="join-btn relative inline-block px-5 py-2 text-sm text-white border border-black rounded-full overflow-hidden group"
-                                style="font-family: 'Space Grotesk', sans-serif;" onclick="toggleJoin()">
-                                <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-                                <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-                                    {{ $komunitas->joined ? 'Keluar' : 'Gabung' }}
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- New Thread Form -->
-                    <div class="new-thread-form">
-                        <h2 class="text-xl font-bold text-black mb-4" style="font-family: 'Space Grotesk', sans-serif">
-                            Buat Diskusi Baru
-                        </h2>
-                        <input type="text" id="new-thread-title" placeholder="Judul Diskusi..." class="mb-4 w-full border border-gray-300 rounded-md p-2" />
-                        <textarea id="new-thread-content" placeholder="Tulis isi diskusi Tuan..." class="mb-4 w-full border border-gray-300 rounded-md p-2"></textarea>
-                        <div class="flex justify-end mt-3">
-                            <button onclick="createNewThread()"
-                                class="relative inline-block px-5 py-2 text-sm text-black border border-black rounded-full overflow-hidden group"
-                                style="font-family: 'Space Grotesk', sans-serif;">
-                                <span class="absolute inset-0 bg-black transition-all duration-300 ease-in-out group-hover:translate-y-0 translate-y-full rounded-full"></span>
-                                <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-                                    Kirim
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Threads -->
-                    <div id="forum-threads" class="space-y-6"></div>
-                    <div id="pagination" class="pagination"></div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 font-space-grotesk">Navigasi Umum</h3>
+                <div class="space-y-2 mb-6">
+                    <a href="{{ route('komunitas.index') }}" class="block bg-white border border-gray-200 rounded-lg p-3 text-sm text-gray-700 hover:bg-gray-100 transition duration-300">
+                        <i class="fas fa-list-alt mr-2 text-gray-600"></i> Semua Komunitas
+                    </a>
+                    <a href="{{ route('komunitas.create') }}" class="block bg-white border border-gray-200 rounded-lg p-3 text-sm text-gray-700 hover:bg-gray-100 transition duration-300">
+                        <i class="fas fa-plus mr-2 text-gray-600"></i> Buat Komunitas
+                    </a>
+                    <span class="block bg-white border border-gray-200 rounded-lg p-3 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 cursor-pointer" onclick="toggleNotifications()">
+                        <i class="fas fa-bell mr-2 text-gray-600"></i> Notifikasi <span id="unread-count" class="ml-1 text-xs bg-gray-400 text-gray-900 rounded-full px-2 py-1">0</span>
+                    </span>
                 </div>
 
-                <!-- Sidebar (sama seperti kode Tuan, tapi dinamis) -->
-                <aside class="sidebar md:w-80">
-                    <!-- ... (nama, category, description, creator, created, discussions, moderators dari $komunitas) -->
-                    <p id="sidebar-community-name" class="text-base font-semibold text-gray-700">{{ $komunitas->name }}</p>
-                    <!-- Lainnya serupa, gunakan $komunitas->posts->count() untuk discussions, dll. -->
-                    <!-- Jadwal Event -->
-                    <div id="sidebar-community-events" class="space-y-4 mb-6">
-                        @foreach ($komunitas->events as $event)
-                            <div class="event-item" onclick="viewEvent({{ $event->id }})">
-                                <p class="text-sm font-medium text-gray-700">{{ $event->name }}</p>
-                                <p class="text-xs text-gray-500">{{ $event->date }} • {{ $event->type }}</p>
+                <hr class="my-4 border-gray-200" />
+
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 font-space-grotesk">Komunitas Saya</h3>
+                <div id="joined-communities" class="space-y-2 mb-6">
+                    @auth
+                        @forelse (auth()->user()->members->take(5) as $joinedCommunity)
+                            <a href="{{ route('komunitas.show', $joinedCommunity->id) }}" class="block bg-white border border-gray-200 rounded-lg p-3 text-sm text-gray-700 hover:bg-gray-100 transition duration-300">
+                                <div class="flex items-center gap-2">
+                                    <img
+                                        src="{{ $joinedCommunity->cover_image
+                                            ? Storage::url($joinedCommunity->cover_image)
+                                            : 'https://i.pravatar.cc/32?img=' . ($loop->index + 1) }}"
+                                        alt="{{ $joinedCommunity->name }}"
+                                        class="w-6 h-6 rounded-md border border-gray-300 object-cover"
+                                    />
+                                    <span class="truncate">r/{{ $joinedCommunity->name }} ({{ $joinedCommunity->pivot->role ?? 'Anggota' }})</span>
+                                </div>
+                            </a>
+                        @empty
+                            <p class="text-sm text-gray-500">Belum bergabung dengan komunitas.</p>
+                        @endforelse
+
+                        @if (auth()->user()->members->count() > 0)
+                            <a href="{{ route('komunitas.saya') }}" class="mt-4 block w-full text-center px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition duration-300 border border-gray-300">
+                                <i class="fas fa-plus mr-1"></i> Semua Komunitas Saya ({{ auth()->user()->members->count() }})
+                            </a>
+                        @endif
+
+                    @else
+                        <p class="text-sm text-gray-500">Login untuk melihat komunitas Anda.</p>
+                    @endauth
+                </div>
+
+                <hr class="my-4 border-gray-200" />
+
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 font-space-grotesk">Aktivitas Terbaru</h3>
+                <div id="recent-activities" class="space-y-2">
+                    @php
+                        $recentActivitiesSidebar = [
+                            ['id' => 1, 'text' => 'Diskusi baru di r/KomunitasTech', 'time' => '2 jam yang lalu', 'communityId' => 1],
+                            ['id' => 2, 'text' => 'Anggota baru bergabung di r/KomunitasGamers', 'time' => '4 jam yang lalu', 'communityId' => 2],
+                        ];
+                    @endphp
+                    @forelse ($recentActivitiesSidebar as $activity)
+                        <div class="recent-activity bg-white border border-gray-200 rounded-lg p-3 hover:bg-gray-100 transition duration-300 cursor-pointer">
+                            <p class="text-sm text-gray-700">{{ $activity['text'] }}</p>
+                            <p class="text-xs text-gray-500">{{ $activity['time'] }}</p>
+                        </div>
+                    @empty
+                        <p class="text-sm text-gray-500">Tidak ada aktivitas terbaru.</p>
+                    @endforelse
+                </div>
+            </aside>
+
+            <div class="flex-1 max-w-full space-y-4">
+
+                {{-- Hapus div Kembali ke Index yang lama --}}
+
+                <div class="community-header bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xl">
+                    <div class="w-full h-40 bg-gray-300 flex items-center justify-center relative">
+                        
+                        {{-- TOMBOL KEMBALI BARU, menyatu dengan gambar cover --}}
+                        <a href="{{ route('komunitas.index') }}" 
+                            class="absolute top-4 left-4 p-2 rounded-full text-white bg-black/30 hover:bg-black/50 transition z-20" 
+                            title="Kembali ke Index Komunitas">
+                            <i class="fas fa-arrow-left fa-lg"></i>
+                        </a>
+                        {{-- AKHIR TOMBOL KEMBALI BARU --}}
+
+                        @if ($community->cover_image)
+                            <img src="{{ Storage::url($community->cover_image) }}" alt="Cover {{ $community->name }}" class="w-full h-full object-cover object-center absolute inset-0 opacity-80" />
+                        @else
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+                                <i class="fas fa-image fa-3x"></i>
                             </div>
-                        @endforeach
+                        @endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
                     </div>
-                    <!-- Peraturan (statis) -->
-                    <!-- Komunitas Lain (rekomendasi dari model lain, atau query Komunitas::whereNot('id', $komunitas->id)->take(3)->get()) -->
-                    <div id="recommended-communities" class="space-y-4">
-                        @foreach ($recommended as $rec)
-                            <div class="recommended-community">
-                                <img src="{{ $rec->image }}" alt="{{ $rec->name }}" />
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700">{{ $rec->name }}</p>
-                                    <p class="text-xs text-gray-500">{{ $rec->members }} Anggota</p>
+
+                    <div class="p-4 bg-white border-b border-gray-200">
+                        <div class="flex justify-between items-end">
+                            <div class="flex items-center -mt-16 sm:-mt-12 ml-2">
+                                <img
+                                    src="{{ $community->avatar ?? 'https://i.pravatar.cc/64?img=3' }}"
+                                    alt="Icon {{ $community->name }}"
+                                    class="w-16 h-16 rounded-full border-4 border-white object-cover shadow-md"
+                                />
+                                <div class="ml-4 pt-10">
+                                    <h1 class="text-2xl font-extrabold text-gray-900 font-space-grotesk">r/{{ $community->name }}</h1>
+                                    <p class="text-sm text-gray-600 hidden sm:block">{{ $community->short_name ?? 'Komunitas' }}</p>
                                 </div>
                             </div>
-                        @endforeach
+
+                            <div class="flex items-center gap-2 pt-10">
+                                @auth
+                                    <a href="{{ route('posts.create', ['community' => $community->id]) }}" class="glare-button bg-gray-900 text-white border border-gray-900 rounded-full p-2 px-4 text-sm font-semibold text-center hover:bg-gray-700 transition duration-300 shadow-md">
+                                        <i class="fas fa-plus mr-1"></i> Buat Post
+                                    </a>
+                                    
+                                    <form action="{{ route('komunitas.join', $community->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <button type="submit" class="glare-button rounded-full p-2 px-4 text-sm font-semibold text-center transition duration-300 shadow-md border
+                                            @if ($isMember)
+                                                bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300
+                                            @else
+                                                bg-gray-900 text-white hover:bg-gray-700 border-gray-900
+                                            @endif
+                                        ">
+                                            @if ($isMember)
+                                                <i class="fas fa-check-circle mr-1"></i> Sudah Bergabung
+                                            @else
+                                                <i class="fas fa-plus mr-1"></i> Gabung
+                                            @endif
+                                        </button>
+                                    </form>
+
+                                    @if ($isAdmin || $isModerator)
+                                        <div class="relative inline-block text-left">
+                                            <button id="options-menu-button" class="p-2 rounded-full text-gray-700 hover:bg-gray-100 transition" title="Opsi Admin/Moderator">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            
+                                            <div id="options-menu-dropdown" 
+                                                class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10" 
+                                                role="menu" aria-orientation="vertical" aria-labelledby="options-menu-button">
+                                                <div class="py-1" role="none">
+                                                    <a href="{{ route('komunitas.edit', $community->id) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                                        <i class="fas fa-edit mr-2 text-yellow-600"></i> Update Komunitas
+                                                    </a>
+                                                    <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                                        <i class="fas fa-users-cog mr-2 text-gray-500"></i> Atur Moderasi
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                @else
+                                    <a href="{{ route('login') }}" class="glare-button rounded-full p-2 px-4 text-sm font-semibold text-center transition duration-300 shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 border border-gray-200">
+                                        <i class="fas fa-plus mr-1"></i> Buat Post/Login
+                                    </a>
+                                    <a href="{{ route('login') }}" class="glare-button rounded-full p-2 px-4 text-sm font-semibold text-center transition duration-300 shadow-md bg-gray-900 text-white hover:bg-gray-700 border border-gray-900">
+                                        <i class="fas fa-sign-in-alt mr-1"></i> Gabung/Login
+                                    </a>
+                                @endauth
+                            </div>
+                        </div>
                     </div>
-                </aside>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4">
+
+                    <div class="flex-1 max-w-full space-y-4">
+
+                        <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-gray-200 shadow-sm text-sm">
+                            <span class="font-semibold text-gray-900">Sortir:</span>
+                            
+                            <a href="{{ request()->fullUrlWithoutQuery('sort') . '?sort=baru' }}" 
+                               class="@if ($sort === 'baru' || !$sort) font-bold text-gray-900 @else text-gray-500 @endif hover:text-gray-700 transition">
+                                Baru
+                            </a>
+                            
+                            <a href="{{ request()->fullUrlWithoutQuery('sort') . '?sort=views' }}" 
+                               class="@if ($sort === 'views') font-bold text-gray-900 @else text-gray-500 @endif hover:text-gray-700 transition">
+                                Paling Banyak Dilihat
+                            </a>
+                        </div>
+
+                        <div id="post-list" class="space-y-4">
+                            @forelse ($posts as $post)
+                                <div class="post-card bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                                    onclick="window.location.href='{{ route('posts.show', [$community, $post]) }}'">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <h4 class="text-lg font-bold text-gray-900">{{ $post->title }}</h4>
+                                            <span class="text-xs text-gray-500">Oleh: <span class="font-medium text-gray-700">{{ $post->user->name ?? 'Anonim' }}</span></span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">{{ $post->created_at->diffForHumans() }}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 line-clamp-2">{{ strip_tags($post->content) }}</p>
+                                    <div class="flex items-center gap-4 mt-3 text-sm text-gray-500 border-t pt-2 border-gray-100">
+                                        <span class="flex items-center"><i class="fas fa-comment-dots mr-1"></i> {{ $post->comments_count ?? 0 }} Komentar</span>
+                                        <span class="flex items-center"><i class="fas fa-eye mr-1"></i> {{ $post->views ?? 0 }} Dilihat</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center text-gray-600 p-8 bg-white border border-gray-200 rounded-xl">
+                                    <p class="text-lg">Belum ada postingan di komunitas ini. Jadilah yang pertama!</p>
+                                </div>
+                            @endforelse
+
+                            <div class="mt-6">
+                                {{ $posts->links() }}
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <aside class="w-full md:w-64 bg-white border border-gray-200 rounded-xl p-6 shadow-sm no-scrollbar sidebar right-sidebar space-y-6 flex-shrink-0 sticky top-4 h-fit">
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 font-space-grotesk border-b pb-4">
+                            Ringkasan r/{{ $community->name }}
+                        </h3>
+
+                        <p class="text-gray-600 mt-2 text-sm">{{ $community->description ?? 'Deskripsi komunitas belum tersedia.' }}</p>
+
+                        <div class="grid grid-cols-2 gap-4 border-b pb-4">
+                            <div>
+                                <p class="text-lg font-bold text-gray-900">{{ $community->member_count }}</p>
+                                <p class="text-xs text-gray-500">Anggota</p>
+                            </div>
+                            <div>
+                                <p class="text-lg font-bold text-gray-900">{{ $community->online_count ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500">Online</p>
+                            </div>
+                        </div>
+
+                        <div class="text-sm text-gray-500 border-b pb-2">
+                            <i class="fas fa-calendar-alt mr-1"></i> Dibuat: {{ $community->created_at->format('M j, Y') }}
+                        </div>
+                        
+                        <div class="text-sm text-gray-500 border-b pb-4">
+                            <i class="fas fa-crown mr-1 text-yellow-500"></i> Dibuat oleh: 
+                            <span class="font-medium text-gray-700">
+                                {{ $community->creator->name ?? 'Admin Tidak Diketahui' }}
+                            </span>
+                        </div>
+
+                        <hr class="my-4 border-gray-200" />
+
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 font-space-grotesk border-b pb-2">
+                            <i class="fas fa-gavel mr-2 text-gray-500"></i> Peraturan Komunitas
+                        </h3>
+                        <div class="space-y-3 text-sm bg-white p-3 rounded-lg border border-gray-200">
+                            @if ($community->rules)
+                                @php
+                                    $rules = is_array($community->rules) ? $community->rules : explode("\n", $community->rules);
+                                @endphp
+                                <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                                    @foreach ($rules as $rule)
+                                        @if (trim($rule))
+                                            <li>{{ trim($rule) }}</li>
+                                        @endif
+                                    @endforeach
+                                </ol>
+                            @else
+                                <p class="text-sm text-gray-500">Komunitas ini belum memiliki peraturan yang ditetapkan.</p>
+                            @endif
+                        </div>
+                    </aside>
+
+                </div>
+
             </div>
         </div>
     </section>
 
     @push('styles')
         <style>
-        body {
-            font-family: "Space Grotesk", sans-serif;
-            background: #ffffff;
-            color: #111827;
-            box-sizing: border-box;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: inherit;
-        }
-
-        .community-banner {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .post-card {
-            background: linear-gradient(145deg, #ffffff, #f9fafb);
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .post-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .post-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .post-card-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #111827;
-            margin: 0;
-            flex: 1;
-            transition: color 0.2s ease;
-        }
-
-        .post-card-header h3:hover {
-            color: #374151;
-        }
-
-        .post-card-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .post-card-content {
-            font-size: 1rem;
-            color: #4b5563;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .post-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .vote-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .attachment-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .attachment-container img {
-            max-width: 120px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-
-        .attachment-container img:hover {
-            transform: scale(1.05);
-        }
-
-        .attachment-container a {
-            color: #374151;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            transition: background 0.2s ease;
-        }
-
-        .attachment-container a:hover {
-            background: #e6f0ff;
-        }
-
-        .recommended-community {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-        }
-
-        .recommended-community img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border-radius: 9999px;
-            margin-left: 0.5rem;
-        }
-
-        .badge-populer {
-            background: linear-gradient(90deg, #facc15, #fde68a);
-            color: #111827;
-        }
-
-        .badge-baru {
-            background: linear-gradient(90deg, #d1fae5, #a7f3d0);
-            color: #065f46;
-        }
-
-        .badge-moderator {
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-            color: #ffffff;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #facc15;
-            color: #111827;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border-radius: 9999px;
-            padding: 0.1rem 0.5rem;
-        }
-
-        .join-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            background: linear-gradient(90deg, #111827, #374151);
-            color: #ffffff;
-        }
-
-        .sidebar {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
-        }
-
-        .sidebar a {
-            display: block;
-            padding: 0.5rem 0;
-            color: #374151;
-            font-weight: 500;
-        }
-
-        .notification-bar {
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-        }
-
-        .notification-modal {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 100%;
-            max-width: 400px;
-            background: #ffffff;
-            border-left: 1px solid #e5e7eb;
-            z-index: 50;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .notification-modal.open {
-            transform: translateX(0);
-        }
-
-        .notification-modal .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            color: #374151;
-            cursor: pointer;
-        }
-
-        .notification-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-        }
-
-        .notification-card.unread {
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
-        }
-
-        .notification-card p {
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-
-        .notification-card .time {
-            font-size: 0.75rem;
-            color: #6b7280;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid #e5e7eb;
-            background: #f3f4f6;
-            color: #374151;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(90deg, #111827, #374151);
-            color: #ffffff;
-            border-color: #facc15;
-        }
-
-        .vote-btn {
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.2s ease;
-        }
-
-        .vote-btn:hover {
-            color: #374151;
-        }
-
-        .event-item {
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .community-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .highlight-post {
-            border-left: 4px solid #facc15;
-            background: linear-gradient(145deg, #f3f4f6, #f3f4f6);
-        }
-
-        .moderator-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 60;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .moderator-modal.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .moderator-modal-content {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .moderator-modal-content .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            color: #374151;
-            cursor: pointer;
-        }
-
-        .show-more-btn {
-            color: #2563eb;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            display: inline-block;
-        }
-
-        .moderator-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .moderator-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            transition: background 0.2s ease;
-        }
-
-        .moderator-item:last-child {
-            border-bottom: none;
-        }
-
-        .moderator-item:hover {
-            background: #f9fafb;
-        }
-
-        .moderator-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #374151;
-            font-size: 1.25rem;
-        }
-
-        .moderator-name {
-            flex: 1;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #111827;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            border: 1px solid #e5e7eb;
-            background: #f3f4f6;
-            color: #374151;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .pagination-btn.active {
-            background: linear-gradient(90deg, #111827, #374151);
-            color: #ffffff;
-            border-color: #facc15;
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .post-menu {
-            position: relative;
-        }
-
-        .post-menu-btn {
-            cursor: pointer;
-            font-size: 1rem;
-            color: #6b7280;
-            transition: color 0.2s ease;
-        }
-
-        .post-menu-btn:hover {
-            color: #374151;
-        }
-
-        .post-menu-content {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
-            z-index: 10;
-            display: none;
-        }
-
-        .post-menu-content.open {
-            display: block;
-        }
-
-        .post-menu-item {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            color: #374151;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .post-menu-item:hover {
-            background: #f9fafb;
-        }
-
-        .post-menu-item.danger {
-            color: #dc2626;
-        }
-
-        @media (min-width: 768px) {
-            .community-section {
-                flex-direction: row;
-                align-items: flex-start;
+            body { background-color: #f7f7f7; }
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+            .left-sidebar {
+                position: sticky;
+                top: 1rem;
+                height: calc(100vh - 2rem);
             }
-        }
-
-        @media (max-width: 768px) {
-            .notification-modal {
-                width: 100%;
-                max-width: 100%;
+            .right-sidebar {
+                position: sticky;
+                top: 1rem;
+                height: fit-content;
+                max-height: calc(100vh - 2rem);
+                overflow-y: auto;
             }
 
             .sidebar {
+                background-color: #ffffff !important;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.75rem;
                 padding: 1.5rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+            .sidebar h3 { font-family: 'Space Grotesk', sans-serif; }
+
+            .sidebar a.hover\:bg-gray-100:hover,
+            .sidebar span.hover\:bg-gray-100:hover,
+            .recent-activity.hover\:bg-gray-100:hover {
+                background-color: #f3f4f6 !important;
             }
 
-            .post-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+            .post-card {
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .post-card:hover {
+                border-color: #d1d5db;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             }
 
-            .moderator-item {
-                padding: 0.5rem;
+            .glare-button {
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+            }
+            .glare-button::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+                transition: all 0.5s ease;
+                transform: skewX(-20deg);
+                z-index: 0;
+            }
+            .glare-button:hover::before {
+                left: 100%;
+            }
+            .glare-button > * {
+                position: relative;
+                z-index: 2;
             }
 
-            .moderator-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
-            }
+            .text-gray-900 { color: #374151; }
+            .text-gray-800 { color: #4b5563; }
+            .text-gray-700 { color: #6b7280; }
+            .text-gray-600 { color: #9ca3af; }
+            .text-gray-500 { color: #a0a0a0; }
 
-            .pagination {
-                flex-wrap: wrap;
-            }
-        }
+            .bg-white { background-color: #ffffff; }
+            .bg-gray-50 { background-color: #f9fafb; }
+            .bg-gray-100 { background-color: #f3f4f6; }
+            .bg-gray-200 { background-color: #e5e7eb; }
+            .bg-gray-300 { background-color: #d1d5db; }
+            .bg-gray-900 { background-color: #374151; color: #f9fafb; }
+            .bg-yellow-600 { background-color: #ca8a04; }
+            .hover\:bg-yellow-700:hover { background-color: #a16207; }
+            .border-yellow-600 { border-color: #ca8a04; }
 
-        /* navlink */
-        .nav-link {
-            position: relative;
-            transition: color 0.3s;
-        }
+            .border-gray-200 { border-color: #e5e7eb; }
+            .border-gray-300 { border-color: #d1d5db; }
 
-        .nav-link::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(90deg, #111827, #374151);
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: #111827;
-            font-weight: 600;
-        }
-
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .notification-bar {
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .notification-bar:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .notification-icon {
-            transition: transform 0.3s ease, color 0.3s ease;
-            position: relative;
-        }
-
-        .notification-icon:hover {
-            transform: scale(1.2);
-            color: #facc15;
-        }
-
-        .notification-modal {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 100%;
-            max-width: 400px;
-            background: #ffffff;
-            border-left: 1px solid #e5e7eb;
-            z-index: 50;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .notification-modal.open {
-            transform: translateX(0);
-        }
-
-        .notification-modal .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            color: #374151;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .notification-modal .close-btn:hover {
-            transform: scale(1.2);
-        }
-
-        .notification-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .notification-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .notification-card.unread {
-            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
-        }
-
-        .notification-card p {
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-
-        .notification-card .time {
-            font-size: 0.75rem;
-            color: #6b7280;
-        }
-
-        .sidebar-notification-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-        }
-
-    </style>
+            .right-sidebar .glare-button.bg-gray-900 { background-color: #374151; color: #f9fafb; }
+            .right-sidebar .glare-button.bg-gray-200 { background-color: #e5e7eb; color: #4b5563; }
+        </style>
     @endpush
 
     @push('scripts')
-    <script>
-        // Data dari backend
-        const communities = @json([$getKomunitasById]);
-        const communityPosts = @json($getKomunitasById->posts);
-        const communityEvents = @json($getKomunitasById->events);
-        const notifications = @json($getKomunitasById->notifications);
-
-        // Pagination Settings
-        const POSTS_PER_PAGE = 5;
-        let currentPage = 1;
-
-        // Get Community ID from URL
-        function getCommunityId() {
-            return {{ $getKomunitasById->id }};
-        }
-
-        // Render Community Details
-        function renderCommunityDetails() {
-            const community = communities[0];
-            document.getElementById("community-image").src = community.image;
-            document.getElementById("community-image").alt = community.name;
-            document.getElementById("community-name").textContent = community.name;
-            document.getElementById("community-badge").className = community.badge ? `badge badge-${community.badge}` : "";
-            document.getElementById("community-badge").textContent = community.badge ? community.badge.charAt(0).toUpperCase() + community.badge.slice(1) : "";
-            document.getElementById("community-description").textContent = community.description;
-            document.getElementById("community-members").innerHTML = `<i class="fas fa-user-friends mr-1"></i>${community.members} Anggota`;
-        }
-
-        // Render Sidebar Community Details
-        function renderSidebarDetails() {
-            const community = communities[0];
-            const posts = communityPosts.filter(p => p.community_id === community.id) || [];
-
-            document.getElementById("sidebar-community-name").textContent = community.name;
-            document.getElementById("sidebar-community-category").innerHTML = `<i class="fas fa-tag mr-1"></i>Kategori: ${community.category}`;
-            document.getElementById("sidebar-community-description").textContent = community.description;
-            document.getElementById("sidebar-community-creator").innerHTML = `<i class="fas fa-user mr-1"></i>Pembuat: ${community.creator}`;
-            document.getElementById("sidebar-community-created").innerHTML = `<i class="fas fa-calendar-alt mr-1"></i>Dibuat: ${community.created_date}`;
-            document.getElementById("sidebar-community-discussions").innerHTML = `<i class="fas fa-comment-alt mr-1"></i>Total Diskusi: ${posts.length}`;
-            const moderators = community.moderators.slice(0, 1);
-            document.getElementById("sidebar-community-moderators").innerHTML = `<i class="fas fa-user-shield mr-1"></i>Moderator: ${moderators.map(m => `${m.name} <span class="badge badge-moderator">Moderator</span>`).join(", ")}`;
-            document.getElementById("sidebar-community-members").innerHTML = `<i class="fas fa-user-friends mr-1"></i>${community.members} Anggota`;
-            document.getElementById("sidebar-community-online").innerHTML = `<i class="fas fa-circle text-green-500 mr-1 text-xs"></i>${community.online_members} Online`;
-
-            const showMoreBtn = document.getElementById("show-more-moderators");
-            if (community.moderators.length > 1) {
-                showMoreBtn.classList.remove("hidden");
-                showMoreBtn.onclick = toggleModeratorModal;
-            } else {
-                showMoreBtn.classList.add("hidden");
+        <script>
+            function toggleNotifications() {
+                // Implementasi Notifikasi
             }
 
-            const events = communityEvents.filter(e => e.community_id === community.id) || [];
-            const eventsContainer = document.getElementById("sidebar-community-events");
-            eventsContainer.innerHTML = events.map(e => `
-                <div class="event-item" onclick="viewEvent(${e.id})">
-                    <p class="text-sm font-medium text-gray-700">${e.name}</p>
-                    <p class="text-xs text-gray-500">${e.date} • ${e.type}</p>
-                </div>
-            `).join("");
-        }
+            document.addEventListener('DOMContentLoaded', function() {
+                const button = document.getElementById('options-menu-button');
+                const dropdown = document.getElementById('options-menu-dropdown');
 
-        // Render Moderator Modal
-        function renderModeratorModal() {
-            const community = communities[0];
-            const moderatorList = document.getElementById("moderator-list");
-            moderatorList.innerHTML = community.moderators.map(m => `
-                <li class="moderator-item">
-                    <div class="moderator-icon"><i class="fas fa-user"></i></div>
-                    <span class="moderator-name">${m.name}</span>
-                    ${m.is_moderator ? '<span class="badge badge-moderator">Moderator</span>' : ""}
-                </li>
-            `).join("");
+                if (button && dropdown) {
+                    button.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        dropdown.classList.toggle('hidden');
+                    });
 
-            gsap.from(".moderator-item", {
-                opacity: 0,
-                y: 20,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power3.out",
+                    document.addEventListener('click', function(event) {
+                        if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                            if (!dropdown.classList.contains('hidden')) {
+                                dropdown.classList.add('hidden');
+                            }
+                        }
+                    });
+                }
             });
-        }
-
-        // JavaScript lainnya tetap sama seperti yang diberikan
-        {{ $originalScripts }}
-    </script>
+        </script>
     @endpush
 </x-layout>
