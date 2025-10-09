@@ -207,4 +207,5 @@
         </div>
     </main>
     <canvas id="ripple-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
+
 </x-layout>

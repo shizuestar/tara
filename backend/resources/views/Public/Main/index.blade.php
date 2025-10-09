@@ -3358,145 +3358,107 @@
         </style>
     @endpush
 
-    @push('scripts')
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add("animate-in");
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.2,
-                        rootMargin: "0px 0px -60px 0px"
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const createObserver = (callback, threshold = 0.2, rootMargin = "0px 0px -60px 0px") => {
+                return new IntersectionObserver(callback, { threshold, rootMargin });
+            };
+
+            const mainObserver = createObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("animate-in");
+                        mainObserver.unobserve(entry.target);
                     }
-                );
-
-                document.querySelectorAll(".fade-section, .text-appear").forEach((item) => {
-                    observer.observe(item);
-                });
-
-                const joinButton = document.getElementById("join-button");
-                if (joinButton) {
-                    joinButton.addEventListener("mouseover", () => {
-                        joinButton.classList.add("animate-pulse");
-                    });
-                    joinButton.addEventListener("mouseout", () => {
-                        joinButton.classList.remove("animate-pulse");
-                    });
-                }
-
-                // 🔢 Counter animation with 'K' format
-                const counters = document.querySelectorAll(".stats-number");
-
-                counters.forEach((counter) => {
-                    const target = +counter.getAttribute("data-target");
-                    let count = 0;
-                    const steps = 30;
-                    const increment = Math.ceil(target / steps);
-
-                    const updateCount = () => {
-                        count += increment;
-                        if (count < target) {
-                            counter.innerText = formatK(count);
-                            setTimeout(updateCount, 50);
-                        } else {
-                            counter.innerText = formatK(target);
-                        }
-                    };
-
-                    const formatK = (val) => {
-                        if (val >= 1000) {
-                            return (val / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
-                        } else {
-                            return val + "+";
-                        }
-                    };
-
-                    updateCount();
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const mobileMenuButton = document.querySelector(".md\\:hidden");
-                const nav = document.querySelector("nav");
+            document.querySelectorAll(".fade-section, .text-appear, .project-card").forEach((item) => {
+                mainObserver.observe(item);
+            });
+
+            const timelineObserver = createObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add("animate-in");
+                        }, entry.target.dataset.delay || 0);
+                        timelineObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            document.querySelectorAll(".timeline-item").forEach((item, index) => {
+                item.dataset.delay = index * 250;
+                timelineObserver.observe(item);
+            });
+
+            const joinButton = document.getElementById("join-button");
+            if (joinButton) {
+                joinButton.addEventListener("mouseover", () => {
+                    joinButton.classList.add("animate-pulse");
+                });
+                joinButton.addEventListener("mouseout", () => {
+                    joinButton.classList.remove("animate-pulse");
+                });
+            }
+
+            const formatK = (val) => {
+                if (val >= 1000) {
+                    return (val / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
+                } else {
+                    return val + "+";
+                }
+            };
+
+            const counters = document.querySelectorAll(".stats-number");
+            counters.forEach((counter) => {
+                const target = +counter.getAttribute("data-target");
+                let count = 0;
+                const steps = 30;
+                const increment = Math.ceil(target / steps);
+
+                const updateCount = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.innerText = formatK(count);
+                        setTimeout(updateCount, 50);
+                    } else {
+                        counter.innerText = formatK(target);
+                    }
+                };
+                updateCount();
+            });
+
+            const mobileMenuButton = document.querySelector(".md\\:hidden");
+            const nav = document.querySelector("nav");
+            if (mobileMenuButton && nav) {
                 mobileMenuButton.addEventListener("click", () => {
                     nav.classList.toggle("mobile-nav-active");
                 });
+            }
 
-            });
+            window.addEventListener("scroll", () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll(".timeline-line");
 
-            document.addEventListener("DOMContentLoaded", () => {
-                // Intersection Observer untuk animasi masuk
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                setTimeout(() => {
-                                    entry.target.classList.add("animate-in");
-                                }, entry.target.dataset.delay || 0);
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.2,
-                        rootMargin: "0px 0px -60px 0px",
-                    }
-                );
-
-                // Observe timeline items dengan delay berbeda
-                document.querySelectorAll(".timeline-item").forEach((item, index) => {
-                    item.dataset.delay = index * 250;
-                    observer.observe(item);
-                });
-
-                // Parallax effect untuk timeline line
-                window.addEventListener("scroll", () => {
-                    const scrolled = window.pageYOffset;
-                    const parallaxElements = document.querySelectorAll(".timeline-line");
-
-                    parallaxElements.forEach((element) => {
-                        const speed = 0.08;
-                        element.style.transform = `translateY(${scrolled * speed
-                        }px) translateX(-50%)`;
-                    });
-                });
-
-                // Smooth scroll untuk anchor links
-                document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-                    anchor.addEventListener("click", function(e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute("href"));
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                            });
-                        }
-                    });
+                parallaxElements.forEach((element) => {
+                    const speed = 0.08;
+                    element.style.transform = `translateY(${scrolled * speed}px) translateX(-50%)`;
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add("animate-in");
-                                observer.unobserve(entry.target);
-                            }
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute("href"));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
                         });
-                    }, {
-                        threshold: 0.2,
-                        rootMargin: "0px 0px -60px 0px",
                     }
-                );
-
-                document.querySelectorAll(".project-card").forEach((card) => {
-                    observer.observe(card);
                 });
             });
 
@@ -3504,22 +3466,24 @@
             const prevBtn = document.querySelector('.carousel-btn.prev');
             const nextBtn = document.querySelector('.carousel-btn.next');
             const dots = document.querySelectorAll('.dot');
-            let currentIndex = 0;
             const cardWidth = 450 + 32;
-            const totalCards = 3; // Original cards
+            const totalCards = 3;
+            let currentIndex = 0;
 
             function updateCarousel(transition = true) {
-                if (transition) {
-                    carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                } else {
-                    carousel.style.transition = 'none';
+                if (carousel && prevBtn && nextBtn && dots.length > 0) {
+                    if (transition) {
+                        carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    } else {
+                        carousel.style.transition = 'none';
+                    }
+                    carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                    prevBtn.disabled = currentIndex === 0;
+                    nextBtn.disabled = currentIndex >= totalCards;
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
                 }
-                carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-                prevBtn.disabled = currentIndex === 0;
-                nextBtn.disabled = currentIndex >= totalCards;
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
             }
 
             function handleTransitionEnd() {
@@ -3531,46 +3495,82 @@
                     updateCarousel(false);
                 }
             }
-
-            prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateCarousel();
-                }
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex++;
-                updateCarousel();
-                if (currentIndex >= totalCards) {
-                    setTimeout(() => {
-                        currentIndex = 0;
-                        updateCarousel(false);
-                    }, 600);
-                }
-            });
-
-            dots.forEach((dot) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = parseInt(dot.dataset.index);
-                    updateCarousel();
+            
+            if (prevBtn && nextBtn && carousel) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
                 });
-            });
 
-            carousel.addEventListener('transitionend', handleTransitionEnd);
+                nextBtn.addEventListener('click', () => {
+                    currentIndex++;
+                    updateCarousel();
+                    if (currentIndex >= totalCards) {
+                        setTimeout(() => {
+                            currentIndex = 0;
+                            updateCarousel(false);
+                        }, 600);
+                    }
+                });
 
-            let autoScroll = setInterval(() => {
-                nextBtn.click();
-            }, 5000);
+                dots.forEach((dot) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = parseInt(dot.dataset.index);
+                        updateCarousel();
+                    });
+                });
 
-            carousel.addEventListener('mouseenter', () => clearInterval(autoScroll));
-            carousel.addEventListener('mouseleave', () => {
-                autoScroll = setInterval(() => {
+                carousel.addEventListener('transitionend', handleTransitionEnd);
+
+                let autoScroll = setInterval(() => {
                     nextBtn.click();
                 }, 5000);
-            });
 
-            updateCarousel();
-        </script>
-    @endpush
+                carousel.addEventListener('mouseenter', () => clearInterval(autoScroll));
+                carousel.addEventListener('mouseleave', () => {
+                    autoScroll = setInterval(() => {
+                        nextBtn.click();
+                    }, 5000);
+                });
+                
+                updateCarousel();
+            }
+
+            if (window.location.pathname === '/') {
+                @if (Auth::check())
+                    const userId = {{ Auth::id() }};
+                    const today = new Date().toISOString().split('T')[0];
+                    const visitKey = `visit_logged_${userId}_${today}`;
+                    
+                    if (!localStorage.getItem(visitKey)) {
+                        localStorage.setItem(visitKey, 'true');
+
+                        fetch('{{ route('log.visit') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ user_id: userId, visit_date: today })
+                        });
+                    }
+
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith(`visit_logged_${userId}_`)) {
+                            const date = key.split('_')[3];
+                            const visitDate = new Date(date);
+                            const daysDiff = (new Date() - visitDate) / (1000 * 60 * 60 * 24);
+                            if (daysDiff > 30) {
+                                localStorage.removeItem(key);
+                            }
+                        }
+                    });
+                @endif
+            }
+        });
+    </script>
+@endpush
+
 </x-layout>

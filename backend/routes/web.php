@@ -17,6 +17,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearnMoreController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\VisitorLogController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminProfileController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminCommunityController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLogActivityController;
+use App\Http\Controllers\CuratorDashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
@@ -87,8 +89,8 @@ Route::post('/komunitas/{community}/join', [CommunityController::class, 'join'])
 Route::get('/komunitas/{community}/posts/create', [CommunityController::class, 'createPostForm'])->name('posts.create');
 Route::post('/komunitas/{community}/posts', [CommunityController::class, 'storePost'])->name('posts.store');
 Route::get('posts/{post}/edit', [CommunityController::class, 'editPostForm'])->name('posts.edit'); // Baru
-    Route::put('posts/{post}', [CommunityController::class, 'updatePost'])->name('posts.update'); // Baru
-    Route::delete('posts/{post}', [CommunityController::class, 'destroyPost'])->name('posts.destroy'); // Baru
+Route::put('posts/{post}', [CommunityController::class, 'updatePost'])->name('posts.update'); // Baru
+Route::delete('posts/{post}', [CommunityController::class, 'destroyPost'])->name('posts.destroy'); // Baru
 Route::get('/komunitas/{community}/posts/{post}', [CommunityController::class, 'showPost'])->name('posts.show');
 
 Route::resource('projects', ProjectController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update']);
@@ -135,8 +137,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/log-visit', [VisitorLogController::class, 'logVisit'])->name('log.visit');
 
-    // **PERBAIKAN KONFLIK NAMA RUTE: Mengubah nama resource admin profile menjadi admin.my-profile**
     Route::prefix('admin')->group(function() {
         Route::resource('my-profile', AdminProfileController::class)
              ->only(['edit', 'update'])
@@ -170,5 +172,25 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::resource('reports', AdminReportController::class);
     Route::get('reports/export/{format}', [AdminReportController::class, 'export'])->name('reports.export');
     Route::resource('events', AdminEventController::class);
+    Route::resource('activity-logs', AdminLogActivityController::class)->only(['index']);
+});
+
+Route::prefix('curator')->middleware(['auth', 'role:kurator'])->name('curator.')->group(function () {
+    Route::resource('dashboard', CuratorDashboardController::class)->only(['index']);
+    Route::resource('galeri', AdminGaleriController::class);
+    Route::resource('categories', AdminCategoryController::class)->except(['show']);
+    Route::resource('communities', AdminCommunityController::class);
+    Route::resource('blogs', AdminBlogController::class);
+    Route::post('blogs/publish-multiple', [AdminBlogController::class, 'publishMultiple'])->name('blogs.publish-multiple');
+    Route::delete('blogs/destroy-multiple', [AdminBlogController::class, 'destroyMultiple'])->name('blogs.destroy-multiple');
+    Route::resource('events', AdminEventController::class);
+    
+    // --- Rute Tambahan untuk Kurator dari Admin ---
+    Route::resource('projects', AdminProjectController::class);
+    Route::get('projects/users/search', [AdminProjectController::class, 'searchUsers'])->name('projects.users.search');
+    
+    
+    Route::resource('reports', AdminReportController::class);
+    Route::get('reports/export/{format}', [AdminReportController::class, 'export'])->name('reports.export');
     Route::resource('activity-logs', AdminLogActivityController::class)->only(['index']);
 });

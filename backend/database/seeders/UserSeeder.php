@@ -38,6 +38,18 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'Kurator Satu',
+                'username' => 'kurator',
+                'email' => 'kurator@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'bio' => 'Akun kurator konten',
+                'role' => 'kurator',
+                'status' => 'active',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

@@ -65,7 +65,7 @@
                 <div class="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="flex items-center gap-4">
                         @if ($galeri->creator)
-                            <a href="{{ route('profile', $galeri->creator->id) }}" class="flex items-center gap-2">
+                            <a href="{{ route('profile.show', $galeri->creator->id) }}" class="flex items-center gap-2">
                                 <img src="{{ $galeri->creator->avatar ?? 'https://i.pravatar.cc/60' }}" alt="avatar" class="w-10 h-10 rounded-full object-cover" />
                                 <div>
                                     <p class="font-semibold text-gray-900">{{ $galeri->creator->name }}</p>

@@ -30,7 +30,6 @@
       rel="stylesheet"
     />
     <style>
-      /* --- CSS Kritis (Dipertahankan karena dependensi layout grid & JS) --- */
       .main-container {
         position: relative;
         min-height: 100vh;
@@ -277,7 +276,7 @@
           </div>
 
           <div 
-            class="benefit-column flex-1 p-12 flex flex-col justify-center items-start bg-gray-100 max-lg:hidden"
+            class="benefit-column flex-1 p-12 flex flex-col justify-center items-start bg-[#f9f9f9fd] max-lg:hidden"
           >
             <h2 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight form-item {{ $hasErrors ? 'has-error' : '' }}">
               Mulai Aksi Kreatifmu
