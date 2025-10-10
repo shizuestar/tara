@@ -82,6 +82,7 @@
               Masukkan email untuk menerima link reset password.
             </p>
           </div>
+          
           @if (session('success'))
             <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg form-item has-error" role="alert">
                 {{ session('success') }}

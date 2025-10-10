@@ -29,7 +29,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return $this->redirectByRole(Auth::user())
-                        ->with('success', 'Login berhasil.');
+                ->with('success', 'Login berhasil.');
         }
 
         return back()->withErrors([
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
     private function redirectByRole(User $user)
     {
-        return match($user->role) {
+        return match ($user->role) {
             'admin' => redirect()->route('admin.dashboard.index'),
             'curator' => redirect()->route('kurator.dashboard.index'),
             default => redirect()->route('home'),
@@ -85,7 +85,7 @@ class AuthController extends Controller
         return view('public.auth.forgot-password');
     }
 
-    public function sendResetLinkEmail(Request $request)
+    public function sendResetLink(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
@@ -93,35 +93,38 @@ class AuthController extends Controller
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['success' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+        if ($status === Password::RESET_LINK_SENT) {
+            return back()->with('success', 'Link reset password berhasil dikirim. Silakan cek email Anda.');
+        }
+
+        return back()->withErrors(['email' => 'Email tidak ditemukan atau gagal mengirim reset link.']);
     }
+
 
     public function showResetPasswordForm($token)
     {
         return view('public.auth.reset-password', ['token' => $token]);
     }
 
-    public function resetPassword(Request $request)
+    public function reset(Request $request)
     {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', Rules\Password::min(8)],
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($password),
                 ])->save();
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('success', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+        return $status == Password::PASSWORD_RESET
+            ? response()->json(['message' => __($status)])
+            : response()->json(['message' => __($status)], 400);
     }
 }
