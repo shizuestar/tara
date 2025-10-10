@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('type', ['public', 'private']);
+            $table->enum('status', ['active', 'pending', 'suspended'])->default('pending');
             $table->string('cover_image', 255)->nullable();
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

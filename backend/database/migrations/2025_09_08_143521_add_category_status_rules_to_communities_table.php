@@ -9,7 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('communities', function (Blueprint $table) {
-            $table->enum('status', ['active', 'inactive'])->default('active')->after('type');
             $table->text('rules')->nullable()->after('cover_image'); 
         });
     }

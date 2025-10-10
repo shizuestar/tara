@@ -1,4 +1,18 @@
 <x-layout>
+       @push('styles')
+    <style>
+        body, * {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
+    </style>
+    @endpush
+
     <div class="max-w-3xl mx-auto px-6 py-8 mt-20">
         <h1 class="text-3xl font-bold mb-8 text-gray-900 border-b-4 border-black pb-3">Edit Karya</h1>
         

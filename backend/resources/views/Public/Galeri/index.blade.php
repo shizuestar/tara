@@ -1,20 +1,18 @@
 <x-layout>
-    @push('styles')
+      @push('styles')
     <style>
         body, * {
             font-family: 'Space Grotesk', sans-serif !important;
         }
-        /* Tambahan CSS untuk efek 3D yang tidak didukung Tailwind */
-        .perspective { perspective: 1200px; }
-        .hover-3d { transform-style: preserve-3d; transition: transform 0.3s ease; cursor: pointer; will-change: transform; }
-        .hover-3d .inner { transform: rotateY(0deg) rotateX(0deg); transition: transform 0.3s ease; }
-        .hover-3d:hover .inner { transform: rotateY(8deg) rotateX(4deg); }
-        .blog-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 16px 20px -5px rgba(0, 0, 0, 0.08), 0 6px 8px -4px rgba(0, 0, 0, 0.05); 
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
         }
     </style>
-   @endpush
+    @endpush
+
 
     @push('scripts')
        
@@ -209,4 +207,5 @@
         </div>
     </main>
     <canvas id="ripple-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
+
 </x-layout>

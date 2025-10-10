@@ -1,12 +1,18 @@
 <x-layout>
-    @push('styles')
+      @push('styles')
     <style>
         body, * {
             font-family: 'Space Grotesk', sans-serif !important;
         }
-
+        h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, option, div, label {
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+        [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', sans-serif !important;
+        }
     </style>
-   @endpush
+    @endpush
+
 
     <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-yellow-400 z-50 transition-all duration-300"></div>
     <div id="particles-js" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></div>
@@ -59,7 +65,7 @@
                 <div class="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="flex items-center gap-4">
                         @if ($galeri->creator)
-                            <a href="{{ route('profile', $galeri->creator->id) }}" class="flex items-center gap-2">
+                            <a href="{{ route('profile.show', $galeri->creator->id) }}" class="flex items-center gap-2">
                                 <img src="{{ $galeri->creator->avatar ?? 'https://i.pravatar.cc/60' }}" alt="avatar" class="w-10 h-10 rounded-full object-cover" />
                                 <div>
                                     <p class="font-semibold text-gray-900">{{ $galeri->creator->name }}</p>

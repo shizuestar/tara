@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Community;
-use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\CommunityMember;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -44,9 +43,7 @@ class AdminCommunityController extends Controller
             Community::withCount('members')->having('members_count', '>', 100)->count(),
         ];
 
-        $activities = ActivityLog::where('type', 'community')->latest()->take(10)->get();
-
-        return view('Administrator.admin.komunitas.index', compact('categories', 'users', 'communities', 'communityCounts', 'activities'));
+        return view('Administrator.Admin.Komunitas.index', compact('categories', 'users', 'communities', 'communityCounts'));
     }
 
     public function store(Request $request)
@@ -57,12 +54,12 @@ class AdminCommunityController extends Controller
                 'description' => 'nullable|string',
                 'category_id' => 'required|exists:categories,id',
                 'type' => 'required|in:public,private',
-                'status' => 'required|in:active,inactive',
+                'status' => 'required|in:active,suspended,pending',
                 'creator_id' => 'required|exists:users,id',
                 'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
                 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
                 'moderator_ids' => 'nullable|string',
-                'rules' => 'nullable|string',
+                'rules' => 'nullable|string|max:1000',
             ]);
 
             if ($request->hasFile('cover_image')) {
@@ -78,35 +75,41 @@ class AdminCommunityController extends Controller
                 'community_id' => $community->id,
                 'user_id' => $validated['creator_id'],
                 'role' => 'admin',
+                'joined_at' => now(),
             ]);
 
             if (!empty($validated['moderator_ids'])) {
                 $modIds = array_filter(explode(',', $validated['moderator_ids']));
                 foreach ($modIds as $modId) {
                     $modId = trim($modId);
-                    if (User::where('id', $modId)->exists()) {
+                    if (User::where('id', $modId)->exists() && $modId != $validated['creator_id']) {
                         CommunityMember::create([
                             'community_id' => $community->id,
                             'user_id' => $modId,
                             'role' => 'moderator',
+                            'joined_at' => now(),
                         ]);
                     }
                 }
             }
 
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'type' => 'community',
-                'description' => 'Komunitas baru "' . $community->name . '" telah ditambahkan',
-            ]);
-
-            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dibuat.');
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Komunitas berhasil dibuat.'], 201);
+            }
+            return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil dibuat.');
         } catch (ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Validasi gagal.', 'errors' => $e->errors()], 422);
+            }
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             Log::error('Error storing community: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Gagal menyimpan komunitas: ' . $e->getMessage()])->withInput();
+            $errorMessage = 'Gagal menyimpan komunitas: ' . $e->getMessage();
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $errorMessage], 500);
+            }
+            return redirect()->back()->withErrors(['error' => $errorMessage])->withInput();
         }
     }
 
@@ -116,10 +119,10 @@ class AdminCommunityController extends Controller
             $community = Community::with(['admins', 'members', 'posts', 'category', 'creator'])->findOrFail($id);
             $users = User::all();
             $categories = Category::all();
-            return view('administrator.admin.communities.show', compact('community', 'users', 'categories'));
+            return view('administrator.admin.komunitas.show', compact('community', 'users', 'categories'));
         } catch (\Exception $e) {
             Log::error('Error fetching community for show: ' . $e->getMessage());
-            return redirect()->route('admin.communities.index')->withErrors(['error' => 'Gagal memuat data komunitas: ' . $e->getMessage()]);
+            return redirect()->route('admin.komunitas.index')->withErrors(['error' => 'Gagal memuat data komunitas: ' . $e->getMessage()]);
         }
     }
 
@@ -129,8 +132,10 @@ class AdminCommunityController extends Controller
             $community = Community::with('category', 'creator', 'moderators')->find($id);
             
             if (!$community) {
-                return response()->json(['error' => 'Komunitas dengan ID ' . $id . ' tidak ditemukan.'], 404);
+                return response()->json(['message' => 'Komunitas dengan ID ' . $id . ' tidak ditemukan.'], 404);
             }
+
+            $rulesArray = $community->rules ? explode("\n", $community->rules) : [];
 
             return response()->json([
                 'id' => $community->id,
@@ -143,11 +148,11 @@ class AdminCommunityController extends Controller
                 'cover_image' => $community->cover_image ? asset('storage/' . $community->cover_image) : null,
                 'avatar' => $community->avatar ? asset('storage/' . $community->avatar) : null,
                 'moderator_ids' => $community->moderators->pluck('id')->toArray(),
-                'rules' => $community->rules ? explode("\n", $community->rules) : [],
+                'rules' => $rulesArray,
             ], 200);
         } catch (\Exception $e) {
             Log::error('Error fetching community data: ' . $e->getMessage());
-            return response()->json(['error' => 'Terjadi kesalahan server saat memuat data komunitas. Silakan coba lagi nanti.'], 500);
+            return response()->json(['message' => 'Gagal memuat data komunitas: ' . $e->getMessage()], 500);
         }
     }
 
@@ -161,12 +166,12 @@ class AdminCommunityController extends Controller
                 'description' => 'nullable|string',
                 'category_id' => 'required|exists:categories,id',
                 'type' => 'required|in:public,private',
-                'status' => 'required|in:active,inactive',
+                'status' => 'required|in:active,suspended',
                 'creator_id' => 'required|exists:users,id',
                 'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
                 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
                 'moderator_ids' => 'nullable|string',
-                'rules' => 'nullable|string',
+                'rules' => 'nullable|string|max:1000',
             ]);
 
             if ($request->hasFile('cover_image')) {
@@ -188,60 +193,56 @@ class AdminCommunityController extends Controller
 
             $community->update($validated);
 
-            $adminMember = $community->members()
+            $community->members()
                 ->where('community_members.role', 'admin')
-                ->first();
+                ->where('user_id', '!=', $validated['creator_id'])
+                ->delete();
 
-            if ($adminMember && $adminMember->pivot->user_id != $validated['creator_id']) {
-                $adminMember->pivot->delete();
-                CommunityMember::create([
-                    'community_id' => $community->id,
-                    'user_id' => $validated['creator_id'],
-                    'role' => 'admin',
-                    'joined_at' => now(),
-                ]);
-            } elseif (!$adminMember) {
-                CommunityMember::create([
-                    'community_id' => $community->id,
-                    'user_id' => $validated['creator_id'],
-                    'role' => 'admin',
-                    'joined_at' => now(),
-                ]);
-            }
+            CommunityMember::firstOrCreate([
+                'community_id' => $community->id,
+                'user_id' => $validated['creator_id'],
+            ], [
+                'role' => 'admin',
+                'joined_at' => now(),
+            ])->update(['role' => 'admin']);
 
-            $community->moderators()->detach();
+            $community->moderators()->whereNotIn('user_id', [$validated['creator_id']])->delete();
+
             if (!empty($validated['moderator_ids'])) {
                 $modIds = array_filter(explode(',', $validated['moderator_ids']));
                 foreach ($modIds as $modId) {
                     $modId = trim($modId);
                     if (User::where('id', $modId)->exists() && $modId != $validated['creator_id']) {
-                        CommunityMember::create([
+                        CommunityMember::firstOrCreate([
                             'community_id' => $community->id,
                             'user_id' => $modId,
+                        ], [
                             'role' => 'moderator',
                             'joined_at' => now(),
-                        ]);
+                        ])->update(['role' => 'moderator']);
                     }
                 }
             }
 
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'type' => 'community',
-                'description' => 'Komunitas "' . $community->name . '" berhasil diperbarui',
-            ]);
+            Session::forget('error');
 
-            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil diupdate.');
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Komunitas berhasil diperbarui.'], 200);
+            }
+            return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil diupdate.');
         } catch (ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Validasi gagal.', 'errors' => $e->errors()], 422);
+            }
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             Log::error('Error updating community: ' . $e->getMessage());
-            $errorMessage = 'Gagal mengupdate komunitas: ';
-            if (str_contains($e->getMessage(), 'SQLSTATE[23000]')) {
-                $errorMessage .= 'Terjadi masalah dengan data anggota komunitas. Pastikan pembuat dan moderator valid.';
-            } else {
-                $errorMessage .= 'Silakan coba lagi atau hubungi administrator.';
+            $errorMessage = str_contains($e->getMessage(), 'SQLSTATE[23000]')
+                ? 'Terjadi masalah dengan data anggota komunitas. Pastikan pembuat dan moderator valid.'
+                : 'Gagal mengupdate komunitas: ' . $e->getMessage();
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $errorMessage], 500);
             }
             return redirect()->back()->withErrors(['error' => $errorMessage])->withInput();
         }
@@ -251,7 +252,6 @@ class AdminCommunityController extends Controller
     {
         try {
             $community = Community::findOrFail($id);
-            $communityName = $community->name;
 
             if ($community->cover_image) {
                 Storage::disk('public')->delete($community->cover_image);
@@ -271,16 +271,17 @@ class AdminCommunityController extends Controller
 
             $community->delete();
 
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'type' => 'community',
-                'description' => 'Komunitas "' . $communityName . '" berhasil dihapus',
-            ]);
-
-            return redirect()->route('admin.communities.index')->with('success', 'Komunitas berhasil dihapus.');
+            if (request()->expectsJson()) {
+                return response()->json(['message' => 'Komunitas berhasil dihapus.'], 200);
+            }
+            return redirect()->route('admin.komunitas.index')->with('success', 'Komunitas berhasil dihapus.');
         } catch (\Exception $e) {
             Log::error('Error deleting community: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Gagal menghapus komunitas: ' . $e->getMessage()]);
+            $errorMessage = 'Gagal menghapus komunitas: ' . $e->getMessage();
+            if (request()->expectsJson()) {
+                return response()->json(['message' => $errorMessage], 500);
+            }
+            return redirect()->back()->withErrors(['error' => $errorMessage]);
         }
     }
 
@@ -301,7 +302,7 @@ class AdminCommunityController extends Controller
             return response()->json($users);
         } catch (\Exception $e) {
             Log::error('Error searching users: ' . $e->getMessage());
-            return response()->json(['error' => 'Gagal mencari pengguna'], 500);
+            return response()->json(['message' => 'Gagal mencari pengguna: ' . $e->getMessage()], 500);
         }
     }
 }

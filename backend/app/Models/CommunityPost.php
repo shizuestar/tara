@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CommunityPost extends Model
 {
+    use HasFactory;
     protected $table = 'community_posts';
     protected $fillable = [
         'community_id',
@@ -13,7 +15,7 @@ class CommunityPost extends Model
         'title',
         'content',
         'type',
-        'file_url',
+        'file_path',
     ];
 
     public function community()

@@ -24,9 +24,25 @@ use App\Models\ProjectComment;
 use App\Models\CommunityMember;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Routing\Controller;
 
 class AdminReportController extends Controller
 {
+    /**
+     * Create a new controller instance and apply role-based middleware.
+     * Only users with the 'admin' or 'kurator' role will be allowed access.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // 1. Ensure the user is logged in
+        $this->middleware('auth');
+
+        // 2. Restrict access based on role (assumes a custom 'role' middleware is defined)
+        $this->middleware('role:admin,kurator');
+    }
+    
     public function index(Request $request)
     {
         $startDate = $request->input('start_date', now()->subMonth()->startOfDay());
@@ -141,12 +157,12 @@ class AdminReportController extends Controller
             'totalEvents' => Event::whereBetween('created_at', [$startDate, $endDate])->count(),
             'totalActiveUsers' => User::where('status', 'active')->whereBetween('created_at', [$startDate, $endDate])->count(),
             'totalLikes' => ArtworkLike::whereBetween('created_at', [$startDate, $endDate])->count() +
-                           BlogLike::whereBetween('created_at', [$startDate, $endDate])->count() +
-                           ProjectLike::whereBetween('created_at', [$startDate, $endDate])->count(),
+                            BlogLike::whereBetween('created_at', [$startDate, $endDate])->count() +
+                            ProjectLike::whereBetween('created_at', [$startDate, $endDate])->count(),
             'totalComments' => ArtworkComment::whereBetween('created_at', [$startDate, $endDate])->count() +
-                              BlogComment::whereBetween('created_at', [$startDate, $endDate])->count() +
-                              ProjectComment::whereBetween('created_at', [$startDate, $endDate])->count() +
-                              EventComment::whereBetween('created_at', [$startDate, $endDate])->count(),
+                                 BlogComment::whereBetween('created_at', [$startDate, $endDate])->count() +
+                                 ProjectComment::whereBetween('created_at', [$startDate, $endDate])->count() +
+                                 EventComment::whereBetween('created_at', [$startDate, $endDate])->count(),
             'activities' => ActivityLog::with(['user', 'subject'])
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($categoryId, function ($query) use ($categoryId) {

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CommunityPostComment extends Model
 {
+    use HasFactory;
     protected $table = 'community_post_comments';
     protected $fillable = [
         'post_id',

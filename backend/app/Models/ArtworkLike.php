@@ -10,6 +10,8 @@ class ArtworkLike extends Model
 {
     use HasFactory;
 
+    protected $table = 'artwork_likes';
+
     protected $fillable = [
         'artwork_id',
         'user_id'

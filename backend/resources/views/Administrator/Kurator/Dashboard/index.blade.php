@@ -5,29 +5,32 @@
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <div class="flex-1">
                         <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-4">
-                            Selamat Datang, <span class="text-yellow-400">Admin TARA</span>! 👋
+                            Selamat Datang, <span class="text-yellow-400">Kurator TARA</span>! 👋
                             <span class="flex-grow h-px bg-gradient-to-r from-transparent via-gray-900 to-yellow-400"></span>
                         </h1>
                         <p class="text-gray-600 text-lg mt-2 max-w-xl">
-                            Senang melihat Anda kembali. Berikut ringkasan aktivitas platform hari ini.
+                            Senang melihat Anda kembali. Berikut ringkasan konten yang Anda kelola hari ini.
                         </p>
                         <div class="flex flex-wrap gap-4 mt-6">
-                            <div class="flex items-center bg-white p-4 rounded-xl rounded-lg shadow-sm border border-yellow-200">
+                            <div class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-yellow-200">
                                 <div class="w-10 h-10 flex items-center justify-center bg-yellow-100 rounded-lg text-yellow-400 mr-3">
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div>
-                                    <span class="text-lg font-bold text-gray-900">{{ array_sum($visitorData['week']) }}</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ $todayTraffic }}</span>
                                     <span class="block text-sm text-gray-600">Traffic Hari Ini</span>
+                                    <span class="text-sm text-{{ $growthPercentage >= 0 ? 'green' : 'red' }}-600">
+                                        {{ $growthPercentage >= 0 ? '+' : '' }}{{ $growthPercentage }}% dari kemarin
+                                    </span>
                                 </div>
                             </div>
                             <div class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-yellow-200">
                                 <div class="w-10 h-10 flex items-center justify-center bg-yellow-100 rounded-lg text-yellow-400 mr-3">
-                                    <i class="fas fa-users"></i>
+                                    <i class="fas fa-blog"></i>
                                 </div>
                                 <div>
-                                    <span class="text-lg font-bold text-gray-900">{{ $totalActiveUsers }}</span>
-                                    <span class="block text-sm text-gray-600">User Aktif</span>
+                                    <span class="text-lg font-bold text-gray-900">{{ $totalBlogs }}</span>
+                                    <span class="block text-sm text-gray-600">Artikel Aktif</span>
                                 </div>
                             </div>
                             <div class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-yellow-200">
@@ -67,28 +70,27 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-4 mt-6 pt-6 border-t border-gray-200">
-                    <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
+                    <a href="{{ route('curator.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
                         <i class="fas fa-plus-circle"></i>
                         <span>Buat Karya</span>
                     </a>
-                    <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
-                        <i class="fas fa-chart-pie"></i>
-                        <span>Lihat Laporan</span>
+                    <a href="{{ route('curator.blogs.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
+                        <i class="fas fa-blog"></i>
+                        <span>Tambah Artikel</span>
                     </a>
-                    <button class="relative flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
-                        <i class="fas fa-bell"></i>
-                        <span>Notifikasi</span>
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
-                    </button>
+                    <a href="{{ route('curator.events.index') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 font-medium hover:bg-yellow-400 hover:border-yellow-400 hover:shadow-lg transition">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Buat Event</span>
+                    </a>
                 </div>
                 <div class="flex justify-between mt-4 pt-4 border-t border-gray-100 text-sm text-gray-600">
                     <div class="flex items-center gap-2 current-date">
                         <i class="fas fa-calendar-alt"></i>
-                        <span>Jumat, 10 Oktober 2025</span>
+                        <span>{{ now()->translatedFormat('l, j F Y') }}</span>
                     </div>
                     <div class="flex items-center gap-2 last-login">
                         <i class="fas fa-clock"></i>
-                        <span>Login terakhir: Hari ini, 01:17</span>
+                        <span>Login terakhir: Hari ini, {{ now()->format('H:i') }}</span>
                     </div>
                 </div>
             </div>
@@ -106,11 +108,11 @@
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-400">
-                    <i class="fas fa-project-diagram"></i>
+                    <i class="fas fa-blog"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">{{ $totalProjects }}</div>
-                    <div class="text-sm text-gray-600">Total Project</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalBlogs }}</div>
+                    <div class="text-sm text-gray-600">Total Artikel</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
@@ -133,11 +135,11 @@
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center gap-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition stat-card">
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-400">
-                    <i class="fas fa-user-check"></i>
+                    <i class="fas fa-stream"></i>
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-gray-900">{{ $totalActiveUsers }}</div>
-                    <div class="text-sm text-gray-600">Total User Aktif</div>
+                    <div class="text-xl font-bold text-gray-900">{{ $totalCategories }}</div>
+                    <div class="text-sm text-gray-600">Total Kategori</div>
                 </div>
             </div>
         </div>
@@ -183,19 +185,19 @@
             <div class="bg-white rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h3>
-                    <a href="{{ route('admin.activity-logs.index') }}" class="text-yellow-400 font-medium">Lihat Semua</a>
+                    <a href="{{ route('curator.galeri.index') }}" class="text-yellow-400 font-medium">Lihat Semua</a>
                 </div>
                 <ul class="space-y-4">
                     @foreach ($activities as $activity)
                         <li class="activity-card" data-category="{{ $activity['category'] }}" data-date="{{ $activity['date'] }}" data-likes="{{ $activity['likes'] }}" data-comments="{{ $activity['comments'] }}" data-title="{{ $activity['title'] }}" data-author="{{ $activity['author'] }}">
                             <div class="flex items-start gap-3">
                                 <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400">
-                                    <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
+                                    <i class="fas {{ $activity['type'] == 'blog' ? 'fa-blog' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image')) }}"></i>
                                 </div>
                                 <div>
                                     <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($activity['description'], 50) }}</h4>
                                     <p class="text-xs text-gray-600">Oleh {{ $activity['author'] }} di {{ $activity['community'] }}</p>
-                                    <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</p>
+                                    <p class="text-xs text-gray-500">{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }} | {{ $activity['likes'] }} Suka</p>
                                 </div>
                             </div>
                         </li>
@@ -211,9 +213,8 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div class="flex flex-wrap gap-2">
                     <button class="filter-tab active px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="all">Semua</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="communitypost">Postingan</button>
+                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="blog">Artikel</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="event">Event</button>
-                    <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="project">Project</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="community">Komunitas</button>
                     <button class="filter-tab px-4 py-2 bg-gray-200 rounded-full text-gray-900 font-medium hover:bg-yellow-400 transition" data-category="artwork">Karya</button>
                 </div>
@@ -236,7 +237,7 @@
                         <div class="relative">
                             <div class="w-full h-32 bg-gray-100"></div>
                             <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-400 text-sm relative z-10 ml-4 -mt-6">
-                                <i class="fas {{ $activity['type'] == 'communitypost' ? 'fa-comment' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'project' ? 'fa-project-diagram' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image'))) }}"></i>
+                                <i class="fas {{ $activity['type'] == 'blog' ? 'fa-blog' : ($activity['type'] == 'event' ? 'fa-calendar-alt' : ($activity['type'] == 'community' ? 'fa-users' : 'fa-image')) }}"></i>
                             </div>
                         </div>
                         <div class="p-3">
@@ -246,6 +247,10 @@
                                 <div class="flex items-center text-xs text-gray-800">
                                     <i class="fas fa-clock mr-1"></i>
                                     <span>{{ \Carbon\Carbon::createFromTimestamp($activity['date'])->diffForHumans() }}</span>
+                                </div>
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>{{ $activity['likes'] }} Suka</span>
                                 </div>
                             </div>
                         </div>
@@ -259,7 +264,7 @@
             </div>
             <div class="flex justify-between items-center bg-gray-100 p-4 rounded-md">
                 <div class="text-gray-600">
-                    Menampilkan <span id="results-number">{{ $activities->count() }}</span> dari <span id="total-results">{{ $activities->count() }}</span> aktivitas
+                    Menampilkan <span id="results-number">{{ count($activities) }}</span> dari <span id="total-results">{{ count($activities) }}</span> aktivitas
                 </div>
                 <div class="flex items-center gap-2">
                     <label for="sort-by" class="text-gray-600">Urutkan:</label>
@@ -274,92 +279,8 @@
 
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Project Kolaborasi Terbaru</h2>
-                <a href="{{ route('admin.projects.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
-                    <i class="fas fa-plus"></i> Project Baru
-                </a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                @forelse ($recentProjects as $project)
-                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div class="relative">
-                            <img src="{{ $project->cover_images ? asset('storage/' . $project->cover_images) : 'https://picsum.photos/id/' . ($project->id + 99) . '/400/120' }}" alt="Cover {{ $project->project_name }}" class="w-full h-32 object-cover">
-                            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm relative z-10 ml-4 -mt-6">
-                                <i class="{{ $project->category ? 'fas fa-' . ($project->category->name == 'Fotografi' ? 'camera' : ($project->category->name == 'Digital Art' ? 'paint-brush' : ($project->category->name == 'Lukisan' ? 'palette' : 'cube'))) : 'fas fa-project-diagram' }}"></i>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <h3 class="font-semibold text-gray-900 mb-1 text-sm font-['Space_Grotesk']">{{ Str::limit($project->project_name, 30) }}</h3>
-                            <p class="text-xs text-gray-800 mb-2">{{ $project->description ? Str::limit($project->description, 50) : 'Tidak ada deskripsi' }}</p>
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="flex items-center text-xs text-gray-800">
-                                    <i class="fas fa-user mr-1"></i>
-                                    <span>{{ $project->creator ? $project->creator->name : 'Unknown' }}</span>
-                                </div>
-                                <span class="px-2 py-1 rounded-full {{ $project->status == 'ongoing' ? 'bg-green-100 text-green-600' : ($project->status == 'pending' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600') }} text-xs">{{ $project->status == 'ongoing' ? 'Berlangsung' : ($project->status == 'pending' ? 'Menunggu' : 'Selesai') }}</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-gray-800">{{ $project->category ? $project->category->name : '-' }}</span>
-                                <div class="flex gap-2">
-                                    <a href="{{ route('admin.projects.show', $project->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $project->project_name }}"><i class="fas fa-eye"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-span-full text-center p-10 text-gray-600">
-                        <i class="fas fa-project-diagram text-6xl mb-4"></i>
-                        <h3 class="text-xl font-semibold">Tidak ada Project terbaru</h3>
-                    </div>
-                @endforelse
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 max-w-7xl mx-auto">
-            <div class="bg-white rounded-lg p-6 shadow-sm">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Distribusi Event</h2>
-                    <select id="event-period" class="p-2 border rounded-md bg-white text-gray-900">
-                        <option value="month">Bulanan</option>
-                        <option value="quarter">Triwulan</option>
-                        <option value="year">Tahunan</option>
-                    </select>
-                </div>
-                <div class="h-64">
-                    <canvas id="eventChart"></canvas>
-                </div>
-            </div>
-            <div class="bg-white rounded-lg p-6 shadow-sm">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Karya Populer</h2>
-                    <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
-                        <i class="fas fa-chart-line"></i> Lihat Analitik
-                    </a>
-                </div>
-                <div class="space-y-4">
-                    @forelse ($popularArtworks as $artwork)
-                        <div class="flex items-center gap-3">
-                            <img src="{{ $artwork->thumbnail ? asset('storage/' . $artwork->thumbnail) : 'https://picsum.photos/id/' . ($artwork->id + 100) . '/80/80' }}" alt="{{ $artwork->title }}" class="w-16 h-16 rounded-lg object-cover">
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($artwork->title, 30) }}</h4>
-                                <p class="text-xs text-gray-600">Oleh {{ $artwork->creator->name ?? 'Unknown' }} | {{ $artwork->category->name ?? 'N/A' }}</p>
-                                <p class="text-xs text-gray-500">{{ $artwork->created_at->diffForHumans() }} | {{ $artwork->likes_count }} Likes</p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-center p-10 text-gray-600">
-                            <i class="fas fa-image text-6xl mb-4"></i>
-                            <h3 class="text-xl font-semibold">Tidak ada karya populer</h3>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Postingan Terbaru di Galeri</h2>
-                <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <h2 class="text-xl font-semibold text-gray-900">Karya Terbaru</h2>
+                <a href="{{ route('curator.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-eye"></i> Lihat Semua
                 </a>
             </div>
@@ -371,7 +292,7 @@
                     @endforeach
                 </div>
                 <div class="flex gap-2 w-full md:w-auto">
-                    <input id="gallery-search" type="text" class="p-2 border rounded-l-md bg-white flex-1" placeholder="Cari postingan...">
+                    <input id="gallery-search" type="text" class="p-2 border rounded-l-md bg-white flex-1" placeholder="Cari karya...">
                     <button class="p-2 bg-yellow-400 text-gray-900 rounded-r-md hover:bg-yellow-300 transition">
                         <i class="fas fa-search"></i>
                     </button>
@@ -394,8 +315,12 @@
                                     <i class="fas fa-clock mr-1"></i>
                                     <span>{{ $artwork->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">{{ $artwork->category->name ?? 'N/A' }}</span>
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>{{ $artwork->likes_count }} Suka</span>
+                                </div>
                             </div>
+                            <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">{{ $artwork->category->name ?? 'N/A' }}</span>
                         </div>
                     </div>
                 @empty
@@ -415,7 +340,7 @@
         <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-gray-900">Event Baru</h2>
-                <a href="{{ route('admin.events.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                <a href="{{ route('curator.events.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
                     <i class="fas fa-plus"></i> Buat Event
                 </a>
             </div>
@@ -436,12 +361,15 @@
                                     <i class="fas fa-clock mr-1"></i>
                                     <span>{{ $event->start_date->format('d M Y') }}</span>
                                 </div>
-                                <span class="px-2 py-1 rounded-full {{ $event->status == 'active' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' }} text-xs">{{ $event->status == 'active' ? 'Aktif' : 'Pending' }}</span>
+                                <div class="flex items-center text-xs text-gray-800">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>{{ $event->registrations_count }} Pendaftar</span>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs text-gray-800">{{ $event->category->name ?? 'N/A' }}</span>
                                 <div class="flex gap-2">
-                                    <a href="{{ route('admin.events.show', $event->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $event->title }}"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('curator.events.show', $event->id) }}" class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 text-xs" aria-label="Lihat {{ $event->title }}"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -455,17 +383,44 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg p-6 shadow-sm mb-8 max-w-7xl mx-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Pertumbuhan Anggota Komunitas</h2>
-                <select id="growth-period" class="p-2 border rounded-md bg-white text-gray-900">
-                    <option value="month">Bulanan</option>
-                    <option value="quarter">Triwulan</option>
-                    <option value="year">Tahunan</option>
-                </select>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 max-w-7xl mx-auto">
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Distribusi Event</h2>
+                    <select id="event-period" class="p-2 border rounded-md bg-white text-gray-900">
+                        <option value="month">Bulanan</option>
+                        <option value="quarter">Triwulan</option>
+                        <option value="year">Tahunan</option>
+                    </select>
+                </div>
+                <div class="h-64">
+                    <canvas id="eventChart"></canvas>
+                </div>
             </div>
-            <div class="h-64">
-                <canvas id="growthChart"></canvas>
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Karya Populer</h2>
+                    <a href="{{ route('curator.galeri.index') }}" class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg font-medium hover:bg-yellow-300 transition">
+                        <i class="fas fa-chart-line"></i> Lihat Analitik
+                    </a>
+                </div>
+                <div class="space-y-4">
+                    @forelse ($popularArtworks as $artwork)
+                        <div class="flex items-center gap-3">
+                            <img src="{{ $artwork->thumbnail ? asset('storage/' . $artwork->thumbnail) : 'https://picsum.photos/id/' . ($artwork->id + 100) . '/80/80' }}" alt="{{ $artwork->title }}" class="w-16 h-16 rounded-lg object-cover">
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900">{{ Str::limit($artwork->title, 30) }}</h4>
+                                <p class="text-xs text-gray-600">Oleh {{ $artwork->creator->name ?? 'Unknown' }} | {{ $artwork->category->name ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500">{{ $artwork->created_at->diffForHumans() }} | {{ $artwork->likes_count }} Suka</p>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center p-10 text-gray-600">
+                            <i class="fas fa-image text-6xl mb-4"></i>
+                            <h3 class="text-xl font-semibold">Tidak ada karya populer</h3>
+                        </div>
+                    @endforelse
+                </div>
             </div>
         </div>
 
@@ -477,11 +432,11 @@
                         <h3 class="text-base font-semibold text-gray-900">Traffic Pengunjung</h3>
                         <i class="fas fa-chart-line text-yellow-400 text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold text-gray-900">{{ array_sum($visitorData['month']) }}</div>
-                    <div class="text-green-600 text-sm flex items-center gap-1">
-                        <i class="fas fa-arrow-up"></i> 0%
+                    <div class="text-2xl font-bold text-gray-900">{{ $todayTraffic }}</div>
+                    <div class="text-{{ $growthPercentage >= 0 ? 'green' : 'red' }}-600 text-sm flex items-center gap-1">
+                        <i class="fas fa-arrow-{{ $growthPercentage >= 0 ? 'up' : 'down' }}"></i> {{ $growthPercentage }}%
                     </div>
-                    <div class="text-sm text-gray-600">dari bulan lalu</div>
+                    <div class="text-sm text-gray-600">dari kemarin</div>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition">
                     <div class="flex justify-between items-center mb-3">
@@ -496,7 +451,7 @@
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-yellow-400 hover:shadow-md hover:-translate-y-1 transition">
                     <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-base font-semibold text-gray-900">Postingan Baru</h3>
+                        <h3 class="text-base font-semibold text-gray-900">Karya Baru</h3>
                         <i class="fas fa-image text-yellow-400 text-xl"></i>
                     </div>
                     <div class="text-2xl font-bold text-gray-900">{{ $totalArtworks }}</div>
@@ -520,23 +475,31 @@
         </div>
 
         <div class="bg-white rounded-lg p-6 shadow-sm max-w-7xl mx-auto">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Aksi Cepat</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <a href="{{ route('admin.galeri.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
-                    <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-plus-circle"></i></div>
-                    <div class="font-medium">Tambah Karya</div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Aksi Cepat Kurator</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                <a href="{{ route('curator.galeri.index') }}" class="quick-action-card flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:bg-yellow-500 transition duration-200 group">
+                    <div class="text-3xl mb-3 text-yellow-500 transition duration-200 group-hover:text-white">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="font-medium text-gray-800 transition duration-200 group-hover:text-white">Tambah Karya</div>
                 </a>
-                <a href="{{ route('admin.communities.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
-                    <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-users"></i></div>
-                    <div class="font-medium">Kelola Komunitas</div>
+                <a href="{{ route('curator.communities.index') }}" class="quick-action-card flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:bg-yellow-500 transition duration-200 group">
+                    <div class="text-3xl mb-3 text-yellow-500 transition duration-200 group-hover:text-white">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="font-medium text-gray-800 transition duration-200 group-hover:text-white">Kelola Komunitas</div>
                 </a>
-                <a href="{{ route('admin.events.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
-                    <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-calendar-alt"></i></div>
-                    <div class="font-medium">Buat Event</div>
+                <a href="{{ route('curator.events.index') }}" class="quick-action-card flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:bg-yellow-500 transition duration-200 group">
+                    <div class="text-3xl mb-3 text-yellow-500 transition duration-200 group-hover:text-white">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="font-medium text-gray-800 transition duration-200 group-hover:text-white">Buat Event</div>
                 </a>
-                <a href="{{ route('admin.reports.index') }}" class="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:bg-yellow-400 hover:text-gray-900 transition">
-                    <div class="text-3xl mb-3 text-yellow-400"><i class="fas fa-chart-pie"></i></div>
-                    <div class="font-medium">Lihat Laporan</div>
+                <a href="{{ route('curator.blogs.index') }}" class="quick-action-card flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:bg-yellow-500 transition duration-200 group">
+                    <div class="text-3xl mb-3 text-yellow-500 transition duration-200 group-hover:text-white">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <div class="font-medium text-gray-800 transition duration-200 group-hover:text-white">Tambah Artikel</div>
                 </a>
             </div>
         </div>
@@ -566,8 +529,8 @@
                     if (period === 'week') {
                         labels = ['Ming', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
                         data = Array(7).fill(0);
-                        Object.keys(visitorData.week).forEach(day => {
-                            data[parseInt(day) % 7] = visitorData.week[day];
+                        Object.keys(visitorData.week).forEach((day, index) => {
+                            data[index % 7] = visitorData.week[day];
                         });
                     } else if (period === 'month') {
                         labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
@@ -648,7 +611,7 @@
                 let interactionChart;
 
                 function updateInteractionChart(period) {
-                    let labels = ['Karya', 'Blog', 'Project'];
+                    let labels = ['Karya', 'Artikel', 'Event'];
                     let likesData = interactionData[period].likes;
                     let commentsData = interactionData[period].comments;
                     if (interactionChart) interactionChart.destroy();
@@ -718,39 +681,6 @@
                     });
                 }
 
-                const growthData = @json($growthData);
-                const growthCtx = document.getElementById('growthChart').getContext('2d');
-                let growthChart;
-
-                function updateGrowthChart(period) {
-                    let labels = Object.keys(growthData[period]);
-                    let data = Object.values(growthData[period]);
-                    if (growthChart) growthChart.destroy();
-                    growthChart = new Chart(growthCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Jumlah Anggota',
-                                data: data,
-                                backgroundColor: 'rgba(255, 215, 0, 0.5)',
-                                borderColor: '#ffd700',
-                                borderWidth: 2,
-                                borderRadius: 5,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                                y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
-                                x: { grid: { display: false } }
-                            }
-                        }
-                    });
-                }
-
                 document.addEventListener('DOMContentLoaded', function() {
                     updateVisitorChart('week');
                     document.getElementById('chart-period').addEventListener('change', function() { updateVisitorChart(this.value); });
@@ -759,8 +689,6 @@
                     document.getElementById('interaction-period').addEventListener('change', function() { updateInteractionChart(this.value); });
                     updateEventChart('month');
                     document.getElementById('event-period').addEventListener('change', function() { updateEventChart(this.value); });
-                    updateGrowthChart('month');
-                    document.getElementById('growth-period').addEventListener('change', function() { updateGrowthChart(this.value); });
 
                     const menuToggle = document.querySelector('.menu-toggle');
                     if (menuToggle) {

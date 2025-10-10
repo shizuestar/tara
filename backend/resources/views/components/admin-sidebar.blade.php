@@ -1,9 +1,15 @@
 <aside class="w-[280px] bg-white border-r border-gray-200 shadow-sm flex flex-col fixed h-screen z-50">
-    <div class="border-b border-gray-200 flex items-center justify-start bg-white h-[70px]">
+    @php
+        $isCurator = Auth::check() && (Auth::user()->role === 'kurator');
+        $isAdmin = Auth::check() && (Auth::user()->role === 'admin');
+        $prefix = $isCurator ? 'curator.' : 'admin.'; 
+    @endphp
+
+    <div class="border-b border-gray-200 flex items-center justify-start bg-white h-[70px] pl-5">
         @if(isset($settings) && $settings->logo_path)
             <img src="{{ Storage::url($settings->logo_path) }}" 
                 alt="Logo" 
-                class="h-full w-auto object-contain ml-5">
+                class="h-full w-auto object-contain">
         @else
             <div class="text-2xl font-bold tracking-normal uppercase" style="font-family: 'Space Grotesk', sans-serif;">
                 TARA<span class="text-yellow-400">●</span>
@@ -14,63 +20,85 @@
     <nav class="p-5 flex-grow overflow-y-auto custom-scrollbar">
         <div class="mb-6">
             <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Menu Utama</div>
-            <a href="{{ route('admin.dashboard.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
-                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-th-large"></i></div>
-                <span class="flex-grow">Dashboard</span>
-            </a>
-            <a href="{{ route('admin.communities.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+
+            {{-- 1. Dashboard (Tergantung Peran) --}}
+            @if ($isCurator)
+                <a href="{{ route('curator.dashboard.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                    <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-th-large"></i></div>
+                    <span class="flex-grow">Dashboard Kurator</span>
+                </a>
+            @elseif ($isAdmin)
+                <a href="{{ route('admin.dashboard.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                    <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-th-large"></i></div>
+                    <span class="flex-grow">Dashboard Admin</span>
+                </a>
+            @endif
+
+            {{-- 2. Manajemen Konten Inti (Menggunakan prefix dinamis) --}}
+            <a href="{{ route($prefix . 'communities.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-users"></i></div>
                 <span class="flex-grow">Komunitas</span>
-                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">50</span> --}}
             </a>
-            <a href="{{ route('admin.projects.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route($prefix . 'projects.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-folder"></i></div>
                 <span class="flex-grow">Project</span>
-                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">100</span> --}}
             </a>
-            <a href="{{ route('admin.blogs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route($prefix . 'blogs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-blog"></i></div>
                 <span class="flex-grow">Blog</span>
-                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold">200</span> --}}
             </a>
         </div>
 
         <div class="mb-6">
-            <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten</div>
-            <a href="{{ route('admin.events.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Konten Lainnya</div>
+            
+            <a href="{{ route($prefix . 'events.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-calendar-alt"></i></div>
                 <span class="flex-grow">Agenda</span>
-                {{-- <span class="bg-yellow-400 text-gray-900 py-1 px-2 rounded-full text-xs font-semibold"></span> --}}
             </a>
-            <a href="{{ route('admin.categories.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            <a href="{{ route($prefix . 'categories.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-stream"></i></div>
                 <span class="flex-grow">Kategori</span>
             </a>
+            
+            @if ($isAdmin)
             <a href="{{ route('admin.users.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-user-friends"></i></div>
                 <span class="flex-grow">Pengguna</span>
             </a>
-            <a href="{{ route('admin.galeri.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+            @endif
+
+            <a href="{{ route($prefix . 'galeri.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-photo-video"></i></div>
                 <span class="flex-grow">Galeri</span>
             </a>
         </div>
 
-        <div class="mb-6">
-            <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Pengaturan</div>
-            <a href="{{ route('admin.reports.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
-                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-chart-bar"></i></div>
-                <span class="flex-grow">Laporan</span>
-            </a>
-            <a href="{{ route('admin.activity-logs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+       <div class="mb-6">
+            <div class="px-6 text-xs uppercase tracking-wide text-gray-500 font-semibold mb-4">Laporan & Sistem</div>
+            
+            {{-- Tautan Laporan hanya terlihat oleh Admin --}}
+            @if ($isAdmin)
+                <a href="{{ route('admin.reports.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                    <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-chart-bar"></i></div>
+                    <span class="flex-grow">Laporan</span>
+                </a>
+            @endif
+            
+            <a href="{{ route($prefix . 'activity-logs.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
                 <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-list-alt"></i></div>
                 <span class="flex-grow">Log Aktivitas</span>
             </a>
-            <a href="{{ route('admin.settings.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
-                <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-cog"></i></div>
-                <span class="flex-grow">Pengaturan Sistem</span>
-            </a>
+
+            {{-- Tautan Pengaturan Sistem (sudah benar, hanya terlihat jika BUKAN Curator) --}}
+            @if (!$isCurator)
+                <a href="{{ route('admin.settings.index') }}" class="nav-item flex items-center py-3 px-6 text-gray-900 font-medium border-l-4 border-transparent hover:bg-gray-100 hover:border-yellow-400">
+                    <div class="w-6 h-6 mr-4 flex items-center justify-center text-gray-500"><i class="fas fa-cog"></i></div>
+                    <span class="flex-grow">Pengaturan Sistem</span>
+                </a>
+            @endif
         </div>
+
     </nav>
 
     <div class="p-5 border-t border-gray-200 bg-gray-50">
@@ -102,10 +130,20 @@
         document.addEventListener('DOMContentLoaded', () => {
             const navItems = document.querySelectorAll('.nav-item');
             const currentPath = window.location.pathname;
+
+            // Fungsi untuk mendapatkan path tanpa trailing slash
+            const normalizePath = (path) => path.replace(/\/$/, '');
+
             navItems.forEach(item => {
                 const link = item.getAttribute('href');
                 const icon = item.querySelector('i');
-                if (link === currentPath) {
+                
+                // Normalisasi path saat ini dan link untuk perbandingan yang akurat
+                const normalizedLink = normalizePath(link);
+                const normalizedCurrentPath = normalizePath(currentPath);
+
+                // Menandai tautan sebagai aktif jika path cocok
+                if (normalizedLink === normalizedCurrentPath) {
                     item.classList.add('border-yellow-400', 'bg-yellow-50');
                     item.classList.remove('border-transparent', 'hover:bg-gray-100', 'hover:border-yellow-400');
                     if (icon) {

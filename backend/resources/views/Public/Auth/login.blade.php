@@ -163,6 +163,10 @@
           transform: none !important;
       }
     </style>
+
+    @if($settings?->favicon_path)
+        <link rel="icon" type="image/png" href="{{ Storage::url($settings->favicon_path) }}" />
+    @endif
   </head>
   <body class="bg-gray-50">
     <main class="main-container">

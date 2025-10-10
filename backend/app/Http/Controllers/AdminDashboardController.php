@@ -21,6 +21,7 @@ use App\Models\ArtworkComment;
 use App\Models\ProjectComment;
 use App\Models\CommunityMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
@@ -33,25 +34,25 @@ class AdminDashboardController extends Controller
         $totalActiveUsers = User::where('status', 'active')->count();
 
         $visitorData = [
-            'week' => ActivityLog::where('description', 'visitor')
-                ->where('created_at', '>=', now()->subWeek())
-                ->selectRaw('DAYOFWEEK(created_at) as day, COUNT(*) as count')
+            'week' => DB::table('visitor_logs')
+                ->where('visit_date', '>=', now()->subWeek())
+                ->selectRaw('DAYOFWEEK(visit_date) as day, SUM(visit_count) as count')
                 ->groupBy('day')
                 ->get()
                 ->mapWithKeys(function ($item) {
                     return [$item->day => $item->count];
                 })->toArray(),
-            'month' => ActivityLog::where('description', 'visitor')
-                ->where('created_at', '>=', now()->subMonth())
-                ->selectRaw('WEEK(created_at) as week, COUNT(*) as count')
+            'month' => DB::table('visitor_logs')
+                ->where('visit_date', '>=', now()->subMonth())
+                ->selectRaw('WEEK(visit_date) as week, SUM(visit_count) as count')
                 ->groupBy('week')
                 ->get()
                 ->mapWithKeys(function ($item) {
                     return ['Minggu ' . ($item->week - date('W', now()->startOfMonth()->timestamp) + 1) => $item->count];
                 })->toArray(),
-            'year' => ActivityLog::where('description', 'visitor')
-                ->where('created_at', '>=', now()->subYear())
-                ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            'year' => DB::table('visitor_logs')
+                ->where('visit_date', '>=', now()->subYear())
+                ->selectRaw('MONTH(visit_date) as month, SUM(visit_count) as count')
                 ->groupBy('month')
                 ->get()
                 ->mapWithKeys(function ($item) {
